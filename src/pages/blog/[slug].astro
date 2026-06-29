@@ -1,0 +1,145 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import home from "../../../content/home/index.json";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("article");
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry, arr: items } }));
+}
+
+const { entry, arr } = Astro.props;
+const { Content } = await render(entry);
+const a = entry.data;
+
+const moisCap = (d) => {
+  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
+  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
+};
+const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+
+// « À lire aussi » : on privilégie la même catégorie, puis on complète, max 3.
+const reste = arr.filter((e) => e.id !== entry.id).map((e) => ({ ...e.data, slug: e.id }));
+const memeCat = reste.filter((e) => a.categorie && e.categorie === a.categorie);
+const autres = [...memeCat, ...reste.filter((e) => !memeCat.includes(e))].slice(0, 3);
+const metaCard = (x) => [x.date && moisCap(x.date), x.tempsLecture].filter(Boolean).join(" · ");
+---
+
+<BaseLayout title={`${a.titre} — Sedona`} description={a.extrait}>
+  <article>
+    <header class="ahead">
+      <div class="container ahead__inner">
+        <nav class="ahead__bread" aria-label="Fil d'ariane">
+          <a href="/">Accueil</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span>
+          <span class="ahead__cur">{a.categorie ?? "Article"}</span>
+        </nav>
+        <h1 class="ahead__title">{a.titre}</h1>
+        {a.extrait && <p class="ahead__chapo">{a.extrait}</p>}
+
+        <div class="ahead__byline">
+          {a.avatar ? <img class="ahead__avatar" src={a.avatar} alt="" /> : <span class="ahead__avatar" aria-hidden="true" />}
+          <div>
+            {a.auteur && <span class="ahead__author">{a.auteur}</span>}
+            {meta && <span class="ahead__meta">{meta}</span>}
+          </div>
+        </div>
+
+        {a.tags?.length > 0 && <ul class="ahead__tags">{a.tags.map((t) => <li>{t}</li>)}</ul>}
+      </div>
+    </header>
+
+    {a.couverture && (
+      <div class="acover container">
+        <img src={a.couverture} alt={a.titre} />
+      </div>
+    )}
+
+    <div class="abody container">
+      <div class="prose"><Content /></div>
+      <a class="abody__back" href="/blog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Tous les articles
+      </a>
+    </div>
+  </article>
+
+  {
+    autres.length > 0 && (
+      <section class="arel">
+        <div class="container">
+          <h2 class="arel__title">À <mark class="hl hl--canyon">lire aussi</mark></h2>
+          <ul class="arel__grid">
+            {autres.map((x) => (
+              <li class="bcard">
+                <a href={`/blog/${x.slug}`} class="pcard">
+                  <div class="pcard__top">
+                    {x.avatar ? <img class="pcard__avatar" src={x.avatar} alt="" loading="lazy" /> : <span class="pcard__avatar" aria-hidden="true" />}
+                    <span>
+                      <span class="pcard__byLabel">Publié par</span>
+                      <span class="pcard__author">{x.auteur}</span>
+                    </span>
+                  </div>
+                  {metaCard(x) && <p class="pcard__meta">{metaCard(x)}</p>}
+                  <h3 class="pcard__h">{x.titre}</h3>
+                  {x.tags?.length > 0 && <ul class="pcard__tags">{x.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaFinal cta={home.ctaFinal} />
+</BaseLayout>
+
+<style>
+  /* En-tête de lecture */
+  .ahead { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem); }
+  .ahead__inner { max-width: 820px; }
+  .ahead__bread { font-family: var(--font-body); font-size: 0.875rem; color: #3b0800; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); }
+  .ahead__bread a { color: #3b0800; font-weight: 600; }
+  .ahead__bread span { margin: 0 0.35rem; }
+  .ahead__cur { font-weight: 400; }
+  .ahead__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.02em; color: #3b0800; }
+  .ahead__chapo { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.4; color: #3b0800; }
+
+  .ahead__byline { display: flex; align-items: center; gap: 0.75rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+  .ahead__avatar { width: 48px; height: 48px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
+  .ahead__author { display: block; font-family: var(--font-body); font-weight: 600; color: #3b0800; }
+  .ahead__meta { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+
+  .ahead__tags { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ahead__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.9em; border: 1px solid var(--color-border); border-radius: 999px; }
+
+  /* Couverture */
+  .acover { margin-top: clamp(1.5rem, 3vw, 2.5rem); }
+  .acover img { display: block; width: 100%; max-height: 560px; object-fit: cover; border-radius: 24px; }
+
+  /* Corps de l'article */
+  .abody { padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); }
+  .abody .prose { max-width: 760px; margin-inline: auto; }
+  .abody__back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 760px; margin: clamp(2.5rem, 5vw, 3.5rem) auto 0; font-family: var(--font-sans); font-weight: 600; color: var(--color-primary); }
+  .abody__back svg { width: 20px; height: 20px; }
+
+  /* À lire aussi */
+  .arel { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--color-border); }
+  .arel__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; color: #3b0800; margin: 0 0 clamp(2rem, 4vw, 2.5rem); }
+  .arel__title .hl { line-height: 1.2; }
+  .arel__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .pcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 1.75rem; color: #3b0800; height: 100%; }
+  .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
+  .pcard__avatar { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
+  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+  .pcard__author { font-family: var(--font-body); font-weight: 600; }
+  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: 1.5rem 0 0.5rem; }
+  .pcard__h { font-family: var(--font-sans); font-weight: 600; font-size: 1.375rem; line-height: 1.2; margin: 0 0 auto; }
+  .pcard__tags { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #3b0800; padding: 0.3em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+
+  @media (max-width: 900px) { .arel__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .arel__grid { grid-template-columns: 1fr; } }
+</style>

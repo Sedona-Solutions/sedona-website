@@ -1,0 +1,404 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import home from "../../../content/home/index.json";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("projet");
+  return items.map((entry, i, arr) => ({ params: { slug: entry.id }, props: { entry, arr } }));
+}
+
+const { entry, arr } = Astro.props;
+const p = entry.data;
+
+const autres = arr
+  .filter((e) => e.id !== entry.id)
+  .slice(0, 2)
+  .map((e) => ({ ...e.data, slug: e.id }));
+
+const technos = p.technos ?? [];
+const ctx = p.contexte;
+const stats = p.stats;
+const temoignage = p.temoignage;
+const galerie = p.galerie ?? [];
+
+// Couleur d'accent (hero + cartes) selon le projet.
+const ACCENTS = {
+  salmon: { heroBg: "#f8b3a9", cardBg: "#fbd3cd", header: "salmon" },
+  sunshine: { heroBg: "#f8d98b", cardBg: "#fdeec9", header: "sunshine" },
+  lavande: { heroBg: "#d0d3f5", cardBg: "#e5e7fa", header: "lavande" },
+};
+const ac = ACCENTS[p.accent ?? "salmon"] ?? ACCENTS.salmon;
+---
+
+<BaseLayout title={`${p.client ?? p.titre} — Sedona`} description={p.accroche ?? p.resume} headerVariant={ac.header}>
+  <!-- HERO -->
+  <section class="phero">
+    <div class="container">
+      <nav class="phero__bread" aria-label="Fil d'ariane">
+        <a href="/">Accueil</a> <span>/</span> <a href="/projets">Projets</a> <span>/</span>
+        <span class="phero__cur">{p.client ?? p.titre}</span>
+      </nav>
+      <h1 class="phero__title">{p.client ?? p.titre}</h1>
+      {p.titre && p.client && <p class="phero__sub">{p.titre}</p>}
+      {p.accroche && <p class="phero__accroche">{p.accroche}</p>}
+      <dl class="phero__meta">
+        {p.client && <div><dt>Client</dt><dd>{p.client}</dd></div>}
+        {p.annee && <div><dt>Année</dt><dd>{p.annee}</dd></div>}
+        {p.tags?.length > 0 && <div><dt>Domaines & technos</dt><dd>{p.tags.join(" · ")}</dd></div>}
+      </dl>
+    </div>
+  </section>
+
+  <!-- COUVERTURE -->
+  {p.couverture && <div class="pcover"><img src={p.couverture} alt={p.titre} /></div>}
+
+  <!-- LE CONTEXTE -->
+  {
+    ctx && (
+      <section class="pctx">
+        <div class="container pctx__row">
+          {ctx.media ? (
+            <div class="pctx__media pctx__media--single"><img src={ctx.media} alt="" loading="lazy" /></div>
+          ) : ctx.images?.length > 0 ? (
+            <div class="pctx__media">
+              {ctx.images[0] && <img class="pctx__ph pctx__ph--back" src={ctx.images[0]} alt="" loading="lazy" />}
+              {ctx.images[1] && <img class="pctx__ph pctx__ph--front" src={ctx.images[1]} alt="" loading="lazy" />}
+            </div>
+          ) : null}
+          <div class="pctx__text">
+            {ctx.eyebrow && <p class="psec__eyebrow">{ctx.eyebrow}</p>}
+            {ctx.titre && <h2 class="psec__title">{ctx.titre}</h2>}
+            {ctx.intro && <p class="psec__body">{ctx.intro}</p>}
+          </div>
+        </div>
+        {ctx.colonnes?.length > 0 && (
+          <ul class="pcards container">
+            {ctx.colonnes.map((c) => (
+              <li class="pcard">
+                <span class="pcard__star" aria-hidden="true">✳</span>
+                <h3>{c.titre}</h3>
+                {c.texte && <p>{c.texte}</p>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    )
+  }
+
+  <!-- DÉFIS (accordéon + visuels) -->
+  {
+    p.defis && (
+      <section class="pdefis">
+        <div class="container pdefis__row">
+          <div class="pdefis__col">
+            {p.defis.eyebrow && <p class="psec__eyebrow">{p.defis.eyebrow}</p>}
+            {p.defis.titre && <h2 class="psec__title">{p.defis.titre}</h2>}
+            {p.defis.intro && <p class="psec__body">{p.defis.intro}</p>}
+            {p.defis.points?.length > 0 && (
+              <div class="pacc">
+                {p.defis.points.map((pt, i) => (
+                  <details class="pacc__item" open={i === 0}>
+                    <summary>
+                      <span class="pacc__t">{pt.titre}</span>
+                      <span class="pacc__icon" aria-hidden="true" />
+                    </summary>
+                    {pt.texte && <p class="pacc__body">{pt.texte}</p>}
+                  </details>
+                ))}
+              </div>
+            )}
+          </div>
+          {p.defis.media ? (
+            <div class="pdefis__media pdefis__media--single"><img src={p.defis.media} alt="" loading="lazy" /></div>
+          ) : p.defis.images?.length > 0 ? (
+            <div class="pdefis__media">
+              {p.defis.images[0] && <img class="pdefis__tablet" src={p.defis.images[0]} alt="" loading="lazy" />}
+              {p.defis.images[1] && <img class="pdefis__phone" src={p.defis.images[1]} alt="" loading="lazy" />}
+            </div>
+          ) : null}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- IMPACTS (bande sombre) -->
+  {
+    stats?.items?.length > 0 && (
+      <section class="pstats">
+        <div class="container">
+          {stats.eyebrow && <p class="pstats__eyebrow">{stats.eyebrow}</p>}
+          {stats.titre && <h2 class="pstats__title">{stats.titre}</h2>}
+          <ul class="pstats__list">
+            {stats.items.map((s) => (
+              <li class="pstat">
+                <p class="pstat__num">
+                  {s.prefixe && <span class="pstat__pm">{s.prefixe}</span>}
+                  {s.valeur}
+                  {s.suffixe && <span class="pstat__pm">{s.suffixe}</span>}
+                </p>
+                {s.label && <p class="pstat__label">{s.label}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- NOTRE APPROCHE (grille de cartes) -->
+  {
+    p.approche?.points?.length > 0 && (
+      <section class="pappr">
+        <div class="container">
+          <header class="psec__head">
+            {p.approche.eyebrow && <p class="psec__eyebrow">{p.approche.eyebrow}</p>}
+            {p.approche.titre && <h2 class="psec__title">{p.approche.titre}</h2>}
+            {p.approche.intro && <p class="pappr__intro">{p.approche.intro}</p>}
+          </header>
+          {p.approche.note && <p class="pappr__note">{p.approche.note}</p>}
+          <ul class="pappr__grid">
+            {p.approche.points.map((pt) => (
+              <li class="pappr__card">
+                {pt.icone && (
+                  <span class="pappr__icon">
+                    <img src={`/icons/${pt.icone}.svg`} alt="" aria-hidden="true" />
+                  </span>
+                )}
+                <div>
+                  <h3>{pt.titre}</h3>
+                  {pt.texte && <p>{pt.texte}</p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {p.approche.galerie?.length > 0 && (
+            <ul class="pappr__gal">
+              {p.approche.galerie.map((g) => <li><img src={g} alt="" loading="lazy" /></li>)}
+            </ul>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- TÉMOIGNAGE -->
+  {
+    temoignage && (
+      <section class="ptemoin">
+        <div class="container">
+          <div class="ptemoin__stack">
+            <div class="ptemoin__back" aria-hidden="true" />
+            <figure class="ptemoin__card">
+            <blockquote>“{temoignage.citation} ”</blockquote>
+            <figcaption>
+              {temoignage.avatar ? (
+                <img class="ptemoin__avatar" src={temoignage.avatar} alt="" />
+              ) : (
+                <span class="ptemoin__avatar" aria-hidden="true" />
+              )}
+              <span>
+                {temoignage.auteur && <span class="ptemoin__author">{temoignage.auteur}</span>}
+                {temoignage.role && <span class="ptemoin__role">{temoignage.role}</span>}
+              </span>
+            </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- STACK TECHNIQUE -->
+  {
+    technos.length > 0 && (
+      <section class="pstack">
+        <div class="container">
+          <p class="psec__eyebrow psec__eyebrow--center">La stack technique</p>
+          <h2 class="pstack__title">Évidemment avec les technos que nous maîtrisons !</h2>
+          <ul class="pstack__list">
+            {technos.map((tc) => (
+              <li class="techno">
+                <span class="techno__icon">{tc.logo && <img src={tc.logo} alt="" aria-hidden="true" />}</span>
+                <span class="techno__nom">{tc.nom}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- GALERIE -->
+  {
+    galerie.length > 0 && (
+      <section class="pgal">
+        <div class="container">
+          {galerie.map((g) => <img class="pgal__img" src={g} alt="" loading="lazy" />)}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- PROJETS LIÉS -->
+  {
+    autres.length > 0 && (
+      <section class="plinked">
+        <div class="container">
+          <h2 class="plinked__title">Nos autres projets <mark class="hl hl--rk">à découvrir</mark></h2>
+          <ul class="plinked__grid">
+            {autres.map((a) => (
+              <li class="plc">
+                <a href={`/projets/${a.slug}`} class="plc__media">
+                  {a.couverture ? <img src={a.couverture} alt={a.titre} loading="lazy" /> : <span class="plc__ph" aria-hidden="true" />}
+                </a>
+                <h3 class="plc__title">{a.client ?? a.titre}</h3>
+                {a.tags?.length > 0 && <ul class="plc__tags">{a.tags.slice(0, 4).map((tg) => <li>{tg}</li>)}</ul>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaFinal cta={home.ctaFinal} />
+</BaseLayout>
+
+<style define:vars={{ heroBg: ac.heroBg, cardBg: ac.cardBg }}>
+  /* ---- Hero (couleur d'accent) ---- */
+  .phero { background: var(--heroBg); padding-block: clamp(2rem, 4vw, 3rem) clamp(2.5rem, 5vw, 4rem); color: #3b0800; }
+  .phero__bread { font-family: var(--font-body); font-size: 0.875rem; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+  .phero__bread a { color: #3b0800; font-weight: 600; }
+  .phero__bread .phero__cur { font-weight: 400; }
+  .phero__bread span { margin: 0 0.35rem; }
+  .phero__title { margin: 0; font-family: var(--font-sans); font-weight: 700; font-size: clamp(3rem, 8vw, 7.5rem); line-height: 1; letter-spacing: -0.033em; }
+  .phero__sub { margin: 1rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.75rem, 4.5vw, 5rem); line-height: 0.9; letter-spacing: -0.01em; max-width: 20ch; }
+  .phero__accroche { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.1rem, 1.6vw, 1.5rem); line-height: 1.25; max-width: 64ch; }
+  .phero__meta { display: flex; flex-wrap: wrap; gap: 1.5rem 4rem; margin: clamp(2rem, 4vw, 3rem) 0 0; }
+  .phero__meta dt { font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; }
+  .phero__meta dd { margin: 0.4rem 0 0; font-family: var(--font-body); font-size: 1.125rem; }
+
+  /* ---- Couverture pleine largeur ---- */
+  .pcover { background: var(--color-canyon-50); }
+  .pcover img { display: block; width: 100%; max-height: 844px; object-fit: cover; }
+
+  /* ---- Titres de section communs ---- */
+  .psec__eyebrow { font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 0.75rem; }
+  .psec__eyebrow--center { text-align: center; }
+  .psec__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.875rem, 3.2vw, 2.5rem); line-height: 1.2; letter-spacing: -0.02em; color: #3b0800; margin: 0; }
+  .psec__body { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: #3b0800; }
+
+  /* ---- Le contexte ---- */
+  .pctx { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .pctx__row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .pctx__media { position: relative; height: clamp(420px, 36vw, 560px); }
+  .pctx__ph { position: absolute; width: auto; max-width: none; border-radius: 28px; box-shadow: 0 24px 60px rgba(59, 8, 0, 0.18); }
+  .pctx__ph--back { top: 0; left: 0; height: 86%; }
+  .pctx__ph--front { top: 12%; left: 34%; height: 88%; }
+  .pctx__media--single { height: auto; }
+  .pctx__media--single img { width: 100%; height: auto; }
+  .pctx__text { max-width: 46ch; }
+
+  /* Cartes Le défi / L'enjeu / Notre rôle */
+  .pcards { list-style: none; padding: 0; margin: clamp(2.5rem, 4vw, 3rem) auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .pcard { position: relative; background: var(--cardBg); border-radius: 24px; padding: 2rem; }
+  .pcard__star { position: absolute; top: 1.5rem; right: 1.75rem; color: #b13724; font-size: 1.25rem; }
+  .pcard h3 { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; line-height: 1.3; letter-spacing: -0.02em; color: #42140d; margin: 0 0 1rem; }
+  .pcard p { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; margin: 0; }
+
+  /* ---- Défis : accordéon + visuels ---- */
+  .pdefis { background: var(--color-canyon-50); padding-block: clamp(2rem, 4vw, 3.5rem); }
+  .pdefis__row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .pacc { margin-top: 2rem; }
+  .pacc__item { border-top: 1px solid rgba(59, 8, 0, 0.15); }
+  .pacc__item:last-child { border-bottom: 1px solid rgba(59, 8, 0, 0.15); }
+  .pacc__item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; cursor: pointer; }
+  .pacc__item summary::-webkit-details-marker { display: none; }
+  .pacc__t { font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; color: #3b0800; }
+  .pacc__icon { position: relative; width: 22px; height: 22px; flex: none; }
+  .pacc__icon::before, .pacc__icon::after { content: ""; position: absolute; background: #3b0800; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .pacc__icon::before { top: 10px; left: 0; width: 22px; height: 2px; }
+  .pacc__icon::after { top: 0; left: 10px; width: 2px; height: 22px; }
+  .pacc__item[open] .pacc__icon::after { transform: scaleY(0); opacity: 0; }
+  .pacc__body { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; margin: 0 0 1.2rem; max-width: 52ch; }
+  .pdefis__media { position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center; }
+  .pdefis__tablet { width: 86%; border-radius: 20px; box-shadow: 0 24px 60px rgba(59, 8, 0, 0.18); }
+  .pdefis__phone { position: absolute; right: 4%; bottom: 0; width: 30%; border-radius: 22px; box-shadow: 0 20px 48px rgba(59, 8, 0, 0.22); }
+  .pdefis__media--single { min-height: 0; }
+  .pdefis__media--single img { width: 100%; height: auto; }
+
+  /* ---- Impacts (bande sombre) ---- */
+  .pstats { background: #3b0800; color: #fdf4f3; padding-block: clamp(3rem, 6vw, 5rem); }
+  .pstats__eyebrow { font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.01em; color: #fdf4f3; margin: 0 0 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .pstats__eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: #f8b3a9; }
+  .pstats__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.875rem, 3.2vw, 2.5rem); line-height: 1.2; letter-spacing: -0.02em; max-width: 28ch; margin: 0 0 clamp(2rem, 4vw, 3rem); }
+  .pstats__list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .pstat { text-align: center; padding: 0 1rem; }
+  .pstat + .pstat { border-left: 2px dotted rgba(253, 244, 243, 0.4); }
+  .pstat__num { font-family: var(--font-sans); font-weight: 400; font-size: clamp(3.5rem, 7vw, 7.5rem); line-height: 1; letter-spacing: -0.03em; margin: 0; }
+  .pstat__pm { font-weight: 300; }
+  .pstat__label { font-family: var(--font-body); font-weight: 600; font-size: 1rem; margin: 0.75rem 0 0; }
+
+  /* ---- Approche : grille de cartes ---- */
+  .pappr { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .psec__head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .pappr__note { display: inline-block; position: relative; z-index: 1; margin: 0 0 -1.25rem 1.75rem; padding: 0.55em 1.4em; background: var(--heroBg); border-radius: 999px; transform: rotate(-3deg); font-family: var(--font-sans); font-weight: 600; font-size: 1.125rem; color: #3b0800; }
+  .pappr__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.1rem, 1.6vw, 1.5rem); line-height: 1.25; color: #3b0800; max-width: 80ch; }
+  .pappr__gal { list-style: none; padding: 0; margin: clamp(2rem, 4vw, 3rem) 0 0; display: grid; gap: 1.5rem; }
+  .pappr__gal img { display: block; width: 100%; border-radius: 24px; }
+  .pappr__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pappr__card { display: flex; align-items: flex-start; gap: 1.5rem; background: var(--cardBg); border-radius: 24px; padding: 2.25rem; }
+  .pappr__icon { flex: none; width: 80px; height: 80px; display: grid; place-items: center; }
+  .pappr__icon img { width: 80px; height: 80px; }
+  .pappr__card h3 { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.02em; color: #42140d; margin: 0.5rem 0 0.75rem; }
+  .pappr__card p { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; margin: 0; }
+
+  /* ---- Témoignage ---- */
+  .ptemoin { background: var(--color-canyon-50); padding-block: clamp(3rem, 5vw, 4rem) clamp(3.5rem, 6vw, 5rem); }
+  .ptemoin__stack { position: relative; max-width: 1088px; margin: 0 auto; }
+  .ptemoin__back { position: absolute; left: 14px; right: -14px; top: 14px; bottom: -14px; background: #fff; border: 1px solid var(--color-border); border-radius: 28px; }
+  .ptemoin__card { position: relative; background: #fff; border: 1px solid var(--color-border); border-radius: 28px; padding: clamp(2rem, 4vw, 3.5rem); }
+  .ptemoin__card blockquote { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.375rem, 2.2vw, 1.75rem); line-height: 1.2; letter-spacing: -0.01em; color: #3b0800; }
+  .ptemoin__card figcaption { display: flex; align-items: center; gap: 0.9rem; margin-top: 2rem; }
+  .ptemoin__avatar { width: 64px; height: 64px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
+  .ptemoin__author { display: block; font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: #3b0800; }
+  .ptemoin__role { display: block; font-family: var(--font-body); font-size: 0.875rem; color: #3b0800; }
+
+  /* ---- Stack technique ---- */
+  .pstack { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem); }
+  .pstack__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.875rem, 3.2vw, 2.5rem); letter-spacing: -0.02em; color: #3b0800; margin: 0 auto clamp(2rem, 4vw, 2.5rem); text-align: center; max-width: 22ch; }
+  .pstack__list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+  .techno { display: flex; align-items: center; gap: 0.85rem; background: #fff; border-radius: 18px; padding: 1.1rem 1.75rem 1.1rem 1.1rem; }
+  .techno__icon { width: 56px; height: 56px; border-radius: 999px; flex: none; background: #42140d; display: grid; place-items: center; }
+  .techno__icon img { width: 28px; height: 28px; }
+  .techno__nom { font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; color: #3b0800; }
+
+  /* ---- Galerie ---- */
+  .pgal { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem); }
+  .pgal__img { display: block; width: 100%; border-radius: 24px; }
+  .pgal__img + .pgal__img { margin-top: 1.5rem; }
+
+  /* ---- Projets liés ---- */
+  .plinked { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .plinked__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 5rem); line-height: 1; letter-spacing: -0.03em; color: #3b0800; margin: 0 0 clamp(2rem, 4vw, 3rem); text-align: center; }
+  .plinked__title .hl { line-height: 1.25; }
+  .hl--rk { background: var(--cardBg); color: #3b0800; }
+  .plinked__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .plc__media { display: block; aspect-ratio: 16 / 11; border-radius: 18px; overflow: hidden; background: var(--color-neutral-100); }
+  .plc__media img { width: 100%; height: 100%; object-fit: cover; }
+  .plc__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
+  .plc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.25rem 0 0; }
+  .plc__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .plc__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+
+  @media (max-width: 900px) {
+    .pctx__row, .pdefis__row { grid-template-columns: 1fr; }
+    .pappr__grid, .pcards, .plinked__grid { grid-template-columns: 1fr; }
+    .pstats__list { grid-template-columns: 1fr; gap: 2.5rem; }
+    .pstat + .pstat { border-left: none; }
+    .pctx__media, .pdefis__media { min-height: 380px; }
+  }
+</style>

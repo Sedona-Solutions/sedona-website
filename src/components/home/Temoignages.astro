@@ -1,0 +1,144 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+const { section } = Astro.props;
+const temoignages = section?.temoignages ?? [];
+const t = temoignages[0];
+const total = String(temoignages.length).padStart(2, "0");
+---
+
+<section class="temoignages">
+  <div class="container temoignages__grid">
+    <div class="temoignages__cardwrap">
+      {
+        t && (
+          <article class="tcard">
+            <blockquote class="tcard__quote">“{t.citation}”</blockquote>
+            <div class="tcard__author">
+              {t.avatar
+                ? <img class="tcard__avatar" src={t.avatar} alt="" loading="lazy" />
+                : <span class="tcard__avatar" aria-hidden="true" />}
+              <span>
+                <span class="tcard__name">{t.auteur}</span>
+                {t.role && <span class="tcard__role">{t.role}</span>}
+              </span>
+            </div>
+            <div class="tcard__nav">
+              <span class="tcard__count">01 <span class="tcard__sep">—</span> {total}</span>
+              <span class="tcard__arrows" aria-hidden="true">
+                <span class="tcard__arrow">←</span>
+                <span class="tcard__arrow">→</span>
+              </span>
+            </div>
+          </article>
+        )
+      }
+    </div>
+
+    <div class="temoignages__intro">
+      <TitreSegments segments={section?.titre} as="h2" class="section-title temoignages__title" />
+      {section?.intro && <p class="temoignages__sub">{section.intro}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .temoignages {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .temoignages__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  /* Carte citation avec cartes arrière en contour, décalées à droite et pivotées */
+  .temoignages__cardwrap {
+    position: relative;
+  }
+  .temoignages__cardwrap::before,
+  .temoignages__cardwrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid color-mix(in srgb, var(--color-red-rock-700) 35%, transparent);
+    border-radius: 24px;
+    z-index: 0;
+  }
+  .temoignages__cardwrap::before {
+    transform: translate(16px, -12px) rotate(2.5deg);
+  }
+  .temoignages__cardwrap::after {
+    transform: translate(28px, 6px) rotate(5deg);
+  }
+  .tcard {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: clamp(1.75rem, 3vw, 2.75rem);
+  }
+  .tcard__quote {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+    line-height: 1.4;
+    color: #3b0800;
+  }
+  .tcard__author {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+  .tcard__avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300));
+    flex: none;
+  }
+  .tcard__name {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: #3b0800;
+  }
+  .tcard__role {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .tcard__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    font-family: var(--font-body);
+    color: #3b0800;
+  }
+  .tcard__count { font-variant-numeric: tabular-nums; letter-spacing: 0.1em; }
+  .tcard__sep { color: var(--color-text-muted); margin: 0 0.4rem; }
+  .tcard__arrows { display: flex; gap: 1rem; font-size: 1.25rem; }
+  .tcard__arrow { cursor: pointer; }
+
+  .temoignages :global(.temoignages__title) {
+    max-width: 12ch;
+  }
+  .temoignages__sub {
+    margin-top: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: #3b0800;
+    max-width: 44ch;
+  }
+
+  @media (max-width: 820px) {
+    .temoignages__grid { grid-template-columns: 1fr; }
+  }
+</style>

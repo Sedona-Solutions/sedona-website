@@ -1,0 +1,57 @@
+---
+const { items = [] } = Astro.props;
+// On duplique la liste pour un défilement continu sans couture.
+const boucle = [...items, ...items];
+---
+
+{
+  items.length > 0 && (
+    <div class="ticker" aria-label="Slogans Sedona">
+      <div class="ticker__track">
+        {boucle.map((t) => (
+          <span class="ticker__item">
+            {t}
+            <span class="ticker__star" aria-hidden="true">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .ticker {
+    background: #3b0800;
+    color: #fdf4f3;
+    overflow: hidden;
+    padding-block: 1.4rem;
+    white-space: nowrap;
+  }
+  .ticker__track {
+    display: inline-flex;
+    align-items: center;
+    animation: ticker-scroll 30s linear infinite;
+    will-change: transform;
+  }
+  .ticker__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-inline: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: -0.01em;
+  }
+  .ticker__star {
+    color: #fdf4f3;
+    font-size: 0.75em;
+  }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__track { animation: none; }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+const {
+  titre = "",
+  accroche,
+  illustration,
+  pillWord,                 // mot(s) à mettre en pastille ; par défaut le dernier mot
+  pillVariant = "cactus",   // variante de couleur de la pastille (cactus, ovni, ...)
+  ctaLabel = "Discutons de votre projet",
+  ctaHref = "/contact",
+} = Astro.props;
+
+// Découpe le titre en [avant, pastille, après].
+const t = titre.trim();
+let avant = "", pastille = "", apres = "";
+if (pillWord && t.includes(pillWord)) {
+  const i = t.indexOf(pillWord);
+  avant = t.slice(0, i);
+  pastille = pillWord;
+  apres = t.slice(i + pillWord.length);
+} else {
+  const parts = t.split(" ");
+  pastille = parts.pop() ?? "";
+  avant = parts.length ? parts.join(" ") + " " : "";
+}
+---
+
+<section class="dhero">
+  <div class="container dhero__inner">
+    <p class="dhero__eyebrow">Domaines d'intervention</p>
+    <h1 class="dhero__title">{avant}<mark class={`hl hl--${pillVariant}`}>{pastille}</mark>{apres}</h1>
+    {accroche && <p class="dhero__accroche">{accroche}</p>}
+    {illustration && <img class="dhero__illu" src={illustration} alt="" aria-hidden="true" />}
+    <a class="dhero__btn" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</section>
+
+<style>
+  .dhero {
+    background: var(--color-canyon-50);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .dhero__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dhero__eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #3b0800;
+    margin-bottom: 1rem;
+  }
+  .dhero__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 6vw, 5rem); /* 80px */
+    line-height: 0.9; /* 72/80 */
+    letter-spacing: -0.01em; /* -0.8px @80 */
+    color: #3b0800;
+    max-width: 900px;
+  }
+  .dhero__title .hl { line-height: 1.1; }
+  .dhero__accroche {
+    margin-top: 1.5rem;
+    max-width: 36ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* 24px */
+    line-height: 1.25; /* 30/24 */
+    color: #3b0800;
+  }
+  .dhero__illu {
+    width: 100%;
+    max-width: 824px;
+    height: auto;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+  .dhero__btn {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    display: inline-flex;
+    align-items: center;
+    padding: 1em 2em;
+    border-radius: 999px;
+    background: #3b0800;
+    color: #fdf4f3;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease;
+  }
+  .dhero__btn:hover { background: var(--color-red-rock-703); color: #fdf4f3; }
+</style>

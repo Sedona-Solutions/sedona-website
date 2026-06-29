@@ -1,0 +1,240 @@
+---
+const { hero } = Astro.props;
+const mots = hero?.titre ?? [];
+const motsCles = hero?.motsCles ?? [];
+
+// Reconstruction fidèle de la maquette Figma (cadre de référence 1680×960).
+// Position (left/top en px), police et style de chaque mot du titre.
+const WORDS = [
+  { left: 334, top: 232, font: "grotesk" }, // Trans
+  { left: 810, top: 232, font: "grotesk" }, // formons
+  { left: 282, top: 336, font: "grotesk" }, // la
+  { left: 436, top: 336, font: "mono-italic" }, // complexité
+  { left: 1255, top: 336, font: "grotesk" }, // en
+  { left: 236, top: 440, font: "grotesk" }, // solutions
+  { left: 953, top: 440, font: "mono" }, // simples
+];
+
+// Bulles : centre (cx,cy), rotation, couleur de fond (hex Figma).
+const BADGES = [
+  { cx: 621, cy: 247, rot: -4, bg: "#f8b3a9" }, // IA
+  { cx: 1188, cy: 238, rot: -6, bg: "#f8d98b" }, // CLOUD
+  { cx: 352, cy: 560, rot: -9, bg: "#a7e9d1" }, // DÉVELOPPEMENT
+  { cx: 1318, cy: 557, rot: -6, bg: "#b3b5ee" }, // DESIGN
+];
+---
+
+<section class="hero">
+  <!-- Composition fidèle (≥ 720px) -->
+  <div class="hero__frame" aria-hidden="false">
+    <h1 class="hero__title">
+      {
+        mots.map((m, i) => (
+          <span
+            class={`hw hw--${WORDS[i]?.font ?? "grotesk"}`}
+            style={`left:${WORDS[i]?.left}px;top:${WORDS[i]?.top}px`}
+          >
+            {m.texte}
+          </span>
+        ))
+      }
+    </h1>
+
+    {/* graphiques décoratifs */}
+    <svg class="hero__deco" style="left:1151px;top:352px;width:88px;height:88px" viewBox="0 0 88 88" aria-hidden="true">
+      <path
+        d="M87.6529 0.0935835L58.3813 0C58.4556 9.79199 58.4616 19.5848 58.3994 29.3768L29.2012 29.2605L29.266 58.6343C19.7055 58.4309 9.61491 58.5665 0 58.4987L0.0527573 88C9.48879 87.5656 21.381 87.8785 31.0234 87.8815L87.6602 87.8541C88.0355 59.9122 88.1878 27.9715 87.6529 0.0935835Z"
+        fill="#f18878"></path>
+    </svg>
+    <svg class="hero__deco" style="left:853px;top:458px;width:84px;height:84px" viewBox="0 0 84 84" aria-hidden="true">
+      <path
+        d="M13.3442 0.173575C25.2951 -0.973357 32.2049 3.70594 41.6913 10.0071C52.9012 3.05358 77.479 -9.6011 83.543 13.3662C85.9253 22.3888 78.4686 35.2167 73.3179 42.5267C84.4603 55.891 91.332 75.7624 70.3757 83.7435C58.8855 85.1316 51.2395 80.7589 42.5372 73.686C8.24631 97.5141 -13.6005 75.3144 10.5726 42.1368C0.807497 28.1144 -8.45629 8.5479 13.3442 0.173575Z"
+        fill="#f18878"></path>
+    </svg>
+    {/* bulles mots-clés */}
+    {
+      motsCles.map((m, i) => (
+        <span
+          class="hero__badge"
+          style={`left:${BADGES[i]?.cx}px;top:${BADGES[i]?.cy}px;--rot:${BADGES[i]?.rot}deg;--bg:${BADGES[i]?.bg}`}
+        >
+          {m.label}
+        </span>
+      ))
+    }
+
+    {hero?.sousTitre && <p class="hero__lead">{hero.sousTitre}</p>}
+    {hero?.ctaLabel && <a href={hero.ctaHref} class="hero__cta">{hero.ctaLabel}</a>}
+  </div>
+
+  <!-- Version mobile simplifiée (< 720px) -->
+  <div class="hero__mobile">
+    <h1 class="hero__mtitle">
+      {
+        mots.map((m, i) => (
+          <span class={`hw--${WORDS[i]?.font ?? "grotesk"}`}>{m.texte} </span>
+        ))
+      }
+    </h1>
+    {hero?.sousTitre && <p class="hero__mlead">{hero.sousTitre}</p>}
+    {hero?.ctaLabel && <a href={hero.ctaHref} class="hero__cta hero__cta--static">{hero.ctaLabel}</a>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    --bg: #fcf6f0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-neutral-700) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-neutral-700) 6%, transparent) 1px, transparent 1px);
+    background-size: calc(66.7px * var(--s, 1)) calc(66.7px * var(--s, 1));
+    background-position: center top;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* --- Composition à l'échelle (cadre 1680×960) --- */
+  .hero {
+    --s: clamp(0.42, calc(100vw / 1680), 1);
+    height: calc(960px * var(--s));
+  }
+  .hero__frame {
+    position: relative;
+    width: 1680px;
+    height: 960px;
+    flex: none;
+    transform: scale(var(--s));
+    transform-origin: top center;
+  }
+
+  .hero__title {
+    margin: 0;
+    font-weight: 600;
+  }
+  .hw {
+    position: absolute;
+    font-size: 120px;
+    line-height: 1;
+    letter-spacing: -4px;
+    color: #3b0800;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .hw--grotesk {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+  }
+  .hw--mono {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+  }
+  .hw--mono-italic {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .hero__deco {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .hero__badge {
+    position: absolute;
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+    background: var(--bg, #f8b3a9);
+    color: #3b0800;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 0.45em 0.95em;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px -10px rgba(59, 8, 0, 0.35);
+  }
+
+  .hero__lead {
+    position: absolute;
+    left: 239px;
+    top: 648px;
+    width: 1202px;
+    margin: 0;
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #3b0800;
+  }
+
+  .hero__cta {
+    position: absolute;
+    left: 840px;
+    top: 786px;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    background: #3b0800;
+    color: #fdf4f3;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 1.15em 2.4em;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .hero__cta:hover {
+    background: #5a1207;
+    color: #fdf4f3;
+  }
+
+  /* --- Version mobile --- */
+  .hero__mobile {
+    display: none;
+  }
+
+  @media (max-width: 719px) {
+    .hero {
+      height: auto;
+      display: block;
+      padding: clamp(2.5rem, 9vw, 4rem) 1.25rem clamp(3rem, 10vw, 4.5rem);
+      background-size: 44px 44px;
+    }
+    .hero__frame {
+      display: none;
+    }
+    .hero__mobile {
+      display: block;
+      text-align: center;
+    }
+    .hero__mtitle {
+      margin: 0;
+      color: #3b0800;
+      text-transform: uppercase;
+      font-weight: 600;
+      line-height: 1.02;
+      font-size: clamp(2.5rem, 13vw, 4rem);
+    }
+    .hero__mtitle .hw--grotesk { font-family: "Space Grotesk", sans-serif; font-weight: 600; }
+    .hero__mtitle .hw--mono { font-family: "Space Mono", monospace; font-weight: 400; }
+    .hero__mtitle .hw--mono-italic { font-family: "Space Mono", monospace; font-style: italic; }
+    .hero__mlead {
+      margin: 1.5rem auto 0;
+      max-width: 32ch;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: #3b0800;
+    }
+    .hero__cta--static {
+      position: static;
+      transform: none;
+      margin-top: 2rem;
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,194 @@
+---
+const { titre = "News", vedette, articles = [] } = Astro.props;
+
+const moisCap = (d) => {
+  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
+  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
+};
+const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+---
+
+<section class="blog">
+  <div class="container">
+    <header class="blog__head">
+      <h2 class="blog__title">
+        <mark class="hl hl--news">{titre}</mark> <span>&amp; articles</span>
+      </h2>
+      <a class="blog__all" href="/blog">Voir tous les articles</a>
+    </header>
+
+    <div class="blog__grid">
+      {
+        vedette && (
+          <a href={`/blog/${vedette.slug}`} class="feat">
+            {vedette.couverture && <img class="feat__img" src={vedette.couverture} alt="" loading="lazy" />}
+            <div class="feat__top">
+              {vedette.avatar
+                ? <img class="feat__avatar" src={vedette.avatar} alt="" loading="lazy" />
+                : <span class="feat__avatar" aria-hidden="true" />}
+              <span class="feat__by">
+                <span class="feat__byLabel">Publié par</span>
+                <span class="feat__author">{vedette.auteur}</span>
+              </span>
+            </div>
+            <div class="feat__bottom">
+              {meta(vedette) && <p class="feat__meta">{meta(vedette)}</p>}
+              <h3 class="feat__h">{vedette.titre}</h3>
+              {vedette.tags?.length > 0 && (
+                <ul class="tags tags--light">{vedette.tags.map((t) => <li>{t}</li>)}</ul>
+              )}
+            </div>
+          </a>
+        )
+      }
+
+      <div class="blog__cards">
+        {
+          articles.map((a) => (
+            <a href={`/blog/${a.slug}`} class="pcard">
+              <div class="pcard__top">
+                {a.avatar
+                  ? <img class="pcard__avatar" src={a.avatar} alt="" loading="lazy" />
+                  : <span class="pcard__avatar" aria-hidden="true" />}
+                <span class="pcard__by">
+                  <span class="pcard__byLabel">Publié par</span>
+                  <span class="pcard__author">{a.auteur}</span>
+                </span>
+              </div>
+              {meta(a) && <p class="pcard__meta">{meta(a)}</p>}
+              <h3 class="pcard__h">{a.titre}</h3>
+              {a.tags?.length > 0 && (
+                <ul class="tags">{a.tags.map((t) => <li>{t}</li>)}</ul>
+              )}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 8vw, 6rem);
+  }
+  .blog__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .blog__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 5.5vw, 5rem); /* 80px */
+    letter-spacing: -0.03em;
+    color: #3b0800;
+  }
+  .hl--news {
+    background: #e9b189;
+    color: #3b0800;
+  }
+  .blog__all {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #3b0800;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .blog__all:hover { color: var(--color-primary); }
+
+  .blog__grid {
+    display: grid;
+    grid-template-columns: 417fr 850fr;
+    gap: 1.5rem;
+  }
+  .blog__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Carte à la une */
+  .feat {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 656px;
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 1.75rem;
+    color: #fff;
+    background: linear-gradient(180deg, #6b5c55, #3b0800);
+    isolation: isolate;
+  }
+  .feat__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  .feat::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(59,8,0,0.15), rgba(59,8,0,0.85));
+  }
+  .feat__top, .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
+  .feat__avatar, .pcard__avatar {
+    width: 40px; height: 40px; border-radius: 999px; flex: none;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300));
+  }
+  .feat__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; opacity: 0.85; }
+  .feat__author { font-family: var(--font-body); font-weight: 600; }
+  .feat__meta { font-family: var(--font-body); font-size: 0.875rem; opacity: 0.9; margin: 0 0 0.5rem; }
+  .feat__h {
+    font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.4rem, 2vw, 1.75rem);
+    line-height: 1.15; margin: 0 0 1rem;
+  }
+
+  /* Cartes secondaires */
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 1.75rem;
+    color: #3b0800;
+  }
+  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+  .pcard__author { font-family: var(--font-body); font-weight: 600; }
+  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: 1.5rem 0 0.5rem; }
+  .pcard__h {
+    font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; line-height: 1.15;
+    margin: 0 0 auto;
+  }
+
+  .tags { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tags li {
+    font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800;
+    padding: 0.3em 0.8em; border: 1px solid var(--color-border); border-radius: 999px; background: #fff;
+  }
+  .tags--light li { color: #fff; border-color: rgba(255,255,255,0.5); background: transparent; }
+
+  @media (max-width: 980px) {
+    .blog__grid { grid-template-columns: 1fr; }
+    .feat { min-height: 420px; }
+  }
+  @media (max-width: 560px) {
+    .blog__cards { grid-template-columns: 1fr; }
+  }
+</style>

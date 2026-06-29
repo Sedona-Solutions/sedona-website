@@ -1,0 +1,146 @@
+/* Design tokens du site Sedona — extraits du design system Figma
+ * (page « _Style » → Colors / Typography).
+ *
+ * Palette thématique « désert de Sedona ». Les nuanciers conservent la
+ * numérotation des designers (50 = clair → 700 = foncé ; 701/702/703 = teintes
+ * profondes intermédiaires). Régénérer les valeurs brutes avec :
+ *   node --env-file=.env scripts/figma-export.mjs tokens
+ */
+
+:root {
+  /* --- Black & White --- */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* --- Neutral (gris chauds) --- */
+  --color-neutral-50: #faf7f5;
+  --color-neutral-100: #f5ede8;
+  --color-neutral-200: #ede3dc;
+  --color-neutral-300: #d6c4ba;
+  --color-neutral-400: #baa094;
+  --color-neutral-500: #967c70;
+  --color-neutral-600: #6b5c55;
+  --color-neutral-702: #4e4038;
+  --color-neutral-701: #352b24;
+  --color-neutral-703: #241a14;
+  --color-neutral-700: #1a1210;
+
+  /* --- Red Rock (couleur signature) --- */
+  --color-red-rock-50: #fdf4f3;
+  --color-red-rock-100: #fde6e3;
+  --color-red-rock-200: #fbd3cd;
+  --color-red-rock-300: #f8b3a9;
+  --color-red-rock-400: #f18878;
+  --color-red-rock-500: #e76450;
+  --color-red-rock-600: #d3452f;
+  --color-red-rock-702: #b13724;
+  --color-red-rock-701: #933021;
+  --color-red-rock-703: #7a2e22;
+  --color-red-rock-700: #42140d;
+
+  /* --- Canyon (orangé) --- */
+  --color-canyon-50: #fcf6f0;
+  --color-canyon-100: #fae9db;
+  --color-canyon-200: #f1d1b7;
+  --color-canyon-300: #e9b189;
+  --color-canyon-400: #de8959;
+  --color-canyon-500: #d97445;
+  --color-canyon-600: #c8552e;
+  --color-canyon-702: #a64228;
+  --color-canyon-701: #863627;
+  --color-canyon-703: #6d2e22;
+  --color-canyon-700: #3b1510;
+
+  /* --- Sunshine (jaune) --- */
+  --color-sunshine-50: #fef9ec;
+  --color-sunshine-100: #fdeec9;
+  --color-sunshine-200: #f8d98b;
+  --color-sunshine-300: #f5c254;
+  --color-sunshine-400: #f3aa2d;
+  --color-sunshine-500: #eb8916;
+  --color-sunshine-600: #d16610;
+  --color-sunshine-702: #ad4811;
+  --color-sunshine-701: #8d3812;
+  --color-sunshine-703: #752e13;
+  --color-sunshine-700: #421605;
+
+  /* --- Cactus (vert) --- */
+  --color-cactus-50: #f2fbf7;
+  --color-cactus-100: #d4f4e7;
+  --color-cactus-200: #a7e9d1;
+  --color-cactus-300: #71d7b4;
+  --color-cactus-400: #5ac5a4;
+  --color-cactus-500: #2ca17e;
+  --color-cactus-600: #218167;
+  --color-cactus-702: #1c6954;
+  --color-cactus-701: #1c5345;
+  --color-cactus-703: #1c463c;
+  --color-cactus-700: #0b2923;
+
+  /* --- Sky (cyan) --- */
+  --color-sky-50: #f2fbfa;
+  --color-sky-100: #d4f3f0;
+  --color-sky-200: #a9e7e4;
+  --color-sky-300: #75d3d0;
+  --color-sky-400: #5abfbf;
+  --color-sky-500: #309b9d;
+  --color-sky-600: #247b7e;
+  --color-sky-702: #216265;
+  --color-sky-701: #1e4e51;
+  --color-sky-703: #1e4245;
+  --color-sky-700: #0b2629;
+
+  /* --- Ovni (violet) --- */
+  --color-ovni-50: #f1f2fc;
+  --color-ovni-100: #e5e7fa;
+  --color-ovni-200: #d0d3f5;
+  --color-ovni-300: #b3b5ee;
+  --color-ovni-400: #9794e5;
+  --color-ovni-500: #8176d9;
+  --color-ovni-600: #7460cb;
+  --color-ovni-702: #6450b2;
+  --color-ovni-701: #524390;
+  --color-ovni-703: #453b74;
+  --color-ovni-700: #292343;
+
+  /* === Rôles sémantiques === */
+  --color-primary: var(--color-red-rock-600);
+  --color-primary-hover: var(--color-red-rock-702);
+  --color-primary-soft: var(--color-red-rock-100);
+  --color-accent: var(--color-sunshine-500);
+
+  --color-bg: var(--color-white);
+  --color-surface: var(--color-neutral-50);
+  --color-text: var(--color-neutral-700);
+  --color-text-muted: var(--color-neutral-500);
+  --color-border: var(--color-neutral-200);
+
+  /* === Typographie (polices de marque : Space Grotesk + Space Mono) === */
+  --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-mono: "Space Mono", ui-monospace, "Cascadia Code", monospace;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Échelle typographique (px → rem, base 16) */
+  --text-sm: 0.875rem;   /* 14 */
+  --text-base: 1rem;     /* 16 — corps */
+  --text-lg: 1.25rem;    /* 20 */
+  --text-xl: 1.5rem;     /* 24 */
+  --text-2xl: 1.875rem;  /* 30 — sous-titres (header) */
+  --text-3xl: 2.5rem;    /* 40 */
+  --text-4xl: 4rem;      /* 64 — titres (title) */
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+
+  /* Espacements */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* Mise en page */
+  --content-max: 1312px;
+  --radius: 12px;
+}

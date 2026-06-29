@@ -1,0 +1,81 @@
+---
+const { section } = Astro.props;
+const titre = section?.titre;
+const logos = section?.logos ?? [];
+---
+
+{
+  logos.length > 0 && (
+    <section class="clients">
+      <div class="container clients__inner">
+        {titre && <p class="clients__title">{titre}</p>}
+        <ul class="clients__logos" aria-label="Nos clients">
+          {logos.map((c, i) => (
+            <>
+              {i > 0 && <li class="clients__star" aria-hidden="true">✦</li>}
+              <li class="clients__item">
+                {c.logo ? <img src={c.logo} alt={c.nom} loading="lazy" /> : <span>{c.nom}</span>}
+              </li>
+            </>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .clients {
+    background: #3b0800;
+    color: #fdf4f3;
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .clients__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+  }
+  .clients__title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: #fdf4f3;
+  }
+  .clients__logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(0.75rem, 2.5vw, 2.5rem);
+  }
+  .clients__star {
+    color: #fdf4f3;
+    opacity: 0.8;
+    font-size: 0.9rem;
+    flex: none;
+  }
+  .clients__item {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: center;
+  }
+  @media (max-width: 760px) {
+    .clients__logos { flex-wrap: wrap; justify-content: center; }
+  }
+  .clients__item img {
+    height: clamp(20px, 2.4vw, 34px);
+    width: auto;
+    max-width: 100%;
+    opacity: 0.92;
+  }
+  .clients__item span {
+    font-weight: 700;
+    color: #fdf4f3;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+// Titre composé de segments, certains surlignés d'une couleur de marque.
+interface Segment {
+  texte?: string;
+  couleur?: string;
+}
+interface Props {
+  segments?: Segment[];
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+const { segments = [], as = "h2", class: cls = "" } = Astro.props;
+const Tag = as;
+---
+
+<Tag class={`titre-segments ${cls}`}>
+  {
+    segments.map((s) =>
+      s.couleur && s.couleur !== "none" ? (
+        <mark class={`hl hl--${s.couleur}`}>{s.texte}</mark>
+      ) : (
+        <span>{s.texte}</span>
+      ),
+    )
+  }
+</Tag>
+
+<style>
+  .titre-segments {
+    text-wrap: balance;
+  }
+  /* le style des <mark> est porté par les classes .hl--* (global.css) */
+</style>

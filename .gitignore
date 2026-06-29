@@ -1,0 +1,44 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables (secrets — ne jamais committer)
+.env
+.env.production
+.env.*.local
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# jetbrains setting folder
+.idea/
+
+# tinacms (types et admin générés)
+tina/__generated__/
+public/admin/
+tina-dev.log
+
+# exports figma bruts
+figma-export/
+
+# réglages locaux Claude Code (permissions perso)
+.claude/settings.local.json
+
+# fichiers de travail à la racine : captures de maquettes, logs, sources d'import ponctuelles
+# (les images réellement utilisées par le site vivent dans public/)
+/*.png
+/*.log
+/sedona.WordPress.*.xml
+/RSE-Sedona-2026.pdf

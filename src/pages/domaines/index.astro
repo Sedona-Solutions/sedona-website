@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const domaines = (await getCollection("expertise"))
+  .map((e) => ({ ...e.data, slug: e.id }))
+  .sort((a, b) => (a.ordre ?? 99) - (b.ordre ?? 99));
+---
+
+<BaseLayout title="Domaines — Sedona" description="Nos domaines d'expertise : produits digitaux, data & IA, infrastructure & sécurité.">
+  <PageHeader
+    eyebrow="Domaines"
+    titre="Nos domaines d'expertise"
+    intro="De la conception produit à l'infrastructure critique — nous maîtrisons toute la chaîne de valeur."
+  />
+
+  <section class="container domaines">
+    <ul class="domaines__grid">
+      {
+        domaines.map((d) => (
+          <li class="dcard">
+            {d.icone && <img class="dcard__icon" src={`/icons/exp-${d.icone}.svg`} alt="" aria-hidden="true" />}
+            <h2 class="dcard__title">{d.titre}</h2>
+            {d.resume && <p class="dcard__text">{d.resume}</p>}
+            {d.tags?.length > 0 && (
+              <ul class="dcard__tags">{d.tags.map((t) => <li>{t}</li>)}</ul>
+            )}
+            <a class="dcard__link" href={`/domaines/${d.slug}`}>En savoir plus →</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .domaines { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 6rem); }
+  .domaines__grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .dcard {
+    background: #fff; border: 1px solid var(--color-border); border-radius: 24px;
+    padding: 2.5rem; display: flex; flex-direction: column;
+  }
+  .dcard__icon { width: auto; height: 84px; object-fit: contain; object-position: left top; margin-bottom: 2rem; }
+  .dcard__title {
+    font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; text-transform: uppercase;
+    letter-spacing: -0.02em; color: var(--color-red-rock-700); margin: 0;
+  }
+  .dcard__text { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.45; color: #3b0800; margin: 0.75rem 0 0; }
+  .dcard__tags { list-style: none; padding: 1.25rem 0 0; margin: 1.5rem 0 0; border-top: 1px dashed var(--color-border); display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .dcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+  .dcard__link { margin-top: 1.5rem; font-family: var(--font-sans); font-weight: 600; color: var(--color-primary); }
+  @media (max-width: 900px) { .domaines__grid { grid-template-columns: 1fr; } }
+</style>

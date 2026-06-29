@@ -1,0 +1,37 @@
+---
+interface Props {
+  href?: string;
+  label?: string;
+}
+const { href, label } = Astro.props;
+---
+
+{
+  href && (
+    <a class="dl-btn" href={href} download>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19.5h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      {label ?? "Télécharger le document (PDF)"}
+    </a>
+  )
+}
+
+<style>
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9em 1.6em;
+    border-radius: 999px;
+    background: #3b0800;
+    color: #fdf4f3;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .dl-btn:hover { background: #5a1e12; color: #fdf4f3; transform: translateY(-1px); }
+  .dl-btn svg { width: 20px; height: 20px; flex: none; }
+</style>

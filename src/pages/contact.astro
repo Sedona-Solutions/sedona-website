@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaFinal from "../components/home/CtaFinal.astro";
+import home from "../../content/home/index.json";
+import global from "../../content/global/index.json";
+const { agences, email, reseaux } = global;
+---
+
+<BaseLayout title="Contact — Sedona" description="Contactez la tribu Sedona — Paris, Lyon, Toulon.">
+  <CtaFinal cta={home.ctaFinal} />
+
+  <section class="contact">
+    <div class="container">
+      <header class="contact__head">
+        <p class="contact__eyebrow">Nos agences</p>
+        <h2 class="contact__title">Trois adresses, une même tribu</h2>
+      </header>
+
+      <ul class="contact__agences">
+        {
+          agences.map((a) => (
+            <li class="agence">
+              <h3 class="agence__ville">{a.ville}</h3>
+              {a.adresse && <p class="agence__adresse">{a.adresse}</p>}
+              {a.telephone && <p class="agence__tel">{a.telephone}</p>}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="contact__coord">
+        {email && (
+          <p class="contact__email">
+            <span>Écrivez-nous</span>
+            <a href={`mailto:${email}`}>{email}</a>
+          </p>
+        )}
+        {reseaux?.length > 0 && (
+          <p class="contact__social">
+            <span>Suivez-nous</span>
+            {reseaux.map((r) => <a href={r.url}>{r.plateforme}</a>)}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .contact__head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .contact__eyebrow {
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 1rem; color: var(--color-text-muted); margin-bottom: 0.75rem;
+  }
+  .contact__title {
+    font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1.05; letter-spacing: -0.03em; color: #3b0800; margin: 0;
+  }
+
+  .contact__agences { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .agence { background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 2rem; }
+  .agence__ville { font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; text-transform: uppercase; color: var(--color-red-rock-700); margin: 0; }
+  .agence__adresse, .agence__tel { font-family: var(--font-body); color: #3b0800; margin: 0.6rem 0 0; white-space: pre-line; }
+
+  .contact__coord { display: flex; flex-wrap: wrap; gap: clamp(2rem, 6vw, 5rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .contact__email span, .contact__social span {
+    display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 0.5rem;
+  }
+  .contact__email a { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.25rem); color: var(--color-primary); }
+  .contact__social { display: flex; flex-direction: column; }
+  .contact__social a { font-family: var(--font-sans); font-weight: 600; color: #3b0800; text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 760px) { .contact__agences { grid-template-columns: 1fr; } }
+</style>

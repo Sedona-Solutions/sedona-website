@@ -1,0 +1,270 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import home from "../../../content/home/index.json";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+
+// Vedettes d'abord (carte image sur 2 rangées), puis du plus récent au plus ancien.
+const articles = (await getCollection("article"))
+  .map((a) => ({ ...a.data, slug: a.id }))
+  .sort(
+    (a, b) =>
+      Number(Boolean(b.vedette)) - Number(Boolean(a.vedette)) ||
+      +new Date(b.date) - +new Date(a.date)
+  );
+
+const slug = (s = "") =>
+  s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+// Catégories construites dynamiquement à partir des catégories réelles des
+// articles, classées par fréquence décroissante. Le compteur = nb d'articles.
+const compteur = {};
+for (const a of articles) if (a.categorie) compteur[a.categorie] = (compteur[a.categorie] ?? 0) + 1;
+const filtres = [
+  { label: "Toutes les catégories", cat: "all", n: articles.length },
+  ...Object.keys(compteur)
+    .sort((x, y) => compteur[y] - compteur[x])
+    .map((c) => ({ label: c, cat: slug(c), n: compteur[c] })),
+];
+
+const moisCap = (d) => {
+  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
+  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
+};
+const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+---
+
+<BaseLayout title="Blog — Sedona" description="Actualités, retours d'expérience et veille technologique de la tribu Sedona.">
+  <section class="bhead">
+    <div class="container">
+      <h1 class="bhead__title"><mark class="hl hl--news">News</mark> &amp; articles</h1>
+      <p class="bhead__sub">
+        Des articles écrits par nos développeurs, designers et product managers pour partager nos
+        expérimentations, les tendances qui inspirent notre travail et les coulisses du quotidien de notre tribu.
+      </p>
+    </div>
+  </section>
+
+  <nav class="bfiltres" aria-label="Filtrer les articles">
+    <div class="container bfiltres__row">
+      <ul class="bfiltres__list">
+        {
+          filtres.map((fl, i) => (
+            <li>
+              <button class={`bfiltre ${i === 0 ? "is-active" : ""}`} type="button" data-cat={fl.cat}>
+                {fl.label}
+                <sup>{fl.n}</sup>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+      <label class="bsearch">
+        <input type="search" placeholder="Rechercher..." aria-label="Rechercher un article" />
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </label>
+    </div>
+  </nav>
+
+  <section class="bgrid">
+    <ul class="container bgrid__list">
+      {
+        articles.map((a) =>
+          a.vedette && a.couverture ? (
+            <li class="bcard bcard--feature" data-cat={slug(a.categorie ?? "")} data-title={(a.titre ?? "").toLowerCase()}>
+              <a href={`/blog/${a.slug}`} class="fcard" style={`background-image:url(${a.couverture})`}>
+                <div class="fcard__body">
+                  {meta(a) && <p class="fcard__meta">{meta(a)}</p>}
+                  <h2 class="fcard__h">{a.titre}</h2>
+                  {a.tags?.length > 0 && <ul class="fcard__tags">{a.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
+                </div>
+              </a>
+            </li>
+          ) : (
+            <li class="bcard" data-cat={slug(a.categorie ?? "")} data-title={(a.titre ?? "").toLowerCase()}>
+              <a href={`/blog/${a.slug}`} class="pcard">
+                <div class="pcard__top">
+                  {a.avatar ? <img class="pcard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="pcard__avatar" aria-hidden="true" />}
+                  <span>
+                    <span class="pcard__byLabel">Publié par</span>
+                    <span class="pcard__author">{a.auteur}</span>
+                  </span>
+                </div>
+                {meta(a) && <p class="pcard__meta">{meta(a)}</p>}
+                <h2 class="pcard__h">{a.titre}</h2>
+                {a.tags?.length > 0 && <ul class="pcard__tags">{a.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+    <p class="bgrid__empty container" hidden>Aucun article ne correspond à votre recherche.</p>
+
+    <div class="pagination container">
+      <p class="pagination__more">HOP HOP HOP, LA SUITE !</p>
+      <div class="pager">
+        <button class="pager__arrow" type="button" data-dir="prev" aria-label="Page précédente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ol class="pager__nums"></ol>
+        <button class="pager__arrow" type="button" data-dir="next" aria-label="Page suivante">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <img class="pager__squiggle" src="/deco/pagination-arrow.svg" alt="" aria-hidden="true" />
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal cta={home.ctaFinal} />
+</BaseLayout>
+
+<script>
+  const TAILLE = 9;
+  const boutons = document.querySelectorAll<HTMLButtonElement>(".bfiltre");
+  const cartes = Array.from(document.querySelectorAll<HTMLElement>(".bcard"));
+  const vide = document.querySelector<HTMLElement>(".bgrid__empty");
+  const numsEl = document.querySelector<HTMLElement>(".pager__nums");
+  const pager = document.querySelector<HTMLElement>(".pager");
+  const pagination = document.querySelector<HTMLElement>(".pagination");
+  const recherche = document.querySelector<HTMLInputElement>(".bsearch input");
+  const fleches = document.querySelectorAll<HTMLButtonElement>(".pager__arrow");
+  const ancre = document.querySelector<HTMLElement>(".bfiltres");
+  let cat = "all";
+  let q = "";
+  let page = 1;
+
+  // Remonte en haut de la liste lors d'un changement de page, en respectant
+  // les préférences d'accessibilité (pas d'animation si l'utilisateur la refuse).
+  function remonter() {
+    if (!ancre) return;
+    const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const y = ancre.getBoundingClientRect().top + window.scrollY - 16;
+    window.scrollTo({ top: y, behavior: reduit ? "auto" : "smooth" });
+  }
+
+  const matches = () =>
+    cartes.filter((c) => (cat === "all" || c.dataset.cat === cat) && (q === "" || (c.dataset.title || "").includes(q)));
+
+  function rendre() {
+    const liste = matches();
+    const pages = Math.max(1, Math.ceil(liste.length / TAILLE));
+    if (page > pages) page = 1;
+    cartes.forEach((c) => (c.style.display = "none"));
+    liste.slice((page - 1) * TAILLE, page * TAILLE).forEach((c) => (c.style.display = ""));
+    if (vide) vide.hidden = liste.length > 0;
+
+    if (numsEl) {
+      numsEl.innerHTML = "";
+      for (let i = 1; i <= pages; i++) {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = String(i);
+        if (i === page) b.classList.add("is-active");
+        b.addEventListener("click", () => { page = i; rendre(); remonter(); });
+        li.appendChild(b);
+        numsEl.appendChild(li);
+      }
+    }
+    fleches.forEach((f) => {
+      const prev = f.dataset.dir === "prev";
+      (f as HTMLButtonElement).disabled = prev ? page <= 1 : page >= pages;
+    });
+    if (pager) pager.style.visibility = pages <= 1 ? "hidden" : "";
+    if (pagination) pagination.style.display = liste.length === 0 ? "none" : "";
+  }
+
+  boutons.forEach((btn) => btn.addEventListener("click", () => {
+    boutons.forEach((b) => b.classList.remove("is-active"));
+    btn.classList.add("is-active");
+    cat = btn.dataset.cat ?? "all"; page = 1; rendre();
+  }));
+  fleches.forEach((f) => f.addEventListener("click", () => {
+    const pages = Math.max(1, Math.ceil(matches().length / TAILLE));
+    page = f.dataset.dir === "prev" ? Math.max(1, page - 1) : Math.min(pages, page + 1);
+    rendre();
+    remonter();
+  }));
+  recherche?.addEventListener("input", () => { q = recherche.value.trim().toLowerCase(); page = 1; rendre(); });
+  rendre();
+</script>
+
+<style>
+  /* En-tête centré */
+  .bhead { background: var(--color-canyon-50); padding-block: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
+  .bhead__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.75rem, 7vw, 5.5rem); letter-spacing: -0.03em; color: #3b0800; }
+  .hl--news { background: #e9b189; color: #3b0800; }
+  .bhead__sub { margin: 1.5rem auto 0; max-width: 64ch; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: var(--color-text-muted); }
+
+  /* Barre de filtres */
+  .bfiltres { background: var(--color-canyon-50); }
+  .bfiltres__row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem 1.5rem; padding-block: 1rem 2.5rem; }
+  .bfiltres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0; padding: 0; margin: 0; max-width: 70%; }
+  .bfiltres__list li:not(:last-child) .bfiltre::after { content: "/"; margin: 0 0.4rem 0 0.6rem; color: var(--color-text-muted); font-weight: 400; }
+  .bfiltre { font-family: var(--font-sans); font-size: 1.25rem; color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
+  .bfiltre sup { font-size: 0.62em; color: var(--color-text-muted); margin-left: 0.15em; vertical-align: super; }
+  .bfiltre.is-active { font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
+  .bsearch { margin-left: auto; display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; border: 1px solid var(--color-border); border-radius: 999px; padding: 0.65rem 1.1rem; color: var(--color-text-muted); }
+  .bsearch svg { width: 18px; height: 18px; flex: none; }
+  .bsearch input { border: none; background: none; outline: none; font-family: var(--font-body); font-size: 1rem; color: #3b0800; min-width: 9rem; }
+  .bsearch input::placeholder { color: var(--color-text-muted); }
+
+  /* Grille (flux dense : la carte vedette occupe 2 rangées) */
+  .bgrid { background: var(--color-canyon-50); padding-block: 0 clamp(3rem, 6vw, 5rem); }
+  .bgrid__list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; grid-auto-rows: 300px; grid-auto-flow: row dense; }
+
+  /* Carte texte standard */
+  .pcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 1.75rem; color: #3b0800; height: 100%; }
+  .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
+  .pcard__avatar { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
+  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+  .pcard__author { font-family: var(--font-body); font-weight: 600; }
+  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: auto 0 0.5rem; }
+  .pcard__h { font-family: var(--font-sans); font-weight: 600; font-size: 1.375rem; line-height: 1.2; margin: 0; }
+  .pcard__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #3b0800; padding: 0.3em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+
+  /* Carte vedette (image, sur 2 rangées) */
+  .bcard--feature { grid-row: span 2; }
+  .fcard { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; border-radius: 24px; overflow: hidden; background-size: cover; background-position: center; color: #fff; }
+  .fcard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(59, 8, 0, 0) 35%, rgba(59, 8, 0, 0.85) 100%); }
+  .fcard__body { position: relative; z-index: 1; padding: 1.75rem; }
+  .fcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: rgba(255, 255, 255, 0.85); margin: 0 0 0.6rem; }
+  .fcard__h { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.5rem, 2vw, 1.875rem); line-height: 1.15; margin: 0; }
+  .fcard__tags { list-style: none; padding: 0; margin: 1.1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .fcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #fff; padding: 0.3em 0.85em; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px; }
+
+  .bgrid__empty { text-align: center; font-family: var(--font-sans); font-size: 1.25rem; color: var(--color-text-muted); margin-top: 2rem; }
+
+  /* Pagination */
+  .pagination { text-align: center; margin-top: clamp(3rem, 6vw, 5rem); }
+  .pagination__more { font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; color: #42140d; margin: 0 0 1.5rem; }
+  /* width: fit-content + margin auto : le pager se centre en épousant la largeur
+     de ses pastilles, pour ancrer la flèche juste à leur droite (et non au bord de page). */
+  .pager { position: relative; width: fit-content; margin-inline: auto; display: flex; align-items: center; gap: 0.75rem; }
+  /* Flèche griffonnée à droite du pager (réutilise l'asset de la page Projets). */
+  .pager__squiggle { position: absolute; left: calc(100% + 1.25rem); top: -2.5rem; width: clamp(74px, 6vw, 104px); height: auto; pointer-events: none; }
+  .pager__nums { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+  /* Les boutons numéros sont créés en JS : styles en :global pour échapper au scope Astro. */
+  .pager__arrow,
+  .pager__nums :global(button) { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 999px; font-family: var(--font-sans); font-size: 1.25rem; color: #42140d; background: none; border: 1.5px solid rgba(66, 20, 13, 0.25); cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+  .pager__nums :global(button:hover) { border-color: #42140d; }
+  .pager__nums :global(button.is-active) { background: #42140d; color: #fdf4f3; border-color: #42140d; }
+  .pager__arrow svg { width: 20px; height: 20px; }
+  .pager__arrow:hover:not(:disabled) { border-color: #42140d; }
+  .pager__arrow:disabled { opacity: 0.3; cursor: default; }
+
+  @media (max-width: 900px) {
+    .bgrid__list { grid-template-columns: 1fr 1fr; }
+    .bfiltres__list { max-width: none; }
+  }
+  @media (max-width: 600px) {
+    .bgrid__list { grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .bcard--feature { grid-row: auto; }
+    .fcard { min-height: 320px; }
+    .pcard { min-height: 260px; }
+    .bsearch { margin-left: 0; }
+    .pager__squiggle { display: none; }
+  }
+</style>

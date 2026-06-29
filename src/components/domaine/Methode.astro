@@ -1,0 +1,113 @@
+---
+const { data } = Astro.props;
+const phases = data?.phases ?? [];
+const technos = data?.technos ?? [];
+const titre = data?.titre ?? [];
+---
+
+<section class="methode">
+  <div class="container methode__container">
+    <img class="methode__arrow" src="/deco/methode-arrow.svg" alt="" aria-hidden="true" />
+    <header class="methode__head">
+      {data?.eyebrow && <p class="methode__eyebrow">{data.eyebrow}</p>}
+      <h2 class="methode__title">
+        {
+          titre.map((s) =>
+            s.br ? <br /> : s.pill ? <mark class="hl hl--cactus">{s.t}</mark> : <span>{s.t}</span>,
+          )
+        }
+      </h2>
+      {data?.sousTitre && <p class="methode__sub">{data.sousTitre}</p>}
+    </header>
+
+    <ol class="methode__row">
+      {
+        phases.map((p, i) => (
+          <li class={`phase ${i === 0 ? "phase--first" : ""}`}>
+            <div class="phase__head">
+              <span class="hexa" aria-hidden="true">
+                <svg viewBox="0 0 34 38"><polygon points="17,1 33,10 33,28 17,37 1,28 1,10" fill="none" stroke="#42140d" stroke-width="1.5" /></svg>
+                <span class="hexa__n">{i + 1}</span>
+              </span>
+              <h3 class="phase__title">{p.titre}</h3>
+            </div>
+            <p class="phase__text">{p.texte}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    {
+      technos.length > 0 && (
+        <>
+          {data?.technosTitre && <h3 class="methode__technosTitle">{data.technosTitre}</h3>}
+          <ul class="technos">
+            {technos.map((t) => (
+              <li class="techno">
+                <span class="techno__icon"><img src={t.logo} alt="" aria-hidden="true" /></span>
+                <span class="techno__body">
+                  {t.badge && <span class="techno__badge">{t.badge}</span>}
+                  <span class="techno__nom">{t.nom}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .methode { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .methode__container { position: relative; }
+  .methode__arrow { position: absolute; top: 0.5rem; right: 0.5rem; width: clamp(40px, 4vw, 60px); height: auto; pointer-events: none; }
+  .methode__head { margin-bottom: clamp(2rem, 4vw, 3rem); padding-right: clamp(4rem, 8vw, 7rem); }
+  .methode__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
+    text-transform: uppercase; letter-spacing: 0.04em; color: #3b0800; margin-bottom: 1rem;
+  }
+  .methode__title {
+    margin: 0; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(2.25rem, 5.5vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; color: #3b0800;
+  }
+  .methode__title .hl { line-height: 1.3; }
+  .methode__sub {
+    margin-top: 1.5rem; max-width: 1150px;
+    font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.1rem, 1.5vw, 1.5rem); line-height: 1.3; color: #3b0800;
+  }
+  .methode__row {
+    list-style: none; margin: 0 0 clamp(3rem, 6vw, 4.5rem); padding: 0 0 1rem;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 360px; gap: 56px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+  }
+  .phase {
+    position: relative; scroll-snap-align: start;
+    background: #fff; border-radius: 24px; padding: 2rem; min-height: 252px;
+  }
+  .phase--first { background: #d4f4e7; }
+  .phase:not(:first-child)::before {
+    content: ""; position: absolute; left: -56px; top: 36px; width: 56px;
+    border-top: 2px dotted color-mix(in srgb, var(--color-neutral-700) 35%, transparent);
+  }
+  .phase__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem; }
+  .hexa { position: relative; width: 34px; height: 38px; flex: none; display: grid; place-items: center; }
+  .hexa svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hexa__n { position: relative; font-family: var(--font-sans); font-weight: 600; font-size: 0.9rem; color: #42140d; }
+  .phase__title { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #42140d; margin: 0; }
+  .phase__text { font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #3b0800; margin: 0; }
+
+  .methode__technosTitle { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #42140d; margin: 0 0 1.5rem; }
+  .technos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+  .techno { display: flex; align-items: center; gap: 0.85rem; background: #fff; border-radius: 18px; padding: 1.25rem 1.5rem; }
+  .techno__icon { width: 56px; height: 56px; border-radius: 999px; flex: none; background: #42140d; display: grid; place-items: center; }
+  .techno__icon img { width: 28px; height: 28px; }
+  .techno__badge {
+    display: inline-block; background: #a7e9d1; color: #3b0800; font-family: var(--font-body); font-weight: 500;
+    font-size: 0.75rem; padding: 0.1em 0.6em; border-radius: 999px; margin-bottom: 0.25rem;
+  }
+  .techno__nom { display: block; font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; color: #3b0800; }
+
+  @media (max-width: 1100px) { .technos { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px) { .technos { grid-template-columns: repeat(2, 1fr); } }
+</style>

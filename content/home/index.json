@@ -1,0 +1,196 @@
+{
+  "hero": {
+    "eyebrow": "",
+    "titre": [
+      {
+        "texte": "Trans",
+        "couleur": "none",
+        "italique": false
+      },
+      {
+        "texte": "formons",
+        "couleur": "none",
+        "italique": false
+      },
+      {
+        "texte": "la",
+        "couleur": "none",
+        "italique": false
+      },
+      {
+        "texte": "complexité",
+        "couleur": "none",
+        "italique": true
+      },
+      {
+        "texte": "en",
+        "couleur": "none",
+        "italique": false
+      },
+      {
+        "texte": "solutions",
+        "couleur": "none",
+        "italique": false
+      },
+      {
+        "texte": "simples",
+        "couleur": "none",
+        "italique": false
+      }
+    ],
+    "motsCles": [
+      {
+        "label": "IA",
+        "couleur": "red-rock"
+      },
+      {
+        "label": "Cloud",
+        "couleur": "sunshine"
+      },
+      {
+        "label": "Développement",
+        "couleur": "cactus"
+      },
+      {
+        "label": "Design",
+        "couleur": "ovni"
+      }
+    ],
+    "sousTitre": "Nous sommes là pour co-construire avec vous, pas pour vous.",
+    "ctaLabel": "Parlons de votre projet",
+    "ctaHref": "/contact"
+  },
+  "ticker": [
+    "Enfin une ESN à voix humaine !",
+    "On trace la route avec vous.",
+    "La bonne stack + la bonne tribu.",
+    "Des pionniers de la tech, guidés par l'humain."
+  ],
+  "intro": "Depuis 1998, nous identifions et résolvons les bons problèmes — avec une obsession : transformer la complexité en solutions simples et durables.",
+  "chips": [
+    "Créativité",
+    "Innovation",
+    "Stratégie"
+  ],
+  "stats": [
+    {
+      "valeur": "25+",
+      "label": "années d'expérience dans le service"
+    },
+    {
+      "valeur": "200+",
+      "label": "projets menés avec succès"
+    },
+    {
+      "valeur": "50+",
+      "label": "collaborateurs sur tout le territoire"
+    }
+  ],
+  "statsCta": {
+    "label": "Apprendre à nous connaître",
+    "href": "/histoire"
+  },
+  "expertisesSection": {
+    "titre": [
+      {
+        "texte": "Nos expertises au ",
+        "couleur": "none"
+      },
+      {
+        "texte": "service",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": " de vos métiers",
+        "couleur": "none"
+      }
+    ],
+    "intro": "De la conception produit à l'infrastructure critique — nous maîtrisons toute la chaîne de valeur."
+  },
+  "projetsSection": {
+    "titre": [
+      {
+        "texte": "Retour sur nos plus beaux ",
+        "couleur": "none"
+      },
+      {
+        "texte": "projets",
+        "couleur": "sky"
+      }
+    ],
+    "intro": "Découvrez quelques exemples de nos travaux récents.",
+    "projetsMisEnAvant": []
+  },
+  "temoignagesSection": {
+    "titre": [
+      {
+        "texte": "Nos ",
+        "couleur": "none"
+      },
+      {
+        "texte": "clients",
+        "couleur": "sunshine"
+      },
+      {
+        "texte": " parlent de nous",
+        "couleur": "none"
+      }
+    ],
+    "intro": "Un client satisfait est notre seul vrai indicateur de réussite.",
+    "temoignages": [
+      {
+        "citation": "J'ai choisi Sedona en raison d'une expérience antérieure positive. Bien que les équipes aient changé depuis 15 ans, j'ai retrouvé l'ADN de Sedona dans les nouveaux collaborateurs.",
+        "auteur": "France Allègre",
+        "role": "Directrice Générale de La Cigale",
+        "avatar": "/uploads/articles/avatar-france.png"
+      }
+    ]
+  },
+  "clientsSection": {
+    "titre": "Ils nous ont fait confiance.",
+    "logos": [
+      {
+        "nom": "BNP Paribas",
+        "logo": "/uploads/clients/bnp-paribas.svg"
+      },
+      {
+        "nom": "Nespresso",
+        "logo": "/uploads/clients/nespresso.svg"
+      },
+      {
+        "nom": "Universal Music Group",
+        "logo": "/uploads/clients/universal-music.svg"
+      },
+      {
+        "nom": "L'Oréal",
+        "logo": "/uploads/clients/loreal.svg"
+      },
+      {
+        "nom": "Saint-Gobain",
+        "logo": "/uploads/clients/saint-gobain.svg"
+      },
+      {
+        "nom": "Sodexo",
+        "logo": "/uploads/clients/sodexo.svg"
+      }
+    ]
+  },
+  "ctaFinal": {
+    "titre": [
+      {
+        "texte": "Un projet, une ",
+        "couleur": "none"
+      },
+      {
+        "texte": "idée ?",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": " Travaillons ensemble !",
+        "couleur": "none"
+      }
+    ],
+    "ctaLabel": "Parlons de votre projet",
+    "ctaHref": "/contact"
+  }
+}

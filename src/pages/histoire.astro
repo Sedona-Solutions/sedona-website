@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const entry = await getEntry("page", "histoire");
+const { Content } = await render(entry);
+const p = entry.data;
+---
+
+<BaseLayout title={`${p.titre} — Sedona`} description={p.intro}>
+  <PageHeader eyebrow={p.eyebrow} titre={p.titre} intro={p.intro} />
+
+  <section class="container prose page-body">
+    <Content />
+  </section>
+</BaseLayout>
+
+<style>
+  .page-body { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem); max-width: 760px; }
+</style>

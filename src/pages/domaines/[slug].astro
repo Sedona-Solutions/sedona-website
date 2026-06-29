@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import home from "../../../content/home/index.json";
+import { domaines } from "../../data/domaines.js";
+
+import DomaineHero from "../../components/domaine/DomaineHero.astro";
+import Ticker from "../../components/home/Ticker.astro";
+import ProjetsDomaine from "../../components/domaine/ProjetsDomaine.astro";
+import Methode from "../../components/domaine/Methode.astro";
+import SkillsCluster from "../../components/domaine/SkillsCluster.astro";
+import CeQueNousFaisons from "../../components/domaine/CeQueNousFaisons.astro";
+import BlogDomaine from "../../components/domaine/BlogDomaine.astro";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("expertise");
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const dom = domaines[entry.id] ?? domaines["produits-digitaux"];
+
+const projets = (await getCollection("projet"))
+  .map((p) => ({ ...p.data, slug: p.id }))
+  .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0))
+  .slice(0, 4);
+
+const articles = (await getCollection("article"))
+  .map((a) => ({ ...a.data, slug: a.id }))
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+  .slice(0, 3);
+---
+
+<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.resume}>
+  <DomaineHero
+    titre={d.titre}
+    accroche={d.accroche ?? d.resume}
+    illustration={d.illustration}
+    pillWord={dom.hero?.pillWord}
+    pillVariant={dom.hero?.pillVariant ?? "cactus"}
+  />
+  <Ticker items={home.ticker} />
+  <ProjetsDomaine projets={projets} eyebrow={dom.projets.eyebrow} titre={dom.projets.titre} />
+  <Methode data={dom.methode} />
+  <SkillsCluster tags={d.tags} />
+  <CeQueNousFaisons data={dom.cqnf} />
+  <BlogDomaine articles={articles} />
+  <CtaFinal cta={home.ctaFinal} />
+</BaseLayout>

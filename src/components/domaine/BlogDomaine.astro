@@ -1,0 +1,124 @@
+---
+const { articles = [] } = Astro.props;
+
+const moisCap = (d) => {
+  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
+  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
+};
+const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+---
+
+<section class="bd">
+  <div class="container">
+    <header class="bd__head">
+      <h2 class="bd__title"><mark class="hl hl--cactus">News</mark> sur le domaine</h2>
+      <a class="bd__all" href="/blog">Voir tous les articles</a>
+    </header>
+
+    <ul class="bd__grid">
+      {
+        articles.map((a) => (
+          <li>
+            <a href={`/blog/${a.slug}`} class="pcard">
+              <div class="pcard__top">
+                {a.avatar
+                  ? <img class="pcard__avatar" src={a.avatar} alt="" loading="lazy" />
+                  : <span class="pcard__avatar" aria-hidden="true" />}
+                <span>
+                  <span class="pcard__byLabel">Publié par</span>
+                  <span class="pcard__author">{a.auteur}</span>
+                </span>
+              </div>
+              {meta(a) && <p class="pcard__meta">{meta(a)}</p>}
+              <h3 class="pcard__h">{a.titre}</h3>
+              {a.tags?.length > 0 && (
+                <ul class="pcard__tags">{a.tags.slice(0, 3).map((t) => <li>{t}</li>)}</ul>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="bd__scallop" aria-hidden="true"></div>
+</section>
+
+<style>
+  .bd {
+    background: var(--color-canyon-50);
+    /* Pas de padding bas : le liseré festonné vient se coller au bloc CTA. */
+    padding-block: clamp(3rem, 6vw, 5rem) 0;
+  }
+  .bd__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .bd__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 5.5vw, 5rem);
+    letter-spacing: -0.03em;
+    color: #3b0800;
+  }
+  .bd__all {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #3b0800;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .bd__all:hover { color: var(--color-primary); }
+
+  .bd__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 1.75rem;
+    color: #3b0800;
+    min-height: 270px;
+  }
+  .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
+  .pcard__avatar {
+    width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none;
+    background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300));
+  }
+  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+  .pcard__author { font-family: var(--font-body); font-weight: 600; }
+  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: 1.5rem 0 0.5rem; }
+  .pcard__h { font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; line-height: 1.15; margin: 0 0 auto; }
+  .pcard__tags { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pcard__tags li {
+    font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800;
+    padding: 0.3em 0.8em; border: 1px solid var(--color-border); border-radius: 999px; background: #fff;
+  }
+
+  /* Liseré festonné : rangée d'arches #E9B189 en quasi pleine largeur,
+     juste avant le bloc CTA (fidèle à la maquette Figma : arche 137×69). */
+  .bd__scallop {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    height: 58px;
+    background: url("/deco/scallop-arc.svg") repeat-x left bottom;
+    background-size: auto 58px;
+  }
+
+  @media (max-width: 900px) { .bd__grid { grid-template-columns: 1fr; } }
+</style>

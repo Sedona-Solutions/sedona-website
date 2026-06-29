@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<BaseLayout title="Carrières — Sedona" description="Rejoignez la tribu Sedona.">
+  <PageHeader
+    eyebrow="Carrières"
+    titre="Rejoindre la tribu Sedona"
+    intro="On recrute des passionnés, pas des profils. La curiosité ne s'enseigne pas."
+  />
+
+  <section class="container prose page-body">
+    <p>
+      Nous cherchons celles et ceux qui souhaitent construire avec nous
+      l'entreprise dans laquelle ils aimeraient travailler.
+    </p>
+    <p>
+      Cette page accueillera prochainement nos offres et notre processus de
+      recrutement, fidèlement à la maquette Figma.
+    </p>
+    <p><a href="/contact">Discutons ensemble →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-body { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem); max-width: 760px; }
+</style>

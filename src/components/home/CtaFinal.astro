@@ -1,0 +1,164 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+const { cta } = Astro.props;
+---
+
+<section class="cta">
+  <div class="container">
+    <div class="cta__frame">
+      <span class="cta__corner cta__corner--tl" aria-hidden="true"></span>
+      <span class="cta__corner cta__corner--tr" aria-hidden="true"></span>
+      <span class="cta__corner cta__corner--bl" aria-hidden="true"></span>
+      <span class="cta__corner cta__corner--br" aria-hidden="true"></span>
+
+      <img class="cta__mascotte" src="/deco/mascotte.png" alt="" aria-hidden="true" />
+
+      <div class="cta__content">
+        <img class="cta__lines" src="/deco/cta-lines.svg" alt="" aria-hidden="true" />
+        <div class="cta__titleWrap">
+          <TitreSegments segments={cta?.titre} as="h2" class="cta__title" />
+          <img class="cta__cursor" src="/deco/cursor.svg" alt="" aria-hidden="true" />
+        </div>
+        <div class="cta__actions">
+          {cta?.ctaLabel && <a class="cta__btn" href={cta.ctaHref}>{cta.ctaLabel}</a>}
+          {cta?.email && (
+            <span class="cta__emailWrap">
+              <a class="cta__email" href={`mailto:${cta.email}`}>{cta.email}</a>
+              <img class="cta__squiggle" src="/deco/cta-squiggle.svg" alt="" aria-hidden="true" />
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: #3b0800;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+  /* Cadre pointillé : 1158/1312 de large, centré, ratio Figma (≈434px) */
+  .cta__frame {
+    position: relative;
+    max-width: 1158px;
+    margin-inline: auto;
+    border: 1.5px dashed color-mix(in srgb, #f18878 60%, transparent);
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 3.5rem) clamp(2.5rem, 5vw, 4.5rem) clamp(5rem, 10vw, 10.5rem);
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+  }
+  .cta__corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #f18878;
+    border: 1.5px solid #3b0800;
+    border-radius: 4px;
+  }
+  .cta__corner--tl { top: -15px; left: -15px; }
+  .cta__corner--tr { top: -15px; right: -15px; }
+  .cta__corner--bl { bottom: -15px; left: -15px; }
+  .cta__corner--br { bottom: -15px; right: -15px; }
+
+  /* Mascotte : à cheval sur le bord gauche du cadre (le cadre « commence au milieu de la mascotte ») */
+  .cta__mascotte {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(-55%, -50%);
+    width: clamp(150px, 16vw, 250px);
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cta__content { position: relative; width: 100%; }
+  .cta__lines {
+    position: absolute;
+    top: -2.25rem;
+    left: 0.5rem;
+    width: 38px;
+    height: auto;
+  }
+  .cta__titleWrap { position: relative; }
+  .cta :global(.cta__title) {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 5vw, 5rem); /* 80px */
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fdf4f3;
+  }
+  .cta__cursor {
+    position: absolute;
+    top: 3.5rem;
+    right: 17.5%;
+    width: clamp(28px, 3vw, 44px);
+    height: auto;
+  }
+  .cta__sub {
+    margin: 1.5rem 0 0;
+    max-width: 30ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* 24px */
+    color: #fdf4f3;
+  }
+  .cta__actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2.25rem;
+  }
+  .cta__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1em 2em;
+    border-radius: 999px;
+    background: #fcf6f0;
+    color: #3b0800;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease;
+  }
+  .cta__btn:hover { background: #fff; color: #3b0800; }
+  .cta__email {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #fdf4f3;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  .cta__email:hover { color: var(--color-canyon-300); }
+  .cta__emailWrap { position: relative; display: inline-flex; align-items: center; }
+  .cta__squiggle {
+    position: absolute;
+    left: 100%;
+    bottom: -1.4rem;
+    margin-left: 0.6rem;
+    width: clamp(48px, 5vw, 82px);
+    height: auto;
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    .cta__frame {
+      flex-direction: column;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .cta__mascotte { position: static; transform: none; margin: 0 auto 1.5rem; }
+    .cta__cursor, .cta__lines, .cta__squiggle { display: none; }
+    .cta__actions { justify-content: center; }
+  }
+</style>

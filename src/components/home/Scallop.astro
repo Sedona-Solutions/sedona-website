@@ -1,0 +1,24 @@
+---
+// Bord festonné (transition décorative) — arcs répétés, façon maquette.
+---
+
+<div class="scallop" aria-hidden="true">
+  <svg width="100%" height="40" preserveAspectRatio="xMinYMid meet">
+    <defs>
+      <pattern id="scallop-arcs" width="64" height="40" patternUnits="userSpaceOnUse">
+        <path d="M0 39 A32 30 0 0 1 64 39" fill="none" stroke="var(--color-canyon-400)" stroke-width="2" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="40" fill="url(#scallop-arcs)" />
+  </svg>
+</div>
+
+<style>
+  .scallop {
+    background: var(--color-canyon-50);
+    line-height: 0;
+  }
+  .scallop svg {
+    display: block;
+  }
+</style>

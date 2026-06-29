@@ -1,0 +1,70 @@
+{
+  "navigation": [
+    {
+      "label": "Domaines",
+      "href": "/domaines",
+      "sousMenu": [
+        {
+          "label": "Produits digitaux",
+          "href": "/domaines/produits-digitaux"
+        },
+        {
+          "label": "Data & IA",
+          "href": "/domaines/data-ia"
+        },
+        {
+          "label": "Infrastructure & Sécurité",
+          "href": "/domaines/infra-securite"
+        }
+      ]
+    },
+    {
+      "label": "Projets",
+      "href": "/projets",
+      "sousMenu": []
+    },
+    {
+      "label": "Histoire",
+      "href": "/histoire",
+      "sousMenu": []
+    },
+    {
+      "label": "Carrières",
+      "href": "/carrieres",
+      "sousMenu": []
+    },
+    {
+      "label": "Blog",
+      "href": "/blog",
+      "sousMenu": []
+    }
+  ],
+  "agences": [
+    {
+      "ville": "Paris",
+      "adresse": "19 Rue de Mogador\n75009 PARIS\nTél. : 01 44 94 89 90",
+      "telephone": ""
+    },
+    {
+      "ville": "Lyon",
+      "adresse": "",
+      "telephone": ""
+    },
+    {
+      "ville": "Toulon",
+      "adresse": "",
+      "telephone": ""
+    }
+  ],
+  "email": "contact@sedona.fr",
+  "reseaux": [
+    {
+      "plateforme": "LinkedIn",
+      "url": "https://www.linkedin.com/company/sedona"
+    },
+    {
+      "plateforme": "X (ex Twitter)",
+      "url": "SEDONAFR"
+    }
+  ]
+}

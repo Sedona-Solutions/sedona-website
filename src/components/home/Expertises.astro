@@ -1,0 +1,144 @@
+---
+const { section, expertises = [] } = Astro.props;
+const segs = section?.titre ?? [];
+---
+
+<section class="expertises">
+  <div class="container">
+    <header class="expertises__head">
+      <h2 class="expertises__title">
+        {
+          segs.map((s) =>
+            s.couleur && s.couleur !== "none" ? (
+              <>
+                <br />
+                <mark class={`hl hl--${s.couleur}`}>{s.texte.trim()}</mark>{" "}
+              </>
+            ) : (
+              <span>{s.texte}</span>
+            ),
+          )
+        }
+      </h2>
+      {section?.intro && <p class="expertises__intro">{section.intro}</p>}
+    </header>
+
+    <ul class="expertises__grid">
+      {
+        expertises.map((e) => (
+          <li class="exp-card">
+            {e.icone && <img class="exp-card__icon" src={`/icons/exp-${e.icone}.svg`} alt="" aria-hidden="true" />}
+            <h3 class="exp-card__title">{e.titre}</h3>
+            {e.resume && <p class="exp-card__text">{e.resume}</p>}
+            {e.tags?.length > 0 && (
+              <ul class="exp-card__tags">
+                {e.tags.map((tg) => (
+                  <li>{tg}</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .expertises {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .expertises__head {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    align-items: start;
+    gap: var(--space-md);
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  .expertises__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 5.5vw, 5rem); /* 80px */
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #3b0800;
+  }
+  .expertises__title .hl {
+    /* la pastille épouse la ligne */
+    line-height: 1.4;
+  }
+  .expertises__intro {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.35;
+    color: #3b0800;
+  }
+
+  .expertises__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .exp-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    min-height: 470px;
+  }
+  .exp-card__icon {
+    width: auto;
+    height: 84px; /* cadre Figma 128×96 → graphisme visible ~58px */
+    object-fit: contain;
+    object-position: left top;
+    margin-bottom: auto;
+  }
+  .exp-card__title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.5rem; /* 24px */
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-red-rock-700);
+    margin: 3rem 0 0;
+  }
+  .exp-card__text {
+    font-family: var(--font-body);
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.45;
+    color: #3b0800;
+    margin-top: 0.75rem;
+  }
+  .exp-card__tags {
+    list-style: none;
+    padding: 1.25rem 0 0;
+    margin: 1.5rem 0 0;
+    border-top: 1px dashed var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .exp-card__tags li {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.875rem; /* 14px */
+    color: #3b0800;
+    padding: 0.35em 0.85em;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 900px) {
+    .expertises__head { grid-template-columns: 1fr; }
+    .expertises__grid { grid-template-columns: 1fr; }
+    .exp-card { min-height: 0; }
+  }
+</style>

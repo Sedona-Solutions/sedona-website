@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import home from "../../content/home/index.json";
+
+import Hero from "../components/home/Hero.astro";
+import Ticker from "../components/home/Ticker.astro";
+import Stats from "../components/home/Stats.astro";
+import Expertises from "../components/home/Expertises.astro";
+import Projets from "../components/home/Projets.astro";
+import Temoignages from "../components/home/Temoignages.astro";
+import Clients from "../components/home/Clients.astro";
+import BlogPreview from "../components/home/BlogPreview.astro";
+import Scallop from "../components/home/Scallop.astro";
+import CtaFinal from "../components/home/CtaFinal.astro";
+
+// Expertises triées par ordre d'affichage.
+const expertises = (await getCollection("expertise"))
+  .map((e) => ({ ...e.data, slug: e.id }))
+  .sort((a, b) => (a.ordre ?? 99) - (b.ordre ?? 99));
+
+// Projets : ceux mis en avant si renseignés, sinon les plus récents.
+const tousProjets = (await getCollection("projet"))
+  .map((p) => ({ ...p.data, slug: p.id }))
+  .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0));
+const misEnAvant = (home.projetsSection?.projetsMisEnAvant ?? [])
+  .map((r) => r.projet)
+  .filter(Boolean);
+const projets =
+  misEnAvant.length > 0
+    ? tousProjets.filter((p) => misEnAvant.some((m) => m.includes(p.slug)))
+    : tousProjets.slice(0, 6);
+
+// Articles : 1 à la une + 4 autres.
+const tousArticles = (await getCollection("article"))
+  .map((a) => ({ ...a.data, slug: a.id }))
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const vedette = tousArticles.find((a) => a.vedette) ?? tousArticles[0];
+const autresArticles = tousArticles.filter((a) => a.slug !== vedette?.slug).slice(0, 4);
+---
+
+<BaseLayout title="Sedona — ESN technologique à Paris, Lyon et Toulon">
+  <Hero hero={home.hero} />
+  <Ticker items={home.ticker} />
+  <Stats intro={home.intro} chips={home.chips} stats={home.stats} cta={home.statsCta} />
+  <Expertises section={home.expertisesSection} expertises={expertises} />
+  <Projets section={home.projetsSection} projets={projets} />
+  <Temoignages section={home.temoignagesSection} />
+  <Clients section={home.clientsSection} />
+  <BlogPreview vedette={vedette} articles={autresArticles} />
+  <Scallop />
+  <CtaFinal cta={home.ctaFinal} />
+</BaseLayout>

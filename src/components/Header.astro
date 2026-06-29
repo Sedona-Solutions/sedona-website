@@ -1,0 +1,195 @@
+---
+import global from "../../content/global/index.json";
+import Logo from "./Logo.astro";
+const { navigation } = global;
+const { variant = "default" } = Astro.props;
+const ctaLabel = "Et si on parlait de vous ?";
+const ctaHref = "/contact";
+---
+
+<header class={`site-header ${variant !== "default" ? "site-header--tinted site-header--" + variant : ""}`}>
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__logo" aria-label="Accueil Sedona">
+      <Logo />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul class="site-nav__list">
+        {
+          navigation.map((item) => {
+            const hasMenu = item.sousMenu && item.sousMenu.length > 0;
+            return (
+              <li class={`site-nav__item ${hasMenu ? "has-menu" : ""}`}>
+                <a href={item.href} class="site-nav__link">
+                  {item.label}
+                  {hasMenu && (
+                    <svg class="site-nav__chevron" viewBox="0 0 12 8" aria-hidden="true">
+                      <path d="M1 1.5L6 6.5L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  )}
+                </a>
+                {hasMenu && (
+                  <ul class="site-nav__menu">
+                    {item.sousMenu.map((sub) => (
+                      <li>
+                        <a href={sub.href}>{sub.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <a href={ctaHref} class="site-header__cta">{ctaLabel}</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--color-canyon-50) 90%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .site-header--salmon { background: #f8b3a9; }
+  .site-header--sunshine { background: #f8d98b; }
+  .site-header--lavande { background: #d0d3f5; }
+  .site-header--tinted {
+    backdrop-filter: none;
+  }
+  .site-header--tinted .site-nav__link {
+    border-color: color-mix(in srgb, var(--color-red-rock-700) 30%, transparent);
+    background: color-mix(in srgb, #fff 35%, transparent);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: 1.1rem;
+  }
+  .site-header__logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-red-rock-700);
+  }
+  .site-header__logo:hover {
+    color: var(--color-primary);
+  }
+
+  /* Navigation en capsules */
+  .site-nav {
+    margin-inline: auto;
+  }
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav__item {
+    position: relative;
+  }
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.15rem;
+    border: 1.5px solid color-mix(in srgb, var(--color-red-rock-700) 22%, transparent);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-red-rock-700);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .site-nav__link:hover,
+  .site-nav__item:focus-within .site-nav__link {
+    background: var(--color-red-rock-700);
+    border-color: var(--color-red-rock-700);
+    color: #fff;
+  }
+  .site-nav__chevron {
+    width: 0.7em;
+    height: auto;
+    transition: transform 0.15s ease;
+  }
+  .site-nav__item.has-menu:hover .site-nav__chevron,
+  .site-nav__item.has-menu:focus-within .site-nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Sous-menu déroulant */
+  .site-nav__menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    min-width: 240px;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--color-neutral-700) 40%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+  .site-nav__item.has-menu:hover .site-nav__menu,
+  .site-nav__item.has-menu:focus-within .site-nav__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .site-nav__menu a {
+    display: block;
+    padding: 0.6rem 0.85rem;
+    border-radius: 10px;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  .site-nav__menu a:hover {
+    background: var(--color-canyon-50);
+    color: var(--color-primary);
+  }
+
+  /* CTA principal (capsule marron) */
+  .site-header__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    background: var(--color-red-rock-700);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .site-header__cta:hover {
+    background: var(--color-red-rock-703);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1040px) {
+    .site-nav,
+    .site-header__cta {
+      display: none;
+    }
+  }
+</style>

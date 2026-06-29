@@ -1,0 +1,161 @@
+---
+const { intro, chips = [], stats = [], cta } = Astro.props;
+const chipBg = ["#f8d98b", "#a7e9d1", "#b3b5ee"];
+const splitVal = (v = "") => {
+  const m = String(v).match(/^(\d+)(\D*)$/);
+  return m ? { num: m[1], suf: m[2] } : { num: v, suf: "" };
+};
+---
+
+<section class="manifeste">
+  <div class="container manifeste__inner">
+    {intro && <p class="manifeste__intro">{intro}</p>}
+
+    {
+      chips.length > 0 && (
+        <div class="manifeste__chips">
+          {chips.map((c, i) => (
+            <span class="mchip" style={`--bg:${chipBg[i % chipBg.length]}`}>{c}</span>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      stats.length > 0 && (
+        <dl class="manifeste__stats">
+          {stats.map((s, i) => {
+            const { num, suf } = splitVal(s.valeur);
+            return (
+              <div class={`mstat ${i > 0 ? "mstat--sep" : ""}`}>
+                <dt class="mstat__value">
+                  {num}
+                  {suf && <span class="mstat__plus">{suf}</span>}
+                </dt>
+                <dd class="mstat__label">{s.label}</dd>
+              </div>
+            );
+          })}
+        </dl>
+      )
+    }
+
+    {cta?.label && <a class="manifeste__cta" href={cta.href}>{cta.label}</a>}
+
+    <img class="doodle doodle--r" src="/deco/squiggle-1.svg" alt="" aria-hidden="true" />
+    <img class="doodle doodle--l" src="/deco/squiggle-2.svg" alt="" aria-hidden="true" />
+  </div>
+</section>
+
+<style>
+  .manifeste {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+  .manifeste__inner {
+    position: relative;
+    text-align: center;
+  }
+  .manifeste__intro {
+    max-width: 26ch;
+    margin: 0 auto;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3.4vw, 3rem); /* 48px */
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #3b0800;
+  }
+
+  /* Chips : cluster centré sur deux lignes */
+  .manifeste__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 920px;
+    margin: clamp(1.5rem, 3.5vw, 2.5rem) auto 0;
+    gap: 0 12px;
+  }
+  .mchip {
+    background: var(--bg);
+    color: #3b0800;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 5vw, 5rem); /* 80px */
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    padding: 0.1em 0.4em 0.16em;
+    border-radius: 999px;
+    margin-block: -4px;
+  }
+  .mchip:nth-child(2) { z-index: 2; }
+  .mchip:nth-child(3) { z-index: 3; }
+
+  /* Chiffres clés */
+  .manifeste__stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+    max-width: 1100px;
+  }
+  .mstat {
+    flex: 1 1 0;
+    min-width: 240px;
+    padding-inline: clamp(1rem, 3vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .mstat--sep {
+    border-left: 1.5px dashed color-mix(in srgb, var(--color-neutral-700) 28%, transparent);
+  }
+  .mstat__value {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(3rem, 6.5vw, 7.5rem); /* 120px */
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #3b0800;
+    white-space: nowrap;
+  }
+  .mstat__plus {
+    font-weight: 300;
+    font-size: 0.62em;
+    vertical-align: 0.32em;
+    margin-left: 0.04em;
+  }
+  .mstat__label {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    color: #3b0800;
+  }
+
+  .manifeste__cta {
+    display: inline-block;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #3b0800;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .manifeste__cta:hover { color: var(--color-primary); }
+
+  .doodle {
+    position: absolute;
+    pointer-events: none;
+    height: auto;
+  }
+  .doodle--r { width: 50px; top: 30%; right: -1%; }
+  .doodle--l { width: 84px; top: 78%; left: -2%; }
+  @media (max-width: 900px) {
+    .doodle { display: none; }
+  }
+</style>

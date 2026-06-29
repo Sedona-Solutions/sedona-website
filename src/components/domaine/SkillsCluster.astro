@@ -1,0 +1,79 @@
+---
+const { tags = [] } = Astro.props;
+// Couleur de pastille par compétence (Design System Sedona).
+const colorMap = {
+  "app mobile": "#f8d98b",
+  "ux/ui design": "#f8b3a9",
+  "logiciel métier": "#b3b5ee",
+  "product management": "#a7e9d1",
+  "design system": "#e9b189",
+  "app web": "#a7e9d1",
+};
+const cycle = ["#f8d98b", "#f8b3a9", "#b3b5ee", "#a7e9d1", "#e9b189", "#a9e7e4"];
+const colored = tags.map((label, i) => ({
+  label,
+  bg: colorMap[label.toLowerCase()] ?? cycle[i % cycle.length],
+}));
+
+// Découpage en lignes façon maquette : 2 / 1 / 1 / 2 pour 6 éléments, sinon paires.
+function enLignes(items) {
+  if (items.length === 6) {
+    return [items.slice(0, 2), [items[2]], [items[3]], items.slice(4, 6)];
+  }
+  const rows = [];
+  for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
+  return rows;
+}
+const lignes = enLignes(colored);
+---
+
+{
+  colored.length > 0 && (
+    <section class="skills">
+      <div class="skills__cluster">
+        {lignes.map((ligne) => (
+          <div class="skills__row">
+            {ligne.map((it) => (
+              <span class="skill" style={`--bg:${it.bg}`}>{it.label}</span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .skills {
+    background: #3b0800;
+    padding-block: clamp(3.5rem, 8vw, 7rem);
+  }
+  .skills__cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .skills__row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: -3px; /* léger chevauchement vertical entre lignes */
+  }
+  .skill {
+    background: var(--bg);
+    color: #3b0800;
+    border-radius: 999px;
+    padding: 0.1em 0.4em 0.16em;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 5rem); /* 80px */
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .skills__row { flex-wrap: wrap; }
+    .skill { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+  }
+</style>

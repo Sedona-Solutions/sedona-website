@@ -1,0 +1,70 @@
+---
+const { projets = [], eyebrow = "Cas concrets client", titre } = Astro.props;
+const segs = titre ?? [{ t: "Quelques " }, { t: "exemples", pill: true }, { t: " d'applications" }];
+---
+
+<section class="pd">
+  <div class="container">
+    <header class="pd__head">
+      <p class="pd__eyebrow">{eyebrow}</p>
+      <h2 class="pd__title">
+        {segs.map((s) => (s.br ? <br /> : s.pill ? <mark class="hl hl--cactus">{s.t}</mark> : <span>{s.t}</span>))}
+      </h2>
+      <svg class="pd__squiggle" viewBox="0 0 60 90" aria-hidden="true">
+        <path d="M44 4c8 10 8 26-6 30-10 3-18-6-10-14 7-7 18 2 14 14-4 13-18 20-30 26"
+          fill="none" stroke="var(--color-cactus-400)" stroke-width="3" stroke-linecap="round" />
+      </svg>
+    </header>
+
+    <ul class="pd__grid">
+      {
+        projets.map((p) => (
+          <li class="pdc">
+            <a href={`/projets/${p.slug}`} class="pdc__media">
+              {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pdc__ph" aria-hidden="true" />}
+            </a>
+            <h3 class="pdc__title">{p.client ?? p.titre}</h3>
+            {p.tags?.length > 0 && <ul class="pdc__tags">{p.tags.map((t) => <li>{t}</li>)}</ul>}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="pd__all"><a href="/projets">Voir tous nos projets</a></div>
+  </div>
+</section>
+
+<style>
+  .pd { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .pd__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .pd__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
+  }
+  .pd__title {
+    margin: 0; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(2.25rem, 5.5vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; color: #3b0800;
+  }
+  .pd__title .hl { line-height: 1.3; }
+  .pd__squiggle { position: absolute; top: 10%; right: 6%; width: clamp(36px, 4vw, 60px); height: auto; }
+
+  .pd__grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 3rem) 2rem;
+  }
+  .pdc__media { display: block; aspect-ratio: 16 / 11; border-radius: 18px; overflow: hidden; background: var(--color-neutral-100); }
+  .pdc__media img { width: 100%; height: 100%; object-fit: cover; }
+  .pdc__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
+  .pdc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.25rem 0 0; }
+  .pdc__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pdc__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+
+  .pd__all { text-align: center; margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .pd__all a {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase;
+    letter-spacing: 0.02em; color: #3b0800; text-decoration: underline; text-underline-offset: 6px;
+  }
+  .pd__all a:hover { color: var(--color-primary); }
+
+  @media (max-width: 760px) { .pd__grid { grid-template-columns: 1fr; } .pd__squiggle { display: none; } }
+</style>

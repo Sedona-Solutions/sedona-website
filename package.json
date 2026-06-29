@@ -1,0 +1,27 @@
+{
+  "name": "sitesedonav3",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "dev:cms": "tinacms dev -c \"astro dev\"",
+    "build": "astro build",
+    "build:cms": "tinacms build && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "figma:list": "node --env-file=.env scripts/figma-export.mjs list",
+    "figma:tokens": "node --env-file=.env scripts/figma-export.mjs tokens",
+    "figma:assets": "node --env-file=.env scripts/figma-export.mjs assets"
+  },
+  "dependencies": {
+    "@tinacms/cli": "^2.4.4",
+    "astro": "^6.4.4",
+    "tinacms": "^3.9.1"
+  },
+  "devDependencies": {
+    "turndown": "^7.2.4"
+  }
+}

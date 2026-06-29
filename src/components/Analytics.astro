@@ -1,0 +1,189 @@
+---
+/**
+ * Analytics — Matomo en mode « sans cookie » + bandeau de consentement.
+ *
+ * Configuration via variables d'environnement (.env) :
+ *   PUBLIC_MATOMO_URL      ex. https://analytics.sedona.fr/  (avec le / final)
+ *   PUBLIC_MATOMO_SITE_ID  ex. 1
+ *
+ * Le composant ne fait rien tant que ces deux variables ne sont pas définies.
+ * Matomo n'est chargé qu'APRÈS acceptation du bandeau (choix mémorisé dans
+ * localStorage). En mode sans cookie, aucun cookie n'est posé.
+ */
+const matomoUrl = import.meta.env.PUBLIC_MATOMO_URL;
+const matomoSiteId = import.meta.env.PUBLIC_MATOMO_SITE_ID;
+const actif = Boolean(matomoUrl && matomoSiteId);
+---
+
+{
+  actif && (
+    <div
+      id="cookie-banner"
+      class="cookie"
+      role="dialog"
+      aria-label="Gestion des cookies et de la mesure d'audience"
+      aria-live="polite"
+      hidden
+    >
+      <div class="cookie__inner">
+        <p class="cookie__text">
+          Nous mesurons l'audience de ce site de façon anonyme, sans cookie
+          publicitaire, pour l'améliorer. Vous pouvez accepter ou refuser.
+          En savoir plus dans notre{" "}
+          <a href="/confidentialite">politique de confidentialité</a>.
+        </p>
+        <div class="cookie__actions">
+          <button type="button" class="cookie__btn cookie__btn--ghost" data-consent="denied">
+            Refuser
+          </button>
+          <button type="button" class="cookie__btn cookie__btn--solid" data-consent="granted">
+            Accepter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ matomoUrl, matomoSiteId }}>
+      (function () {
+        var KEY = "sedona-analytics-consent";
+
+        function chargerMatomo() {
+          if (window.__matomoCharge) return;
+          window.__matomoCharge = true;
+          var _paq = (window._paq = window._paq || []);
+          _paq.push(["disableCookies"]); // mode sans cookie
+          _paq.push(["enableLinkTracking"]);
+          _paq.push(["trackPageView"]);
+          _paq.push(["setTrackerUrl", matomoUrl + "matomo.php"]);
+          _paq.push(["setSiteId", matomoSiteId]);
+          var g = document.createElement("script");
+          g.async = true;
+          g.src = matomoUrl + "matomo.js";
+          document.head.appendChild(g);
+        }
+
+        function enregistrer(choix) {
+          try {
+            localStorage.setItem(KEY, choix);
+          } catch (e) {}
+          var b = document.getElementById("cookie-banner");
+          if (b) b.hidden = true;
+          if (choix === "granted") chargerMatomo();
+        }
+
+        function init() {
+          var choix = null;
+          try {
+            choix = localStorage.getItem(KEY);
+          } catch (e) {}
+
+          if (choix === "granted") {
+            chargerMatomo();
+          } else if (choix !== "denied") {
+            var b = document.getElementById("cookie-banner");
+            if (b) b.hidden = false;
+          }
+
+          document.querySelectorAll("[data-consent]").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              enregistrer(btn.getAttribute("data-consent"));
+            });
+          });
+        }
+
+        // Permet de rouvrir le bandeau depuis un lien (ex. footer) :
+        // <a href="#" onclick="sedonaGererCookies();return false">Gérer les cookies</a>
+        window.sedonaGererCookies = function () {
+          try {
+            localStorage.removeItem(KEY);
+          } catch (e) {}
+          var b = document.getElementById("cookie-banner");
+          if (b) b.hidden = false;
+        };
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  )
+}
+
+<style>
+  .cookie {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 9999;
+    max-width: 760px;
+    margin-inline: auto;
+    background: #fcf6f0;
+    color: #3b0800;
+    border: 1.5px solid var(--color-border, #e8ddd2);
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(59, 8, 0, 0.18);
+    padding: 1.25rem 1.5rem;
+  }
+  .cookie[hidden] {
+    display: none;
+  }
+  .cookie__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cookie__text {
+    flex: 1 1 320px;
+    margin: 0;
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .cookie__text a {
+    color: #3b0800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cookie__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex: none;
+  }
+  .cookie__btn {
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 0.7em 1.5em;
+    font-family: var(--font-sans, sans-serif);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid #3b0800;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .cookie__btn--ghost {
+    background: transparent;
+    color: #3b0800;
+  }
+  .cookie__btn--ghost:hover {
+    background: rgba(59, 8, 0, 0.06);
+  }
+  .cookie__btn--solid {
+    background: #3b0800;
+    color: #fcf6f0;
+  }
+  .cookie__btn--solid:hover {
+    background: #42140d;
+  }
+
+  @media (max-width: 560px) {
+    .cookie__actions {
+      width: 100%;
+    }
+    .cookie__btn {
+      flex: 1;
+    }
+  }
+</style>
