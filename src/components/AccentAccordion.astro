@@ -97,8 +97,9 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
   .acca__plus::after { top: 0; left: 10px; width: 2px; height: 22px; }
   .acca[open] .acca__plus::after { transform: scaleY(0); opacity: 0; }
   .acca__body { padding-top: 1.5rem; }
-  /* Legacy : texte + 1 visuel captionné, décalé sous le titre (cf. Fonctionnalités Brieff). */
-  .acca__body > .acca__legacy { padding-left: calc(280px + 1.25rem); aspect-ratio: 16 / 9; }
+  /* Legacy : texte + 1 visuel captionné, décalé sous le titre (cf. Fonctionnalités Brieff).
+     Hauteur libre, relative au contenu (texte + image) — pas de ratio imposé. */
+  .acca__body > .acca__legacy { padding-left: calc(280px + 1.25rem); }
   .acca__body :global(p) { margin: 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; }
   .acca__body :global(p + p) { margin-top: 1em; }
   .acca__body :global(ul),
@@ -129,7 +130,7 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
   @media (max-width: 700px) {
     .acca { padding: 1.5rem; }
     .acca__title { font-size: 1rem; }
-    .acca__body > .acca__legacy { padding-left: 0; aspect-ratio: auto; }
+    .acca__body > .acca__legacy { padding-left: 0; }
     .acca__contentRow { flex-direction: column; gap: 1.25rem; }
     .acca__tags { flex-direction: row; flex-wrap: wrap; width: auto; }
     .acca__images { flex-wrap: wrap; }

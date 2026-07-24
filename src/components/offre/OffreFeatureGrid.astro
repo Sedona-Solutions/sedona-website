@@ -3,7 +3,8 @@
 // pour vous" et pour "Vos bénéfices concrets" (mêmes props, données différentes).
 import { richTextToHtml } from "../../utils/richText.js";
 import { recolorIcon } from "../../utils/iconRecolor.js";
-const { eyebrow, titre, items = [], radius = "top", accentMid = "#b3b5ee" } = Astro.props;
+import TitreAccent from "../TitreAccent.astro";
+const { eyebrow, titre, titreAccent, pillVariant, items = [], radius = "top", accentMid = "#b3b5ee" } = Astro.props;
 const radiusStyle =
   radius === "top" ? "var(--radius-section-lg) var(--radius-section-lg) 0 0" : "0 0 var(--radius-section-lg) var(--radius-section-lg)";
 const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : null));
@@ -15,7 +16,7 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
       <div class="container">
         <header class="ofg__head" data-reveal>
           {eyebrow && <p class="ofg__eyebrow">{eyebrow}</p>}
-          {titre && <h2 class="ofg__title">{titre}</h2>}
+          <TitreAccent titre={titre} accent={titreAccent} as="h2" class="ofg__title" pillVariant={pillVariant} />
         </header>
 
         <ul class="ofg__grid" data-reveal-group>
@@ -47,7 +48,7 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
     font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
     text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
   }
-  .ofg__title { margin: 0 auto; max-width: 32ch; color: #3b0800; }
+  .ofg :global(.ofg__title) { margin: 0 auto; max-width: 32ch; color: #3b0800; }
 
   .ofg__grid {
     list-style: none; margin: 0; padding: 0;

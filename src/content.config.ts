@@ -4,20 +4,6 @@ import { glob } from "astro/loaders";
 // Les collections Astro lisent les MÊMES fichiers que TinaCMS édite (dossier content/).
 // Astro = rendu statique (source de vérité), Tina = interface d'édition.
 
-const titreSegmentSchema = z.object({
-  t: z.string().optional(),
-  pill: z.boolean().optional(),
-  br: z.boolean().optional(),
-});
-
-// Segments de titre colorables (cf. `titreSegments` dans tina/config.ts), utilisés
-// par les différents champs "ctaFinal" (home, offre, expertise…).
-const titreSegmentsColorables = z.object({
-  texte: z.string().optional(),
-  couleur: z.string().optional(),
-  italique: z.boolean().optional(),
-});
-
 const expertise = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/expertises" }),
   schema: z.object({
@@ -37,7 +23,8 @@ const expertise = defineCollection({
     projets: z
       .object({
         eyebrow: z.string().optional(),
-        titre: z.array(titreSegmentSchema).optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         layout: z.enum(["image", "texte"]).optional(),
         projetsMisEnAvant: z.array(z.object({ projet: z.string().optional() })).optional(),
         cartesTexte: z
@@ -48,7 +35,8 @@ const expertise = defineCollection({
     methode: z
       .object({
         eyebrow: z.string().optional(),
-        titre: z.array(titreSegmentSchema).optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         sousTitre: z.string().optional(),
         phases: z.array(z.object({ titre: z.string().optional(), texte: z.string().optional() })).optional(),
         technosTitre: z.string().optional(),
@@ -60,7 +48,8 @@ const expertise = defineCollection({
     cqnf: z
       .object({
         eyebrow: z.string().optional(),
-        titre: z.array(titreSegmentSchema).optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         intro: z.string().optional(),
         layout: z.enum(["accordion", "cards"]).optional(),
         items: z
@@ -84,7 +73,8 @@ const expertise = defineCollection({
       .optional(),
     ctaFinal: z
       .object({
-        titre: z.array(titreSegmentsColorables).optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         description: z.string().optional(),
         ctaLabel: z.string().optional(),
         ctaHref: z.string().optional(),
@@ -214,6 +204,7 @@ const offre = defineCollection({
     benefices: z
       .object({
         titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), icone: z.string().optional() })).optional(),
       })
       .optional(),
@@ -221,6 +212,7 @@ const offre = defineCollection({
       .object({
         eyebrow: z.string().optional(),
         titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         items: z.array(z.object({ titre: z.string(), sousTitre: z.string().optional(), texte: z.any().optional() })).optional(),
       })
       .optional(),
@@ -271,14 +263,14 @@ const offre = defineCollection({
       .object({
         eyebrow: z.string().optional(),
         titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         items: z.array(z.object({ valeur: z.string(), label: z.string().optional(), note: z.string().optional() })).optional(),
       })
       .optional(),
     ctaFinal: z
       .object({
-        titre: z
-          .array(z.object({ texte: z.string().optional(), couleur: z.string().optional(), italique: z.boolean().optional() }))
-          .optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
         description: z.string().optional(),
         ctaLabel: z.string().optional(),
         ctaHref: z.string().optional(),

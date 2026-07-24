@@ -36,7 +36,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       proof={d.heroProof}
       pillVariant={pillVariant}
     />
-    <Personas eyebrow={d.pourQui?.eyebrow} titre={d.pourQui?.titre} items={d.pourQui?.items ?? []} />
+    <Personas eyebrow={d.pourQui?.eyebrow} titre={d.pourQui?.titre} titreAccent={d.pourQui?.titreAccent} pillVariant={pillVariant} items={d.pourQui?.items ?? []} />
     <Constat
       eyebrow={d.constat?.eyebrow}
       titre={d.constat?.titre}
@@ -63,6 +63,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       titreAccent={d.incoherence?.titreAccent}
       texte={d.incoherence?.texte}
       illustration={d.incoherence?.illustration}
+      pillVariant={pillVariant}
     />
     <Fonctionnalites
       eyebrow={d.produits?.eyebrow}
@@ -72,7 +73,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       items={d.produits?.items ?? []}
       pillVariant={pillVariant}
     />
-    <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} items={d.impacts?.items ?? []} />
+    <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} titreAccent={d.impacts?.titreAccent} pillVariant={pillVariant} items={d.impacts?.items ?? []} />
     <Testimonial />
     <ReglesConformite
       eyebrow={d.raisons?.eyebrow}
@@ -90,6 +91,7 @@ const pillVariant = d.pillVariant ?? "ovni";
   <CtaFinal
     cta={{
       ...d.ctaFinal,
+      pillVariant,
       accentColor: ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni,
     }}
   />

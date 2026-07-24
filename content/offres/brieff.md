@@ -64,6 +64,12 @@ produits:
       icone: cursor-arrow-double
       image: /uploads/offre/brieff-proto.png
       imageCaption: "Storyboard avec vignettes des écrans + flèches de navigation labellisés par action\_"
+benefices:
+  titre: bla bla
+  items:
+    - titre: rzbefdb
+      texte: |
+        zrbrfbdb
 pourQui:
   eyebrow: À qui s'adresse cette offre ?
   titre: Conçu par et pour ceux qui pilotent.
@@ -92,19 +98,19 @@ raisons:
   items:
     - titre: 100% décisions tracées
       texte: |
-        \[object Object]
+        Chaque ADR signé par un décideur identifié, chaque alerte Red Team acquittée avec commentaire de mitigation.
       icone: audit-data
     - titre: Intégrité vérifiable
       texte: |
-        \[object Object]
+        Journal d'audit append-only en chaîne de hash : toute altération rétroactive est immédiatement détectée.
       icone: check-double
     - titre: Souveraineté des données
       texte: |
-        \[object Object]
+        Compatible AWS Bedrock & Google Vertex AI. Vos prompts ne quittent jamais votre tenant cloud, région UE au choix.
       icone: badge-favorite-heart-2
     - titre: Risques anticipés
       texte: |
-        \[object Object]
+        Ravi challenge vos spécifications comme un attaquant : hypothèses fragiles, angles morts sécurité et dépendances oubliées, repérés avant qu'ils ne coûtent.
       icone: clock-1
   technosTitle: 'En plus, BRIEFF parle à n''importe quel outil AI !'
   technos:
@@ -121,16 +127,16 @@ etapes:
   items:
     - titre: Analyse
       texte: |
-        \[object Object]
+        Brainstorm, recherche, brief produit et fil rouge narratif à partir de vos sources.
     - titre: Planning
       texte: |
-        \[object Object]
+        PRD, spec UX/UI, maquettes HTML cliquables et storyboard interactif.
     - titre: Conception
       texte: |
-        \[object Object]
+        Architecture, epics, stories, plan de test et cahier de recette.
     - titre: Implémentation
       texte: |
-        \[object Object]
+        Sprints, handoff dev et intégration du code, prêts pour Claude Code ou Cursor.
 constat:
   eyebrow: Le constat
   titre: 'Cadrer un projet IT, c''est souvent trop long'
@@ -171,11 +177,8 @@ impacts:
       label: Livrables type
       note: De la synthèse exécutive au cahier de recette signable
 ctaFinal:
-  titre:
-    - texte: 'Prêt à tester '
-      couleur: none
-    - texte: BRIEFF ?
-      couleur: ovni
+  titre: 'Prêt à tester BRIEFF ?'
+  titreAccent: BRIEFF ?
   description: 'Une session d''1h suffit pour comprendre comment l''outil s''adapterait à votre contexte, vos clients et vos projets récurrents.'
   ctaLabel: Demander une démo
   ctaHref: /contact

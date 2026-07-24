@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { engagements } = Astro.props;
 const faits = engagements?.ceQuOnFait ?? [];
 const pasFaits = engagements?.ceQuOnNeFaitPas ?? [];
@@ -9,7 +9,7 @@ const pasFaits = engagements?.ceQuOnNeFaitPas ?? [];
   <div class="container">
     <header class="heng__head" data-reveal>
       {engagements?.eyebrow && <p class="heng__eyebrow">{engagements.eyebrow}</p>}
-      <TitreSegments segments={engagements?.titre} as="h2" class="heng__title" />
+      <TitreAccent titre={engagements?.titre} accent={engagements?.titreAccent} as="h2" class="heng__title" pillVariant={engagements?.titreCouleur} />
     </header>
 
     <div class="heng__cols">

@@ -209,7 +209,7 @@ const clients = home.clientsSection?.logos ?? [];
   .pcard__arrow {
     position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
     display: flex; align-items: center; justify-content: center; border-radius: 999px;
-    background: #3b0800; color: #fdf4f3; opacity: 0; transform: translateY(8px);
+    background: #3b0800; color: var(--color-red-rock-50); opacity: 0; transform: translateY(8px);
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
   .pcard__media:hover .pcard__arrow { opacity: 1; transform: translateY(0); }
@@ -227,7 +227,7 @@ const clients = home.clientsSection?.logos ?? [];
   .pager__nums { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: 0.85rem; }
   .pager__nums :global(button) { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 999px; font-family: var(--font-sans); font-size: 1.25rem; color: #3b0800; background: transparent; border: 1.5px solid #3b0800; cursor: pointer; transition: background 0.15s ease, color 0.15s ease; }
   .pager__nums :global(button.is-active),
-  .pager__nums :global(button:hover) { background: #3b0800; color: #fdf4f3; }
+  .pager__nums :global(button:hover) { background: #3b0800; color: var(--color-red-rock-50); }
   .pager__arrow { display: grid; place-items: center; width: 40px; height: 40px; background: none; border: none; color: #3b0800; cursor: pointer; }
   .pager__arrow svg { width: 22px; height: 22px; }
   .pager__arrow:disabled { opacity: 0.3; cursor: default; }

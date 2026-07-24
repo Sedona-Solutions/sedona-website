@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 import TeamMarquee from "../TeamMarquee.astro";
 const { hero } = Astro.props;
 const membres = hero?.membres ?? [];
@@ -8,7 +8,7 @@ const membres = hero?.membres ?? [];
 <section class="chero">
   <div class="container chero__inner">
     {hero?.eyebrow && <p class="chero__eyebrow" data-reveal>{hero.eyebrow}</p>}
-    <TitreSegments segments={hero?.titre} as="h1" class="title-2 chero__title" />
+    <TitreAccent titre={hero?.titre} accent={hero?.titreAccent} as="h1" class="title-2 chero__title" pillVariant={hero?.titreCouleur} />
     {hero?.intro && <p class="chero__intro" data-reveal>{hero.intro}</p>}
 
     {
@@ -63,7 +63,7 @@ const membres = hero?.membres ?? [];
     align-items: center;
     justify-content: center;
     margin-top: clamp(2rem, 4vw, 2.75rem);
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 20px;

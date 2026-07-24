@@ -73,7 +73,7 @@ const reseaux = [
 <style>
   .ftr {
     background: #3b0800;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     padding-block: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2rem);
   }
   .ftr__top {
@@ -93,7 +93,7 @@ const reseaux = [
     font-size: 1.25rem; /* 20px */
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   .ftr__col a:hover { color: var(--color-canyon-300); }
 
@@ -107,7 +107,7 @@ const reseaux = [
     font-family: var(--font-body);
     font-size: 1rem;
     margin: 0.75rem 0 1.5rem;
-    color: color-mix(in srgb, #fdf4f3 85%, transparent);
+    color: color-mix(in srgb, var(--color-red-rock-50) 85%, transparent);
   }
   .ftr__social ul {
     list-style: none;
@@ -137,12 +137,12 @@ const reseaux = [
     flex-wrap: wrap;
     gap: 1rem;
     padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid color-mix(in srgb, #fdf4f3 14%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-red-rock-50) 14%, transparent);
   }
   .ftr__copy {
     font-family: var(--font-body);
     font-size: 0.875rem;
-    color: color-mix(in srgb, #fdf4f3 80%, transparent);
+    color: color-mix(in srgb, var(--color-red-rock-50) 80%, transparent);
     margin: 0;
   }
   .ftr__legal {
@@ -153,10 +153,10 @@ const reseaux = [
   .ftr__legal a {
     font-family: var(--font-sans);
     font-size: 1rem;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   .ftr__legal a:hover { color: var(--color-canyon-300); }
-  .ftr__bar { color: color-mix(in srgb, #fdf4f3 40%, transparent); }
+  .ftr__bar { color: color-mix(in srgb, var(--color-red-rock-50) 40%, transparent); }
 
   @media (max-width: 820px) {
     .ftr__top { grid-template-columns: 1fr 1fr; }

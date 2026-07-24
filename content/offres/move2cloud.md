@@ -218,11 +218,8 @@ etapes:
               - type: text
                 text: Ajustement des coûts et support post-migration.
 ctaFinal:
-  titre:
-    - texte: 'Prêt à tester '
-      couleur: none
-    - texte: 'Move2Cloud ?'
-      couleur: sky
+  titre: 'Prêt à tester Move2Cloud ?'
+  titreAccent: 'Move2Cloud ?'
   description: >-
     Une session d'1h suffit pour comprendre comment Move2Cloud s'adapterait à
     votre contexte, vos équipes et vos projets récurrents.

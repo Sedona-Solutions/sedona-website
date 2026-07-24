@@ -59,6 +59,7 @@ const articles =
       cartesTexte={d.projets?.cartesTexte}
       eyebrow={d.projets?.eyebrow}
       titre={d.projets?.titre}
+      titreAccent={d.projets?.titreAccent}
       layout={d.projets?.layout}
       pillVariant={accent.pillVariant}
       squiggleColor={accent.squiggle}
@@ -79,7 +80,8 @@ const articles =
   </div>
   <CtaFinal
     cta={{
-      titre: d.ctaFinal?.titre?.length ? d.ctaFinal.titre : home.ctaFinal.titre,
+      titre: d.ctaFinal?.titre || home.ctaFinal.titre,
+      titreAccent: d.ctaFinal?.titreAccent || home.ctaFinal.titreAccent,
       description:
         d.ctaFinal?.description ||
         `Un premier échange suffit pour comprendre comment nous pourrions vous accompagner sur ${d.titre.toLowerCase()}, sans engagement de votre part.`,
@@ -87,6 +89,7 @@ const articles =
       ctaHref: d.ctaFinal?.ctaHref || home.ctaFinal.ctaHref,
       email: d.ctaFinal?.email || home.ctaFinal.email,
       accentColor: accent.mid,
+      pillVariant: accent.pillVariant,
     }}
   />
 </BaseLayout>

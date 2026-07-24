@@ -89,37 +89,15 @@
     "href": "/histoire"
   },
   "expertisesSection": {
-    "titre": [
-      {
-        "texte": "Nos expertises au ",
-        "couleur": "none"
-      },
-      {
-        "texte": "service",
-        "couleur": "red-rock"
-      },
-      {
-        "texte": " de vos métiers",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Nos expertises au service de vos métiers",
+    "titreAccent": "service",
+    "titreCouleur": "red-rock",
     "intro": "De la conception produit à l'infrastructure critique — nous maîtrisons toute la chaîne de valeur."
   },
   "offresSection": {
-    "titre": [
-      {
-        "texte": "Nos ",
-        "couleur": "none"
-      },
-      {
-        "texte": "offres",
-        "couleur": "cactus"
-      },
-      {
-        "texte": " clé en main",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Nos offres clé en main",
+    "titreAccent": "offres",
+    "titreCouleur": "cactus",
     "intro": "Déjà prêtes à s'intégrer dans vos projets !",
     "offres": [
       {
@@ -149,34 +127,16 @@
     ]
   },
   "projetsSection": {
-    "titre": [
-      {
-        "texte": "Retour sur nos plus beaux ",
-        "couleur": "none"
-      },
-      {
-        "texte": "projets",
-        "couleur": "sky"
-      }
-    ],
+    "titre": "Retour sur nos plus beaux projets",
+    "titreAccent": "projets",
+    "titreCouleur": "sky",
     "intro": "Découvrez quelques exemples de nos travaux récents.",
     "projetsMisEnAvant": []
   },
   "temoignagesSection": {
-    "titre": [
-      {
-        "texte": "Nos ",
-        "couleur": "none"
-      },
-      {
-        "texte": "clients",
-        "couleur": "sunshine"
-      },
-      {
-        "texte": " parlent de nous",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Nos clients parlent de nous",
+    "titreAccent": "clients",
+    "titreCouleur": "sunshine",
     "intro": "Un client satisfait est notre seul vrai indicateur de réussite.",
     "temoignages": [
       {
@@ -235,20 +195,9 @@
     ]
   },
   "ctaFinal": {
-    "titre": [
-      {
-        "texte": "Un projet, une ",
-        "couleur": "none"
-      },
-      {
-        "texte": "idée ?",
-        "couleur": "red-rock"
-      },
-      {
-        "texte": " Travaillons ensemble !",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Un projet, une idée ? Travaillons ensemble !",
+    "titreAccent": "idée ?",
+    "titreCouleur": "red-rock",
     "description": "Un premier échange suffit pour comprendre comment nous pourrions vous accompagner, sans engagement de votre part.",
     "ctaLabel": "Parlons de votre projet",
     "ctaHref": "/contact"

@@ -378,10 +378,10 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
   .pdefis__media--single img { width: 100%; height: auto; }
 
   /* ---- Impacts (bande sombre) ---- */
-  .pstats { background: #3b0800; color: #fdf4f3; padding-block: clamp(3rem, 6vw, 5rem); }
-  .pstats__eyebrow { font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.01em; color: #fdf4f3; margin: 0 0 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .pstats { background: #3b0800; color: var(--color-red-rock-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .pstats__eyebrow { font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-red-rock-50); margin: 0 0 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
   .pstats__eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--heroBg); }
-  .pstats__title { color: #fdf4f3; margin: 0 0 clamp(2rem, 4vw, 3rem); }
+  .pstats__title { color: var(--color-red-rock-50); margin: 0 0 clamp(2rem, 4vw, 3rem); }
   .pstats__list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
   .pstat { text-align: center; padding: 0 1rem; }
   .pstat + .pstat { border-left: 2px dotted rgba(253, 244, 243, 0.4); }

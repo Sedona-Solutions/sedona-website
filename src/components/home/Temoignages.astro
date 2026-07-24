@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { section } = Astro.props;
 const temoignages = section?.temoignages ?? [];
 const t = temoignages[0];
@@ -74,7 +74,7 @@ const total = String(temoignages.length).padStart(2, "0");
     </div>
 
     <div class="temoignages__intro" data-reveal>
-      <TitreSegments segments={section?.titre} as="h2" class="title-2 temoignages__title" />
+      <TitreAccent titre={section?.titre} accent={section?.titreAccent} as="h2" class="title-2 temoignages__title" pillVariant={section?.titreCouleur} />
       {section?.intro && <p class="temoignages__sub">{section.intro}</p>}
     </div>
   </div>
@@ -299,6 +299,8 @@ const total = String(temoignages.length).padStart(2, "0");
 
   @media (max-width: 820px) {
     .temoignages__grid { grid-template-columns: 1fr; }
+    .temoignages__intro { order: 1; }
+    .temoignages__cardwrap { order: 2; }
     .tcard { padding: 48px 32px 32px; }
     .tcard--ghost { display: none; }
     .temoignages__deco { display: none; }

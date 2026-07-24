@@ -1,11 +1,12 @@
 ---
 import { richTextToHtml } from "../../utils/richText.js";
 import { recolorIcon } from "../../utils/iconRecolor.js";
+import TitreAccent from "../TitreAccent.astro";
 
 const {
   eyebrow = "Gestion & Respect des règles",
-  titre = "",
-  titreAccent = "",
+  titre,
+  titreAccent,
   intro,
   items = [],
   technosTitle,
@@ -15,14 +16,6 @@ const {
   accentMid = "#b3b5ee",
 } = Astro.props;
 
-let t1 = titre, accent = "", t2 = "";
-if (titreAccent && titre.includes(titreAccent)) {
-  const i = titre.indexOf(titreAccent);
-  t1 = titre.slice(0, i);
-  accent = titreAccent;
-  t2 = titre.slice(i + titreAccent.length);
-}
-
 const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icone, accentMid) : null));
 ---
 
@@ -30,7 +23,7 @@ const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icon
   <div class="container">
     <header class="bregl__head" data-reveal>
       <p class="bregl__eyebrow">{eyebrow}</p>
-      <h2 class="bregl__title">{t1}{accent && <mark class={`hl hl--${pillVariant}`}>{accent}</mark>}{t2}</h2>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bregl__title" pillVariant={pillVariant} />
       {intro && <p class="bregl__intro">{intro}</p>}
     </header>
 
@@ -65,7 +58,7 @@ const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icon
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
-  .bregl__title { margin: 0; color: #3b0800; }
+  .bregl :global(.bregl__title) { margin: 0; color: #3b0800; }
   .bregl__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
 
   .bregl__grid {

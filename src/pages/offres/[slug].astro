@@ -20,25 +20,25 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const d = entry.data;
 const pillVariant = d.pillVariant ?? "cactus";
-
-const etapesTitre = d.etapes?.titre ? [{ t: d.etapes.titre }] : [];
 ---
 
 <BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.enBref}>
   <div class="dark-stack">
     <OffreHero titre={d.titre} accroche={d.accroche} enBref={d.enBref} illustration={d.illustration} pillVariant={pillVariant} />
     <Ticker items={home.ticker} />
-    <OffreFeatureGrid eyebrow="Ce que ça change" titre={d.produits?.titre} items={d.produits?.items ?? []} radius="top" accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus} />
-    <OffreFeatureGrid eyebrow="Bénéfices" titre={d.benefices?.titre} items={d.benefices?.items ?? []} radius="bottom" accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus} />
+    <OffreFeatureGrid eyebrow="Ce que ça change" titre={d.produits?.titre} titreAccent={d.produits?.titreAccent} pillVariant={pillVariant} items={d.produits?.items ?? []} radius="top" accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus} />
+    <OffreFeatureGrid eyebrow="Bénéfices" titre={d.benefices?.titre} titreAccent={d.benefices?.titreAccent} pillVariant={pillVariant} items={d.benefices?.items ?? []} radius="bottom" accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus} />
     <OffrePersonas
       eyebrow="À qui ça s'adresse"
       titre={d.pourQui?.titre}
+      titreAccent={d.pourQui?.titreAccent}
+      pillVariant={pillVariant}
       items={d.pourQui?.items ?? []}
       accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus}
     />
     <OffreRaisons titre={d.raisons?.titre} titreAccent={d.raisons?.titreAccent} items={d.raisons?.items ?? []} />
     <Methode
-      data={{ titre: etapesTitre, sousTitre: d.etapes?.sousTitre, phases: d.etapes?.items ?? [] }}
+      data={{ titre: d.etapes?.titre, titreAccent: d.etapes?.titreAccent, sousTitre: d.etapes?.sousTitre, phases: d.etapes?.items ?? [] }}
       pillVariant={pillVariant}
       accentLight={ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus}
       accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus}
@@ -47,6 +47,7 @@ const etapesTitre = d.etapes?.titre ? [{ t: d.etapes.titre }] : [];
   <CtaFinal
     cta={{
       ...d.ctaFinal,
+      pillVariant,
       accentColor: ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus,
     }}
   />

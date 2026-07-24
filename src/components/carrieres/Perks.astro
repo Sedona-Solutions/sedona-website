@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { perks } = Astro.props;
 const items = perks?.items ?? [];
 ---
@@ -9,7 +9,7 @@ const items = perks?.items ?? [];
   <div class="container">
     <header class="cperks__head" data-reveal>
       {perks?.eyebrow && <p class="cperks__eyebrow">{perks.eyebrow}</p>}
-      <TitreSegments segments={perks?.titre} as="h2" class="cperks__title" />
+      <TitreAccent titre={perks?.titre} accent={perks?.titreAccent} as="h2" class="cperks__title" pillVariant={perks?.titreCouleur} />
       <img class="cperks__deco2" src="/deco/squiggle-5.svg" alt="" aria-hidden="true" />
     </header>
 

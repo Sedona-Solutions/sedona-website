@@ -1,16 +1,9 @@
 {
   "hero": {
     "eyebrow": "Rejoins Sedona",
-    "titre": [
-      {
-        "texte": "Construisons les projets de ",
-        "couleur": "none"
-      },
-      {
-        "texte": "demain",
-        "couleur": "ovni"
-      }
-    ],
+    "titre": "Construisons les projets de demain",
+    "titreAccent": "demain",
+    "titreCouleur": "ovni",
     "intro": "On ne recrute pas des CV, mais on crée une équipe où designers et devs collaborent sur des produits dont on est fiers, avec zéro bullshit et 100% d'ambition.",
     "ctaLabel": "Voir nos offres",
     "ctaHref": "#jobs",
@@ -133,20 +126,9 @@
   },
   "jobs": {
     "eyebrow": "Jobs à pourvoir",
-    "titre": [
-      {
-        "texte": "On recrute ",
-        "couleur": "none"
-      },
-      {
-        "texte": "5 profils",
-        "couleur": "cactus"
-      },
-      {
-        "texte": " !",
-        "couleur": "none"
-      }
-    ],
+    "titre": "On recrute 5 profils !",
+    "titreAccent": "5 profils",
+    "titreCouleur": "cactus",
     "intro": "Tous nos postes sont ouverts en full remote ou hybride depuis nos bureaux.",
     "items": [
       {
@@ -183,16 +165,9 @@
   },
   "perks": {
     "eyebrow": "Rejoins notre tribu",
-    "titre": [
-      {
-        "texte": "Ce qui t'attend ",
-        "couleur": "none"
-      },
-      {
-        "texte": "concrètement",
-        "couleur": "red-rock"
-      }
-    ],
+    "titre": "Ce qui t'attend concrètement",
+    "titreAccent": "concrètement",
+    "titreCouleur": "red-rock",
     "items": [
       {
         "texte": "MacBook Pro + budget matériel"
@@ -253,16 +228,9 @@
   },
   "gallery": {
     "eyebrow": "La vie chez Sedona",
-    "titre": [
-      {
-        "texte": "Plus qu'une équipe, une même ",
-        "couleur": "none"
-      },
-      {
-        "texte": "tribu",
-        "couleur": "sunshine"
-      }
-    ],
+    "titre": "Plus qu'une équipe, une même tribu",
+    "titreAccent": "tribu",
+    "titreCouleur": "sunshine",
     "intro": "Séminaires, afterworks improvisés, pair programming, meetups internes... On bosse dur et on s'amuse !",
     "photos": [
       "/uploads/histoire/photo-1.png",
@@ -275,20 +243,9 @@
     ]
   },
   "ctaFinal": {
-    "titre": [
-      {
-        "texte": "Prêt·e à écrire la suite avec ",
-        "couleur": "none"
-      },
-      {
-        "texte": "nous",
-        "couleur": "red-rock"
-      },
-      {
-        "texte": " ?",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Prêt·e à écrire la suite avec nous ?",
+    "titreAccent": "nous",
+    "titreCouleur": "red-rock",
     "description": "",
     "ctaLabel": "Nous rejoindre",
     "ctaHref": "#jobs"

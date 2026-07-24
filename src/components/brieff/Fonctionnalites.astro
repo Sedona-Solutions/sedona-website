@@ -1,11 +1,12 @@
 ---
 import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
 import AccentAccordion from "../AccentAccordion.astro";
+import TitreAccent from "../TitreAccent.astro";
 
 const {
   eyebrow = "Les fonctionnalités phares",
-  titre = "",
-  titreAccent = "",
+  titre,
+  titreAccent,
   intro,
   items = [],
   pillVariant = "ovni",
@@ -13,21 +14,13 @@ const {
 
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
 const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
-
-let t1 = titre, accent = "", t2 = "";
-if (titreAccent && titre.includes(titreAccent)) {
-  const i = titre.indexOf(titreAccent);
-  t1 = titre.slice(0, i);
-  accent = titreAccent;
-  t2 = titre.slice(i + titreAccent.length);
-}
 ---
 
 <section class="bfonc">
   <div class="container">
     <header class="bfonc__head" data-reveal>
       <p class="bfonc__eyebrow">{eyebrow}</p>
-      <h2 class="bfonc__title">{t1}{accent && <mark class={`hl hl--${pillVariant}`}>{accent}</mark>}{t2}</h2>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bfonc__title" pillVariant={pillVariant} />
       {intro && <p class="bfonc__intro">{intro}</p>}
     </header>
 
@@ -42,6 +35,6 @@ if (titreAccent && titre.includes(titreAccent)) {
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
-  .bfonc__title { margin: 0; color: #3b0800; }
+  .bfonc :global(.bfonc__title) { margin: 0; color: #3b0800; }
   .bfonc__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
 </style>

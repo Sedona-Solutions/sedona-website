@@ -1,16 +1,27 @@
 ---
 // Bloc "Pourquoi Sedona" façon colonnes numérotées séparées par des filets
 // (cf. référence fournie) : gros numéro, titre, texte, sans carte ni fond coloré.
+// Le mot mis en avant est rendu en italique mono, pas en pastille colorée —
+// c'est le seul bloc du site à utiliser ce style, cf. TitreAccent.astro.
 import { richTextToHtml } from "../../utils/richText.js";
-const { eyebrow = "Pourquoi Sedona", titre, titreAccent, items = [] } = Astro.props;
+const { eyebrow = "Pourquoi Sedona", titre = "", titreAccent = "", items = [] } = Astro.props;
 
-// Coupe le titre en [avant, accent, après] pour mettre `titreAccent` en italique.
-let avant = titre ?? "", accent = "", apres = "";
-if (titre && titreAccent && titre.includes(titreAccent)) {
-  const i = titre.indexOf(titreAccent);
-  avant = titre.slice(0, i);
-  accent = titreAccent;
-  apres = titre.slice(i + titreAccent.length);
+const t = titre.trim();
+let avant = "";
+let accentMot = "";
+let apres = "";
+if (titreAccent && t.includes(titreAccent)) {
+  const i = t.indexOf(titreAccent);
+  avant = t.slice(0, i);
+  accentMot = titreAccent;
+  apres = t.slice(i + titreAccent.length);
+} else if (t) {
+  const mots = t.split(" ");
+  accentMot = mots.pop() ?? "";
+  while (mots.length && !/[\p{L}\p{N}]/u.test(accentMot)) {
+    accentMot = `${mots.pop()} ${accentMot}`;
+  }
+  avant = mots.length ? mots.join(" ") + " " : "";
 }
 ---
 
@@ -20,10 +31,10 @@ if (titre && titreAccent && titre.includes(titreAccent)) {
       <div class="container">
         <header class="orz__head" data-reveal>
           <p class="orz__eyebrow">{eyebrow}</p>
-          {titre && (
+          {t && (
             <h2 class="orz__title">
               {avant}
-              {accent && <em>{accent}</em>}
+              {accentMot && <em>{accentMot}</em>}
               {apres}
             </h2>
           )}

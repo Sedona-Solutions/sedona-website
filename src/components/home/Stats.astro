@@ -150,4 +150,21 @@ const splitVal = (v = "") => {
   @media (max-width: 900px) {
     .doodle { display: none; }
   }
+  @media (max-width: 560px) {
+    .manifeste__stats {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mstat {
+      width: 50%;
+    }
+    .mstat--sep {
+      border-left: none;
+    }
+    .mstat:not(:last-child) {
+      border-bottom: 1.5px dashed #3b0800;
+      padding-bottom: 2rem;
+    }
+  }
 </style>

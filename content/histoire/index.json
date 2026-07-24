@@ -1,20 +1,9 @@
 {
   "hero": {
     "eyebrow": "Notre histoire",
-    "titre": [
-      {
-        "texte": "Nous les ",
-        "couleur": "none"
-      },
-      {
-        "texte": "Sedoniens",
-        "couleur": "red-rock"
-      },
-      {
-        "texte": ", nous aimons explorer de nouveaux territoires.",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Nous les Sedoniens, nous aimons explorer de nouveaux territoires.",
+    "titreAccent": "Sedoniens",
+    "titreCouleur": "red-rock",
     "intro": "Depuis 1998, plus de 100 clients nous ont fait confiance. Toujours avec la même conviction : on n'arrive pas chez un client avec la solution. On la construit avec lui, dans les technologies qu'on maîtrise vraiment.",
     "ctaLabel": "Contactez-nous",
     "ctaHref": "/contact"
@@ -94,20 +83,9 @@
     ]
   },
   "offices": {
-    "titre": [
-      {
-        "texte": "Le déploiement de notre ",
-        "couleur": "none"
-      },
-      {
-        "texte": "tribu",
-        "couleur": "sunshine"
-      },
-      {
-        "texte": " sur le territoire",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Le déploiement de notre tribu sur le territoire",
+    "titreAccent": "tribu",
+    "titreCouleur": "sunshine",
     "items": [
       {
         "ville": "Lyon",
@@ -131,20 +109,9 @@
   },
   "engagements": {
     "eyebrow": "Nos engagements",
-    "titre": [
-      {
-        "texte": "Pourquoi choisir ",
-        "couleur": "none"
-      },
-      {
-        "texte": "SEDONA",
-        "couleur": "canyon"
-      },
-      {
-        "texte": " ?",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Pourquoi choisir SEDONA ?",
+    "titreAccent": "SEDONA",
+    "titreCouleur": "canyon",
     "ceQuOnFaitTitre": "Ce qu'on fait",
     "ceQuOnFait": [
       {
@@ -194,35 +161,17 @@
   },
   "team": {
     "eyebrow": "Notre tribu",
-    "titre": [
-      {
-        "texte": "Passionnés, disponibles et ",
-        "couleur": "none"
-      },
-      {
-        "texte": "à l'écoute",
-        "couleur": "ovni"
-      }
-    ],
+    "titre": "Passionnés, disponibles et à l'écoute",
+    "titreAccent": "à l'écoute",
+    "titreCouleur": "ovni",
     "intro": "Chefs de projet, designers UX/UI, développeurs : des experts passionnés, disponibles et à l'écoute.",
     "merciTitre": "Merci également aux anciens",
     "merciTexte": "Sébastien, Victor, Édouard, Arnaud, Nicolas, Florian, Aurélia, Mathilde, Coraline, Aimen, Charles, Romain, Camille, Jugurta, Antoine, Benoît, Rémi, Tiago, Elsa, Kim, Franck, Philippe, Stéphane, Anaïs, Nathalie, Farah, Aurélie…"
   },
   "ctaFinal": {
-    "titre": [
-      {
-        "texte": "Envie d'écrire la suite avec ",
-        "couleur": "none"
-      },
-      {
-        "texte": "nous",
-        "couleur": "red-rock"
-      },
-      {
-        "texte": " ?",
-        "couleur": "none"
-      }
-    ],
+    "titre": "Envie d'écrire la suite avec nous ?",
+    "titreAccent": "nous",
+    "titreCouleur": "red-rock",
     "description": "Un premier échange suffit pour comprendre comment nous pourrions vous accompagner, sans engagement de votre part.",
     "ctaLabel": "Parlons de votre projet",
     "ctaHref": "/contact"

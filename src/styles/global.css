@@ -108,6 +108,10 @@ img, svg, video {
   letter-spacing: -0.01em;
   color: #3b0800;
 }
+/* Variante pour titre sur fond sombre (ex. section Offres de la home). */
+.title-2--inverse {
+  color: var(--color-red-rock-50);
+}
 .section-intro {
   margin-top: 1rem;
   color: var(--color-text-muted);
@@ -160,7 +164,7 @@ img, svg, video {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  color: #fdf4f3;
+  color: var(--color-red-rock-50);
   font-family: var(--font-sans);
   line-height: 0.7;
   text-transform: uppercase;
@@ -227,7 +231,7 @@ img, svg, video {
   transition: background 0.15s ease, color 0.15s ease, transform 0.2s ease;
 }
 .btn-outline-lg:hover,
-.btn-outline-sm:hover { background: var(--color-red-rock-950); color: #fdf4f3; transform: scale(0.97); }
+.btn-outline-sm:hover { background: var(--color-red-rock-950); color: var(--color-red-rock-50); transform: scale(0.97); }
 .btn-outline-lg {
   padding: 21px 32px;
   font-weight: 400;
@@ -242,11 +246,11 @@ img, svg, video {
 }
 .btn-outline-lg--white,
 .btn-outline-sm--white {
-  border-color: #fdf4f3;
-  color: #fdf4f3;
+  border-color: var(--color-red-rock-50);
+  color: var(--color-red-rock-50);
 }
 .btn-outline-lg--white:hover,
-.btn-outline-sm--white:hover { background: #fdf4f3; color: #3b0800; transform: scale(0.97); }
+.btn-outline-sm--white:hover { background: var(--color-red-rock-50); color: #3b0800; transform: scale(0.97); }
 
 /* Soulignement à deux traits (pas de changement de couleur) : un premier trait
    fin reste toujours visible, un second trait glisse par-dessus au survol
@@ -286,7 +290,7 @@ img, svg, video {
    .link-cta seul à spécificité égale : on fixe la couleur sur les deux états. */
 .link-cta:hover { color: #3b0800; }
 .link-cta--white,
-.link-cta--white:hover { color: #fdf4f3; }
+.link-cta--white:hover { color: var(--color-red-rock-50); }
 .link-cta--sm {
   font-size: 16px;
   font-weight: 400;

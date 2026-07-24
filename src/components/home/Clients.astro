@@ -28,7 +28,7 @@ const logos = section?.logos ?? [];
 <style>
   .clients {
     background: #3b0800;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     padding-block: clamp(2.5rem, 7.8vw, 112px);
     /* Pas d'arrondi ici : la section se fond dans le fond sombre commun
        (.home-stack) ; ce sont Témoignages et BlogPreview qui portent le rayon. */
@@ -38,7 +38,7 @@ const logos = section?.logos ?? [];
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 1.25rem;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     text-align: center;
   }
 
@@ -62,7 +62,7 @@ const logos = section?.logos ?? [];
   .clients__star {
     /* Même taille/couleur que l'étoile du bandeau défilant plus haut (Ticker) —
        0.75em de son texte, clamp(1.5rem, 3vw, 2.5rem). */
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     font-size: clamp(1.125rem, 2.25vw, 1.875rem);
     flex: none;
   }
@@ -79,7 +79,7 @@ const logos = section?.logos ?? [];
   }
   .clients__item span {
     font-weight: 700;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     white-space: nowrap;
   }
 </style>

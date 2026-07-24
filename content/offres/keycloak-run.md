@@ -237,11 +237,8 @@ etapes:
                   Nous restons disponibles pour faire évoluer votre
                   configuration au fil de vos besoins.
 ctaFinal:
-  titre:
-    - texte: 'Prêt à tester '
-      couleur: none
-    - texte: 'Keycloak Run ?'
-      couleur: cactus
+  titre: 'Prêt à tester Keycloak Run ?'
+  titreAccent: 'Keycloak Run ?'
   description: >-
     Une session d'1h suffit pour comprendre comment Keycloak Run s'adapterait
     à votre contexte, vos équipes et vos projets récurrents.

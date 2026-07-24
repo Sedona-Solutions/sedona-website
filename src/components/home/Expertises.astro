@@ -1,6 +1,6 @@
 ---
+import TitreAccent from "../TitreAccent.astro";
 const { section, expertises = [] } = Astro.props;
-const segs = section?.titre ?? [];
 // Fond au survol par domaine (bg/accent-color-1/2/3 "variant" du design system Figma),
 // dans l'ordre d'affichage (tri par `ordre` : Produits digitaux, Data & IA, Infra & Sécurité).
 const CARD_HOVER_BG = ["#d4f4e7", "#e5e7fa", "#fbd3cd"];
@@ -9,20 +9,13 @@ const CARD_HOVER_BG = ["#d4f4e7", "#e5e7fa", "#fbd3cd"];
 <section class="expertises">
   <div class="container">
     <header class="expertises__head" data-reveal>
-      <h2 class="title-2 expertises__title">
-        {
-          segs.map((s) =>
-            s.couleur && s.couleur !== "none" ? (
-              <>
-                <br />
-                <mark class={`hl hl--${s.couleur}`}>{s.texte.trim()}</mark>{" "}
-              </>
-            ) : (
-              <span>{s.texte}</span>
-            ),
-          )
-        }
-      </h2>
+      <TitreAccent
+        titre={section?.titre}
+        accent={section?.titreAccent}
+        as="h2"
+        class="title-2 expertises__title"
+        pillVariant={section?.titreCouleur}
+      />
       {section?.intro && <p class="expertises__intro">{section.intro}</p>}
     </header>
 

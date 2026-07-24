@@ -1,30 +1,23 @@
 ---
 import { richTextToHtml } from "../../utils/richText.js";
+import TitreAccent from "../TitreAccent.astro";
 
 const {
   eyebrow = "Comment ça marche ?",
-  titre = "",
-  titreAccent = "",
+  titre,
+  titreAccent,
   intro,
   image,
   items = [],
   pillVariant = "ovni",
 } = Astro.props;
-
-let t1 = titre, accent = "", t2 = "";
-if (titreAccent && titre.includes(titreAccent)) {
-  const i = titre.indexOf(titreAccent);
-  t1 = titre.slice(0, i);
-  accent = titreAccent;
-  t2 = titre.slice(i + titreAccent.length);
-}
 ---
 
 <section class="bccm">
   <div class="container">
     <header class="bccm__head" data-reveal>
       <p class="bccm__eyebrow">{eyebrow}</p>
-      <h2 class="bccm__title">{t1}{accent && <mark class={`hl hl--${pillVariant}`}>{accent}</mark>}{t2}</h2>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bccm__title" pillVariant={pillVariant} />
       {intro && <p class="bccm__intro">{intro}</p>}
     </header>
 
@@ -54,7 +47,7 @@ if (titreAccent && titre.includes(titreAccent)) {
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
-  .bccm__title { margin: 0 auto; max-width: 24ch; color: #3b0800; }
+  .bccm :global(.bccm__title) { margin: 0 auto; max-width: 24ch; color: #3b0800; }
   .bccm__intro {
     margin: 2.5rem auto 0; max-width: 72ch; font-family: var(--font-sans); font-weight: 500;
     font-size: 1.125rem; line-height: 1.4; color: #3b0800;

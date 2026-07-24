@@ -1,5 +1,6 @@
 ---
 import ArticleCard from "../blog/ArticleCard.astro";
+import Scallop from "./Scallop.astro";
 
 const { titre = "News", vedette, articles = [] } = Astro.props;
 ---
@@ -31,14 +32,21 @@ const { titre = "News", vedette, articles = [] } = Astro.props;
       </div>
     </div>
   </div>
+  <Scallop />
 </section>
 
 <style>
   .blog {
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 15.5vw, 11rem);
-    /* Coins hauts arrondis : flotte sur le fond sombre commun, au-dessus de Clients. */
-    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+    padding-top: clamp(3rem, 15.5vw, 11rem);
+    /* Flotte sur le fond sombre commun, coins entièrement arrondis (comme les
+       autres pages, ex. Gallery sur carrières) ; la déco Scallop, en dernier
+       enfant plein-bleed, doit rester dans ces coins arrondis. */
+    border-radius: var(--radius-section-lg);
+    overflow: hidden;
+  }
+  .blog .container {
+    padding-bottom: clamp(3rem, 15.5vw, 11rem);
   }
   .blog__head {
     display: flex;

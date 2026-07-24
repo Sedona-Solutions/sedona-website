@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { jobs } = Astro.props;
 const items = jobs?.items ?? [];
 ---
@@ -8,7 +8,7 @@ const items = jobs?.items ?? [];
   <div class="container">
     <header class="cjobs__head" data-reveal>
       {jobs?.eyebrow && <p class="cjobs__eyebrow">{jobs.eyebrow}</p>}
-      <TitreSegments segments={jobs?.titre} as="h2" class="cjobs__title" />
+      <TitreAccent titre={jobs?.titre} accent={jobs?.titreAccent} as="h2" class="cjobs__title" pillVariant={jobs?.titreCouleur} />
       {jobs?.intro && <p class="cjobs__intro">{jobs.intro}</p>}
     </header>
 
@@ -68,7 +68,7 @@ const items = jobs?.items ?? [];
   .cjobs__texte { margin: 0 0 1.25rem; font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #3b0800; max-width: 60ch; }
   .cjobs__apply {
     display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px;
-    border-radius: 999px; background: #3b0800; color: #fdf4f3; font-family: var(--font-sans);
+    border-radius: 999px; background: #3b0800; color: var(--color-red-rock-50); font-family: var(--font-sans);
     font-weight: 500; font-size: 0.9375rem; text-transform: uppercase; letter-spacing: -0.18px;
     transition: transform 0.2s ease;
   }

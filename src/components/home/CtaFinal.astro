@@ -1,6 +1,7 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { cta } = Astro.props;
+const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
 ---
 
 <section class="cta">
@@ -14,9 +15,9 @@ const { cta } = Astro.props;
       <img class="cta__mascotte" src="/deco/mascotte.svg" alt="" aria-hidden="true" />
 
       <div class="cta__content cta__content--centered">
-        <img class="cta__lines" src="/deco/cta-lines.svg" alt="" aria-hidden="true" />
         <div class="cta__titleWrap">
-          <TitreSegments segments={cta?.titre} as="h2" class="cta__title" />
+          <img class="cta__lines" src="/deco/cta-lines.svg" alt="" aria-hidden="true" />
+          <TitreAccent titre={cta?.titre} accent={cta?.titreAccent} as="h2" class="cta__title" pillVariant={ctaPillVariant} />
         </div>
         {cta?.description && <p class="cta__sub">{cta.description}</p>}
         <div class="cta__actions">
@@ -101,15 +102,19 @@ const { cta } = Astro.props;
   }
   .cta__lines {
     position: absolute;
-    top: -2.25rem;
-    left: 0.5rem;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
     width: 38px;
     height: auto;
   }
-  .cta__titleWrap { position: relative; }
+  /* inline-block : le cadre se resserre sur le titre (centré par le parent),
+     pour que la déco reste ferrée sur son coin haut-gauche quel que soit le texte. */
+  .cta__titleWrap { position: relative; display: inline-block; }
   .cta :global(.cta__title) {
+    display: inline;
     margin: 0;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   /* Sur les pages avec une couleur d'accent (domaines, offres), la pastille du
      titre reprend cette couleur plutôt que celle choisie dans le contenu ; le
@@ -124,7 +129,7 @@ const { cta } = Astro.props;
     font-weight: 500;
     font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* 24px */
     line-height: 1.3;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   .cta__actions {
     position: relative;

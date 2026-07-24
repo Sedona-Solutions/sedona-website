@@ -1,4 +1,5 @@
 ---
+import TitreAccent from "../TitreAccent.astro";
 const { section, offres = [] } = Astro.props;
 // Teintes accordées aux illustrations de chaque offre (accent-color-N variant/light, cf. Figma).
 const CARD_BG = {
@@ -18,15 +19,13 @@ const ROTATIONS = [-3, 0, -4, 3];
       <div class="container">
         <header class="offres__head" data-reveal>
           {section?.titre && (
-            <h2 class="title-2 offres__title">
-              {section.titre.map((s) =>
-                s.couleur && s.couleur !== "none" ? (
-                  <mark class={`hl hl--${s.couleur}`}>{s.texte}</mark>
-                ) : (
-                  <span>{s.texte}</span>
-                ),
-              )}
-            </h2>
+            <TitreAccent
+              titre={section.titre}
+              accent={section?.titreAccent}
+              as="h2"
+              class="title-2 title-2--inverse offres__title"
+              pillVariant={section?.titreCouleur}
+            />
           )}
           {section?.intro && <p class="offres__intro">{section.intro}</p>}
         </header>
@@ -57,7 +56,7 @@ const ROTATIONS = [-3, 0, -4, 3];
 <style>
   .offres {
     background: #3b0800;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     padding-block: clamp(2.5rem, 7.8vw, 112px);
   }
   .offres__head {
@@ -69,7 +68,6 @@ const ROTATIONS = [-3, 0, -4, 3];
   .offres__title {
     margin: 0;
     max-width: 60ch;
-    color: #fdf4f3;
   }
   .offres__title .hl { line-height: 1.4; }
   .offres__intro {
@@ -79,7 +77,7 @@ const ROTATIONS = [-3, 0, -4, 3];
     font-weight: 500;
     font-size: clamp(1.1rem, 1.5vw, 1.25rem);
     line-height: 1.4;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     opacity: 0.85;
   }
 

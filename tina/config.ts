@@ -60,23 +60,33 @@ const titreSegments = {
   ],
 };
 
-/** Champ réutilisable pour les titres de section des pages Domaine : une liste de
- * segments simples (texte + surlignage couleur-du-domaine + saut de ligne), plus
- * légère que `titreSegments` car la couleur de surlignage est déjà fixée par le
- * domaine (accent.pillVariant), pas choisie segment par segment. */
-const titreDomaine = {
-  type: "object" as const,
+/** Champ réutilisable : le titre de section en texte simple (une seule chaîne),
+ * à coupler avec `titreAccent` ci-dessous pour le mot/la phrase à mettre en avant. */
+const titreTexte = {
+  type: "string" as const,
   name: "titre",
-  label: "Titre (segments)",
-  list: true,
-  ui: {
-    itemProps: (item: { t?: string }) => ({ label: item?.t || "Segment" }),
-  },
-  fields: [
-    { type: "string" as const, name: "t", label: "Texte" },
-    { type: "boolean" as const, name: "pill", label: "Surligné (couleur du domaine)" },
-    { type: "boolean" as const, name: "br", label: "Retour à la ligne après ce segment" },
-  ],
+  label: "Titre",
+};
+
+/** Champ réutilisable : le mot ou la phrase à mettre en avant dans `titre`
+ * (doit être une sous-chaîne exacte de `titre`). Si vide ou introuvable, c'est
+ * le dernier mot du titre qui est surligné par défaut. */
+const titreAccentTexte = {
+  type: "string" as const,
+  name: "titreAccent",
+  label: "Mot surligné dans le titre (optionnel)",
+  description: "Par défaut, c'est le dernier mot du Titre qui est surligné.",
+};
+
+/** Champ réutilisable : la couleur du surlignage pour `titreTexte`/`titreAccentTexte`,
+ * choisie une fois par section (pas par page, pas segment par segment). */
+const couleurTitre = {
+  type: "string" as const,
+  name: "titreCouleur",
+  label: "Couleur section",
+  description: "Couleur du mot mis en avant dans le titre de cette section.",
+  ui: { component: ColorSwatchDropdown },
+  options: COULEURS.filter((c) => c.value !== "none"),
 };
 
 export default defineConfig({
@@ -226,17 +236,21 @@ export default defineConfig({
             name: "expertisesSection",
             label: "Section Expertises",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
             ],
           },
           {
             type: "object",
             name: "offresSection",
-            label: "Section Offres (Keycloak Run, Brieff, IA Forge, Elastic, Move2Cloud…)",
+            label: "Section Offres",
             fields: [
               { type: "string", name: "eyebrow", label: "Eyebrow (ex. Nos offres spéciales)" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               {
                 type: "object",
@@ -262,7 +276,9 @@ export default defineConfig({
             name: "projetsSection",
             label: "Section Projets",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               {
                 type: "object",
@@ -285,7 +301,9 @@ export default defineConfig({
             name: "temoignagesSection",
             label: "Section Témoignages",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Sous-titre", ui: { component: "textarea" } },
               {
                 type: "object",
@@ -326,7 +344,9 @@ export default defineConfig({
             name: "ctaFinal",
             label: "Bandeau d'appel final",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -387,7 +407,8 @@ export default defineConfig({
             label: "Section « Projets »",
             fields: [
               { type: "string", name: "eyebrow", label: "Eyebrow" },
-              { ...titreDomaine },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               {
                 type: "string",
                 name: "layout",
@@ -440,7 +461,8 @@ export default defineConfig({
             label: "Section « Méthode »",
             fields: [
               { type: "string", name: "eyebrow", label: "Eyebrow" },
-              { ...titreDomaine },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "sousTitre", label: "Sous-titre", ui: { component: "textarea" } },
               {
                 type: "object",
@@ -474,7 +496,8 @@ export default defineConfig({
             label: "Section « Ce que nous faisons »",
             fields: [
               { type: "string", name: "eyebrow", label: "Eyebrow" },
-              { ...titreDomaine },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               {
                 type: "string",
@@ -523,7 +546,8 @@ export default defineConfig({
             label: "Bandeau d'appel final",
             description: "Chaque champ laissé vide reprend celui du bandeau d'appel final de la page d'accueil.",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -697,8 +721,8 @@ export default defineConfig({
             type: "object", name: "produits", label: "Ce que l'offre produit pour vous",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { type: "string", name: "titre", label: "Titre de section" },
-              { type: "string", name: "titreAccent", label: "Mot à mettre en avant dans le titre (optionnel)" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
               {
                 type: "object", name: "items", label: "Livrables", list: true,
@@ -716,7 +740,8 @@ export default defineConfig({
           {
             type: "object", name: "benefices", label: "Vos bénéfices concrets",
             fields: [
-              { type: "string", name: "titre", label: "Titre de section" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               {
                 type: "object", name: "items", label: "Bénéfices", list: true,
                 ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
@@ -732,7 +757,8 @@ export default defineConfig({
             type: "object", name: "pourQui", label: "Pour qui ?",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { type: "string", name: "titre", label: "Titre de section" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               {
                 type: "object", name: "items", label: "Profils", list: true,
                 ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
@@ -748,8 +774,8 @@ export default defineConfig({
             type: "object", name: "raisons", label: "Pourquoi Sedona ?",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { type: "string", name: "titre", label: "Titre de section" },
-              { type: "string", name: "titreAccent", label: "Mot à mettre en avant dans le titre" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
               {
                 type: "object", name: "items", label: "Raisons", list: true,
@@ -769,8 +795,8 @@ export default defineConfig({
             type: "object", name: "etapes", label: "Comment on démarre ensemble",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { type: "string", name: "titre", label: "Titre de section" },
-              { type: "string", name: "titreAccent", label: "Mot à mettre en avant dans le titre (optionnel)" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "sousTitre", label: "Sous-titre" },
               { type: "image", name: "image", label: "Capture d'écran (optionnel)" },
               {
@@ -787,8 +813,8 @@ export default defineConfig({
             type: "object", name: "constat", label: "Le constat (avant / après, optionnel)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { type: "string", name: "titre", label: "Titre" },
-              { type: "string", name: "titreAccent", label: "Mot à mettre en avant dans le titre" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               { type: "string", name: "colonneAvantTitre", label: "Titre colonne « avant »" },
               { type: "string", name: "colonneApresTitre", label: "Titre colonne « après »" },
@@ -800,8 +826,8 @@ export default defineConfig({
             type: "object", name: "incoherence", label: "Détection (bloc 2 colonnes, optionnel)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { type: "string", name: "titre", label: "Titre" },
-              { type: "string", name: "titreAccent", label: "Phrase mise en avant" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "rich-text", name: "texte", label: "Texte" },
               { type: "image", name: "illustration", label: "Illustration" },
             ],
@@ -810,7 +836,8 @@ export default defineConfig({
             type: "object", name: "impacts", label: "Impacts mesurables (bande sombre, optionnel)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { type: "string", name: "titre", label: "Titre" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               {
                 type: "object", name: "items", label: "Chiffres", list: true,
                 ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
@@ -825,7 +852,8 @@ export default defineConfig({
           {
             type: "object", name: "ctaFinal", label: "Bandeau d'appel final",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
               { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -920,7 +948,9 @@ export default defineConfig({
             label: "Hero",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -966,7 +996,9 @@ export default defineConfig({
             name: "offices",
             label: "Agences",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               {
                 type: "object",
                 name: "items",
@@ -988,7 +1020,9 @@ export default defineConfig({
             label: "Nos engagements",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "ceQuOnFaitTitre", label: "Titre colonne « Ce qu'on fait »" },
               {
                 type: "object",
@@ -1021,7 +1055,9 @@ export default defineConfig({
             label: "Notre tribu (équipe)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro (2 lignes)", ui: { component: "textarea" } },
               { type: "string", name: "merciTitre", label: "Titre du remerciement" },
               { type: "string", name: "merciTexte", label: "Texte du remerciement", ui: { component: "textarea" } },
@@ -1032,7 +1068,9 @@ export default defineConfig({
             name: "ctaFinal",
             label: "Bandeau d'appel final",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -1056,7 +1094,9 @@ export default defineConfig({
             label: "Hero",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
@@ -1103,7 +1143,9 @@ export default defineConfig({
             label: "Jobs à pourvoir",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               {
                 type: "object",
@@ -1126,7 +1168,9 @@ export default defineConfig({
             label: "Ce qui t'attend concrètement",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               {
                 type: "object",
                 name: "items",
@@ -1161,7 +1205,9 @@ export default defineConfig({
             label: "La vie chez Sedona (galerie photo)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
               { type: "image", name: "photos", label: "Photos", list: true },
             ],
@@ -1171,7 +1217,9 @@ export default defineConfig({
             name: "ctaFinal",
             label: "Bandeau d'appel final",
             fields: [
-              { ...titreSegments },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { ...couleurTitre },
               { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
               { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
               { type: "string", name: "ctaHref", label: "Bouton — lien" },

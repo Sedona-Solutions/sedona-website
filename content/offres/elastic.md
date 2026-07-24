@@ -229,11 +229,8 @@ etapes:
                   Nous restons disponibles pour faire évoluer dashboards et
                   alerting.
 ctaFinal:
-  titre:
-    - texte: 'Prêt à tester '
-      couleur: none
-    - texte: 'Elastic ?'
-      couleur: sunshine
+  titre: 'Prêt à tester Elastic ?'
+  titreAccent: 'Elastic ?'
   description: >-
     Une session d'1h suffit pour comprendre comment Elastic s'adapterait à
     votre contexte, vos équipes et vos projets récurrents.

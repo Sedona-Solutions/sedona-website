@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { gallery } = Astro.props;
 const photos = gallery?.photos ?? [];
 ---
@@ -8,7 +8,7 @@ const photos = gallery?.photos ?? [];
   <div class="container">
     <header class="cgal__head" data-reveal>
       {gallery?.eyebrow && <p class="cgal__eyebrow">{gallery.eyebrow}</p>}
-      <TitreSegments segments={gallery?.titre} as="h2" class="cgal__title" />
+      <TitreAccent titre={gallery?.titre} accent={gallery?.titreAccent} as="h2" class="cgal__title" pillVariant={gallery?.titreCouleur} />
       {gallery?.intro && <p class="cgal__intro">{gallery.intro}</p>}
     </header>
 

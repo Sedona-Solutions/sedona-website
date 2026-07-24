@@ -1,18 +1,19 @@
 ---
 import NumberBadge from "../NumberBadge.astro";
+import TitreAccent from "../TitreAccent.astro";
 
 const {
   projets = [],
   cartesTexte = [],
   eyebrow = "Cas concrets client",
-  titre,
+  titre = "Quelques exemples d'applications",
+  titreAccent,
   layout = "image",
   pillVariant = "cactus",
   squiggleColor = "#a7e9d1",
   accentMid = "#a7e9d1",
   accentLight = "#d4f4e7",
 } = Astro.props;
-const segs = titre ?? [{ t: "Quelques " }, { t: "exemples", pill: true }, { t: " d'applications" }];
 const isTexte = layout === "texte";
 ---
 
@@ -20,9 +21,7 @@ const isTexte = layout === "texte";
   <div class="container pd__container">
     <header class="pd__head" data-reveal>
       <p class="pd__eyebrow">{eyebrow}</p>
-      <h2 class="pd__title">
-        {segs.map((s) => (s.br ? <br /> : s.pill ? <mark class={`hl hl--${pillVariant}`}>{s.t}</mark> : <span>{s.t}</span>))}
-      </h2>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="pd__title" pillVariant={pillVariant} />
     </header>
 
     <div class="pd__squiggle" style={`background-color:${squiggleColor}`} aria-hidden="true" />
@@ -80,7 +79,7 @@ const isTexte = layout === "texte";
     font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
     text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
   }
-  .pd__title { margin: 0; color: #3b0800; }
+  .pd :global(.pd__title) { margin: 0; color: #3b0800; }
   .pd__title .hl { line-height: 1.3; }
   .pd__squiggle {
     position: absolute; top: 6%; right: 3%; width: clamp(36px, 4vw, 60px); height: clamp(105px, 11.7vw, 175px);
@@ -113,7 +112,7 @@ const isTexte = layout === "texte";
   .pdc--image .pdc__mediaArrow {
     position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
     display: flex; align-items: center; justify-content: center; border-radius: 999px;
-    background: #3b0800; color: #fdf4f3; opacity: 0; transform: translateY(8px);
+    background: #3b0800; color: var(--color-red-rock-50); opacity: 0; transform: translateY(8px);
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
   .pdc--image .pdc__media:hover .pdc__mediaArrow { opacity: 1; transform: translateY(0); }

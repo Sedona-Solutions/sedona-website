@@ -14,21 +14,15 @@ ticker:
   - 'Faites parler vos données, elles en ont des choses à raconter  !'
 projets:
   eyebrow: Cas concrets client
-  titre:
-    - t: 'Quelques '
-    - t: exemples
-      pill: true
-    - t: ' d''applications'
+  titre: Quelques exemples d'applications
+  titreAccent: exemples
   layout: image
   cartesTexte:
     - {}
 methode:
   eyebrow: Notre méthode
-  titre:
-    - t: 'Les '
-    - t: 4 piliers
-      pill: true
-    - t: ' de notre approche'
+  titre: Les 4 piliers de notre approche
+  titreAccent: 4 piliers
   sousTitre: Une infrastructure moderne repose sur quatre fondamentaux que nous appliquons à chaque projet.
   phases:
     - titre: Automatisation
@@ -65,12 +59,8 @@ methode:
       logo: /technos/elastic.svg
 cqnf:
   eyebrow: Ce que nous faisons
-  titre:
-    - t: 'De l''infrastructure comme code '
-    - br: true
-    - t: 'à la sécurité '
-    - t: zero-trust
-      pill: true
+  titre: De l'infrastructure comme code à la sécurité zero-trust
+  titreAccent: zero-trust
   intro: 'Nous concevons et opérons des infrastructures modernes, scalables et sécurisées.'
   items:
     - label: Cloud & DevOps
@@ -123,7 +113,7 @@ cqnf:
     - label: Monitoring & Observabilité
       icone: money-graph-bar
       texte: |
-        Mettre en place des systèmes de surveillance qui donnent une vision claire de l'état de santé de vos applications et infrastructures. Détection proactive des incidents, alertes intelligentes, dashboards temps réel.
+        Mettre en place des systèmes de surveillance qui donnent une **vision claire de l'état de santé de vos applications et infrastructures**. Détection proactive des incidents, alertes intelligentes, dashboards temps réel.
 
         * Métriques applicatives et infrastructure (Prometheus, Datadog)
         * Centralisation des logs (ELK, Loki, CloudWatch)

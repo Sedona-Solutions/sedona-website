@@ -18,19 +18,13 @@ ticker:
   - Des sites et des apps beaux et puissants qui fonctionnent vraiment
 projets:
   eyebrow: Cas concrets client
-  titre:
-    - t: 'Quelques '
-    - t: exemples
-      pill: true
-    - t: ' d''applications'
+  titre: Quelques exemples d'applications
+  titreAccent: exemples
   layout: image
 methode:
   eyebrow: Notre méthode
-  titre:
-    - t: 'Une approche éprouvée '
-    - t: 'en '
-    - t: 5 phases
-      pill: true
+  titre: Une approche éprouvée en 5 phases
+  titreAccent: 5 phases
   sousTitre: 'Nous travaillons en cycles courts et itératifs pour livrer de la valeur rapidement, tout en gardant le cap sur vos objectifs business.'
   phases:
     - titre: Découverte & Cadrage
@@ -72,12 +66,8 @@ methode:
       logo: /technos/react-native.svg
 cqnf:
   eyebrow: Ce que nous faisons
-  titre:
-    - t: 'Des '
-    - t: solutions
-      pill: true
-    - br: true
-    - t: pensées pour durer
+  titre: Des solutions pensées pour durer
+  titreAccent: solutions
   intro: 'Nous créons des expériences digitales de qualité, centrées sur l''UX, le code propre et la durabilité.'
   items:
     - label: Applications mobiles natives & cross-platform

@@ -1,5 +1,5 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 import TeamMarquee from "../TeamMarquee.astro";
 const { team, membres = [] } = Astro.props;
 ---
@@ -8,7 +8,7 @@ const { team, membres = [] } = Astro.props;
   <div class="container">
     <header class="hteam__head" data-reveal>
       {team?.eyebrow && <p class="hteam__eyebrow">{team.eyebrow}</p>}
-      <TitreSegments segments={team?.titre} as="h2" class="hteam__title" />
+      <TitreAccent titre={team?.titre} accent={team?.titreAccent} as="h2" class="hteam__title" pillVariant={team?.titreCouleur} />
       {team?.intro && <p class="hteam__intro">{team.intro}</p>}
     </header>
   </div>

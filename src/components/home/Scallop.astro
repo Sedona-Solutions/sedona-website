@@ -1,5 +1,7 @@
 ---
 // Bord festonné (transition décorative) — arcs répétés, façon maquette.
+// Toujours utilisé en dernier enfant plein-bleed d'une section déjà arrondie
+// et en overflow:hidden (cf. BlogPreview.astro) : pas de radius propre ici.
 ---
 
 <div class="scallop" aria-hidden="true">
@@ -17,7 +19,6 @@
   .scallop {
     background: var(--color-canyon-50);
     line-height: 0;
-    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
   }
   .scallop svg {
     display: block;

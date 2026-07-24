@@ -223,11 +223,8 @@ etapes:
               - type: text
                 text: Formation de vos équipes et accompagnement sur les évolutions.
 ctaFinal:
-  titre:
-    - texte: 'Prêt à tester '
-      couleur: none
-    - texte: 'IA Forge ?'
-      couleur: red-rock
+  titre: 'Prêt à tester IA Forge ?'
+  titreAccent: 'IA Forge ?'
   description: >-
     Une session d'1h suffit pour comprendre comment IA Forge s'adapterait à
     votre contexte, vos équipes et vos projets récurrents.
