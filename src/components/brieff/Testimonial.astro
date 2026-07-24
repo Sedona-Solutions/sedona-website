@@ -1,0 +1,79 @@
+---
+import home from "../../../content/home/index.json";
+const temoignage = home.temoignagesSection?.temoignages?.[1];
+---
+
+{
+  temoignage && (
+    <section class="btest">
+      <div class="container btest__frame">
+        <img class="btest__ring btest__ring--lg" src="/deco/btest-ring-ovni.svg" alt="" aria-hidden="true" />
+        <img class="btest__ring btest__ring--sm" src="/deco/btest-ring-ovni-light.svg" alt="" aria-hidden="true" />
+        <img class="btest__squiggle btest__squiggle--1" src="/deco/btest-squiggle-16.svg" alt="" aria-hidden="true" />
+        <img class="btest__squiggle btest__squiggle--2" src="/deco/btest-squiggle-32.svg" alt="" aria-hidden="true" />
+        <blockquote class="btest__card" data-reveal>
+          <p class="btest__quote">"{temoignage.citation}"</p>
+          <footer class="btest__foot">
+            {temoignage.avatar && <img class="btest__avatar" src={temoignage.avatar} alt="" loading="lazy" />}
+            <div>
+              <cite class="btest__auteur">{temoignage.auteur}</cite>
+              <p class="btest__role">{temoignage.role}</p>
+            </div>
+          </footer>
+        </blockquote>
+        <div class="btest__peek" aria-hidden="true" />
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .btest {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 15.5vw, 11rem) clamp(2.5rem, 6.7vw, 96px);
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+  }
+  .btest__frame { position: relative; display: flex; flex-direction: column; align-items: center; }
+
+  .btest__card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1088px;
+    background: #fff; border: 1px solid #42140d; border-radius: 32px;
+    padding: 56px;
+  }
+  .btest__quote {
+    margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.75rem;
+    line-height: 34px; letter-spacing: -0.2px; color: #3b0800;
+  }
+  .btest__foot { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+  .btest__avatar { width: 64px; height: 64px; border-radius: 999px; object-fit: cover; flex: none; }
+  .btest__auteur {
+    display: block; font-style: normal; font-family: var(--font-body); font-weight: 600;
+    font-size: 1rem; line-height: 1.5; letter-spacing: -0.18px; color: #3b0800;
+  }
+  .btest__role {
+    margin: 4px 0 0; font-family: var(--font-body); font-weight: 400;
+    font-size: 0.875rem; line-height: 1.4286; letter-spacing: -0.16px; color: #3b0800;
+  }
+
+  /* Bande qui dépasse sous la carte : illusion de carte empilée derrière. */
+  .btest__peek {
+    width: calc(100% - 48px); max-width: 1040px; height: 24px;
+    background: #fff; border: 1px solid #42140d; border-top: none;
+    border-radius: 0 0 32px 32px; margin-top: -1px;
+  }
+
+  .btest__ring, .btest__squiggle { position: absolute; pointer-events: none; }
+  .btest__ring--lg { width: 46px; height: 46px; left: 1130px; top: 451.68px; }
+  .btest__ring--sm { width: 27px; height: 27px; left: 619px; top: 22.68px; }
+  .btest__squiggle--1 { width: 57px; height: 80px; left: 1467px; top: 33.09px; }
+  .btest__squiggle--2 { width: 57px; height: 80px; left: 149.49px; top: 358.32px; transform: rotate(75deg); }
+
+  @media (max-width: 900px) {
+    .btest__ring, .btest__squiggle { display: none; }
+    .btest__card { padding: 2rem; }
+    .btest__quote { font-size: 1.375rem; line-height: 1.4; }
+  }
+</style>

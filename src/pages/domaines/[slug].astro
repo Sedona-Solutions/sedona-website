@@ -2,7 +2,8 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
-import { domaines } from "../../data/domaines.js";
+import { ACCENTS } from "../../data/domaines.js";
+import { estArticlePublie } from "../../utils/articleVisibility";
 
 import DomaineHero from "../../components/domaine/DomaineHero.astro";
 import Ticker from "../../components/home/Ticker.astro";
@@ -20,32 +21,81 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const d = entry.data;
-const dom = domaines[entry.id] ?? domaines["produits-digitaux"];
+const accent = ACCENTS[entry.id] ?? ACCENTS["produits-digitaux"];
 
-const projets = (await getCollection("projet"))
+// Projets : ceux mis en avant si renseignés, sinon les 4 plus récents.
+const tousProjets = (await getCollection("projet"))
   .map((p) => ({ ...p.data, slug: p.id }))
-  .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0))
-  .slice(0, 4);
+  .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0));
+const projetsMisEnAvant = (d.projets?.projetsMisEnAvant ?? []).map((r) => r.projet).filter(Boolean);
+const projets =
+  projetsMisEnAvant.length > 0
+    ? tousProjets.filter((p) => projetsMisEnAvant.some((m) => m.includes(p.slug))).slice(0, 4)
+    : tousProjets.slice(0, 4);
 
-const articles = (await getCollection("article"))
+// Articles : ceux qui partagent un tag avec le domaine si renseigné, sinon les plus récents du blog.
+const tagsLies = d.articlesSection?.tagsLies ?? [];
+const tousArticles = (await getCollection("article", ({ data }) => estArticlePublie(data.statut)))
   .map((a) => ({ ...a.data, slug: a.id }))
-  .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-  .slice(0, 3);
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const articles =
+  tagsLies.length > 0
+    ? tousArticles.filter((a) => a.tags?.some((t) => tagsLies.includes(t))).slice(0, 3)
+    : tousArticles.slice(0, 3);
 ---
 
-<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.resume}>
-  <DomaineHero
-    titre={d.titre}
-    accroche={d.accroche ?? d.resume}
-    illustration={d.illustration}
-    pillWord={dom.hero?.pillWord}
-    pillVariant={dom.hero?.pillVariant ?? "cactus"}
+<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.affichage?.resume}>
+  <div class="dark-stack">
+    <DomaineHero
+      titre={d.titre}
+      accroche={d.accroche ?? d.affichage?.resume}
+      illustration={d.illustration}
+      pillWord={d.pillWord}
+      pillVariant={accent.pillVariant}
+    />
+    <Ticker items={d.ticker?.length ? d.ticker : home.ticker} />
+    <ProjetsDomaine
+      projets={projets}
+      cartesTexte={d.projets?.cartesTexte}
+      eyebrow={d.projets?.eyebrow}
+      titre={d.projets?.titre}
+      layout={d.projets?.layout}
+      pillVariant={accent.pillVariant}
+      squiggleColor={accent.squiggle}
+      accentMid={accent.mid}
+      accentLight={accent.light}
+    />
+    <Methode
+      data={d.methode}
+      pillVariant={accent.pillVariant}
+      accentLight={accent.light}
+      accentMid={accent.mid}
+      arrowColor={entry.id === "data-ia" ? "#8176d9" : undefined}
+      layout={entry.id === "infra-securite" ? "grid" : "scroll"}
+    />
+    <SkillsCluster tags={d.tags} />
+    <CeQueNousFaisons data={d.cqnf} pillVariant={accent.pillVariant} accentMid={accent.mid} accentLight={accent.light} />
+    <BlogDomaine articles={articles} pillVariant={accent.pillVariant} />
+  </div>
+  <CtaFinal
+    cta={{
+      titre: d.ctaFinal?.titre?.length ? d.ctaFinal.titre : home.ctaFinal.titre,
+      description:
+        d.ctaFinal?.description ||
+        `Un premier échange suffit pour comprendre comment nous pourrions vous accompagner sur ${d.titre.toLowerCase()}, sans engagement de votre part.`,
+      ctaLabel: d.ctaFinal?.ctaLabel || home.ctaFinal.ctaLabel,
+      ctaHref: d.ctaFinal?.ctaHref || home.ctaFinal.ctaHref,
+      email: d.ctaFinal?.email || home.ctaFinal.email,
+      accentColor: accent.mid,
+    }}
   />
-  <Ticker items={home.ticker} />
-  <ProjetsDomaine projets={projets} eyebrow={dom.projets.eyebrow} titre={dom.projets.titre} />
-  <Methode data={dom.methode} />
-  <SkillsCluster tags={d.tags} />
-  <CeQueNousFaisons data={dom.cqnf} />
-  <BlogDomaine articles={articles} />
-  <CtaFinal cta={home.ctaFinal} />
 </BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires (DomaineHero, ProjetsDomaine…)
+     flottent dessus grâce à leurs coins arrondis ; Ticker et SkillsCluster,
+     déjà sombres, s'y fondent sans avoir besoin de leur propre arrondi. */
+  .dark-stack {
+    background: #3b0800;
+  }
+</style>

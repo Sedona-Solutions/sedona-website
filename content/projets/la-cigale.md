@@ -1,20 +1,22 @@
 ---
 titre: Refonte du site institutionnel
 client: La Cigale
-couverture: /uploads/projets/la-cigale.png
-accroche: Une vitrine en ligne à l'image d'une salle de concert mythique.
-annee: 2023 - 2024
+couverture: /uploads/projets/la-cigale-cover.png
 tags:
   - Services
   - App web
   - UX/UI Design
   - Symfony
   - Interface Design
+resume: 'Un site institutionnel repensé, à l''image de la salle mythique.'
+accroche: Une vitrine en ligne à l'image d'une salle de concert mythique.
+annee: 2023 - 2024
 technos:
-  - { nom: Symfony, logo: /technos/symfony.svg }
+  - nom: Symfony
+    logo: /technos/symfony.svg
 defis:
   titre: Refléter l'identité d'un lieu iconique
-  intro: Traduire en ligne l'énergie d'une salle de concert, avec une programmation qui change en continu.
+  intro: 'Traduire en ligne l''énergie d''une salle de concert, avec une programmation qui change en continu.'
   points:
     - titre: Programmation dynamique
       texte: Mettre à jour facilement les événements et la billetterie.
@@ -33,7 +35,6 @@ approche:
       texte: De la découverte à la réservation sans friction.
     - titre: Performance & robustesse
       texte: Une plateforme qui encaisse les pics.
-resume: Un site institutionnel repensé, à l'image de la salle mythique.
 date: 2025-05-01T00:00:00.000Z
 ---
 

@@ -1,20 +1,22 @@
 ---
 titre: Refonte du site institutionnel
 client: Boucheron
-couverture: /uploads/projets/boucheron.png
-accroche: Une présence en ligne à la hauteur de l'exigence d'une grande maison de joaillerie.
-annee: 2022 - 2023
+couverture: /uploads/projets/boucheron-cover.png
 tags:
   - Luxe
   - App métier
   - UX/UI design
   - SwiftUI
   - Interface Design
+resume: Refonte du site institutionnel de la maison de joaillerie Boucheron.
+accroche: Une présence en ligne à la hauteur de l'exigence d'une grande maison de joaillerie.
+annee: 2022 - 2023
 technos:
-  - { nom: SwiftUI, logo: /technos/swiftui.svg }
+  - nom: SwiftUI
+    logo: /technos/swiftui.svg
 defis:
   titre: L'exigence absolue du luxe
-  intro: Sublimer des pièces d'exception sur le web, sans compromis sur la performance.
+  intro: 'Sublimer des pièces d''exception sur le web, sans compromis sur la performance.'
   points:
     - titre: Exigence visuelle
       texte: Restituer la beauté des créations en haute définition.
@@ -33,7 +35,6 @@ approche:
       texte: Une mise en scène discrète et raffinée.
     - titre: Outil d'administration
       texte: Une gestion autonome par les équipes.
-resume: Refonte du site institutionnel de la maison de joaillerie Boucheron.
 date: 2025-02-01T00:00:00.000Z
 ---
 

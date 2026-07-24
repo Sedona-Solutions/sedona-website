@@ -1,0 +1,140 @@
+---
+const { manifeste } = Astro.props;
+const paragraphes = manifeste?.paragraphes ?? [];
+
+// Mises en valeur ponctuelles (cf. maquette) : un cercle autour de "Sedona,"
+// dans le 2e paragraphe, un trait sous "peu humaines" dans le 3e. Le décor est
+// un ::after (pas un <img> imbriqué) : un <img> inline, même en position:absolute,
+// force le navigateur à isoler la phrase sur sa propre ligne au lieu de la
+// laisser continuer avec le reste du paragraphe.
+const highlight = (text: string, needle: string, markClass: string) =>
+  text.replace(needle, `<mark class="hmani__hl ${markClass}">${needle}</mark>`);
+const renderParagraph = (text: string, i: number) => {
+  if (i === 1) return highlight(text, "Sedona,", "hmani__hl--circle");
+  if (i === 2) return highlight(text, "peu humaines", "hmani__hl--line");
+  return text;
+};
+---
+
+<section class="hmani">
+  <img class="hmani__deco" src="/deco/squiggle-6.svg" alt="" aria-hidden="true" />
+  {
+    manifeste?.note && (
+      <p class="hmani__note" data-reveal>
+        {manifeste.note}
+      </p>
+    )
+  }
+  <div class="container hmani__inner">
+    {manifeste?.eyebrow && <p class="hmani__eyebrow" data-reveal>{manifeste.eyebrow}</p>}
+
+    <div class="hmani__text" data-reveal-group>
+      {paragraphes.map((p, i) => <p data-reveal set:html={renderParagraph(p, i)} />)}
+    </div>
+
+    {
+      (manifeste?.signatureRole || manifeste?.signatureNom) && (
+        <footer class="hmani__sign" data-reveal>
+          {manifeste?.signatureRole && <p class="hmani__sign-role">{manifeste.signatureRole}</p>}
+          {manifeste?.signatureNom && <p class="hmani__sign-nom">{manifeste.signatureNom}</p>}
+        </footer>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .hmani {
+    position: relative;
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 15.5vw, 11rem);
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+  }
+  .hmani__note {
+    position: absolute;
+    left: clamp(1.5rem, 12vw, 184px);
+    top: clamp(1rem, 3vw, 2rem);
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    color: #3b0800;
+  }
+  .hmani__deco {
+    position: absolute;
+    left: 184px;
+    top: -116.32px;
+    width: 161px;
+    height: 176px;
+    transform: rotate(-30deg);
+    pointer-events: none;
+  }
+
+  .hmani__eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: -0.18px;
+    font-size: 1.25rem;
+    color: #3b0800;
+    margin: 0 0 1rem;
+  }
+  .hmani__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .hmani__text p {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.375rem, 2.6vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #3b0800;
+  }
+  /* set:html injecte ces <mark> comme HTML brut : ils ne portent pas
+     l'attribut de scope d'Astro, d'où le :global() pour que les règles
+     ci-dessous les atteignent (même technique que .cta :global(mark.hl)). */
+  .hmani :global(.hmani__hl) {
+    position: relative;
+    display: inline;
+    background: none;
+    color: inherit;
+  }
+  .hmani :global(.hmani__hl)::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .hmani :global(.hmani__hl--circle)::after {
+    left: 50%; top: 50%;
+    width: 122%; height: 175%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+    background: url("/deco/circle-annotation.svg") no-repeat center / 100% 100%;
+  }
+  .hmani :global(.hmani__hl--line)::after {
+    left: 0; bottom: -0.12em;
+    width: 104%; height: 0.3em;
+    background: url("/deco/line-2.svg") no-repeat center / 100% 100%;
+  }
+  .hmani__sign {
+    margin-top: 2.5rem;
+  }
+  .hmani__sign-role {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    color: #3b0800;
+  }
+  .hmani__sign-nom {
+    margin: 0.1rem 0 0;
+    font-family: "Style Script", cursive;
+    font-weight: 400;
+    font-size: 2.5rem;
+    color: #3b0800;
+  }
+
+  @media (max-width: 640px) {
+    .hmani__note { position: static; display: block; margin: 0 0 1.5rem; padding-left: 1.25rem; }
+    .hmani__deco { display: none; }
+  }
+</style>

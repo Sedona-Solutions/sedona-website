@@ -1,0 +1,230 @@
+{
+  "hero": {
+    "eyebrow": "Notre histoire",
+    "titre": [
+      {
+        "texte": "Nous les ",
+        "couleur": "none"
+      },
+      {
+        "texte": "Sedoniens",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": ", nous aimons explorer de nouveaux territoires.",
+        "couleur": "none"
+      }
+    ],
+    "intro": "Depuis 1998, plus de 100 clients nous ont fait confiance. Toujours avec la même conviction : on n'arrive pas chez un client avec la solution. On la construit avec lui, dans les technologies qu'on maîtrise vraiment.",
+    "ctaLabel": "Contactez-nous",
+    "ctaHref": "/contact"
+  },
+  "photoBand1": "/uploads/histoire/sedona-jm-juliette.png",
+  "manifeste": {
+    "eyebrow": "Notre manifeste",
+    "paragraphes": [
+      "Jean-Michel, issu du commerce, a vu comment la tech traite souvent clients et équipes comme des chiffres. Juliette, psychologue, observe ce monde en se concentrant d'abord sur les personnes.",
+      "Un voyage à Sedona, en Arizona, donnera son nom à l'aventure — et surtout un cap.",
+      "On s'est retrouvés sur un constat simple : Pourquoi les sociétés de conseils sont-elles si peu humaines ?",
+      "On a bâti SEDONA autour de cette question. Une entreprise de conseils et tech à visage humain, où l'on conçoit des produits et services dont on est fiers — pas pour livrer vite et passer au suivant, mais pour accompagner et faire durer.",
+      "25 ans plus tard, certains clients sont toujours là. Parce qu'on ne vend ni des jours-homme ni des promesses ! Avant chaque projet, on se pose deux questions : est-ce qu'on sait vraiment le faire ? est-ce qu'on est fiers de le faire ? — et on s'y tient."
+    ],
+    "signatureRole": "Les co-fondateurs",
+    "signatureNom": "Jean-Michel et Juliette",
+    "note": "C'est nous là :)"
+  },
+  "timeline": {
+    "eyebrow": "Notre histoire",
+    "titre": "Une même ligne depuis plus de 25 ans...",
+    "items": [
+      {
+        "annee": "1998",
+        "titre": "Les débuts à Paris",
+        "texte": "Le voyage qui inspire l'entreprise et sa conviction. Sedona débute comme société de conseil web avec une âme humaine.",
+        "stat": "3 collaborateurs / 300K CA"
+      },
+      {
+        "annee": "2012 & 2013",
+        "titre": "Cap sur Hong Kong & Genève",
+        "texte": "Les premiers bureaux hors de France. L'international par choix, pas par opportunisme.",
+        "stat": "100-140 personnes / 10-14 M€ CA"
+      },
+      {
+        "annee": "2014",
+        "titre": "Trois métiers prennent un nom",
+        "texte": "West, Sedona Solutions et Zest innovation structurent nos savoir-faire.",
+        "stat": "160 personnes / 16 M€ CA"
+      },
+      {
+        "annee": "2015",
+        "titre": "Direction le Sud",
+        "texte": "Ouverture du bureau de Toulon, au plus près de nouveaux talents.",
+        "stat": "170 personnes / 17 M€ CA"
+      },
+      {
+        "annee": "2016",
+        "titre": "Sedona rencontre RedShift",
+        "texte": "On grandit par rencontres, pas par absorptions.",
+        "stat": "180 personnes / 18 M€ CA"
+      },
+      {
+        "annee": "2018",
+        "titre": "Lyon entre dans la carte",
+        "texte": "Un nouvel ancrage régional, collé aux équipes clientes.",
+        "stat": "190 personnes / 19 M€ CA"
+      },
+      {
+        "annee": "2020",
+        "titre": "Un seul nom pour tous, le groupe SEDONA",
+        "texte": "Les marques se rassemblent sous le groupe Sedona.",
+        "stat": "200 personnes / 20 M€ CA"
+      },
+      {
+        "annee": "2022",
+        "titre": "Dix ans en Asie",
+        "texte": "Singapour ouvre ses portes ; Sedona Asia souffle ses dix bougies.",
+        "stat": ""
+      },
+      {
+        "annee": "2024 - aujourd'hui",
+        "titre": "L'IA, pour de vrai",
+        "texte": "Intégrée à nos projets clients comme au quotidien des équipes — utile, jamais gadget.",
+        "stat": ""
+      }
+    ]
+  },
+  "offices": {
+    "titre": [
+      {
+        "texte": "Le déploiement de notre ",
+        "couleur": "none"
+      },
+      {
+        "texte": "tribu",
+        "couleur": "sunshine"
+      },
+      {
+        "texte": " sur le territoire",
+        "couleur": "none"
+      }
+    ],
+    "items": [
+      {
+        "ville": "Lyon",
+        "label": "Agence Rhônes-Alpes",
+        "adresse": "45 avenue de la République\n69003 Lyon",
+        "email": "contact-lyon@sedona.fr"
+      },
+      {
+        "ville": "Paris",
+        "label": "Agence parisienne (siège social)",
+        "adresse": "19 rue Mogador\n75009 Paris",
+        "email": "contact-paris@sedona.fr"
+      },
+      {
+        "ville": "Toulon",
+        "label": "Agence PACA",
+        "adresse": "8 boulevard du Littoral\n83000 Toulon",
+        "email": "contact-toulon@sedona.fr"
+      }
+    ]
+  },
+  "engagements": {
+    "eyebrow": "Nos engagements",
+    "titre": [
+      {
+        "texte": "Pourquoi choisir ",
+        "couleur": "none"
+      },
+      {
+        "texte": "SEDONA",
+        "couleur": "canyon"
+      },
+      {
+        "texte": " ?",
+        "couleur": "none"
+      }
+    ],
+    "ceQuOnFaitTitre": "Ce qu'on fait",
+    "ceQuOnFait": [
+      {
+        "titre": "Du 100% sur-mesure.",
+        "texte": "Votre projet ne ressemblera à aucun autre — c'est tout l'intérêt de travailler avec nous.\""
+      },
+      {
+        "titre": "Concevoir pour les utilisateurs",
+        "texte": "On conçoit d'abord pour les gens qui utilisent le produit, pas pour le comité qui le valide ;)"
+      },
+      {
+        "titre": "Challenger sur vos idées !",
+        "texte": "Avec bienveillance, promis. On vous dit quand une idée nous semble risquée — on ne vous dira pas oui à tout juste pour vous faire plaisir."
+      },
+      {
+        "titre": "Travailler dans la durée",
+        "texte": "On construit des relations qui durent des années, pas des missions qu'on finit au plus vite. Certains de nos clients sont là depuis plus de 10 ans et on connaît leurs contraintes métier par cœur."
+      },
+      {
+        "titre": "Refuser certains projets",
+        "texte": "Pas par caprice — parce qu'on préfère vous dire non maintenant que vous décevoir plus tard."
+      }
+    ],
+    "ceQuOnNeFaitPasTitre": "Ce qu'on ne fait pas",
+    "ceQuOnNeFaitPas": [
+      {
+        "titre": "Travailler gratuitement",
+        "texte": "Comme vous, on ne vit pas d’amour et d’eau fraiche :)"
+      },
+      {
+        "titre": "Promettre la lune pour signer",
+        "texte": "... puis livrer un caillou. On ne vous dira jamais oui à tout juste pour décrocher le contrat."
+      },
+      {
+        "titre": "Sortir un projet pour hier !",
+        "texte": "Nous sommes rapides mais nous ne sommes pas des magiciens ;)"
+      },
+      {
+        "titre": "Brader la qualité pour tenir un délai",
+        "texte": "Un délai intenable produit toujours une dette qu'on paie plus tard. On ajuste le périmètre avant de sacrifier la qualité du projet."
+      },
+      {
+        "titre": "Sous-traiter en silence",
+        "texte": "Si on ne maîtrise pas, on vous le dit — et on vous recommande quelqu'un qui maîtrise."
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "Notre tribu",
+    "titre": [
+      {
+        "texte": "Passionnés, disponibles et ",
+        "couleur": "none"
+      },
+      {
+        "texte": "à l'écoute",
+        "couleur": "ovni"
+      }
+    ],
+    "intro": "Chefs de projet, designers UX/UI, développeurs : des experts passionnés, disponibles et à l'écoute.",
+    "merciTitre": "Merci également aux anciens",
+    "merciTexte": "Sébastien, Victor, Édouard, Arnaud, Nicolas, Florian, Aurélia, Mathilde, Coraline, Aimen, Charles, Romain, Camille, Jugurta, Antoine, Benoît, Rémi, Tiago, Elsa, Kim, Franck, Philippe, Stéphane, Anaïs, Nathalie, Farah, Aurélie…"
+  },
+  "ctaFinal": {
+    "titre": [
+      {
+        "texte": "Envie d'écrire la suite avec ",
+        "couleur": "none"
+      },
+      {
+        "texte": "nous",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": " ?",
+        "couleur": "none"
+      }
+    ],
+    "description": "Un premier échange suffit pour comprendre comment nous pourrions vous accompagner, sans engagement de votre part.",
+    "ctaLabel": "Parlons de votre projet",
+    "ctaHref": "/contact"
+  }
+}

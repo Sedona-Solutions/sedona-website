@@ -1,21 +1,24 @@
 ---
 titre: Refonte du site institutionnel
 client: Ministère de la Culture
-couverture: /uploads/projets/ministere-culture.png
-accroche: Donner à la culture une vitrine numérique claire, ouverte et accessible à tous.
-annee: 2021 - 2022
+couverture: /uploads/projets/ministere-culture-cover.png
 tags:
   - Service publique
   - App mobile
   - UX/UI design
   - Flutter
   - Elastic Search
+resume: Refonte du site institutionnel du Ministère de la Culture.
+accroche: 'Donner à la culture une vitrine numérique claire, ouverte et accessible à tous.'
+annee: 2021 - 2022
 technos:
-  - { nom: Flutter, logo: /technos/flutter.svg }
-  - { nom: Elastic Stack, logo: /technos/elastic.svg }
+  - nom: Flutter
+    logo: /technos/flutter.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 defis:
   titre: Une institution au service du plus grand nombre
-  intro: Concilier exigence institutionnelle, accessibilité et richesse éditoriale.
+  intro: 'Concilier exigence institutionnelle, accessibilité et richesse éditoriale.'
   points:
     - titre: Accessibilité (RGAA)
       texte: Un site inclusif pour tous les citoyens.
@@ -24,7 +27,7 @@ defis:
     - titre: Image institutionnelle
       texte: Un rendu sobre et rassurant.
 approche:
-  titre: Un site clair, ouvert et durable
+  titre: 'Un site clair, ouvert et durable'
   points:
     - titre: Architecture éditoriale solide
       texte: Une navigation lisible dans une grande arborescence.
@@ -34,7 +37,6 @@ approche:
       texte: Trouver vite la bonne information.
     - titre: Socle pérenne
       texte: Une base maintenable dans la durée.
-resume: Refonte du site institutionnel du Ministère de la Culture.
 date: 2025-03-01T00:00:00.000Z
 ---
 

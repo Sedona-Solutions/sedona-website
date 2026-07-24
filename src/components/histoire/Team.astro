@@ -1,0 +1,52 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+import TeamMarquee from "../TeamMarquee.astro";
+const { team, membres = [] } = Astro.props;
+---
+
+<section class="hteam">
+  <div class="container">
+    <header class="hteam__head" data-reveal>
+      {team?.eyebrow && <p class="hteam__eyebrow">{team.eyebrow}</p>}
+      <TitreSegments segments={team?.titre} as="h2" class="hteam__title" />
+      {team?.intro && <p class="hteam__intro">{team.intro}</p>}
+    </header>
+  </div>
+
+  <div class="hteam__marquee-wrap" data-reveal>
+    <TeamMarquee membres={membres} />
+  </div>
+
+  {
+    (team?.merciTitre || team?.merciTexte) && (
+      <div class="container">
+        <div class="hteam__merci" data-reveal>
+          {team?.merciTitre && <p class="hteam__merci-titre">{team.merciTitre}</p>}
+          {team?.merciTexte && <p class="hteam__merci-texte">{team.merciTexte}</p>}
+        </div>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .hteam { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .hteam__head { max-width: 720px; margin: 0 auto clamp(2.5rem, 5vw, 3rem); text-align: center; }
+  .hteam__eyebrow {
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
+    font-size: 1.25rem; color: #3b0800; margin: 0 0 1rem;
+  }
+  .hteam :global(.hteam__title) { margin: 0 auto; color: #3b0800; }
+  .hteam__intro {
+    margin: 2rem 0 0; font-family: var(--font-sans); font-weight: 500;
+    font-size: 1.5rem; line-height: 1.25; color: #3b0800;
+  }
+
+  .hteam__marquee-wrap { margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+
+  .hteam__merci {
+    max-width: 760px; margin: 0 auto; text-align: center;
+  }
+  .hteam__merci-titre { margin: 0 0 0.75rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px; font-size: 1.25rem; color: #3b0800; }
+  .hteam__merci-texte { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.25; color: #3b0800; }
+</style>

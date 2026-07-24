@@ -1,0 +1,101 @@
+---
+// Ligne de photos de l'équipe en défilement continu (façon marquee), réutilisée
+// telle quelle entre "Notre histoire" (section Team) et le Hero de "Carrières"
+// (cf. maquette Figma node 3978-24937) — mêmes réglages (taille, vitesse) partout.
+const { membres = [] } = Astro.props;
+
+const TINTS = ["#f18878", "#e5e7fa", "#f8d98b", "#a7e9d1", "#a9e7e4", "#f1d1b7"];
+const COULEUR_HEX = {
+  cactus: "#a7e9d1",
+  "cactus-light": "#d4f4e7",
+  canyon: "#e9b189",
+  "canyon-light": "#fae9db",
+  ovni: "#b3b5ee",
+  "ovni-light": "#e5e7fa",
+  "red-rock": "#f8b3a9",
+  "red-rock-light": "#fbd3cd",
+  "red-rock-strong": "#f18878",
+  sky: "#a9e7e4",
+  "sky-light": "#d4f3f0",
+  sunshine: "#f8d98b",
+  "sunshine-light": "#fdeec9",
+};
+const tintFor = (m, i) => (m.couleur && m.couleur !== "none" ? COULEUR_HEX[m.couleur] : TINTS[i % TINTS.length]);
+---
+
+{
+  membres.length > 0 && (
+    <div class="team-marquee">
+      <div class="team-marquee__row">
+        <ul class="team-marquee__track">
+          {[...membres, ...membres].map((m, i) => (
+            <li class="team-marquee__card" style={`--tint:${tintFor(m, i % membres.length)}`} aria-hidden={i >= membres.length ? "true" : undefined}>
+              <span class="team-marquee__tag">
+                {m.nom && <span class="team-marquee__nom">{m.nom}</span>}
+                {m.role && <span class="team-marquee__role">{m.role}</span>}
+              </span>
+              {m.photo && <img class="team-marquee__photo" src={m.photo} alt={m.nom} loading="lazy" />}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .team-marquee {
+    --tmq-card-w: 264px;
+  }
+  @media (max-width: 720px) {
+    .team-marquee { --tmq-card-w: 190px; }
+  }
+  .team-marquee__row { overflow: hidden; }
+  .team-marquee__track {
+    list-style: none; margin: 0;
+    /* Marge de gauche plus généreuse qu'à droite : au chargement, la frise
+       démarre déjà "en mouvement" (carte précédente qui dépasse à gauche),
+       comme si on l'avait surprise au milieu de son défilement. */
+    padding: 0 max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2))
+      calc(0.5rem + 40px) calc(max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2)) + 240px);
+    display: flex; align-items: flex-start; gap: 1.5rem; width: max-content;
+    animation: team-marquee-left 75s linear infinite;
+  }
+  .team-marquee__track:hover { animation-play-state: paused; }
+  @keyframes team-marquee-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .team-marquee__track { animation: none; }
+  }
+
+  .team-marquee__card {
+    flex: none;
+    width: var(--tmq-card-w); aspect-ratio: 304 / 480; border-radius: 999px; overflow: hidden;
+    background: var(--tint, #f1d1b7);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  /* Une carte sur deux est décalée vers le bas, façon quinconce. */
+  .team-marquee__card:nth-child(even) { transform: translateY(40px); }
+  .team-marquee__photo { width: 100%; flex: 1; min-height: 0; object-fit: cover; transition: transform 0.4s ease; }
+  .team-marquee__card:hover .team-marquee__photo { transform: scale(1.05); }
+  .team-marquee__tag {
+    position: relative;
+    z-index: 1;
+    margin-top: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .team-marquee__card:hover .team-marquee__tag { opacity: 1; }
+  .team-marquee__nom {
+    font-family: var(--font-sans); font-weight: 500; font-size: var(--text-lg, 1.25rem);
+    line-height: 1.2; letter-spacing: normal; color: #3b0800;
+  }
+  .team-marquee__role {
+    max-width: 150px; text-align: center; font-family: var(--font-body); font-weight: 400;
+    font-size: 0.875rem; line-height: 1.4286; letter-spacing: -0.16px; color: #3b0800;
+  }
+</style>

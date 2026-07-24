@@ -1,0 +1,56 @@
+---
+import { richTextToHtml } from "../../utils/richText.js";
+const { eyebrow = "Détection d'incohérences", titre = "", titreAccent = "", texte, illustration } = Astro.props;
+
+let t1 = titre, accent = "", t2 = "";
+if (titreAccent && titre.includes(titreAccent)) {
+  const i = titre.indexOf(titreAccent);
+  t1 = titre.slice(0, i);
+  accent = titreAccent;
+  t2 = titre.slice(i + titreAccent.length);
+}
+---
+
+<section class="bincoh">
+  <div class="container bincoh__row">
+    <div class="bincoh__col">
+      <p class="bincoh__eyebrow"><span class="dot" aria-hidden="true"></span> {eyebrow}</p>
+      <h2 class="bincoh__title">
+        {t1}{accent && <span class="accent">{accent}</span>}{t2}
+      </h2>
+      {texte && <div class="bincoh__text" set:html={richTextToHtml(texte)} />}
+    </div>
+    <div class="bincoh__illu-wrap">
+      {illustration && <img class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" loading="lazy" />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .bincoh { background: #3b0800; padding-block: clamp(3rem, 6vw, 5rem); }
+  .bincoh__row {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 640px);
+    gap: clamp(2rem, 4vw, 3rem); align-items: center;
+  }
+  .bincoh__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: #fdf4f3; margin: 0 0 1.25rem;
+  }
+  .bincoh__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--color-ovni-300); flex: none; }
+  .bincoh__title {
+    margin: 0; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.2; letter-spacing: -0.01em; color: #fdf4f3;
+  }
+  .bincoh__title .accent { color: var(--color-ovni-300); }
+  .bincoh__text { margin: 1.5rem 0 0; }
+  .bincoh__text :global(p) { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #fdf4f3; opacity: 0.9; margin: 0; }
+  .bincoh__text :global(p + p) { margin-top: 0.75em; }
+
+  .bincoh__illu-wrap { border-radius: 20px; overflow: hidden; }
+  .bincoh__illu { width: 100%; height: auto; display: block; }
+
+  @media (max-width: 900px) {
+    .bincoh__row { grid-template-columns: 1fr; }
+  }
+</style>

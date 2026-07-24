@@ -1,0 +1,138 @@
+---
+// Accordéon "icône + titre" réutilisable (Ce que nous faisons / fonctionnalités
+// Brieff...) : icône 40x40 recolorée à la couleur d'accent de la page, titre
+// 18px, survol + état ouvert teintés en couleur d'accent claire, image +
+// légende optionnelles dans le corps déplié.
+import { recolorIcon } from "../utils/iconRecolor.js";
+import { richTextToHtml } from "../utils/richText.js";
+
+interface Item {
+  titre: string;
+  texte?: unknown;
+  icone?: string;
+  image?: string;
+  imageCaption?: string;
+  tags?: string[];
+  images?: string[];
+  client?: string;
+}
+
+const {
+  items = [] as Item[],
+  accentMid = "#b3b5ee",
+  accentLight = "#e5e7fa",
+  groupName = "accent-accordion",
+} = Astro.props;
+
+const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : null));
+---
+
+<div class="acca__list" data-reveal-group style={`--accent-light:${accentLight}`}>
+  {items.map((it, i) => (
+    <details class="acca" data-reveal name={groupName}>
+      <summary class="acca__row">
+        {icons[i] && <span class="acca__icon" aria-hidden="true"><Fragment set:html={icons[i]} /></span>}
+        <span class="acca__title">{it.titre}</span>
+        <span class="acca__plus" aria-hidden="true" />
+      </summary>
+      <div class="acca__body">
+        {
+          it.tags?.length || it.images?.length ? (
+            <div class="acca__contentRow">
+              {it.tags?.length > 0 && (
+                <ul class="acca__tags">
+                  {it.tags.map((tag) => (
+                    <li class="acca__tag">{tag}</li>
+                  ))}
+                </ul>
+              )}
+              <div class="acca__main">
+                {it.texte && <Fragment set:html={richTextToHtml(it.texte)} />}
+                {it.client && <p class="acca__client"><strong>Client : {it.client}</strong></p>}
+                {it.images?.length > 0 && (
+                  <div class="acca__images">
+                    {it.images.slice(0, 3).map((src) => (
+                      <div class="acca__imgPlaceholder">
+                        <img src={src} alt="" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div class="acca__legacy">
+              {it.texte && <Fragment set:html={richTextToHtml(it.texte)} />}
+              {it.client && <p class="acca__client"><strong>Client : {it.client}</strong></p>}
+              {it.image && (
+                <>
+                  <div class="acca__imgWrap"><img src={it.image} alt="" loading="lazy" /></div>
+                  {it.imageCaption && <p class="acca__caption">{it.imageCaption}</p>}
+                </>
+              )}
+            </div>
+          )
+        }
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .acca__list { display: flex; flex-direction: column; gap: 1rem; max-width: 1088px; margin: 0 auto; }
+  .acca {
+    background: #fff; border: 1px solid #42140d; border-bottom-width: 1px; border-radius: 24px;
+    padding: 1.75rem 2.5rem; transition: background 0.2s ease, border-bottom-width 0.2s ease;
+  }
+  .acca:hover { background: var(--accent-light, #fff); border-bottom-width: 10px; }
+  .acca[open] { background: var(--accent-light, #fff); }
+  .acca__row { display: flex; align-items: center; gap: 1.25rem; cursor: pointer; list-style: none; }
+  .acca__row::-webkit-details-marker { display: none; }
+  .acca__icon { flex: none; width: 40px; height: 40px; display: grid; place-items: center; }
+  .acca__icon :global(svg) { width: 100%; height: 100%; }
+  .acca__title { flex: 1; font-family: var(--font-sans); font-weight: 700; font-size: 1.125rem; color: #3b0800; }
+  .acca__plus { position: relative; width: 22px; height: 22px; flex: none; }
+  .acca__plus::before, .acca__plus::after { content: ""; position: absolute; background: #3b0800; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .acca__plus::before { top: 10px; left: 0; width: 22px; height: 2px; }
+  .acca__plus::after { top: 0; left: 10px; width: 2px; height: 22px; }
+  .acca[open] .acca__plus::after { transform: scaleY(0); opacity: 0; }
+  .acca__body { padding-top: 1.5rem; }
+  /* Legacy : texte + 1 visuel captionné, décalé sous le titre (cf. Fonctionnalités Brieff). */
+  .acca__body > .acca__legacy { padding-left: calc(280px + 1.25rem); aspect-ratio: 16 / 9; }
+  .acca__body :global(p) { margin: 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; }
+  .acca__body :global(p + p) { margin-top: 1em; }
+  .acca__body :global(ul),
+  .acca__body :global(ol) { margin: 1em 0 0; padding-left: 1.25em; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; }
+  .acca__body :global(a) { color: inherit; text-decoration: underline; }
+  /* Contenu enrichi (tags + images) : rangée tags (colonne fixe) + texte/images (Ce que nous faisons). */
+  .acca__contentRow { display: flex; align-items: flex-start; gap: 2.5rem; }
+  .acca__tags { flex: none; width: 240px; display: flex; flex-direction: column; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  .acca__tag {
+    align-self: flex-start; padding: 2px 12px; border-radius: 999px; background: #fff;
+    border: 1px solid rgba(59, 8, 0, 0.4); font-family: var(--font-sans); font-weight: 500;
+    font-size: 0.875rem; letter-spacing: -0.16px; color: #3b0800; white-space: nowrap;
+  }
+  .acca__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1.5rem; }
+  .acca__images { display: flex; gap: 1rem; width: 100%; }
+  .acca__imgPlaceholder { flex: 1; min-width: 0; aspect-ratio: 400 / 300; background: #e8e8e8; border-radius: 16px; overflow: hidden; }
+  .acca__imgPlaceholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .acca__imgWrap {
+    margin-top: 1.5rem; aspect-ratio: 496 / 343; border: 8px solid #fff; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 16px 32px -12px color-mix(in srgb, #3b0800 25%, transparent);
+  }
+  .acca__imgWrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  p.acca__caption {
+    margin: 1rem 0 0; font-family: var(--font-body); font-size: 0.875rem; line-height: 1.4;
+    letter-spacing: -0.01em; color: #3b0800; text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .acca { padding: 1.5rem; }
+    .acca__title { font-size: 1rem; }
+    .acca__body > .acca__legacy { padding-left: 0; aspect-ratio: auto; }
+    .acca__contentRow { flex-direction: column; gap: 1.25rem; }
+    .acca__tags { flex-direction: row; flex-wrap: wrap; width: auto; }
+    .acca__images { flex-wrap: wrap; }
+    .acca__imgPlaceholder { flex: 1 1 calc(50% - 0.5rem); }
+  }
+</style>

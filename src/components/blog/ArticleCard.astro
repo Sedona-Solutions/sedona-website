@@ -1,0 +1,102 @@
+---
+// Carte article partagée par le blog, la home, les pages Domaine et « à lire aussi » :
+// même composant partout, avec deux variantes selon la présence d'une image de
+// couverture (l'image ne dépend plus du flag "vedette", juste de `couverture`).
+const { article: a } = Astro.props;
+
+const moisCap = (d: string) => {
+  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
+  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
+};
+const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+---
+
+{a.couverture ? (
+  <a href={`/blog/${a.slug}`} class="acard acard--img">
+    <img class="acard__img" src={a.couverture} alt="" loading="lazy" />
+    <div class="acard__top">
+      {a.avatar ? <img class="acard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      <span>
+        <span class="acard__byLabel">Publié par</span>
+        <span class="acard__author">{a.auteur}</span>
+      </span>
+    </div>
+    <div class="acard__bottom">
+      {meta && <p class="acard__meta">{meta}</p>}
+      <h3 class="acard__h">{a.titre}</h3>
+      {a.tags?.length > 0 && <ul class="acard__tags acard__tags--light">{a.tags.slice(0, 3).map((t: string) => <li>{t}</li>)}</ul>}
+    </div>
+  </a>
+) : (
+  <a href={`/blog/${a.slug}`} class="acard acard--plain">
+    <div class="acard__top">
+      {a.avatar ? <img class="acard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      <span>
+        <span class="acard__byLabel">Publié par</span>
+        <span class="acard__author">{a.auteur}</span>
+      </span>
+    </div>
+    {meta && <p class="acard__meta">{meta}</p>}
+    <h3 class="acard__h">{a.titre}</h3>
+    {a.tags?.length > 0 && <ul class="acard__tags">{a.tags.slice(0, 3).map((t: string) => <li>{t}</li>)}</ul>}
+  </a>
+)}
+
+<style>
+  .acard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #42140d;
+    border-radius: 32px;
+    padding: 1.75rem;
+    transition: background 0.2s ease, border-bottom-width 0.2s ease;
+  }
+  .acard:hover { border-bottom-width: 10px; }
+
+  /* Variante avec image de couverture. */
+  .acard--img {
+    justify-content: space-between;
+    overflow: hidden;
+    color: #fff;
+    isolation: isolate;
+  }
+  .acard--img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.6));
+  }
+  .acard__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 0.4s ease; }
+  .acard--img:hover .acard__img { transform: scale(1.05); }
+  .acard__bottom { margin-top: auto; }
+
+  /* Variante sans image. */
+  .acard--plain { background: #fff; color: #3b0800; }
+  .acard--plain:hover { background: #fae9db; }
+
+  .acard__top { display: flex; align-items: center; gap: 0.6rem; }
+  .acard__avatar {
+    width: 40px; height: 40px; border-radius: 999px; flex: none; object-fit: cover;
+    background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300));
+  }
+  .acard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; }
+  .acard--img .acard__byLabel { opacity: 0.85; }
+  .acard--plain .acard__byLabel { color: var(--color-text); }
+  .acard__author { font-family: var(--font-body); font-weight: 600; }
+
+  .acard__meta { font-family: var(--font-body); font-size: 0.875rem; letter-spacing: -0.16px; margin: 0 0 0.5rem; }
+  .acard--img .acard__meta { opacity: 0.9; }
+  .acard--plain .acard__meta { color: #3b0800; margin: auto 0 0.5rem; }
+
+  .acard__h { font-family: var(--font-sans); font-weight: 600; line-height: 1.2; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .acard--img .acard__h { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+  .acard--plain .acard__h { font-size: 1.375rem; }
+
+  .acard__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .acard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; line-height: 20px; letter-spacing: -0.16px; padding: 2px 12px; border-radius: 999px; }
+  .acard--plain .acard__tags li { color: #3b0800; border: 1px solid color-mix(in srgb, #3b0800 40%, transparent); background: #fff; }
+  .acard__tags--light li { color: #fff; border: 1px solid rgba(255, 255, 255, 0.55); background: transparent; }
+</style>

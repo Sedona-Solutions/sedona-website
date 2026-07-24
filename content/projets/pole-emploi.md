@@ -1,21 +1,24 @@
 ---
 titre: Modernisation et refonte du site internet
 client: Pôle Emploi
-couverture: /uploads/projets/pole-emploi.png
-accroche: Accompagner demandeurs d'emploi et recruteurs avec une plateforme claire et robuste.
-annee: 2020 - 2022
+couverture: /uploads/projets/pole-emploi-cover.png
 tags:
   - Service publique
   - Logiciel métier
   - UX/UI design
   - Liferay
   - Interface Design
+resume: Modernisation et refonte de la plateforme en ligne de Pôle Emploi.
+accroche: Accompagner demandeurs d'emploi et recruteurs avec une plateforme claire et robuste.
+annee: 2020 - 2022
 technos:
-  - { nom: Liferay, logo: /technos/liferay.svg }
-  - { nom: Elastic Stack, logo: /technos/elastic.svg }
+  - nom: Liferay
+    logo: /technos/liferay.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 defis:
   titre: Un service public à très grande échelle
-  intro: Servir des millions d'utilisateurs aux profils variés, avec une exigence forte d'accessibilité et de fiabilité.
+  intro: 'Servir des millions d''utilisateurs aux profils variés, avec une exigence forte d''accessibilité et de fiabilité.'
   points:
     - titre: Très forte volumétrie
       texte: Tenir la charge d'un service massivement utilisé.
@@ -34,7 +37,6 @@ approche:
       texte: Des résultats rapides et pertinents.
     - titre: Industrialisation & monitoring
       texte: Fiabilité et supervision en continu.
-resume: Modernisation et refonte de la plateforme en ligne de Pôle Emploi.
 date: 2025-01-01T00:00:00.000Z
 ---
 

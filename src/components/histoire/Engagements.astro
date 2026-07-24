@@ -1,0 +1,94 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+const { engagements } = Astro.props;
+const faits = engagements?.ceQuOnFait ?? [];
+const pasFaits = engagements?.ceQuOnNeFaitPas ?? [];
+---
+
+<section class="heng">
+  <div class="container">
+    <header class="heng__head" data-reveal>
+      {engagements?.eyebrow && <p class="heng__eyebrow">{engagements.eyebrow}</p>}
+      <TitreSegments segments={engagements?.titre} as="h2" class="heng__title" />
+    </header>
+
+    <div class="heng__cols">
+      <div class="heng__col heng__col--fait" data-reveal>
+        <img class="heng__arrow" src="/deco/squiggle-6-canyon-400.svg" alt="" aria-hidden="true" />
+        {engagements?.ceQuOnFaitTitre && <h3 class="heng__col-title">{engagements.ceQuOnFaitTitre}</h3>}
+        <ul class="heng__list" data-reveal-group>
+          {faits.map((it) => (
+            <li>
+              <details class="heng__item" data-reveal>
+                <summary class="heng__row">
+                  <span class="heng__row-titre">{it.titre}</span>
+                  <span class="heng__plus" aria-hidden="true" />
+                </summary>
+                {it.texte && <p class="heng__row-texte">{it.texte}</p>}
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="heng__col heng__col--pas" data-reveal>
+        {engagements?.ceQuOnNeFaitPasTitre && <h3 class="heng__col-title">{engagements.ceQuOnNeFaitPasTitre}</h3>}
+        <ul class="heng__list" data-reveal-group>
+          {pasFaits.map((it) => (
+            <li>
+              <details class="heng__item" data-reveal>
+                <summary class="heng__row">
+                  <span class="heng__row-titre">{it.titre}</span>
+                  <span class="heng__plus" aria-hidden="true" />
+                </summary>
+                {it.texte && <p class="heng__row-texte">{it.texte}</p>}
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .heng { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .heng__head { max-width: 900px; margin: 0 auto clamp(2.5rem, 5vw, 3rem); text-align: center; }
+  .heng__eyebrow {
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
+    font-size: 1.25rem; color: #3b0800; margin: 0 0 1rem;
+  }
+  .heng :global(.heng__title) { margin: 0 auto; color: #3b0800; }
+  /* bg/accent-color-6 (Canyon/300) plutôt que la teinte par défaut de .hl--canyon. */
+  .heng :global(.heng__title .hl--canyon) { background: #e9b189; }
+
+  .heng__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1088px; margin: 0 auto; align-items: start; }
+  .heng__col { position: relative; border-radius: var(--radius-section-sm); padding: 3rem; display: flex; flex-direction: column; gap: 2.5rem; }
+  .heng__col--fait { background: #f1d1b7; }
+  .heng__col--pas { background: #fff; }
+  .heng__arrow { position: absolute; left: 337px; top: -71.317px; width: 161px; height: 176px; transform: rotate(224.335deg); pointer-events: none; }
+  .heng__col-title { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 2.5rem; letter-spacing: -0.01em; color: #42140d; }
+
+  .heng__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .heng__item {
+    background: #fff; border: 1px solid #3b0800; border-bottom-width: 1px; border-radius: 24px; overflow: hidden;
+    transition: background 0.2s ease, border-bottom-width 0.2s ease;
+  }
+  .heng__item:hover { background: var(--color-canyon-100); border-bottom-width: 10px; }
+  .heng__item[open] { background: var(--color-canyon-100); border-radius: 24px; }
+  .heng__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem 1rem 2rem; cursor: pointer; list-style: none; }
+  .heng__row::-webkit-details-marker { display: none; }
+  .heng__row-titre { font-family: var(--font-body); font-weight: 700; font-size: 1.125rem; color: #3b0800; }
+  .heng__plus { position: relative; flex: none; width: 22px; height: 22px; }
+  .heng__plus::before, .heng__plus::after { content: ""; position: absolute; background: #3b0800; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .heng__plus::before { top: 10px; left: 0; width: 22px; height: 2px; }
+  .heng__plus::after { top: 0; left: 10px; width: 2px; height: 22px; }
+  .heng__item[open] .heng__plus::after { transform: scaleY(0); opacity: 0; }
+  .heng__row-texte { margin: 0; padding: 0 1.5rem 1.25rem 2rem; font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #3b0800; }
+
+  @media (max-width: 820px) {
+    .heng__cols { grid-template-columns: 1fr; }
+    .heng__col { padding: 2rem; }
+    .heng__arrow { display: none; }
+  }
+</style>

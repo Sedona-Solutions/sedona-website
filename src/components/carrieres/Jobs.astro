@@ -1,0 +1,81 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+const { jobs } = Astro.props;
+const items = jobs?.items ?? [];
+---
+
+<section class="cjobs" id="jobs">
+  <div class="container">
+    <header class="cjobs__head" data-reveal>
+      {jobs?.eyebrow && <p class="cjobs__eyebrow">{jobs.eyebrow}</p>}
+      <TitreSegments segments={jobs?.titre} as="h2" class="cjobs__title" />
+      {jobs?.intro && <p class="cjobs__intro">{jobs.intro}</p>}
+    </header>
+
+    <ul class="cjobs__list" data-reveal-group>
+      {items.map((it) => (
+        <li>
+          <details class="cjobs__item" data-reveal>
+            <summary class="cjobs__row">
+              <span class="cjobs__row-text">
+                <span class="cjobs__row-titre">{it.titre}</span>
+                {
+                  (it.contrat || it.lieu) && (
+                    <span class="cjobs__meta">
+                      {it.contrat}
+                      {it.contrat && it.lieu && " · "}
+                      {it.lieu}
+                    </span>
+                  )
+                }
+              </span>
+              <span class="cjobs__plus" aria-hidden="true" />
+            </summary>
+            <div class="cjobs__body">
+              {it.texte && <p class="cjobs__texte">{it.texte}</p>}
+              <a class="cjobs__apply" href="/contact">Postuler</a>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cjobs { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .cjobs__head { max-width: 720px; margin: 0 auto clamp(2.5rem, 5vw, 3rem); text-align: center; }
+  .cjobs__eyebrow {
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
+    font-size: 1.25rem; color: #3b0800; margin: 0 0 1rem;
+  }
+  .cjobs :global(.cjobs__title) { margin: 0 auto; color: #3b0800; }
+  .cjobs__intro { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; }
+
+  .cjobs__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; max-width: 1088px; margin-inline: auto; }
+  .cjobs__item { background: #fff; border: 1px solid #3b0800; border-radius: 24px; overflow: hidden; }
+  .cjobs__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 2rem; cursor: pointer; list-style: none; }
+  .cjobs__row::-webkit-details-marker { display: none; }
+  .cjobs__row-text { display: flex; flex-direction: column; gap: 0.25rem; }
+  .cjobs__row-titre { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #3b0800; }
+  .cjobs__meta { font-family: var(--font-body); font-weight: 400; font-size: 0.875rem; color: #3b0800; }
+  .cjobs__plus { position: relative; flex: none; width: 22px; height: 22px; }
+  .cjobs__plus::before, .cjobs__plus::after { content: ""; position: absolute; background: #3b0800; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .cjobs__plus::before { top: 10px; left: 0; width: 22px; height: 2px; }
+  .cjobs__plus::after { top: 0; left: 10px; width: 2px; height: 22px; }
+  .cjobs__item[open] .cjobs__plus::after { transform: scaleY(0); opacity: 0; }
+  .cjobs__body { padding: 0 1.5rem 1.5rem 2rem; }
+  .cjobs__texte { margin: 0 0 1.25rem; font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #3b0800; max-width: 60ch; }
+  .cjobs__apply {
+    display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px;
+    border-radius: 999px; background: #3b0800; color: #fdf4f3; font-family: var(--font-sans);
+    font-weight: 500; font-size: 0.9375rem; text-transform: uppercase; letter-spacing: -0.18px;
+    transition: transform 0.2s ease;
+  }
+  .cjobs__apply:hover { transform: scale(0.97); }
+
+  @media (max-width: 640px) {
+    .cjobs__row { padding: 1rem 1.25rem; }
+    .cjobs__body { padding: 0 1.25rem 1.25rem; }
+  }
+</style>

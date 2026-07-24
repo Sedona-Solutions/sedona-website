@@ -1,76 +1,348 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CtaFinal from "../components/home/CtaFinal.astro";
 import home from "../../content/home/index.json";
 import global from "../../content/global/index.json";
-const { agences, email, reseaux } = global;
+
+const { agences, email } = global;
+const temoignage = home.temoignagesSection?.temoignages?.[0];
+
+const PROFILS = [
+  "Dirigeant / Direction générale",
+  "DSI / Directeur technique",
+  "Chef de projet / PMO",
+  "Responsable produit / marketing",
+  "Autre",
+];
+
+const BESOINS = [
+  "Produits digitaux (site, app, UX/UI)",
+  "Data & IA",
+  "Infra & sécurité / Cloud",
+  "Une offre clé en main (Keycloak, Brieff, IA Forge…)",
+  "Accompagnement / conseil",
+  "Autre / à définir",
+];
+
+const DELAIS = ["Dès que possible", "Dans 1 à 3 mois", "Dans 3 à 6 mois", "Phase d'exploration"];
 ---
 
-<BaseLayout title="Contact — Sedona" description="Contactez la tribu Sedona — Paris, Lyon, Toulon.">
-  <CtaFinal cta={home.ctaFinal} />
-
+<BaseLayout title="Contact — Sedona" description="Un échange, pas un cahier des charges. Parlons de votre projet.">
   <section class="contact">
-    <div class="container">
-      <header class="contact__head">
-        <p class="contact__eyebrow">Nos agences</p>
-        <h2 class="contact__title">Trois adresses, une même tribu</h2>
-      </header>
+    <div class="container contact__grid">
+      <aside class="contact__intro" data-reveal>
+        <p class="contact__eyebrow">Contact</p>
+        <h1 class="contact__title">Un échange, <em>pas un cahier des charges.</em></h1>
+        <p class="contact__lead">
+          On vous pose quelques questions de cadrage pour préparer un échange utile. Pas de relance commerciale insistante — promis.
+        </p>
 
-      <ul class="contact__agences">
-        {
-          agences.map((a) => (
-            <li class="agence">
-              <h3 class="agence__ville">{a.ville}</h3>
-              {a.adresse && <p class="agence__adresse">{a.adresse}</p>}
-              {a.telephone && <p class="agence__tel">{a.telephone}</p>}
-            </li>
-          ))
-        }
-      </ul>
-
-      <div class="contact__coord">
-        {email && (
-          <p class="contact__email">
-            <span>Écrivez-nous</span>
+        <ul class="contact__meta">
+          <li>
+            <span class="contact__meta-label">Email</span>
             <a href={`mailto:${email}`}>{email}</a>
-          </p>
+          </li>
+          <li>
+            <span class="contact__meta-label">Disponibilité</span>
+            <span>Lun - Ven · 9h - 18h</span>
+          </li>
+          <li>
+            <span class="contact__meta-label">Délai de réponse</span>
+            <span>Sous 48h ouvrées</span>
+          </li>
+          <li>
+            <span class="contact__meta-label">Engagement</span>
+            <span>Aucun · premier échange offert</span>
+          </li>
+        </ul>
+
+        {temoignage && (
+          <blockquote class="contact__quote">
+            <p>“{temoignage.citation}”</p>
+            <cite>— {temoignage.auteur} · {temoignage.role}</cite>
+          </blockquote>
         )}
-        {reseaux?.length > 0 && (
-          <p class="contact__social">
-            <span>Suivez-nous</span>
-            {reseaux.map((r) => <a href={r.url}>{r.plateforme}</a>)}
+      </aside>
+
+      <div class="contact__card" data-reveal>
+        <ol class="contact__steps" aria-hidden="true">
+          <li class="step is-active" data-step-indicator="1"><span class="step__n">01</span>Profil</li>
+          <li class="step" data-step-indicator="2"><span class="step__n">02</span>Projet</li>
+          <li class="step" data-step-indicator="3"><span class="step__n">03</span>Coordonnées</li>
+        </ol>
+
+        <form id="contactForm" novalidate>
+          <input type="text" name="website_url" id="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <fieldset class="panel" data-panel="1">
+            <legend class="panel__title">Quel est votre profil ?</legend>
+            <div class="option-grid" data-required="true">
+              {PROFILS.map((p) => (
+                <label class="option-card">
+                  <input type="radio" name="profil" value={p} />
+                  <span>{p}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="panel" data-panel="2" hidden>
+            <legend class="panel__title">Votre projet.</legend>
+            <p class="panel__sub">Vos besoins — plusieurs choix possibles</p>
+            <div class="option-grid">
+              {BESOINS.map((b) => (
+                <label class="option-card option-card--check">
+                  <input type="checkbox" name="besoins" value={b} />
+                  <span>{b}</span>
+                </label>
+              ))}
+            </div>
+            <p class="panel__sub panel__sub--spaced">Quand souhaitez-vous démarrer ?</p>
+            <div class="option-grid option-grid--tight" data-required="true">
+              {DELAIS.map((d) => (
+                <label class="option-card">
+                  <input type="radio" name="delai" value={d} />
+                  <span>{d}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="panel" data-panel="3" hidden>
+            <legend class="panel__title">Vos coordonnées.</legend>
+            <div class="field-grid">
+              <label class="field"><input type="text" name="prenom" placeholder="Prénom *" required /></label>
+              <label class="field"><input type="text" name="nom" placeholder="Nom *" required /></label>
+              <label class="field"><input type="email" name="email" placeholder="Email professionnel *" required /></label>
+              <label class="field"><input type="tel" name="telephone" placeholder="Téléphone (optionnel)" /></label>
+              <label class="field field--full"><input type="text" name="entreprise" placeholder="Nom de l'entreprise" /></label>
+              <label class="field field--full">
+                <textarea name="message" rows="3" placeholder="Décrivez brièvement votre projet (optionnel)"></textarea>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-nav">
+            <button type="button" class="form-btn form-btn--ghost" id="btnPrev" hidden>Précédent</button>
+            <button type="button" class="form-btn form-btn--primary" id="btnNext">Suivant</button>
+            <button type="submit" class="form-btn form-btn--primary" id="btnSubmit" hidden>Envoyer ma demande</button>
+          </div>
+
+          <p class="form-legal">
+            En envoyant ce formulaire, vous acceptez d'être contacté(e). Vos données sont traitées conformément au RGPD et ne sont jamais partagées.
           </p>
-        )}
+        </form>
+
+        <div class="contact__success" id="contactSuccess" hidden>
+          <span class="success__check" aria-hidden="true">✓</span>
+          <h2>Demande envoyée.</h2>
+          <p>Nous revenons vers vous rapidement, avec un premier retour sur votre projet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="contact__agences" data-reveal>
+        <p class="contact__agences-title">Nos agences</p>
+        <ul>
+          {agences.map((a) => (
+            <li>
+              <strong>{a.ville}</strong>
+              {a.adresse && <span>{a.adresse}</span>}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  const form = document.getElementById("contactForm");
+  if (form instanceof HTMLFormElement) {
+    const panels = [...form.querySelectorAll(".panel")];
+    const stepIndicators = [...document.querySelectorAll("[data-step-indicator]")];
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+    const btnSubmit = document.getElementById("btnSubmit");
+    const stepsList = document.querySelector(".contact__steps");
+    const success = document.getElementById("contactSuccess");
+    let step = 1;
+
+    function validatePanel(panel) {
+      let valid = true;
+      panel.querySelectorAll("[data-required]").forEach((group) => {
+        const checked = group.querySelector("input:checked");
+        group.classList.toggle("is-invalid", !checked);
+        if (!checked) valid = false;
+      });
+      const requiredInputs = [...panel.querySelectorAll("input[required]")];
+      for (const input of requiredInputs) {
+        if (!input.checkValidity()) {
+          valid = false;
+          input.reportValidity();
+          break;
+        }
+      }
+      return valid;
+    }
+
+    function render() {
+      panels.forEach((p, i) => {
+        p.hidden = i + 1 !== step;
+      });
+      stepIndicators.forEach((el, i) => el.classList.toggle("is-active", i + 1 <= step));
+      btnPrev.hidden = step === 1;
+      btnNext.hidden = step === panels.length;
+      btnSubmit.hidden = step !== panels.length;
+    }
+
+    btnNext.addEventListener("click", () => {
+      const current = panels[step - 1];
+      if (!validatePanel(current)) return;
+      step = Math.min(step + 1, panels.length);
+      render();
+    });
+
+    btnPrev.addEventListener("click", () => {
+      step = Math.max(step - 1, 1);
+      render();
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const lastPanel = panels[panels.length - 1];
+      if (!validatePanel(lastPanel)) return;
+
+      const data = new FormData(form);
+      const payload = Object.fromEntries(data.entries());
+      payload.besoins = data.getAll("besoins");
+
+      // TODO: brancher l'envoi réel ici (Netlify Forms, Formspree, CRM, webhook…).
+      console.log("Contact form submission", payload);
+
+      form.hidden = true;
+      if (stepsList) stepsList.hidden = true;
+      success.hidden = false;
+    });
+
+    render();
+  }
+</script>
+
 <style>
-  .contact { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
-  .contact__head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .contact {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-radius: var(--radius-section-lg);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 400px) 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
   .contact__eyebrow {
-    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em;
-    font-size: 1rem; color: var(--color-text-muted); margin-bottom: 0.75rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
   }
   .contact__title {
-    font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem);
-    line-height: 1.05; letter-spacing: -0.03em; color: #3b0800; margin: 0;
+    margin: 0; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.1; letter-spacing: -0.02em; color: #3b0800;
   }
+  .contact__title em { font-family: var(--font-mono); font-style: italic; font-weight: 400; }
+  .contact__lead { margin: 1.25rem 0 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.5; color: #3b0800; max-width: 38ch; }
 
-  .contact__agences { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .agence { background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 2rem; }
-  .agence__ville { font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; text-transform: uppercase; color: var(--color-red-rock-700); margin: 0; }
-  .agence__adresse, .agence__tel { font-family: var(--font-body); color: #3b0800; margin: 0.6rem 0 0; white-space: pre-line; }
+  .contact__meta { list-style: none; margin: 2rem 0 0; padding: 1.75rem 0 0; border-top: 1px dashed #3b0800; display: flex; flex-direction: column; gap: 1rem; }
+  .contact__meta li { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800; }
+  .contact__meta-label { color: color-mix(in srgb, #3b0800 60%, transparent); }
+  .contact__meta a { color: #3b0800; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
-  .contact__coord { display: flex; flex-wrap: wrap; gap: clamp(2rem, 6vw, 5rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
-  .contact__email span, .contact__social span {
-    display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em;
-    font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 0.5rem;
+  .contact__quote { margin: 2rem 0 0; padding: 1.5rem 1.75rem; background: #fff; border-radius: 20px; }
+  .contact__quote p { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1rem; line-height: 1.5; color: #3b0800; }
+  .contact__quote cite { display: block; margin-top: 0.75rem; font-style: normal; font-family: var(--font-body); font-size: 0.875rem; color: color-mix(in srgb, #3b0800 65%, transparent); }
+
+  .contact__card { background: #fff; border-radius: 28px; padding: clamp(1.75rem, 3vw, 2.75rem); }
+
+  .contact__steps { list-style: none; display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0 0 2rem; padding: 0; }
+  .step {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem;
+    color: color-mix(in srgb, #3b0800 40%, transparent);
   }
-  .contact__email a { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.25rem); color: var(--color-primary); }
-  .contact__social { display: flex; flex-direction: column; }
-  .contact__social a { font-family: var(--font-sans); font-weight: 600; color: #3b0800; text-decoration: underline; text-underline-offset: 4px; }
+  .step__n {
+    display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px;
+    border-radius: 999px; border: 1.5px solid currentColor; font-size: 0.75rem;
+  }
+  .step.is-active { color: #3b0800; }
+  .step.is-active .step__n { background: #3b0800; border-color: #3b0800; color: #fdf4f3; }
 
-  @media (max-width: 760px) { .contact__agences { grid-template-columns: 1fr; } }
+  .panel__title { margin: 0 0 1.5rem; padding: 0; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #3b0800; }
+  .panel__sub { margin: 0 0 1rem; font-family: var(--font-body); font-weight: 500; font-size: 0.9375rem; color: color-mix(in srgb, #3b0800 70%, transparent); }
+  .panel__sub--spaced { margin-top: 2rem; }
+
+  .option-grid { list-style: none; margin: 0; padding: 0.35rem; border-radius: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; transition: box-shadow 0.15s ease; }
+  .option-grid--tight { grid-template-columns: repeat(2, 1fr); }
+  .option-grid.is-invalid { box-shadow: 0 0 0 2px var(--color-red-rock-600); }
+  .option-card {
+    position: relative; display: flex; align-items: center; gap: 0.6rem;
+    border: 1.5px solid color-mix(in srgb, #3b0800 25%, transparent); border-radius: 14px;
+    padding: 0.85rem 1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800;
+    cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .option-card input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .option-card:has(input:checked) { border-color: #3b0800; background: var(--color-canyon-100); font-weight: 600; }
+  .option-card:has(input:focus-visible) { outline: 2px solid #3b0800; outline-offset: 2px; }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { display: block; }
+  .field--full { grid-column: 1 / -1; }
+  .field input, .field textarea {
+    width: 100%; border: 1.5px solid color-mix(in srgb, #3b0800 25%, transparent); border-radius: 14px;
+    padding: 0.9rem 1.1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800;
+    background: #fff; resize: vertical;
+  }
+  .field input:focus, .field textarea:focus { outline: none; border-color: #3b0800; }
+  .field input::placeholder, .field textarea::placeholder { color: color-mix(in srgb, #3b0800 45%, transparent); }
+
+  .form-nav { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 2rem; }
+  .form-btn {
+    border-radius: 999px; padding: 0.9rem 1.75rem; font-family: var(--font-sans); font-weight: 500;
+    font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.01em; border: none; cursor: pointer;
+    transition: transform 0.2s ease, background 0.15s ease;
+  }
+  .form-btn:hover { transform: scale(0.97); }
+  .form-btn--primary { background: #3b0800; color: #fdf4f3; }
+  .form-btn--primary:hover { background: var(--color-red-rock-900); }
+  .form-btn--ghost { background: transparent; color: #3b0800; border: 1.5px solid color-mix(in srgb, #3b0800 30%, transparent); margin-right: auto; }
+
+  .form-legal { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 0.8125rem; color: color-mix(in srgb, #3b0800 55%, transparent); }
+
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+  .contact__success { text-align: center; padding: 2rem 1rem; }
+  .success__check {
+    display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px;
+    border-radius: 999px; background: var(--color-cactus-200); color: #3b0800; font-size: 1.5rem; margin-bottom: 1.25rem;
+  }
+  .contact__success h2 { margin: 0 0 0.75rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; color: #3b0800; }
+  .contact__success p { margin: 0; font-family: var(--font-body); color: #3b0800; }
+
+  .contact__agences { margin-top: clamp(3rem, 6vw, 5rem); padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px dashed #3b0800; }
+  .contact__agences-title {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin: 0 0 1.25rem;
+  }
+  .contact__agences ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .contact__agences li { font-family: var(--font-body); color: #3b0800; display: flex; flex-direction: column; gap: 0.4rem; }
+  .contact__agences li strong { font-family: var(--font-sans); font-weight: 700; text-transform: uppercase; }
+  .contact__agences li span { white-space: pre-line; font-size: 0.9375rem; }
+
+  @media (max-width: 900px) {
+    .contact__grid { grid-template-columns: 1fr; }
+    .option-grid { grid-template-columns: 1fr; }
+    .field-grid { grid-template-columns: 1fr; }
+    .contact__agences ul { grid-template-columns: 1fr; }
+  }
 </style>

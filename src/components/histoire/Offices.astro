@@ -1,0 +1,71 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+import { recolorIcon } from "../../utils/iconRecolor.js";
+
+const { offices } = Astro.props;
+const items = offices?.items ?? [];
+
+// Icône de chaque agence en accent-color-1/2/3 (Ovni, Cactus, Red rock).
+const ICON_COLOR = { Lyon: "#b3b5ee", Paris: "#f8b3a9", Toulon: "#a7e9d1" };
+const icons = items.map((it) => recolorIcon("flag-heart", ICON_COLOR[it.ville] ?? "#a7e9d1"));
+---
+
+<section class="hoff">
+  <img class="hoff__deco" src="/deco/squiggle-9-cactus-200.svg" alt="" aria-hidden="true" />
+  <div class="container">
+    <header class="hoff__head" data-reveal>
+      <TitreSegments segments={offices?.titre} as="h2" class="hoff__title" />
+    </header>
+
+    <ul class="hoff__grid" data-reveal-group>
+      {
+        items.map((it, i) => (
+          <li class="hoff__card" data-reveal>
+            {icons[i] && <span class="hoff__icon" aria-hidden="true" set:html={icons[i]} />}
+            <h3 class="hoff__ville">{it.ville}</h3>
+            {it.label && <p class="hoff__label">{it.label}</p>}
+            {it.adresse && <p class="hoff__adresse">{it.adresse}</p>}
+            {it.email && (
+              <a class="hoff__email" href={`mailto:${it.email}`}>
+                <span class="hoff__email-bg" aria-hidden="true" />
+                <span class="hoff__email-label">{it.email}</span>
+              </a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hoff { position: relative; overflow: hidden; background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .hoff__deco { position: absolute; right: 20%; top: 19%; width: 140px; height: auto; transform: rotate(140deg); pointer-events: none; }
+  .hoff__head { margin: 0 auto clamp(2.5rem, 5vw, 4rem); text-align: center; }
+  .hoff :global(.hoff__title) { margin: 0 auto; max-width: 88ch; color: #3b0800; }
+
+  .hoff__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .hoff__card {
+    background: #fff; border: 1px solid #42140d; border-radius: 32px; padding: 3rem 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;
+  }
+  .hoff__icon { display: block; width: 56px; height: 56px; }
+  .hoff__icon :global(svg) { width: 100%; height: 100%; }
+  .hoff__ville { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 2.5rem; letter-spacing: -0.01em; color: #42140d; }
+  .hoff__label { margin: -0.5rem 0 0; font-family: var(--font-sans); font-size: 1rem; letter-spacing: -0.01em; color: #3b0800; }
+  .hoff__adresse { margin: 0; white-space: pre-line; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: #3b0800; }
+  .hoff__email {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    padding: 18.5px 24px; border-radius: 999px; color: #fdf4f3;
+    font-family: var(--font-sans); font-weight: 500; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: -0.18px; transition: transform 0.2s ease;
+  }
+  .hoff__email:hover { transform: scale(0.97); }
+  .hoff__email-bg { position: absolute; inset: 0; border-radius: inherit; background: #3b0800; }
+  .hoff__email-label { position: relative; }
+
+  @media (max-width: 900px) {
+    .hoff__grid { grid-template-columns: 1fr; }
+    .hoff__deco { display: none; }
+  }
+</style>

@@ -1,0 +1,296 @@
+{
+  "hero": {
+    "eyebrow": "Rejoins Sedona",
+    "titre": [
+      {
+        "texte": "Construisons les projets de ",
+        "couleur": "none"
+      },
+      {
+        "texte": "demain",
+        "couleur": "ovni"
+      }
+    ],
+    "intro": "On ne recrute pas des CV, mais on crée une équipe où designers et devs collaborent sur des produits dont on est fiers, avec zéro bullshit et 100% d'ambition.",
+    "ctaLabel": "Voir nos offres",
+    "ctaHref": "#jobs",
+    "membres": [
+      {
+        "nom": "Edouard L.",
+        "role": "CTO",
+        "photo": "/uploads/articles/collab/edouard-l.png",
+        "couleur": "cactus"
+      },
+      {
+        "nom": "Marie-Abelle N.",
+        "role": "Directrice commerciale régie",
+        "photo": "/uploads/articles/collab/marie-n.png",
+        "couleur": "canyon"
+      },
+      {
+        "nom": "Adérito P.",
+        "role": "Business developper Cloud Data/IA & Digital",
+        "photo": "/uploads/articles/collab/aderito-p.png",
+        "couleur": "sky"
+      },
+      {
+        "nom": "Jérome C.",
+        "role": "Chef de projet",
+        "photo": "/uploads/articles/collab/jerome-c.png",
+        "couleur": "red-rock"
+      },
+      {
+        "nom": "Elsa M.",
+        "role": "Cheffe de projet",
+        "photo": "/uploads/articles/collab/elsa-m.png",
+        "couleur": "sunshine"
+      },
+      {
+        "nom": "Sébastien C.",
+        "role": "Expert Keycloak",
+        "photo": "/uploads/articles/collab/sebastien-c.png",
+        "couleur": "ovni"
+      },
+      {
+        "nom": "Antoine M.",
+        "role": "Lead dev mobile",
+        "photo": "/uploads/articles/collab/antoine-m.png",
+        "couleur": "cactus"
+      },
+      {
+        "nom": "Cécile I.",
+        "role": "Lead UX/UI designer",
+        "photo": "/uploads/articles/collab/cecile-i.png",
+        "couleur": "canyon"
+      },
+      {
+        "nom": "Benoît D.",
+        "role": "Dévleoppeur PHP",
+        "photo": "/uploads/articles/collab/benoit-d.png",
+        "couleur": "sky"
+      },
+      {
+        "nom": "Mathias B.",
+        "role": "Développeur Java",
+        "photo": "/uploads/articles/collab/mathias-b.png",
+        "couleur": "red-rock"
+      },
+      {
+        "nom": "Mathieu Broutin",
+        "role": "Architecte",
+        "photo": "/uploads/articles/collab/mathieu-b.png",
+        "couleur": "sunshine"
+      },
+      {
+        "nom": "Guillaume M.",
+        "role": "Développeur PHP",
+        "photo": "/uploads/articles/collab/guillaume-m.png",
+        "couleur": "ovni"
+      }
+    ]
+  },
+  "valeurs": {
+    "eyebrow": "Nos valeurs",
+    "titre": "Derrière nos valeurs se cachent celles de nos équipes !",
+    "items": [
+      {
+        "titre": "Humain",
+        "texte": "On met les gens avant les process. Chaque décision passe par une question : est-ce bon pour l'équipe ?",
+        "icone": "badge-favorite-heart-2",
+        "couleur": "sunshine"
+      },
+      {
+        "titre": "Équité",
+        "texte": "Mêmes règles, mêmes chances pour tous. Rémunération et évolution restent transparentes.",
+        "icone": "check-double",
+        "couleur": "red-rock"
+      },
+      {
+        "titre": "Exigence",
+        "texte": "On vise juste, pas vite. La qualité du travail prime toujours sur le nombre de jours facturés.",
+        "icone": "windows-speedtest",
+        "couleur": "ovni"
+      },
+      {
+        "titre": "Passion",
+        "texte": "On recrute des gens curieux qui ont envie d'apprendre, pas seulement d'exécuter.",
+        "icone": "flag-heart",
+        "couleur": "sky"
+      },
+      {
+        "titre": "Résilience",
+        "texte": "Un projet n'est jamais linéaire. On s'adapte sans jamais perdre le cap.",
+        "icone": "network",
+        "couleur": "canyon"
+      },
+      {
+        "titre": "Collectif",
+        "texte": "On avance en équipe : la réussite d'un projet est toujours une réussite partagée.",
+        "icone": "business-pick-user",
+        "couleur": "cactus"
+      }
+    ]
+  },
+  "jobs": {
+    "eyebrow": "Jobs à pourvoir",
+    "titre": [
+      {
+        "texte": "On recrute ",
+        "couleur": "none"
+      },
+      {
+        "texte": "5 profils",
+        "couleur": "cactus"
+      },
+      {
+        "texte": " !",
+        "couleur": "none"
+      }
+    ],
+    "intro": "Tous nos postes sont ouverts en full remote ou hybride depuis nos bureaux.",
+    "items": [
+      {
+        "titre": "Product Designer (UX/UI) Senior",
+        "texte": "Vous concevez des parcours et des interfaces pour nos clients, du cadrage jusqu'au design system.",
+        "lieu": "Paris, Lyon ou remote",
+        "contrat": "CDI"
+      },
+      {
+        "titre": "Développeur·se Full-Stack",
+        "texte": "Vous intervenez sur des projets clients variés, du back au front, avec une vraie autonomie technique.",
+        "lieu": "Paris, Lyon, Toulon ou remote",
+        "contrat": "CDI"
+      },
+      {
+        "titre": "Ingénieur·e DevOps / Cloud",
+        "texte": "Vous industrialisez et sécurisez les infrastructures de nos clients sur des environnements cloud exigeants.",
+        "lieu": "Remote",
+        "contrat": "CDI"
+      },
+      {
+        "titre": "Consultant·e Data / IA",
+        "texte": "Vous accompagnez nos clients sur leurs projets data et IA, du cadrage à la mise en production.",
+        "lieu": "Paris ou remote",
+        "contrat": "CDI"
+      },
+      {
+        "titre": "Stage — UX Research",
+        "texte": "Vous participez aux études utilisateurs et à la restitution des insights auprès des équipes produit.",
+        "lieu": "Paris",
+        "contrat": "Stage"
+      }
+    ]
+  },
+  "perks": {
+    "eyebrow": "Rejoins notre tribu",
+    "titre": [
+      {
+        "texte": "Ce qui t'attend ",
+        "couleur": "none"
+      },
+      {
+        "texte": "concrètement",
+        "couleur": "red-rock"
+      }
+    ],
+    "items": [
+      {
+        "texte": "MacBook Pro + budget matériel"
+      },
+      {
+        "texte": "Pack full remote (hébergement, transport, coworking)"
+      },
+      {
+        "texte": "Carte restaurant Swile"
+      },
+      {
+        "texte": "Afterworks, apéros, team buildings réguliers"
+      },
+      {
+        "texte": "Des bureaux dans un super quartier de Paris"
+      },
+      {
+        "texte": "13 jours de RTT (en moyenne)"
+      },
+      {
+        "texte": "Mutuelle Alan Green"
+      },
+      {
+        "texte": "Conférences, formations, meetups"
+      },
+      {
+        "texte": "Prime de vacances Syntec"
+      }
+    ]
+  },
+  "words": {
+    "items": [
+      {
+        "texte": "Humain",
+        "couleur": "sunshine"
+      },
+      {
+        "texte": "Équité",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": "Exigence",
+        "couleur": "ovni"
+      },
+      {
+        "texte": "Passion",
+        "couleur": "sky"
+      },
+      {
+        "texte": "Résilience",
+        "couleur": "canyon"
+      },
+      {
+        "texte": "Collectif",
+        "couleur": "cactus"
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "La vie chez Sedona",
+    "titre": [
+      {
+        "texte": "Plus qu'une équipe, une même ",
+        "couleur": "none"
+      },
+      {
+        "texte": "tribu",
+        "couleur": "sunshine"
+      }
+    ],
+    "intro": "Séminaires, afterworks improvisés, pair programming, meetups internes... On bosse dur et on s'amuse !",
+    "photos": [
+      "/uploads/histoire/photo-1.png",
+      "/uploads/histoire/photo-2.png",
+      "/uploads/histoire/photo-3.png",
+      "/uploads/histoire/photo-4.png",
+      "/uploads/histoire/photo-5.png",
+      "/uploads/histoire/photo-6.png",
+      "/uploads/histoire/photo-7.png"
+    ]
+  },
+  "ctaFinal": {
+    "titre": [
+      {
+        "texte": "Prêt·e à écrire la suite avec ",
+        "couleur": "none"
+      },
+      {
+        "texte": "nous",
+        "couleur": "red-rock"
+      },
+      {
+        "texte": " ?",
+        "couleur": "none"
+      }
+    ],
+    "description": "",
+    "ctaLabel": "Nous rejoindre",
+    "ctaHref": "#jobs"
+  }
+}

@@ -1,0 +1,53 @@
+---
+import TitreSegments from "../TitreSegments.astro";
+const { gallery } = Astro.props;
+const photos = gallery?.photos ?? [];
+---
+
+<section class="cgal">
+  <div class="container">
+    <header class="cgal__head" data-reveal>
+      {gallery?.eyebrow && <p class="cgal__eyebrow">{gallery.eyebrow}</p>}
+      <TitreSegments segments={gallery?.titre} as="h2" class="cgal__title" />
+      {gallery?.intro && <p class="cgal__intro">{gallery.intro}</p>}
+    </header>
+
+    {
+      photos.length > 0 && (
+        <ul class="cgal__grid" data-reveal-group>
+          {photos.map((src, i) => (
+            <li class={`cgal__item cgal__item--${i % 7}`} data-reveal>
+              <img src={src} alt="" loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .cgal { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg); }
+  .cgal__head { max-width: 720px; margin: 0 auto clamp(2.5rem, 5vw, 3rem); text-align: center; }
+  .cgal__eyebrow {
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
+    font-size: 1.25rem; color: #3b0800; margin: 0 0 1rem;
+  }
+  .cgal :global(.cgal__title) { margin: 0 auto; color: #3b0800; }
+  .cgal__intro { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; }
+
+  .cgal__grid { list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .cgal__item { border-radius: 20px; overflow: hidden; }
+  .cgal__item img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* Rythme 2 grandes / 3 moyennes / 2 grandes, comme sur la maquette. */
+  .cgal__item--0, .cgal__item--1 { grid-column: span 3; aspect-ratio: 640 / 480; }
+  .cgal__item--2, .cgal__item--3, .cgal__item--4 { grid-column: span 2; aspect-ratio: 416 / 312; }
+  .cgal__item--5, .cgal__item--6 { grid-column: span 3; aspect-ratio: 640 / 480; }
+
+  @media (max-width: 900px) {
+    .cgal__grid { grid-template-columns: repeat(2, 1fr); }
+    .cgal__item--0, .cgal__item--1, .cgal__item--2, .cgal__item--3, .cgal__item--4, .cgal__item--5, .cgal__item--6 {
+      grid-column: span 1; aspect-ratio: 4 / 3;
+    }
+  }
+</style>

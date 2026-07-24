@@ -1,21 +1,25 @@
 ---
 titre: Modernisation et refonte du site internet
 client: Insee
-couverture: /uploads/projets/insee.png
-accroche: Rendre la donnée statistique lisible et accessible au plus grand nombre.
-annee: 2021 - 2023
+couverture: /uploads/projets/klesia-cover.png
 tags:
   - Service publique
   - App Web
   - UX/UI design
   - Symfony
   - Interface Design
+resume: Modernisation et refonte du site internet de l'Insee.
+accroche: Rendre la donnée statistique lisible et accessible au plus grand nombre.
+annee: 2021 - 2023
+accent: sky
 technos:
-  - { nom: Symfony, logo: /technos/symfony.svg }
-  - { nom: Elastic Stack, logo: /technos/elastic.svg }
+  - nom: Symfony
+    logo: /technos/symfony.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 defis:
   titre: Donner du sens à la donnée
-  intro: Diffuser une masse considérable de données statistiques de façon claire, fiable et accessible.
+  intro: 'Diffuser une masse considérable de données statistiques de façon claire, fiable et accessible.'
   points:
     - titre: Volumétrie de données
       texte: Structurer et publier de très nombreux jeux de données.
@@ -34,7 +38,6 @@ approche:
       texte: Trouver rapidement la bonne statistique.
     - titre: Socle Symfony robuste
       texte: Une base fiable et maintenable.
-resume: Modernisation et refonte du site internet de l'Insee.
 date: 2024-12-01T00:00:00.000Z
 ---
 

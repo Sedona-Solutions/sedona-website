@@ -61,12 +61,10 @@
     "ctaHref": "/contact"
   },
   "ticker": [
-    "Enfin une ESN à voix humaine !",
-    "On trace la route avec vous.",
-    "La bonne stack + la bonne tribu.",
-    "Des pionniers de la tech, guidés par l'humain."
+    "Marre des ESN en mode pilote automatique ? Rejoins la tribu Sedona.",
+    "SEDONA, enfin une ESN à voix humaine !"
   ],
-  "intro": "Depuis 1998, nous identifions et résolvons les bons problèmes — avec une obsession : transformer la complexité en solutions simples et durables.",
+  "intro": "Depuis 1998, nous développons des solutions, adaptées aux réalités métier, sans promesses irréalistes ni automatisations aveugles.",
   "chips": [
     "Créativité",
     "Innovation",
@@ -107,6 +105,49 @@
     ],
     "intro": "De la conception produit à l'infrastructure critique — nous maîtrisons toute la chaîne de valeur."
   },
+  "offresSection": {
+    "titre": [
+      {
+        "texte": "Nos ",
+        "couleur": "none"
+      },
+      {
+        "texte": "offres",
+        "couleur": "cactus"
+      },
+      {
+        "texte": " clé en main",
+        "couleur": "none"
+      }
+    ],
+    "intro": "Déjà prêtes à s'intégrer dans vos projets !",
+    "offres": [
+      {
+        "titre": "Brieff",
+        "accroche": "Lancez vos projets 10x plus vite",
+        "ctaHref": "/offres/brieff",
+        "illustration": "/deco/illus_brieff.svg"
+      },
+      {
+        "titre": "Keycloak",
+        "accroche": "Sécuriser vos applications sans réinventer la roue",
+        "ctaHref": "/offres/keycloak-run",
+        "illustration": "/deco/illus_keycloak.svg"
+      },
+      {
+        "titre": "IA Forge",
+        "accroche": "Notre accélérateur pour passer du prototype IA à la production",
+        "ctaHref": "/offres/ia-forge",
+        "illustration": "/deco/illus_IA_Forge.svg"
+      },
+      {
+        "titre": "Elastic",
+        "accroche": "Vos données exploitables en temps réel avec une stack taillée sur-mesure",
+        "ctaHref": "/offres/elastic",
+        "illustration": "/deco/illus_Elastic.svg"
+      }
+    ]
+  },
   "projetsSection": {
     "titre": [
       {
@@ -142,7 +183,13 @@
         "citation": "J'ai choisi Sedona en raison d'une expérience antérieure positive. Bien que les équipes aient changé depuis 15 ans, j'ai retrouvé l'ADN de Sedona dans les nouveaux collaborateurs.",
         "auteur": "France Allègre",
         "role": "Directrice Générale de La Cigale",
-        "avatar": "/uploads/articles/avatar-france.png"
+        "avatar": "/uploads/articles/avatar-france-a.png"
+      },
+      {
+        "citation": "Sedona a su comprendre nos enjeux métier et traduire la singularité de chaque marque dans une interface cohérente. Leur réactivité sur 8 ans nous a permis de maintenir un service irréprochable pour nos auditeurs.",
+        "auteur": "Christophe Lenoble",
+        "role": "Directeur Technique Adjoint & Responsable pôle Digital NRJ AUDIO",
+        "avatar": "/uploads/articles/avatar-christophe-l.png"
       }
     ]
   },
@@ -151,27 +198,39 @@
     "logos": [
       {
         "nom": "BNP Paribas",
-        "logo": "/uploads/clients/bnp-paribas.svg"
+        "logo": "/uploads/clients/white/bnp-paribas.svg"
       },
       {
         "nom": "Nespresso",
-        "logo": "/uploads/clients/nespresso.svg"
+        "logo": "/uploads/clients/white/nespresso_logo.svg"
       },
       {
-        "nom": "Universal Music Group",
-        "logo": "/uploads/clients/universal-music.svg"
+        "nom": "Cedig",
+        "logo": "/uploads/clients/white/cegid_logo.svg"
       },
       {
         "nom": "L'Oréal",
-        "logo": "/uploads/clients/loreal.svg"
+        "logo": "/uploads/clients/white/loreal_logo.svg"
       },
       {
         "nom": "Saint-Gobain",
-        "logo": "/uploads/clients/saint-gobain.svg"
+        "logo": "/uploads/clients/white/saint-gobain_logo.svg"
       },
       {
         "nom": "Sodexo",
-        "logo": "/uploads/clients/sodexo.svg"
+        "logo": "/uploads/clients/white/sodexo.svg"
+      },
+      {
+        "nom": "M6",
+        "logo": "/uploads/clients/white/m6_logo.svg"
+      },
+      {
+        "nom": "Orange",
+        "logo": "/uploads/clients/white/orange_logo.svg"
+      },
+      {
+        "nom": "Universal Music Group",
+        "logo": "/uploads/clients/white/universal-music.svg"
       }
     ]
   },
@@ -190,6 +249,7 @@
         "couleur": "none"
       }
     ],
+    "description": "Un premier échange suffit pour comprendre comment nous pourrions vous accompagner, sans engagement de votre part.",
     "ctaLabel": "Parlons de votre projet",
     "ctaHref": "/contact"
   }

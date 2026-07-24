@@ -25,6 +25,8 @@ const filtres = [
   { label: "Services", cat: "services" },
 ];
 const compte = (cat) => (cat === "all" ? projets.length : projets.filter((p) => slug(p.tags?.[0] ?? "") === cat).length);
+// On masque les catégories vides (aucune réalisation à filtrer dessus).
+const filtresVisibles = filtres.filter((fl) => fl.cat === "all" || compte(fl.cat) > 0);
 const clients = home.clientsSection?.logos ?? [];
 ---
 
@@ -41,10 +43,10 @@ const clients = home.clientsSection?.logos ?? [];
 
   <nav class="filtres" aria-label="Filtrer les projets">
     <ul class="container filtres__list">
-      {filtres.map((fl, i) => (
+      {filtresVisibles.map((fl, i) => (
         <li>
           <button class={`filtre ${i === 0 ? "is-active" : ""}`} type="button" data-cat={fl.cat}>
-            {fl.label}<sup>{compte(fl.cat)}</sup>
+            <span class="filtre__label">{fl.label}</span><sup>{compte(fl.cat)}</sup>
           </button>
         </li>
       ))}
@@ -52,12 +54,17 @@ const clients = home.clientsSection?.logos ?? [];
   </nav>
 
   <section class="pgrid">
-    <ul class="container pgrid__list">
+    <ul class="container pgrid__list" data-reveal-group>
       {
         projets.map((p) => (
-          <li class="pcard" data-cat={slug(p.tags?.[0] ?? "")}>
+          <li class="pcard" data-cat={slug(p.tags?.[0] ?? "")} data-reveal>
             <a href={`/projets/${p.slug}`} class="pcard__media">
               {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pcard__ph" aria-hidden="true" />}
+              <span class="pcard__arrow" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </a>
             <h2 class="pcard__title">{p.client ?? p.titre}</h2>
             {p.tags?.length > 0 && <ul class="pcard__tags">{p.tags.map((tg) => <li>{tg}</li>)}</ul>}
@@ -82,14 +89,16 @@ const clients = home.clientsSection?.logos ?? [];
     </div>
   </section>
 
+  <div class="dark-stack">
   <section class="autres">
-    <div class="container">
+    <div class="container" data-reveal>
       <h2 class="autres__title">Ces <mark class="hl hl--sunshine">clients</mark> ont aussi tenté l'aventure avec nous</h2>
       <img class="autres__logos" src="/uploads/clients/clients-logos.png" alt="Logos de nos clients" loading="lazy" />
     </div>
   </section>
 
   <CtaFinal cta={home.ctaFinal} />
+  </div>
 </BaseLayout>
 
 <script>
@@ -163,20 +172,51 @@ const clients = home.clientsSection?.logos ?? [];
   /* Filtres : libellés Space Grotesk séparés par « / », compteur en exposant,
      actif souligné d'un trait rouge crayonné (SVG Figma). */
   .filtres { background: var(--color-canyon-50); }
-  .filtres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0; padding-block: 1rem 2.5rem; margin-block: 0; }
+  .filtres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; text-align: center; gap: 0.25rem 0.5rem; padding-block: 1rem 2.5rem; margin-block: 0; }
   .filtres__list li:not(:last-child) .filtre::after { content: "/"; margin: 0 0.5rem 0 0.65rem; font-weight: 400; color: var(--color-text-muted); }
   .filtre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
   .filtre sup { font-size: 0.5em; font-weight: 500; margin-left: 0.15em; vertical-align: super; }
-  .filtre.is-active { background: url("/deco/filtre-underline.svg") no-repeat left bottom / 100% 0.5rem; padding-bottom: 0.7rem; }
+  .filtre__label { display: inline-block; }
+  /* Le trait souligne uniquement le libellé (pas le compteur en exposant) ;
+     hauteur fixe + repeat-x pour garder une épaisseur de trait constante,
+     quelle que soit la longueur du libellé (au lieu d'un étirement 100% qui
+     déformait le trait). */
+  .filtre.is-active .filtre__label {
+    background: url("/deco/filtre-underline.svg") repeat-x left bottom / auto 7px;
+    padding-bottom: 0.2rem;
+  }
 
-  .pgrid { background: var(--color-canyon-50); padding-block: clamp(1rem, 2vw, 1.5rem) clamp(3rem, 6vw, 5rem); }
+  .dark-stack { background: #3b0800; }
+  .pgrid {
+    background: var(--color-canyon-50);
+    padding-block: clamp(1rem, 2vw, 1.5rem) clamp(3rem, 6vw, 5rem);
+  }
   .pgrid__list { list-style: none; padding-block: 0; margin-block: 0; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 4vw, 3.5rem) 2rem; }
-  .pcard__media { display: block; aspect-ratio: 640 / 571; border-radius: 20px; overflow: hidden; background: var(--color-neutral-100); }
-  .pcard__media img { width: 100%; height: 100%; object-fit: cover; }
+  .pcard__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 640 / 571;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--color-neutral-100);
+    border: 1px solid transparent;
+    transition: border-color 0.25s ease, border-bottom-width 0.25s ease;
+  }
+  .pcard__media:hover { border-color: #3b0800; border-bottom-width: 5px; }
+  .pcard__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .pcard__media:hover img { transform: scale(1.05); }
   .pcard__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
+  .pcard__arrow {
+    position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center; border-radius: 999px;
+    background: #3b0800; color: #fdf4f3; opacity: 0; transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .pcard__media:hover .pcard__arrow { opacity: 1; transform: translateY(0); }
+  .pcard__arrow svg { width: 22px; height: 22px; }
   .pcard__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.5rem 0 0; }
   .pcard__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; line-height: 20px; letter-spacing: -0.16px; color: #3b0800; padding: 2px 12px; border: 1px solid color-mix(in srgb, #3b0800 40%, transparent); border-radius: 999px; }
 
   .pgrid__empty { text-align: center; font-family: var(--font-sans); font-size: 1.25rem; color: var(--color-text-muted); margin-top: 2rem; }
   /* Pagination : « HOP HOP HOP » + chevrons + cercles numérotés + flèche crayonnée.
@@ -185,15 +225,22 @@ const clients = home.clientsSection?.logos ?? [];
   .pagination__more { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1.5rem; }
   .pager { position: relative; display: inline-flex; align-items: center; gap: 0.85rem; }
   .pager__nums { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: 0.85rem; }
-  .pager__nums :global(button) { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 999px; font-family: var(--font-sans); font-size: 1.25rem; color: #fdf4f3; background: #3b0800; border: 1.5px solid #3b0800; cursor: pointer; transition: background 0.15s ease, color 0.15s ease; }
-  .pager__nums :global(button.is-active) { background: transparent; color: #3b0800; }
+  .pager__nums :global(button) { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 999px; font-family: var(--font-sans); font-size: 1.25rem; color: #3b0800; background: transparent; border: 1.5px solid #3b0800; cursor: pointer; transition: background 0.15s ease, color 0.15s ease; }
+  .pager__nums :global(button.is-active),
+  .pager__nums :global(button:hover) { background: #3b0800; color: #fdf4f3; }
   .pager__arrow { display: grid; place-items: center; width: 40px; height: 40px; background: none; border: none; color: #3b0800; cursor: pointer; }
   .pager__arrow svg { width: 22px; height: 22px; }
   .pager__arrow:disabled { opacity: 0.3; cursor: default; }
   .pager__squiggle { position: absolute; left: calc(100% + 3.5rem); top: -5.5rem; width: clamp(80px, 7vw, 120px); height: auto; pointer-events: none; }
 
-  /* Bande « Ces clients » : fond crème, titre foncé, pastille sunshine, mur de logos. */
-  .autres { background: var(--color-canyon-50); padding-block: clamp(3rem, 7vw, 6rem); text-align: center; }
+  /* Bande « Ces clients » : fond crème, titre foncé, pastille sunshine, mur de logos.
+     Coin bas arrondi : flotte sur le fond sombre commun, au-dessus du CtaFinal. */
+  .autres {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 6rem);
+    text-align: center;
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
   .autres__title { margin: 0 auto; max-width: 20ch; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 5rem); line-height: 1.1; letter-spacing: -0.03em; color: #3b0800; }
   .autres__title .hl { line-height: 1.25; }
   .autres__logos { display: block; width: 100%; max-width: 1180px; height: auto; margin: clamp(2.5rem, 6vw, 4.5rem) auto 0; }

@@ -1,0 +1,86 @@
+---
+const {
+  eyebrow = "Le constat",
+  titre = "",
+  titreAccent = "",
+  intro,
+  colonneAvantTitre = "Les frictions du quotidien",
+  colonneApresTitre = "Ce qui change",
+  avant = [],
+  apres = [],
+  pillVariant = "ovni",
+} = Astro.props;
+
+// Découpe le titre en [avant, accent, après] autour du segment à mettre en pastille.
+let t1 = titre, accent = "", t2 = "";
+if (titreAccent && titre.includes(titreAccent)) {
+  const i = titre.indexOf(titreAccent);
+  t1 = titre.slice(0, i);
+  accent = titreAccent;
+  t2 = titre.slice(i + titreAccent.length);
+}
+---
+
+<section class="bconst">
+  <div class="container">
+    <header class="bconst__head" data-reveal>
+      <p class="bconst__eyebrow">{eyebrow}</p>
+      <h2 class="bconst__title">{t1}{accent && <mark class={`hl hl--${pillVariant}`}>{accent}</mark>}{t2}</h2>
+      {intro && <p class="bconst__intro">{intro}</p>}
+    </header>
+
+    <div class="bconst__row">
+      <div class="bconst__col" data-reveal>
+        <h3 class="bconst__colTitle">{colonneAvantTitre}</h3>
+        <ul class="bconst__list bconst__list--before">
+          {avant.map((t: string) => (
+            <li><span class="mark mark--x" aria-hidden="true">✗</span>{t}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="bconst__col bconst__col--after" data-reveal>
+        <img class="bconst__squiggle" src="/deco/squiggle-8.svg" alt="" aria-hidden="true" />
+        <h3 class="bconst__colTitle">{colonneApresTitre}</h3>
+        <ul class="bconst__list bconst__list--after">
+          {apres.map((t: string) => (
+            <li><span class="mark mark--check" aria-hidden="true">✓</span>{t}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bconst { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .bconst__head { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bconst__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .bconst__title { margin: 0 auto; max-width: 22ch; color: #3b0800; }
+  .bconst__intro { margin: 3rem auto 0; max-width: 62ch; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
+
+  .bconst__row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .bconst__col { background: #fff; border-radius: 24px; padding: 2.5rem 3rem; }
+  .bconst__col--after { background: var(--color-ovni-100); position: relative; }
+  .bconst__squiggle { position: absolute; left: -20px; top: -30px; width: 73px; height: 80px; z-index: 1; pointer-events: none; transform: rotate(-98deg); }
+  .bconst__colTitle { margin: 0 0 1.75rem; font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; color: #3b0800; }
+
+  .bconst__list { list-style: none; margin: 0; padding: 0; }
+  .bconst__list li {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 0;
+    border-bottom: 1px dashed color-mix(in srgb, #3b0800 30%, transparent);
+    font-family: var(--font-body); font-size: 1rem; line-height: 1.4; color: #3b0800;
+  }
+  .bconst__list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .bconst__list li:first-child { padding-top: 0; }
+  .mark { flex: none; font-size: 1.125rem; font-weight: 700; }
+  .mark--x { color: var(--color-red-rock-600); }
+  .mark--check { color: var(--color-ovni-500); }
+
+  @media (max-width: 860px) {
+    .bconst__row { grid-template-columns: 1fr; }
+    .bconst__col { padding: 2rem; }
+  }
+</style>

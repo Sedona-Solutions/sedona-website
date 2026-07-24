@@ -10,6 +10,15 @@
 
 html {
   scroll-behavior: smooth;
+  /* Curseur de marque sur tout le site (la pointe de la flèche = hotspot 4,4). */
+  cursor: url("/deco/cursor.svg") 4 4, auto;
+}
+
+/* Le navigateur impose son propre curseur "main" sur les éléments cliquables
+   (plus prioritaire qu'un curseur simplement hérité du <html>) : on le
+   remplace explicitement ici pour garder le curseur de marque partout. */
+a, button, summary, [role="button"], label[for] {
+  cursor: url("/deco/cursor.svg") 4 4, auto;
 }
 
 body {
@@ -27,8 +36,22 @@ h1, h2, h3, h4 {
 }
 
 h1 { font-size: var(--text-3xl); }
-h2 { font-size: var(--text-2xl); }
+/* Titre de section « grand format » : référence sitewide (Figma « Title-3 », 64/64),
+   reprise ici pour que les composants n'aient plus qu'à définir color/margin/max-width. */
+h2 {
+  font-size: clamp(2rem, 4.4vw, 4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
 h3 { font-size: var(--text-xl); }
+/* Titre de bloc secondaire (ex. bandes « Impacts mesurables ») — Figma « Title-4 » (48/48, SemiBold). */
+h4 {
+  font-size: clamp(1.75rem, 3.4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
 
 a {
   color: var(--color-primary);
@@ -64,15 +87,26 @@ img, svg, video {
 .prose ul, .prose ol { padding-left: 1.5rem; }
 .prose img { border-radius: var(--radius); margin-block: 1.5rem; }
 
-/* Titres de section réutilisables (Space Grotesk, grand format façon maquette) */
+/* Titres de section réutilisables — Figma « Title-3 » (64/64, SemiBold). */
 .section-title {
   font-family: var(--font-sans);
-  font-size: clamp(2.25rem, 5.5vw, 5rem);
+  font-size: clamp(2rem, 4.4vw, 4rem);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1;
   letter-spacing: -0.03em;
   color: #3b0800;
   max-width: 14ch;
+}
+/* Titre de page (H1 présent pour le SEO, mais visuellement distinct du H1 home) —
+   Figma « Title-2 » (80/72, SemiBold). Utilisé par PageHeader/OffreHero/DomaineHero/
+   brieff Hero : le vrai H1 « Title-1 » (120px) reste réservé à la home. */
+.title-2 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: #3b0800;
 }
 .section-intro {
   margin-top: 1rem;
@@ -111,27 +145,176 @@ img, svg, video {
 .hl--sky { background: #a9e7e4; color: #3b0800; }
 .hl--ovni { background: #b3b5ee; color: #3b0800; }
 
-/* Bouton de base */
-.button {
+/* ---- Boutons (design system Figma — node 3072:38414) ----
+   Flat = rempli, Outline = contour, Link = texte souligné.
+   Large = 20px/32px·21px, Default = 16px medium/24px·18.5px.
+   Modificateur --white = niveau "White" (bouton sur fond sombre).
+   Au survol, le bouton entier se tasse légèrement (scale 0.97), comme sur
+   wisprflow.ai — un retour tactile discret plutôt qu'un changement de couleur.
+   Structure requise :
+   <a class="btn-flat-lg"><span class="btn-bg"/><span class="btn-front"/><span class="btn-label">Label</span></a> */
+.btn-flat-lg,
+.btn-flat-sm {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
-  padding: 0.85em 1.6em;
+  justify-content: center;
   border-radius: 999px;
-  background: var(--color-primary);
-  color: #fff;
-  font-weight: 600;
-  line-height: 1;
-  transition: background 0.15s ease, transform 0.15s ease;
+  color: #fdf4f3;
+  font-family: var(--font-sans);
+  line-height: 0.7;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
 }
-.button:hover { background: var(--color-primary-hover); color: #fff; transform: translateY(-1px); }
-.button--dark {
-  background: var(--color-neutral-700);
+.btn-flat-lg:hover,
+.btn-flat-sm:hover {
+  transform: scale(0.97);
 }
-.button--dark:hover { background: var(--color-neutral-701); }
-.button--ghost {
+.btn-flat-lg .btn-bg,
+.btn-flat-sm .btn-bg,
+.btn-flat-lg .btn-front,
+.btn-flat-sm .btn-front {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.btn-flat-lg .btn-bg,
+.btn-flat-sm .btn-bg {
+  background: var(--color-red-rock-400);
+}
+.btn-flat-lg .btn-front,
+.btn-flat-sm .btn-front {
+  background: #3b0800;
+}
+.btn-flat-lg {
+  padding: 21px 32px;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.18px;
+}
+.btn-flat-sm {
+  padding: 18.5px 24px;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.18px;
+}
+.btn-flat-lg--white .btn-front,
+.btn-flat-sm--white .btn-front {
+  background: #fcf6f0;
+}
+.btn-flat-lg--white,
+.btn-flat-sm--white {
+  color: #3b0800;
+}
+.btn-label {
+  position: relative;
+}
+
+.btn-outline-lg,
+.btn-outline-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-red-rock-950);
   background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
+  color: var(--color-red-rock-950);
+  font-family: var(--font-sans);
+  line-height: 0.7;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.2s ease;
 }
-.button--ghost:hover { background: var(--color-surface); color: var(--color-text); }
+.btn-outline-lg:hover,
+.btn-outline-sm:hover { background: var(--color-red-rock-950); color: #fdf4f3; transform: scale(0.97); }
+.btn-outline-lg {
+  padding: 21px 32px;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.18px;
+}
+.btn-outline-sm {
+  padding: 18.5px 24px;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.18px;
+}
+.btn-outline-lg--white,
+.btn-outline-sm--white {
+  border-color: #fdf4f3;
+  color: #fdf4f3;
+}
+.btn-outline-lg--white:hover,
+.btn-outline-sm--white:hover { background: #fdf4f3; color: #3b0800; transform: scale(0.97); }
+
+/* Soulignement à deux traits (pas de changement de couleur) : un premier trait
+   fin reste toujours visible, un second trait glisse par-dessus au survol
+   (effet "relais", cf. msh-intl.com). */
+.link-cta {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.18px;
+  text-transform: uppercase;
+  color: #3b0800;
+  text-decoration: none;
+  padding-bottom: 6px;
+}
+.link-cta::before,
+.link-cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: currentColor;
+}
+.link-cta::before {
+  height: 1px;
+}
+.link-cta::after {
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.link-cta:hover::after { transform: scaleX(1); }
+/* Neutralise la règle globale `a:hover` (couleur), plus prioritaire que
+   .link-cta seul à spécificité égale : on fixe la couleur sur les deux états. */
+.link-cta:hover { color: #3b0800; }
+.link-cta--white,
+.link-cta--white:hover { color: #fdf4f3; }
+.link-cta--sm {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+/* Apparition au scroll (façon Framer) : fondu + léger déplacement vers le haut,
+   déclenché une fois via IntersectionObserver (voir BaseLayout). */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal-group] > [data-reveal]:nth-child(1) { --reveal-delay: 0s; }
+[data-reveal-group] > [data-reveal]:nth-child(2) { --reveal-delay: 0.1s; }
+[data-reveal-group] > [data-reveal]:nth-child(3) { --reveal-delay: 0.2s; }
+[data-reveal-group] > [data-reveal]:nth-child(4) { --reveal-delay: 0.3s; }
+[data-reveal-group] > [data-reveal]:nth-child(5) { --reveal-delay: 0.4s; }
+[data-reveal-group] > [data-reveal]:nth-child(6) { --reveal-delay: 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

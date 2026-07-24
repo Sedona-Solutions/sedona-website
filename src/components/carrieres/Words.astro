@@ -1,0 +1,47 @@
+---
+const { words } = Astro.props;
+const items = words?.items ?? [];
+const COULEUR_HEX = {
+  "red-rock": "#f8b3a9",
+  canyon: "#e9b189",
+  sunshine: "#f8d98b",
+  cactus: "#a7e9d1",
+  sky: "#a9e7e4",
+  ovni: "#b3b5ee",
+};
+---
+
+{
+  items.length > 0 && (
+    <section class="cwords">
+      <div class="container">
+        <ul class="cwords__list" data-reveal-group>
+          {items.map((it) => (
+            <li class="cwords__badge" style={`--bg:${COULEUR_HEX[it.couleur] ?? "#f8d98b"}`} data-reveal>
+              {it.texte}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .cwords { background: #3b0800; padding-block: clamp(2.5rem, 7.8vw, 112px); }
+  .cwords__list {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;
+  }
+  .cwords__badge {
+    background: var(--bg, #f8d98b);
+    color: #3b0800;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 4vw, 3.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    padding: 0.35em 0.8em;
+    border-radius: 999px;
+  }
+</style>

@@ -1,70 +1,146 @@
 ---
-const { projets = [], eyebrow = "Cas concrets client", titre } = Astro.props;
+import NumberBadge from "../NumberBadge.astro";
+
+const {
+  projets = [],
+  cartesTexte = [],
+  eyebrow = "Cas concrets client",
+  titre,
+  layout = "image",
+  pillVariant = "cactus",
+  squiggleColor = "#a7e9d1",
+  accentMid = "#a7e9d1",
+  accentLight = "#d4f4e7",
+} = Astro.props;
 const segs = titre ?? [{ t: "Quelques " }, { t: "exemples", pill: true }, { t: " d'applications" }];
+const isTexte = layout === "texte";
 ---
 
 <section class="pd">
-  <div class="container">
-    <header class="pd__head">
+  <div class="container pd__container">
+    <header class="pd__head" data-reveal>
       <p class="pd__eyebrow">{eyebrow}</p>
       <h2 class="pd__title">
-        {segs.map((s) => (s.br ? <br /> : s.pill ? <mark class="hl hl--cactus">{s.t}</mark> : <span>{s.t}</span>))}
+        {segs.map((s) => (s.br ? <br /> : s.pill ? <mark class={`hl hl--${pillVariant}`}>{s.t}</mark> : <span>{s.t}</span>))}
       </h2>
-      <svg class="pd__squiggle" viewBox="0 0 60 90" aria-hidden="true">
-        <path d="M44 4c8 10 8 26-6 30-10 3-18-6-10-14 7-7 18 2 14 14-4 13-18 20-30 26"
-          fill="none" stroke="var(--color-cactus-400)" stroke-width="3" stroke-linecap="round" />
-      </svg>
     </header>
 
-    <ul class="pd__grid">
+    <div class="pd__squiggle" style={`background-color:${squiggleColor}`} aria-hidden="true" />
+
+    <ul class="pd__grid" data-reveal-group style={`--accent-light:${accentLight}`}>
       {
-        projets.map((p) => (
-          <li class="pdc">
-            <a href={`/projets/${p.slug}`} class="pdc__media">
-              {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pdc__ph" aria-hidden="true" />}
-            </a>
-            <h3 class="pdc__title">{p.client ?? p.titre}</h3>
-            {p.tags?.length > 0 && <ul class="pdc__tags">{p.tags.map((t) => <li>{t}</li>)}</ul>}
-          </li>
-        ))
+        isTexte
+          ? cartesTexte.map((c, i) => (
+              <li class="pdc pdc--texte" data-reveal>
+                <div class="pdc__card">
+                  <NumberBadge n={i + 1} color={accentMid} size={64} class="pdc__badge" />
+                  <div class="pdc__text">
+                    <h3 class="pdc__title">{c.titre}</h3>
+                    {c.texte && <p class="pdc__desc">{c.texte}</p>}
+                    {c.client && (
+                      <p class="pdc__client">
+                        <strong>Client : {c.client}</strong>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))
+          : projets.map((p) => (
+              <li class="pdc pdc--image" data-reveal>
+                <a href={`/projets/${p.slug}`} class="pdc__media">
+                  {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pdc__ph" aria-hidden="true" />}
+                  <span class="pdc__mediaArrow" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </a>
+                <h3 class="pdc__title">{p.client ?? p.titre}</h3>
+                {p.tags?.length > 0 && <ul class="pdc__tags">{p.tags.map((t) => <li>{t}</li>)}</ul>}
+              </li>
+            ))
       }
     </ul>
 
-    <div class="pd__all"><a href="/projets">Voir tous nos projets</a></div>
+    <div class="pd__all" data-reveal><a class="link-cta" href="/projets">Voir tous nos projets</a></div>
   </div>
 </section>
 
 <style>
-  .pd { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
-  .pd__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .pd {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 6vw, 11rem);
+    /* Coin haut arrondi : flotte sur le fond sombre commun, sous le Ticker. */
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+  }
+  .pd__container { position: relative; }
+  .pd__head { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
   .pd__eyebrow {
     font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
     text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
   }
-  .pd__title {
-    margin: 0; font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(2.25rem, 5.5vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; color: #3b0800;
-  }
+  .pd__title { margin: 0; color: #3b0800; }
   .pd__title .hl { line-height: 1.3; }
-  .pd__squiggle { position: absolute; top: 10%; right: 6%; width: clamp(36px, 4vw, 60px); height: auto; }
+  .pd__squiggle {
+    position: absolute; top: 6%; right: 3%; width: clamp(36px, 4vw, 60px); height: clamp(105px, 11.7vw, 175px);
+    z-index: 2; pointer-events: none;
+    -webkit-mask: url("/deco/methode-arrow.svg") no-repeat center / contain;
+    mask: url("/deco/methode-arrow.svg") no-repeat center / contain;
+  }
 
   .pd__grid {
     list-style: none; padding: 0; margin: 0;
     display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 3rem) 2rem;
   }
-  .pdc__media { display: block; aspect-ratio: 16 / 11; border-radius: 18px; overflow: hidden; background: var(--color-neutral-100); }
-  .pdc__media img { width: 100%; height: 100%; object-fit: cover; }
-  .pdc__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
-  .pdc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.25rem 0 0; }
   .pdc__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .pdc__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+  .pdc__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; line-height: 20px; letter-spacing: -0.16px; color: #3b0800; padding: 2px 12px; border: 1px solid color-mix(in srgb, #3b0800 40%, transparent); border-radius: 999px; }
+
+  /* Cartes avec image (produits digitaux — même langage que la home). */
+  .pdc--image .pdc__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 11;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--color-neutral-100);
+    border: 1px solid transparent;
+    transition: border-color 0.25s ease, border-bottom-width 0.25s ease;
+  }
+  .pdc--image .pdc__media:hover { border-color: #3b0800; border-bottom-width: 5px; }
+  .pdc--image .pdc__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .pdc--image .pdc__media:hover img { transform: scale(1.05); }
+  .pdc--image .pdc__mediaArrow {
+    position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center; border-radius: 999px;
+    background: #3b0800; color: #fdf4f3; opacity: 0; transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .pdc--image .pdc__media:hover .pdc__mediaArrow { opacity: 1; transform: translateY(0); }
+  .pdc--image .pdc__mediaArrow svg { width: 22px; height: 22px; }
+  .pdc--image .pdc__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
+  .pdc--image .pdc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.25rem 0 0; }
+
+  /* Cartes texte (badge numéroté, sans image — Data & IA / Infra & Sécurité). Contenu propre à
+     la section (pas de lien : ce ne sont pas forcément de vraies fiches Projets). */
+  .pdc--texte { height: 100%; }
+  .pdc--texte .pdc__card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 24px;
+    /* Variante claire de la couleur d'accent du domaine (ex. bg/accent-color-1-variant). */
+    background: var(--accent-light, var(--color-neutral-100));
+  }
+  .pdc--texte .pdc__badge { flex: none; }
+  .pdc--texte .pdc__text { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+  .pdc--texte .pdc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; color: #3b0800; margin: 0; }
+  .pdc--texte .pdc__desc { margin: 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: #3b0800; }
+  .pdc--texte .pdc__client { margin: 0; font-family: var(--font-body); font-size: 1.0625rem; color: #3b0800; }
 
   .pd__all { text-align: center; margin-top: clamp(2.5rem, 5vw, 4rem); }
-  .pd__all a {
-    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem; text-transform: uppercase;
-    letter-spacing: 0.02em; color: #3b0800; text-decoration: underline; text-underline-offset: 6px;
-  }
-  .pd__all a:hover { color: var(--color-primary); }
 
   @media (max-width: 760px) { .pd__grid { grid-template-columns: 1fr; } .pd__squiggle { display: none; } }
 </style>

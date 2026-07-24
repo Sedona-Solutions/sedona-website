@@ -1,0 +1,108 @@
+---
+import { ACCENT_LIGHT } from "../../data/offreAccents.js";
+
+const {
+  titre = "",
+  accroche,
+  enBref,
+  illustration,
+  pillVariant = "cactus",
+  eyebrow = "Nos offres clé en main",
+  ctaLabel = "Demander une démo",
+  ctaHref = "/contact",
+} = Astro.props;
+
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus;
+---
+
+<section class="ohero">
+  <div class="container ohero__inner">
+    <p class="ohero__eyebrow">{eyebrow}</p>
+    <h1 class="title-2 ohero__title">
+      <mark class={`hl hl--${pillVariant}`}>{titre}</mark>
+    </h1>
+    {accroche && <p class="ohero__accroche">{accroche}</p>}
+    {enBref && (
+      <p class="ohero__enbref" style={`--accent-light:${accentLight}`}>
+        {enBref}
+      </p>
+    )}
+    {illustration && <img class="ohero__illu" src={illustration} alt="" aria-hidden="true" />}
+    <a class="ohero__btn" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</section>
+
+<style>
+  .ohero {
+    background: var(--color-canyon-50);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.5rem, 6vw, 4.5rem);
+    /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus du Ticker. */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .ohero__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ohero__eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #3b0800;
+    margin-bottom: 1rem;
+  }
+  .ohero__title {
+    margin: 0;
+    max-width: 900px;
+  }
+  .ohero__title .hl { line-height: 1.1; }
+  .ohero__accroche {
+    margin-top: 1.5rem;
+    max-width: 42ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    line-height: 1.25;
+    color: #3b0800;
+  }
+  .ohero__enbref {
+    margin-top: 2rem;
+    max-width: 640px;
+    text-align: left;
+    background: var(--accent-light, #d4f4e7);
+    border-left: 4px solid #3b0800;
+    border-radius: 0 16px 16px 0;
+    padding: 1.25rem 1.75rem;
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: #3b0800;
+  }
+  .ohero__illu {
+    width: 100%;
+    max-width: 824px;
+    height: auto;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+  .ohero__btn {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    display: inline-flex;
+    align-items: center;
+    padding: 21px 32px;
+    border-radius: 999px;
+    background: #3b0800;
+    color: #fdf4f3;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease, transform 0.2s ease;
+  }
+  .ohero__btn:hover { background: var(--color-red-rock-900); color: #fdf4f3; transform: scale(0.97); }
+</style>

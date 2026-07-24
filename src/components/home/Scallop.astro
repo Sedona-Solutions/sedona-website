@@ -3,13 +3,13 @@
 ---
 
 <div class="scallop" aria-hidden="true">
-  <svg width="100%" height="40" preserveAspectRatio="xMinYMid meet">
+  <svg width="100%" height="70" preserveAspectRatio="xMinYMid meet">
     <defs>
-      <pattern id="scallop-arcs" width="64" height="40" patternUnits="userSpaceOnUse">
-        <path d="M0 39 A32 30 0 0 1 64 39" fill="none" stroke="var(--color-canyon-400)" stroke-width="2" />
+      <pattern id="scallop-arcs" width="130" height="70" patternUnits="userSpaceOnUse">
+        <path d="M0 69 A65 65 0 0 1 130 69" fill="none" stroke="#E9B189" stroke-width="1.5" />
       </pattern>
     </defs>
-    <rect width="100%" height="40" fill="url(#scallop-arcs)" />
+    <rect width="100%" height="70" fill="url(#scallop-arcs)" />
   </svg>
 </div>
 
@@ -17,6 +17,7 @@
   .scallop {
     background: var(--color-canyon-50);
     line-height: 0;
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
   }
   .scallop svg {
     display: block;

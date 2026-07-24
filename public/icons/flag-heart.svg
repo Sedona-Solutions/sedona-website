@@ -1,0 +1,20 @@
+<svg width="56" height="56" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(4.064,2.432)">
+    <path d="M71.8668 55.5333L55.5334 58.8L32.6668 52.2666L0 58.8V6.53333L35.9334 0L55.5334 6.53333L71.8668 3.26666V55.5333Z" fill="#ffffff"/>
+  </g>
+  <g transform="translate(4.064,48.168)">
+    <path d="M71.8668 9.8L55.5334 13.0667L32.6668 6.53333L0 13.0667V6.53333L35.9334 0L55.5334 6.53333L71.8668 3.26667V9.8Z" fill="#F2D0B8"/>
+  </g>
+  <g transform="translate(40,18.768)">
+    <path d="M0 26.1333L16.3333 9.8L8.16667 0L0 6.53333V26.1333Z" fill="#F2D0B8"/>
+  </g>
+  <g transform="translate(4.064,2.432)">
+    <path d="M1 1V76.1333" stroke="#42140D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(4.064,2.432)">
+    <path d="M72.8668 56.5333L56.5334 59.8L33.6668 53.2666L1 59.8V7.53333L36.9334 1L56.5334 7.53333L72.8668 4.26666V56.5333Z" stroke="#42140D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(23.664,18.768)">
+    <path d="M17.3334 27.1334L33.6667 10.8L25.5001 1.00003L17.3334 7.53336L9.16667 1.00003L1.00001 10.8L17.3334 27.1334Z" stroke="#42140D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

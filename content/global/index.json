@@ -2,7 +2,7 @@
   "navigation": [
     {
       "label": "Domaines",
-      "href": "/domaines",
+      "href": "/domaines/produits-digitaux",
       "sousMenu": [
         {
           "label": "Produits digitaux",
@@ -29,7 +29,7 @@
       "sousMenu": []
     },
     {
-      "label": "Carrières",
+      "label": "Jobs",
       "href": "/carrieres",
       "sousMenu": []
     },
@@ -60,11 +60,19 @@
   "reseaux": [
     {
       "plateforme": "LinkedIn",
-      "url": "https://www.linkedin.com/company/sedona"
+      "url": "https://www.linkedin.com/company/sedona-france/"
     },
     {
       "plateforme": "X (ex Twitter)",
-      "url": "SEDONAFR"
+      "url": "https://x.com/SedonaFR"
+    },
+    {
+      "plateforme": "Facebook",
+      "url": "https://www.facebook.com/sedonaparis/"
+    },
+    {
+      "plateforme": "YouTube",
+      "url": "https://www.youtube.com/channel/UCIwSKsSBhnfVFnekR6yf9Ag"
     }
   ]
 }
