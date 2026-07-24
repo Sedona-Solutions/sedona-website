@@ -1,6 +1,10 @@
 ---
+// Contenu piloté par Tina (collection "offre" > champ "temoignage") ; si
+// l'entrée ne renseigne rien, on retombe sur un témoignage de la home.
 import home from "../../../content/home/index.json";
-const temoignage = home.temoignagesSection?.temoignages?.[1];
+const { citation, auteur, role, avatar } = Astro.props;
+const fallback = home.temoignagesSection?.temoignages?.[1];
+const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
 ---
 
 {

@@ -8,7 +8,6 @@ enBref: >-
   SSO fiable sans mobiliser un expert IAM à temps plein.
 illustration: /deco/illus_keycloak.png
 pillVariant: cactus
-ordre: 2
 produits:
   titre: Ce que Keycloak Run produit pour vous
   items:

@@ -8,7 +8,6 @@ tags:
   - UX/UI design
   - SwiftUI
   - Interface Design
-resume: Refonte du site institutionnel de la maison de joaillerie Boucheron.
 accroche: Une présence en ligne à la hauteur de l'exigence d'une grande maison de joaillerie.
 annee: 2022 - 2023
 technos:
@@ -37,6 +36,3 @@ approche:
       texte: Une gestion autonome par les équipes.
 date: 2025-02-01T00:00:00.000Z
 ---
-
-Refonte du site institutionnel de Boucheron, à la hauteur de l'exigence d'une
-grande maison de joaillerie.

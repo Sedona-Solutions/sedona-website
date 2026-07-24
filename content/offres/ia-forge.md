@@ -7,7 +7,6 @@ enBref: >-
   construisons les modèles sur-mesure et industrialisons la mise en œuvre, dans
   le respect de vos contraintes de sécurité et de conformité.
 pillVariant: red-rock
-ordre: 3
 produits:
   titre: Ce qu'IA Forge produit pour vous
   items:

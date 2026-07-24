@@ -136,7 +136,3 @@ articlesSection:
     - Sécurité
     - Keycloak
 ---
-
-Nous bâtissons et opérons des infrastructures cloud solides comme la roche :
-fiables, scalables et sécurisées, pour que vos plateformes tiennent la charge
-en toute sérénité.

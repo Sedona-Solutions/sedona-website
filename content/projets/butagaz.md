@@ -9,7 +9,6 @@ tags:
   - UX/UI design
   - Backend
   - IoT
-resume: Une solution de Click & Collect connectée pour acheter et retirer ses bouteilles de gaz 24/7.
 accroche: 'Concevoir et développer une solution de Click & Collect révolutionnaire pour Butagaz, avec ouverture des casiers via Bluetooth et parcours d''achat mobile ultra-simplifié.'
 annee: 2017 - 2018
 accent: ovni
@@ -95,6 +94,3 @@ galerie:
   - /uploads/projets/butagaz/gallery.png
 date: 2024-10-01T00:00:00.000Z
 ---
-
-Conception d'une solution de Click & Collect connectée pour Butagaz : commander
-sur mobile et retirer sa bouteille de gaz dans un casier intelligent, 24h/24.

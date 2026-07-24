@@ -9,7 +9,6 @@ tags:
   - Backend
   - Cloud
   - Micro-services
-resume: ''
 accroche: 'Concevoir un dispositif de vente tactile autonome pour proposer les grands crus Nespresso des boutiques — en galeries commerciales, gares et aéroports, partout dans le monde.'
 annee: 2019 - 2020
 accent: sunshine
@@ -90,4 +89,3 @@ galerie:
   - /uploads/projets/nespresso/pexels-headphones-connected-with-laptop-placed-near-cappuccino-7421874.png
 date: 2025-09-01T00:00:00.000Z
 ---
-

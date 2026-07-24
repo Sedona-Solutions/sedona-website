@@ -9,7 +9,6 @@ tags:
   - UX/UI design
   - Symfony
   - Interface Design
-resume: Refondre le catalogue en ligne de la Bibliothèque publique d'information pour rendre son fonds encyclopédique accessible au plus grand nombre — y compris aux personnes en situation de handicap.
 accroche: Refondre le catalogue en ligne de la Bibliothèque publique d'information pour rendre son fonds encyclopédique accessible au plus grand nombre — y compris aux personnes en situation de handicap.
 annee: '2019'
 technos:
@@ -82,6 +81,3 @@ approche:
       icone: computeur-pc-4
 date: 2019-07-10T00:00:00.000Z
 ---
-
-Modernisation et refonte du site internet de la Bibliothèque Publique
-d'Information : architecture, design et accessibilité au service du public.

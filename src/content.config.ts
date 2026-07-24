@@ -91,7 +91,6 @@ const projet = defineCollection({
     couverture: z.string().optional(),
     bannerDetail: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    resume: z.string().optional(),
     accroche: z.string().optional(),
     annee: z.string().optional(),
     technos: z.array(z.object({ nom: z.string(), logo: z.string().optional() })).optional(),
@@ -167,12 +166,26 @@ const article = defineCollection({
   }),
 });
 
+const evenement = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./content/evenements" }),
+  schema: z.object({
+    titre: z.string(),
+    image: z.string(),
+    ctaLabel: z.string().optional(),
+    ctaHref: z.string().optional(),
+    position: z.enum(["gauche", "centre", "droite"]).optional(),
+    dateDebut: z.coerce.date(),
+    dateFin: z.coerce.date(),
+  }),
+});
+
 const offre = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/offres" }),
   schema: z.object({
     titre: z.string(),
     eyebrow: z.string().optional(),
     accroche: z.string().optional(),
+    accrocheAccent: z.string().optional(),
     enBref: z.string().optional(),
     illustration: z.string().optional(),
     pillVariant: z.enum(["cactus", "ovni", "red-rock", "sunshine", "sky"]).optional(),
@@ -224,7 +237,7 @@ const offre = defineCollection({
         intro: z.string().optional(),
         items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), icone: z.string().optional() })).optional(),
         technosTitle: z.string().optional(),
-        technos: z.array(z.string()).optional(),
+        technos: z.array(z.object({ nom: z.string(), logo: z.string().optional() })).optional(),
         technosNote: z.string().optional(),
       })
       .optional(),
@@ -267,6 +280,14 @@ const offre = defineCollection({
         items: z.array(z.object({ valeur: z.string(), label: z.string().optional(), note: z.string().optional() })).optional(),
       })
       .optional(),
+    temoignage: z
+      .object({
+        citation: z.string().optional(),
+        auteur: z.string().optional(),
+        role: z.string().optional(),
+        avatar: z.string().optional(),
+      })
+      .optional(),
     ctaFinal: z
       .object({
         titre: z.string().optional(),
@@ -276,7 +297,6 @@ const offre = defineCollection({
         ctaHref: z.string().optional(),
       })
       .optional(),
-    ordre: z.number().optional(),
   }),
 });
 
@@ -293,4 +313,4 @@ const page = defineCollection({
   }),
 });
 
-export const collections = { expertise, projet, article, page, offre };
+export const collections = { expertise, projet, article, page, offre, evenement };

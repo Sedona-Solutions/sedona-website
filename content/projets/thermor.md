@@ -8,7 +8,6 @@ tags:
   - UX/UI design
   - eZ Platform
   - Akéno PIM
-resume: Refonte du site institutionnel du fabricant Thermor.
 accroche: 'Mettre en valeur une gamme produits riche, du catalogue à l''expérience utilisateur.'
 annee: 2022 - 2023
 technos:
@@ -37,6 +36,3 @@ approche:
       texte: Un site rapide malgré la richesse du catalogue.
 date: 2024-11-01T00:00:00.000Z
 ---
-
-Refonte du site institutionnel de Thermor, mettant en valeur ses solutions de
-confort thermique.

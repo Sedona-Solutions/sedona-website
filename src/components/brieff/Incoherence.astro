@@ -33,6 +33,12 @@ const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illus
     margin: 0; font-family: var(--font-sans); font-weight: 600;
     font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.2; letter-spacing: -0.01em; color: var(--color-red-rock-50);
   }
+  /* Sur fond sombre, pas de pastille colorée (réservée aux fonds clairs) :
+     le mot mis en avant reste en texte simple, même couleur que le titre. */
+  .bincoh :global(.bincoh__title .hl) {
+    display: inline; background: none; color: inherit; padding: 0; border-radius: 0; transform: none;
+  }
+  .bincoh :global(.bincoh__title .hl:hover) { animation: none; }
   .bincoh__text { margin: 1.5rem 0 0; }
   .bincoh__text :global(p) { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: var(--color-red-rock-50); opacity: 0.9; margin: 0; }
   .bincoh__text :global(p + p) { margin-top: 0.75em; }

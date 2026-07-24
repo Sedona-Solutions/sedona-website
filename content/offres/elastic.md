@@ -8,7 +8,6 @@ enBref: >-
   de bord opérationnels.
 illustration: /deco/illus_Elastic.png
 pillVariant: sunshine
-ordre: 4
 produits:
   titre: Ce qu'Elastic produit pour vous
   items:

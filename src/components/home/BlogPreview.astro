@@ -1,8 +1,9 @@
 ---
 import ArticleCard from "../blog/ArticleCard.astro";
+import EventBanner from "./EventBanner.astro";
 import Scallop from "./Scallop.astro";
 
-const { titre = "News", vedette, articles = [] } = Astro.props;
+const { titre = "News", vedette, articles = [], evenement } = Astro.props;
 ---
 
 <section class="blog">
@@ -13,6 +14,16 @@ const { titre = "News", vedette, articles = [] } = Astro.props;
       </h2>
       <a class="blog__all link-cta" href="/blog">Voir tous les articles</a>
     </header>
+
+    {evenement && (
+      <EventBanner
+        titre={evenement.titre}
+        image={evenement.image}
+        ctaLabel={evenement.ctaLabel}
+        ctaHref={evenement.ctaHref}
+        position={evenement.position}
+      />
+    )}
 
     <div class="blog__grid" data-reveal-group>
       {vedette && (

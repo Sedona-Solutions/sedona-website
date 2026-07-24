@@ -32,6 +32,12 @@ const { eyebrow = "Impacts mesurables", titre, titreAccent, items = [], pillVari
   }
   .bimp__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--color-ovni-300); flex: none; }
   .bimp :global(.bimp__title) { margin: 0; color: var(--color-red-rock-50); }
+  /* Sur fond sombre, pas de pastille colorée (réservée aux fonds clairs) :
+     le mot mis en avant reste en texte simple, même couleur que le titre. */
+  .bimp :global(.bimp__title .hl) {
+    display: inline; background: none; color: inherit; padding: 0; border-radius: 0; transform: none;
+  }
+  .bimp :global(.bimp__title .hl:hover) { animation: none; }
 
   .bimp__stats { display: flex; flex-wrap: wrap; justify-content: center; margin: 0; }
   .bstat { flex: 1 1 0; min-width: 220px; padding-inline: clamp(1rem, 3vw, 2.5rem); text-align: center; }

@@ -8,7 +8,6 @@ tags:
   - UX/UI Design
   - Symfony
   - Interface Design
-resume: 'Un site institutionnel repensé, à l''image de la salle mythique.'
 accroche: Une vitrine en ligne à l'image d'une salle de concert mythique.
 annee: 2023 - 2024
 technos:
@@ -37,6 +36,3 @@ approche:
       texte: Une plateforme qui encaisse les pics.
 date: 2025-05-01T00:00:00.000Z
 ---
-
-Refonte du site institutionnel de La Cigale, pour une vitrine en ligne fidèle
-à l'identité et à l'histoire de la salle.

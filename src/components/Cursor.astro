@@ -1,0 +1,184 @@
+---
+// Curseur personnalisé (desktop uniquement) : un point suit la souris avec un
+// léger retard. Il grossit en pastille avec flèche uniquement au survol des
+// cartes cliquables (offres, domaines, articles, projets) ; pour tous les
+// autres éléments cliquables (liens, boutons, badges…) on garde le curseur
+// main natif. Remplace le curseur natif sur les pointeurs fins (souris) ;
+// inchangé sur tactile.
+---
+
+<div class="cursor" id="siteCursor" aria-hidden="true">
+  <svg class="cursor__arrow" viewBox="0 0 20 20" fill="none">
+    <path
+      d="M4 10H16M16 10L11 5M16 10L11 15"
+      stroke="#fdf4f3"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</div>
+
+<style>
+  @media (hover: hover) and (pointer: fine) {
+    :global(body) {
+      cursor: none;
+    }
+    /* Par défaut, tout élément cliquable garde le curseur main natif. */
+    :global(a),
+    :global(button),
+    :global([role="button"]),
+    :global(input),
+    :global(textarea),
+    :global(select) {
+      cursor: pointer;
+    }
+    /* Exception : les cartes cliquables (offres, domaines, articles, projets)
+       masquent le curseur natif pour laisser place à la pastille flèche. */
+    :global(.exp-card),
+    :global(.offre-card__link),
+    :global(.acard),
+    :global(.proj__media),
+    :global(.pcard__media),
+    :global(.pdc__media),
+    :global(.plc__media) {
+      cursor: none;
+    }
+  }
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #3b0800;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition:
+      width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.2s ease;
+    will-change: transform, width, height;
+  }
+  .cursor.is-visible {
+    opacity: 1;
+  }
+  /* Sur un fond sombre, le point (couleur texte) deviendrait invisible :
+     on bascule sur la couleur inverse. Seulement à l'état repos — au survol
+     d'une carte (is-hover), le fond de la pastille reste sombre volontairement. */
+  .cursor.is-dark-bg:not(.is-hover) {
+    background: var(--color-text-inverse);
+  }
+  .cursor.is-hover {
+    width: 56px;
+    height: 56px;
+  }
+  .cursor__arrow {
+    width: 18px;
+    height: 18px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity 0.2s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cursor.is-hover .cursor__arrow {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .cursor {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (function initCustomCursor() {
+    if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+
+    const cursor = document.getElementById("siteCursor");
+    if (!cursor) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let rafId: number | null = null;
+
+    const render = () => {
+      // Suivi avec un léger retard (lerp) pour un mouvement fluide, pas instantané.
+      currentX += (targetX - currentX) * 0.2;
+      currentY += (targetY - currentY) * 0.2;
+      cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+
+      if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1) {
+        rafId = requestAnimationFrame(render);
+      } else {
+        rafId = null;
+      }
+    };
+
+    // Cartes cliquables : la pastille grossit avec la flèche.
+    const ARROW_SELECTOR = ".exp-card, .offre-card__link, .acard, .proj__media, .pcard__media, .pdc__media, .plc__media";
+    // Tous les autres éléments cliquables : on masque la pastille et on
+    // laisse le curseur main natif faire son travail.
+    const NATIVE_SELECTOR = 'a, button, [role="button"], input, textarea, select';
+
+    const isArrowTarget = (el: EventTarget | null) => el instanceof Element && el.closest(ARROW_SELECTOR);
+    const isNativeTarget = (el: EventTarget | null) => el instanceof Element && el.closest(NATIVE_SELECTOR);
+
+    // Remonte les ancêtres jusqu'à trouver un fond opaque, pour savoir si le
+    // point (couleur texte) resterait lisible dessus ou doit passer en inverse.
+    const isDarkBackground = (el: Element | null) => {
+      let node: Element | null = el;
+      while (node && node !== document.documentElement) {
+        const bg = getComputedStyle(node).backgroundColor;
+        const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (match) {
+          const alpha = match[4] === undefined ? 1 : parseFloat(match[4]);
+          if (alpha > 0.5) {
+            const [r, g, b] = [match[1], match[2], match[3]].map(Number);
+            const luminance = (r * 299 + g * 587 + b * 114) / 1000;
+            return luminance < 128;
+          }
+        }
+        node = node.parentElement;
+      }
+      return false;
+    };
+
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (rafId === null) rafId = requestAnimationFrame(render);
+
+      if (isArrowTarget(e.target)) {
+        cursor.classList.add("is-visible", "is-hover");
+      } else if (isNativeTarget(e.target)) {
+        cursor.classList.remove("is-visible", "is-hover");
+      } else {
+        cursor.classList.add("is-visible");
+        cursor.classList.remove("is-hover");
+      }
+
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      cursor.classList.toggle("is-dark-bg", isDarkBackground(under));
+    };
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseleave", () => cursor.classList.remove("is-visible"));
+  })();
+</script>

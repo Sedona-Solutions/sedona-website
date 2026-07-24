@@ -7,7 +7,6 @@ tags:
   - App web
   - eZ Platform
   - Interface Design
-resume: Refonte du site institutionnel de Citeo.
 accroche: Accompagner la transition vers l'économie circulaire avec une vitrine claire et engageante.
 annee: 2022 - 2024
 technos:
@@ -36,6 +35,3 @@ approche:
       texte: Un site rapide et inclusif.
 date: 2024-09-01T00:00:00.000Z
 ---
-
-Refonte du site institutionnel de Citeo, au service de la transition vers
-l'économie circulaire.

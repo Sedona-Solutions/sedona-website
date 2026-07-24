@@ -134,15 +134,14 @@ const ROTATIONS = [-3, 0, -4, 3];
     .offres__head { grid-template-columns: 1fr; }
     .offres__intro { max-width: none; margin-top: 1rem; }
     .offres__grid {
-      display: grid; grid-template-columns: 1fr 1fr; flex-wrap: wrap; gap: 16px;
+      display: grid; grid-template-columns: 1fr; gap: 16px;
     }
     .offre-card,
+    .offre-card:not(:first-child),
     .offre-card:hover { transform: none; margin-left: 0; }
-  }
-  @media (max-width: 560px) {
-    .offres__grid { grid-template-columns: 1fr; }
+    .offre-card__link { width: 100%; }
   }
   @media (max-width: 400px) {
-    .offre-card__link { width: 100%; padding: 32px; }
+    .offre-card__link { padding: 32px; }
   }
 </style>

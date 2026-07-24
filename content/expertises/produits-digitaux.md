@@ -160,5 +160,3 @@ articlesSection:
     - Symfony
     - Devoxx
 ---
-
-Nous concevons des produits digitaux centrés sur l'utilisateur final : sites, portails, applications web et mobiles. De la stratégie produit à l'industrialisation, nous couvrons toute la chaîne de valeur.

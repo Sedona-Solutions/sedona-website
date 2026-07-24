@@ -5,18 +5,21 @@ const {
   eyebrow = "Offres clé en main",
   titre = "Brieff",
   accroche = "",
+  accrocheAccent = "",
   enBref,
   illustration,
   proof,
   pillVariant = "ovni",
 } = Astro.props;
 
-// Découpe l'accroche en [avant, pastille, après] autour du nom de l'offre, pour le mettre en pastille.
-let avant = accroche, pastille = titre, apres = "";
-if (accroche.includes(titre)) {
-  const i = accroche.indexOf(titre);
+// Découpe l'accroche en [avant, pastille, après] autour du mot mis en avant
+// (champ éditorial `accrocheAccent`, sinon le nom de l'offre par défaut).
+const motAMettreEnAvant = accrocheAccent && accroche.includes(accrocheAccent) ? accrocheAccent : titre;
+let avant = accroche, pastille = motAMettreEnAvant, apres = "";
+if (accroche.includes(motAMettreEnAvant)) {
+  const i = accroche.indexOf(motAMettreEnAvant);
   avant = accroche.slice(0, i);
-  apres = accroche.slice(i + titre.length);
+  apres = accroche.slice(i + motAMettreEnAvant.length);
 }
 ---
 
@@ -90,7 +93,7 @@ if (accroche.includes(titre)) {
     background: #3b0800; color: var(--color-red-rock-50); font-family: var(--font-sans); font-weight: 400;
     font-size: 20px; line-height: 0.7; text-transform: uppercase; letter-spacing: -0.18px; transition: transform 0.2s ease, background 0.15s ease;
   }
-  .bhero__btn:hover { transform: scale(0.97); background: var(--color-red-rock-900); }
+  .bhero__btn:hover { transform: scale(0.97); }
   .bhero__btn2 { font-size: 20px; }
 
   .bhero__illu-wrap { border-radius: 24px; overflow: hidden; }

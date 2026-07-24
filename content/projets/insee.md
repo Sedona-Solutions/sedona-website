@@ -8,7 +8,6 @@ tags:
   - UX/UI design
   - Symfony
   - Interface Design
-resume: Modernisation et refonte du site internet de l'Insee.
 accroche: Rendre la donnée statistique lisible et accessible au plus grand nombre.
 annee: 2021 - 2023
 accent: sky
@@ -40,6 +39,3 @@ approche:
       texte: Une base fiable et maintenable.
 date: 2024-12-01T00:00:00.000Z
 ---
-
-Modernisation et refonte du site de l'Insee, pour rendre la donnée statistique
-plus lisible et accessible à tous.

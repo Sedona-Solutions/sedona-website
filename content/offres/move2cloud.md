@@ -7,7 +7,6 @@ enBref: >-
   migration et sécurisons chaque bascule, en maîtrisant les risques et les coûts
   à chaque phase.
 pillVariant: sky
-ordre: 5
 produits:
   titre: Ce que Move2Cloud produit pour vous
   items:

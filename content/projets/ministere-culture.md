@@ -8,7 +8,6 @@ tags:
   - UX/UI design
   - Flutter
   - Elastic Search
-resume: Refonte du site institutionnel du Ministère de la Culture.
 accroche: 'Donner à la culture une vitrine numérique claire, ouverte et accessible à tous.'
 annee: 2021 - 2022
 technos:
@@ -39,6 +38,3 @@ approche:
       texte: Une base maintenable dans la durée.
 date: 2025-03-01T00:00:00.000Z
 ---
-
-Refonte du site institutionnel du Ministère de la Culture, au service de la
-diffusion et de l'accès à la culture.

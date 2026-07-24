@@ -60,11 +60,6 @@ const clients = home.clientsSection?.logos ?? [];
           <li class="pcard" data-cat={slug(p.tags?.[0] ?? "")} data-reveal>
             <a href={`/projets/${p.slug}`} class="pcard__media">
               {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pcard__ph" aria-hidden="true" />}
-              <span class="pcard__arrow" aria-hidden="true">
-                <svg viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
             </a>
             <h2 class="pcard__title">{p.client ?? p.titre}</h2>
             {p.tags?.length > 0 && <ul class="pcard__tags">{p.tags.map((tg) => <li>{tg}</li>)}</ul>}
@@ -206,14 +201,6 @@ const clients = home.clientsSection?.logos ?? [];
   .pcard__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
   .pcard__media:hover img { transform: scale(1.05); }
   .pcard__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
-  .pcard__arrow {
-    position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
-    display: flex; align-items: center; justify-content: center; border-radius: 999px;
-    background: #3b0800; color: var(--color-red-rock-50); opacity: 0; transform: translateY(8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  .pcard__media:hover .pcard__arrow { opacity: 1; transform: translateY(0); }
-  .pcard__arrow svg { width: 22px; height: 22px; }
   .pcard__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.5rem 0 0; }
   .pcard__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; line-height: 20px; letter-spacing: -0.16px; color: #3b0800; padding: 2px 12px; border: 1px solid color-mix(in srgb, #3b0800 40%, transparent); border-radius: 999px; }

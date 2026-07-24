@@ -92,14 +92,98 @@ const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)
       <span class="site-header__cta-front" aria-hidden="true"></span>
       <span class="site-header__cta-label">{ctaLabel}</span>
     </a>
+
+    <button
+      type="button"
+      class="site-header__burger"
+      aria-expanded="false"
+      aria-controls="mobileNav"
+      aria-label="Ouvrir le menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+{
+  /* Panneau hors de <header> : ce dernier a un backdrop-filter, ce qui en
+     ferait le containing block d'un enfant position:fixed (au lieu du
+     viewport) et casserait le plein-écran du panneau. */
+}
+<div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__backdrop"></div>
+    <nav class="mobile-nav__panel" aria-label="Navigation mobile">
+      <ul class="mobile-nav__list">
+        {
+          navigation.map((item) => {
+            const hasMenu = item.sousMenu && item.sousMenu.length > 0;
+            const isDomaines = item.label === "Domaines";
+            return (
+              <li class="mobile-nav__item">
+                {hasMenu ? (
+                  <>
+                    <button type="button" class="mobile-nav__toggle" aria-expanded="false">
+                      {item.label}
+                      <svg viewBox="0 0 12 8" aria-hidden="true">
+                        <path d="M1 1.5L6 6.5L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
+                    <div class="mobile-nav__submenu">
+                      {isDomaines ? (
+                        <>
+                          {domaines.map((d) => (
+                            <a href={`/domaines/${d.slug}`} class="mobile-nav__row">
+                              <span class="mobile-nav__row-icon" style={`--bg:${ICON_BG[(d.affichage?.ordre ?? 1) - 1] ?? ICON_BG[0]}`}>
+                                {d.affichage?.icone && <img src={`/icons/${d.affichage.icone}.svg`} alt="" aria-hidden="true" />}
+                              </span>
+                              <span class="mobile-nav__row-text">
+                                <span class="mobile-nav__row-titre">{d.titre}</span>
+                              </span>
+                            </a>
+                          ))}
+                          {offres.length > 0 && (
+                            <div class="mobile-nav__offres">
+                              <p class="mobile-nav__offres-titre">Nos offres clé en main</p>
+                              <div class="mobile-nav__badges">
+                                {offres.map((o) => (
+                                  <a href={`/offres/${o.id}`} class="mobile-nav__badge" style={`--bg:${COULEUR_HEX[o.data.pillVariant] ?? "#a7e9d1"}`}>
+                                    {o.data.titre}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        item.sousMenu.map((sub) => (
+                          <a href={sub.href} class="mobile-nav__link">{sub.label}</a>
+                        ))
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <a href={item.href} class="mobile-nav__link mobile-nav__link--top">{item.label}</a>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <a href={ctaHref} class="mobile-nav__cta">
+        <span class="site-header__cta-bg" aria-hidden="true"></span>
+        <span class="site-header__cta-front" aria-hidden="true"></span>
+        <span class="site-header__cta-label">{ctaLabel}</span>
+      </a>
+    </nav>
+  </div>
+</div>
 
 <style>
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 30;
     width: auto;
     margin-inline: 0;
     border: 1px solid transparent;
@@ -125,11 +209,22 @@ const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)
     border-radius: var(--radius-section-sm);
     background: var(--color-canyon-50);
   }
+  /* Menu mobile ouvert : le bandeau repasse en blanc uni pour raccorder
+     visuellement avec le panneau (lui-même blanc), quel que soit l'état
+     scroll/flottant ou la couleur custom de la page. */
+  .site-header--menu-open,
+  .site-header--menu-open.site-header--floating,
+  .site-header--menu-open.site-header--custom:not(.site-header--floating) {
+    background: #fff;
+    backdrop-filter: none;
+  }
   .site-header--floating .site-header__inner {
     padding-inline: 32px;
     padding-right: 17px;
   }
   .site-header__inner {
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -137,6 +232,7 @@ const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)
   }
   .site-header__logo {
     display: inline-flex;
+    flex: none;
     align-items: center;
     color: var(--color-red-rock-950);
   }
@@ -341,8 +437,232 @@ const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)
     position: relative;
   }
 
+  /* Bouton burger (mobile/tablette uniquement, cf. media query ci-dessous). */
+  .site-header__burger {
+    display: none;
+    flex: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-red-rock-950);
+    border-radius: 999px;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .site-header__burger span {
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-red-rock-950);
+    transition: transform 0.25s ease, opacity 0.25s ease, top 0.25s ease;
+  }
+  .site-header__burger span:nth-child(1) { top: 14px; }
+  .site-header__burger span:nth-child(2) { top: 19px; }
+  .site-header__burger span:nth-child(3) { top: 24px; }
+  .site-header__burger.is-open span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+  .site-header__burger.is-open span:nth-child(2) { opacity: 0; }
+  .site-header__burger.is-open span:nth-child(3) { top: 19px; transform: rotate(-45deg); }
+
+  /* Panneau de navigation mobile/tablette (menu burger). */
+  :global(body.no-scroll) { overflow: hidden; }
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    visibility: hidden;
+  }
+  .mobile-nav__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, #1a1210 55%, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 6rem 1.5rem 2rem;
+    overflow-y: auto;
+    background: #fff;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mobile-nav.is-open {
+    visibility: visible;
+  }
+  .mobile-nav.is-open .mobile-nav__backdrop {
+    opacity: 1;
+  }
+  .mobile-nav.is-open .mobile-nav__panel {
+    transform: translateX(0);
+  }
+  .mobile-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .mobile-nav__toggle,
+  .mobile-nav__link.mobile-nav__link--top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    background: none;
+    padding: 0.9rem 0.25rem;
+    border-bottom: 1px solid color-mix(in srgb, #3b0800 15%, transparent);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 1.125rem;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--color-red-rock-950);
+    cursor: pointer;
+  }
+  .mobile-nav__toggle svg {
+    width: 10px;
+    height: 6px;
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+  .mobile-nav__item.is-open .mobile-nav__toggle svg {
+    transform: rotate(180deg);
+  }
+  .mobile-nav__submenu {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5rem;
+    transition: max-height 0.3s ease;
+  }
+  .mobile-nav__item.is-open .mobile-nav__submenu {
+    max-height: 900px;
+  }
+  .mobile-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.25rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    color: #3b0800;
+  }
+
+  /* Ligne « domaine » : même langage que le méga-menu desktop (.mega__row),
+     juste réagencé en colonne pleine largeur pour le mobile. */
+  .mobile-nav__row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 4px;
+    border-radius: 12px;
+  }
+  .mobile-nav__row-icon {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    background: var(--bg, #d4f4e7);
+    display: grid;
+    place-items: center;
+  }
+  .mobile-nav__row-icon img {
+    width: 38px;
+    height: 38px;
+  }
+  .mobile-nav__row-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .mobile-nav__row-titre {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.0625rem;
+    letter-spacing: 0;
+    color: #42140d;
+    text-transform: uppercase;
+  }
+
+  /* Bloc « Nos offres clé en main » : même langage que le méga-menu desktop
+     (.mega__offres / .mega__badge), juste réagencé pour le mobile. */
+  .mobile-nav__offres {
+    background: var(--color-canyon-50);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 0.25rem 0 0.75rem;
+  }
+  .mobile-nav__offres-titre {
+    margin: 0 0 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.0625rem;
+    color: #42140d;
+  }
+  .mobile-nav__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mobile-nav__badge {
+    background: var(--bg, #a7e9d1);
+    color: #3b0800;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: -0.1px;
+    padding: 4px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .mobile-nav__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 18.5px 24px;
+    border-radius: 999px;
+    color: var(--color-red-rock-50);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 0.7;
+    letter-spacing: -0.18px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
   @media (max-width: 1040px) {
-    .site-nav,
+    .site-nav {
+      display: none;
+    }
+    .site-header__burger {
+      display: inline-flex;
+    }
+  }
+  /* En dessous de la tablette, la capsule CTA n'a plus la place de tenir à
+     côté du logo et du burger : elle reste accessible en bas du panneau mobile. */
+  @media (max-width: 640px) {
     .site-header__cta {
       display: none;
     }
@@ -360,4 +680,41 @@ const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
   document.addEventListener("astro:page-load", onScroll);
+
+  // Menu burger (mobile/tablette) : panneau coulissant + accordéons pour les sous-menus.
+  const burger = document.querySelector(".site-header__burger");
+  const mobileNav = document.getElementById("mobileNav");
+  const backdrop = mobileNav?.querySelector(".mobile-nav__backdrop");
+
+  const closeMobileNav = () => {
+    burger?.classList.remove("is-open");
+    burger?.setAttribute("aria-expanded", "false");
+    mobileNav?.classList.remove("is-open");
+    header?.classList.remove("site-header--menu-open");
+    document.body.classList.remove("no-scroll");
+  };
+  const openMobileNav = () => {
+    burger?.classList.add("is-open");
+    burger?.setAttribute("aria-expanded", "true");
+    mobileNav?.classList.add("is-open");
+    header?.classList.add("site-header--menu-open");
+    document.body.classList.add("no-scroll");
+  };
+
+  burger?.addEventListener("click", () => {
+    mobileNav?.classList.contains("is-open") ? closeMobileNav() : openMobileNav();
+  });
+  backdrop?.addEventListener("click", closeMobileNav);
+  mobileNav?.querySelectorAll(".mobile-nav__link, .mobile-nav__badge, .mobile-nav__cta").forEach((el) => {
+    el.addEventListener("click", closeMobileNav);
+  });
+  mobileNav?.querySelectorAll(".mobile-nav__toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.closest(".mobile-nav__item")?.classList.toggle("is-open");
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMobileNav();
+  });
+  document.addEventListener("astro:page-load", closeMobileNav);
 </script>

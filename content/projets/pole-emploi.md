@@ -8,7 +8,6 @@ tags:
   - UX/UI design
   - Liferay
   - Interface Design
-resume: Modernisation et refonte de la plateforme en ligne de Pôle Emploi.
 accroche: Accompagner demandeurs d'emploi et recruteurs avec une plateforme claire et robuste.
 annee: 2020 - 2022
 technos:
@@ -39,6 +38,3 @@ approche:
       texte: Fiabilité et supervision en continu.
 date: 2025-01-01T00:00:00.000Z
 ---
-
-Modernisation et refonte du site internet de Pôle Emploi, pour mieux accompagner
-les demandeurs d'emploi et les recruteurs.

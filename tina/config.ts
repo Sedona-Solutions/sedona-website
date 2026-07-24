@@ -247,7 +247,7 @@ export default defineConfig({
             name: "offresSection",
             label: "Section Offres",
             fields: [
-              { type: "string", name: "eyebrow", label: "Eyebrow (ex. Nos offres spéciales)" },
+              { type: "string", name: "eyebrow", label: "Sur-titre (ex. Nos offres spéciales)" },
               { ...titreTexte },
               { ...titreAccentTexte },
               { ...couleurTitre },
@@ -406,7 +406,7 @@ export default defineConfig({
             name: "projets",
             label: "Section « Projets »",
             fields: [
-              { type: "string", name: "eyebrow", label: "Eyebrow" },
+              { type: "string", name: "eyebrow", label: "Sur-titre" },
               { ...titreTexte },
               { ...titreAccentTexte },
               {
@@ -460,7 +460,7 @@ export default defineConfig({
             name: "methode",
             label: "Section « Méthode »",
             fields: [
-              { type: "string", name: "eyebrow", label: "Eyebrow" },
+              { type: "string", name: "eyebrow", label: "Sur-titre" },
               { ...titreTexte },
               { ...titreAccentTexte },
               { type: "string", name: "sousTitre", label: "Sous-titre", ui: { component: "textarea" } },
@@ -495,7 +495,7 @@ export default defineConfig({
             name: "cqnf",
             label: "Section « Ce que nous faisons »",
             fields: [
-              { type: "string", name: "eyebrow", label: "Eyebrow" },
+              { type: "string", name: "eyebrow", label: "Sur-titre" },
               { ...titreTexte },
               { ...titreAccentTexte },
               { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
@@ -553,7 +553,6 @@ export default defineConfig({
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
             ],
           },
-          { type: "rich-text", name: "body", label: "Contenu", isBody: true },
         ],
       },
 
@@ -567,17 +566,10 @@ export default defineConfig({
         format: "md",
         fields: [
           { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
-          { type: "string", name: "client", label: "Client" },
-          { type: "image", name: "couverture", label: "Image de couverture (miniatures : listes, cartes projets liés…)" },
-          { type: "image", name: "bannerDetail", label: "Bannière (page détail, sous le hero — différente de la couverture)" },
-          { type: "string", name: "tags", label: "Tags", list: true },
-          { type: "string", name: "resume", label: "Résumé", ui: { component: "textarea" } },
-          { type: "string", name: "accroche", label: "Accroche (sous le titre)", ui: { component: "textarea" } },
-          { type: "string", name: "annee", label: "Année (ex. 2019 - Aujourd'hui)" },
           {
             type: "string",
             name: "accent",
-            label: "Couleur d'accent (hero/cartes)",
+            label: "Couleur d'accent de la page",
             ui: { component: ColorSwatchDropdown },
             options: [
               { value: "red-rock", label: "Red Rock (rose)", color: "#f8b3a9" },
@@ -588,14 +580,12 @@ export default defineConfig({
               { value: "ovni", label: "Ovni (violet)", color: "#d0d3f5" },
             ],
           },
-          {
-            type: "object", name: "technos", label: "Stack technique", list: true,
-            ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
-            fields: [
-              { type: "string", name: "nom", label: "Nom" },
-              { type: "image", name: "logo", label: "Logo" },
-            ],
-          },
+          { type: "string", name: "client", label: "Client" },
+          { type: "image", name: "couverture", label: "Image de couverture" },
+          { type: "string", name: "accroche", label: "Accroche (sous le titre)", ui: { component: "textarea" } },
+          { type: "image", name: "bannerDetail", label: "Bannière" },
+          { type: "string", name: "tags", label: "Tags", list: true },
+          { type: "string", name: "annee", label: "Année (ex. 2019 - Aujourd'hui)" },
           {
             type: "object", name: "contexte", label: "Le contexte",
             fields: [
@@ -677,9 +667,16 @@ export default defineConfig({
               { type: "image", name: "avatar", label: "Photo" },
             ],
           },
+          {
+            type: "object", name: "technos", label: "Stack technique", list: true,
+            ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
+            fields: [
+              { type: "string", name: "nom", label: "Nom" },
+              { type: "image", name: "logo", label: "Logo" },
+            ],
+          },
           { type: "image", name: "galerie", label: "Galerie d'images", list: true },
           { type: "datetime", name: "date", label: "Date" },
-          { type: "rich-text", name: "body", label: "Étude de cas", isBody: true },
         ],
       },
 
@@ -692,18 +689,6 @@ export default defineConfig({
         path: "content/offres",
         format: "md",
         fields: [
-          { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
-          { type: "string", name: "eyebrow", label: "Sur-titre du hero (optionnel, sinon valeur par défaut)" },
-          { type: "string", name: "accroche", label: "Accroche (grand titre du hero)", ui: { component: "textarea" } },
-          { type: "string", name: "enBref", label: "En bref (paragraphe d'intro)", ui: { component: "textarea" } },
-          { type: "image", name: "illustration", label: "Illustration du hero" },
-          {
-            type: "object", name: "heroProof", label: "Preuve sociale (sous le hero — page Brieff)",
-            fields: [
-              { type: "image", name: "avatars", label: "Avatars", list: true },
-              { type: "string", name: "texte", label: "Texte (ex. chiffre à confirmer)" },
-            ],
-          },
           {
             type: "string",
             name: "pillVariant",
@@ -717,8 +702,84 @@ export default defineConfig({
               { value: "sky", label: "Bleu (sky)", color: "#75d3d0" },
             ],
           },
+          { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
+          { type: "string", name: "eyebrow", label: "Sur-titre" },
+          { type: "string", name: "accroche", label: "Accroche (grand titre du hero)", ui: { component: "textarea" } },
           {
-            type: "object", name: "produits", label: "Ce que l'offre produit pour vous",
+            type: "string",
+            name: "accrocheAccent",
+            label: "Mot mis en avant (pill) dans l'accroche",
+            description: "Doit être une sous-chaîne exacte de l'Accroche. Si vide, le Titre (nom de l'offre) est utilisé par défaut.",
+          },
+          { type: "string", name: "enBref", label: "En bref (paragraphe d'intro)", ui: { component: "textarea" } },
+          { type: "image", name: "illustration", label: "Illustration du hero" },
+          {
+            type: "object", name: "heroProof", label: "Preuve sociale (sous le hero — page Brieff)",
+            fields: [
+              { type: "image", name: "avatars", label: "Avatars", list: true },
+              { type: "string", name: "texte", label: "Texte (ex. chiffre à confirmer)" },
+            ],
+          },
+          {
+            type: "object", name: "pourQui", label: "Pour qui ?",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              {
+                type: "object", name: "items", label: "Profils", list: true,
+                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+                fields: [
+                  { type: "string", name: "titre", label: "Rôle" },
+                  { type: "string", name: "sousTitre", label: "Sous-titre (optionnel, ex. « 3–5 projets en parallèle »)" },
+                  { type: "rich-text", name: "texte", label: "Texte" },
+                ],
+              },
+            ],
+          },
+          {
+            type: "object", name: "constat", label: "Le constat (avant / après, optionnel)",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Sur-titre" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
+              { type: "string", name: "colonneAvantTitre", label: "Titre colonne « avant »" },
+              { type: "string", name: "colonneApresTitre", label: "Titre colonne « après »" },
+              { type: "string", name: "avant", label: "Frictions (colonne « avant »)", list: true },
+              { type: "string", name: "apres", label: "Changements (colonne « après »)", list: true },
+            ],
+          },
+          {
+            type: "object", name: "etapes", label: "Comment ça marche ?",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { type: "string", name: "sousTitre", label: "Sous-titre" },
+              { type: "image", name: "image", label: "Capture d'écran (optionnel)" },
+              {
+                type: "object", name: "items", label: "Étapes", list: true,
+                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+                fields: [
+                  { type: "string", name: "titre", label: "Titre" },
+                  { type: "rich-text", name: "texte", label: "Texte" },
+                ],
+              },
+            ],
+          },
+          {
+            type: "object", name: "incoherence", label: "Détection (bloc 2 colonnes, optionnel)",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Sur-titre" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { type: "rich-text", name: "texte", label: "Texte" },
+              { type: "image", name: "illustration", label: "Illustration" },
+            ],
+          },
+          {
+            type: "object", name: "produits", label: "Les fonctionnalités",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
               { ...titreTexte },
@@ -754,85 +815,6 @@ export default defineConfig({
             ],
           },
           {
-            type: "object", name: "pourQui", label: "Pour qui ?",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              {
-                type: "object", name: "items", label: "Profils", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Rôle" },
-                  { type: "string", name: "sousTitre", label: "Sous-titre (optionnel, ex. « 3–5 projets en parallèle »)" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "raisons", label: "Pourquoi Sedona ?",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
-              {
-                type: "object", name: "items", label: "Raisons", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                  { type: "string", name: "icone", label: "Icône (optionnel, nom de fichier dans /icons, sans .svg)" },
-                ],
-              },
-              { type: "string", name: "technosTitle", label: "Titre technos (optionnel)" },
-              { type: "string", name: "technos", label: "Technos", list: true },
-              { type: "string", name: "technosNote", label: "Note technos (optionnel)", ui: { component: "textarea" } },
-            ],
-          },
-          {
-            type: "object", name: "etapes", label: "Comment on démarre ensemble",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "sousTitre", label: "Sous-titre" },
-              { type: "image", name: "image", label: "Capture d'écran (optionnel)" },
-              {
-                type: "object", name: "items", label: "Étapes", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "constat", label: "Le constat (avant / après, optionnel)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
-              { type: "string", name: "colonneAvantTitre", label: "Titre colonne « avant »" },
-              { type: "string", name: "colonneApresTitre", label: "Titre colonne « après »" },
-              { type: "string", name: "avant", label: "Frictions (colonne « avant »)", list: true },
-              { type: "string", name: "apres", label: "Changements (colonne « après »)", list: true },
-            ],
-          },
-          {
-            type: "object", name: "incoherence", label: "Détection (bloc 2 colonnes, optionnel)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "rich-text", name: "texte", label: "Texte" },
-              { type: "image", name: "illustration", label: "Illustration" },
-            ],
-          },
-          {
             type: "object", name: "impacts", label: "Impacts mesurables (bande sombre, optionnel)",
             fields: [
               { type: "string", name: "eyebrow", label: "Sur-titre" },
@@ -850,6 +832,44 @@ export default defineConfig({
             ],
           },
           {
+            type: "object", name: "temoignage", label: "Témoignage client (page Brieff)",
+            description: "Si vide, un témoignage de la home est utilisé par défaut.",
+            fields: [
+              { type: "string", name: "citation", label: "Citation", ui: { component: "textarea" } },
+              { type: "string", name: "auteur", label: "Auteur" },
+              { type: "string", name: "role", label: "Fonction" },
+              { type: "image", name: "avatar", label: "Photo" },
+            ],
+          },
+          {
+            type: "object", name: "raisons", label: "Infos complémentaires (section grid)",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
+              { ...titreTexte },
+              { ...titreAccentTexte },
+              { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
+              {
+                type: "object", name: "items", label: "Raisons", list: true,
+                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+                fields: [
+                  { type: "string", name: "titre", label: "Titre" },
+                  { type: "rich-text", name: "texte", label: "Texte" },
+                  { type: "string", name: "icone", label: "Icône (optionnel, nom de fichier dans /icons, sans .svg)" },
+                ],
+              },
+              { type: "string", name: "technosTitle", label: "Titre technos (optionnel)" },
+              {
+                type: "object", name: "technos", label: "Technos", list: true,
+                ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
+                fields: [
+                  { type: "string", name: "nom", label: "Nom" },
+                  { type: "image", name: "logo", label: "Logo" },
+                ],
+              },
+              { type: "string", name: "technosNote", label: "Note technos (optionnel)", ui: { component: "textarea" } },
+            ],
+          },
+          {
             type: "object", name: "ctaFinal", label: "Bandeau d'appel final",
             fields: [
               { ...titreTexte },
@@ -859,7 +879,6 @@ export default defineConfig({
               { type: "string", name: "ctaHref", label: "Bouton — lien" },
             ],
           },
-          { type: "number", name: "ordre", label: "Ordre d'affichage" },
         ],
       },
 
@@ -915,6 +934,50 @@ export default defineConfig({
         ],
       },
       // ---------------------------------------------------------------
+      // Évènements (bandeau affiché sur l'accueil, entre le titre "News &
+      // articles" et la grille d'articles, selon la période d'affichage)
+      // ---------------------------------------------------------------
+      {
+        name: "evenement",
+        label: "Évènements",
+        path: "content/evenements",
+        format: "md",
+        ui: {
+          filename: {
+            slugify: (values: { titre?: string }) =>
+              (values?.titre || "evenement")
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[̀-ͯ]/g, "")
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, ""),
+          },
+        },
+        fields: [
+          { type: "string", name: "titre", label: "Nom de l'évènement", isTitle: true, required: true },
+          { type: "image", name: "image", label: "Image", required: true },
+          {
+            type: "string",
+            name: "ctaLabel",
+            label: "CTA — libellé du bouton",
+            description: "Ex. S'inscrire à l'évènement",
+          },
+          { type: "string", name: "ctaHref", label: "CTA — lien" },
+          {
+            type: "string",
+            name: "position",
+            label: "Positionnement du bouton",
+            options: [
+              { value: "gauche", label: "Gauche" },
+              { value: "centre", label: "Centre" },
+              { value: "droite", label: "Droite" },
+            ],
+          },
+          { type: "datetime", name: "dateDebut", label: "Date d'affichage — début", required: true },
+          { type: "datetime", name: "dateFin", label: "Date d'affichage — fin", required: true },
+        ],
+      },
+      // ---------------------------------------------------------------
       // Pages statiques / légales (mentions légales, confidentialité, RSE…)
       // ---------------------------------------------------------------
       {
@@ -924,7 +987,7 @@ export default defineConfig({
         format: "md",
         fields: [
           { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
-          { type: "string", name: "eyebrow", label: "Sur-titre (eyebrow)" },
+          { type: "string", name: "eyebrow", label: "Sur-titre" },
           { type: "string", name: "intro", label: "Introduction", ui: { component: "textarea" } },
           { type: "string", name: "dateMaj", label: "Date de mise à jour (ex. Juin 2026)" },
           { type: "image", name: "fichier", label: "Fichier à télécharger (PDF)" },

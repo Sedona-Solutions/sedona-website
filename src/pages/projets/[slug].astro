@@ -40,7 +40,7 @@ const accentDark = ACCENT_MID[p.accent ?? "red-rock"] ?? ACCENT_MID["red-rock"];
 const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolorIcon(pt.icone, ac.heroBg) : null));
 ---
 
-<BaseLayout title={`${p.client ?? p.titre} — Sedona`} description={p.accroche ?? p.resume} headerBg={ac.heroBg}>
+<BaseLayout title={`${p.client ?? p.titre} — Sedona`} description={p.accroche} headerBg={ac.heroBg}>
   <div class="dark-stack">
   <!-- HERO -->
   <section class="phero">

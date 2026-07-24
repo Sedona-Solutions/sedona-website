@@ -31,6 +31,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       eyebrow={d.eyebrow}
       titre={d.titre}
       accroche={d.accroche}
+      accrocheAccent={d.accrocheAccent}
       enBref={d.enBref}
       illustration={d.illustration}
       proof={d.heroProof}
@@ -74,7 +75,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       pillVariant={pillVariant}
     />
     <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} titreAccent={d.impacts?.titreAccent} pillVariant={pillVariant} items={d.impacts?.items ?? []} />
-    <Testimonial />
+    <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} />
     <ReglesConformite
       eyebrow={d.raisons?.eyebrow}
       titre={d.raisons?.titre}

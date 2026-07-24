@@ -10,7 +10,6 @@ tags:
   - Backend
   - Kotlin
   - SwiftUI
-resume: Une expérience numérique au service de la visite et du rayonnement du domaine.
 accroche: 'Transformer la visite du monument le plus emblématique de France grâce à des applications mobiles iOS et Android riches, élégantes et accessibles à 10 millions de visiteurs annuels.'
 annee: 2016 - Aujourd'hui
 accent: sunshine
@@ -88,6 +87,3 @@ galerie:
   - /uploads/projets/versailles/gallery.png
 date: 2025-09-01T00:00:00.000Z
 ---
-
-Conception d'une nouvelle expérience de visite numérique valorisant le
-patrimoine et facilitant le parcours des visiteurs du Château de Versailles.

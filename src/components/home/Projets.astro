@@ -34,17 +34,6 @@ const { section, projets = [] } = Astro.props;
               ) : (
                 <span class="proj__placeholder" aria-hidden="true" />
               )}
-              <span class="proj__arrow" aria-hidden="true">
-                <svg viewBox="0 0 20 20" fill="none">
-                  <path
-                    d="M4 10H16M16 10L11 5M16 10L11 15"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
             </a>
             <h3 class="proj__title">{p.client ?? p.titre}</h3>
             {p.tags?.length > 0 && (
@@ -144,31 +133,6 @@ const { section, projets = [] } = Astro.props;
   }
   .proj__media:hover img {
     transform: scale(1.05);
-  }
-  /* Bouton flèche repris du langage visuel des CTA (capsule sombre, icône claire). */
-  .proj__arrow {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    background: #3b0800;
-    color: var(--color-red-rock-50);
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  .proj__media:hover .proj__arrow {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .proj__arrow svg {
-    width: 22px;
-    height: 22px;
   }
   .proj__placeholder {
     display: block;

@@ -9,7 +9,6 @@ tags:
   - UX/UI design
   - Kotlin
   - SwiftUI
-resume: Une application unique pour réunir et promouvoir les marques radio du Groupe NRJ.
 accroche: Accompagner la première radio musicale de France dans la refonte complète de son application mobile iOS et Android pour offrir une expérience fluide à 6 millions d'utilisateurs.
 annee: 2019 - Aujourd'hui
 accent: red-rock
@@ -96,6 +95,3 @@ galerie:
   - /uploads/projets/nrj/gallery.png
 date: 2025-11-01T00:00:00.000Z
 ---
-
-Accompagnement du Groupe NRJ dans la conception d'une application réunissant ses
-marques radio, pour une expérience d'écoute unifiée et performante.

@@ -49,11 +49,6 @@ const isTexte = layout === "texte";
               <li class="pdc pdc--image" data-reveal>
                 <a href={`/projets/${p.slug}`} class="pdc__media">
                   {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pdc__ph" aria-hidden="true" />}
-                  <span class="pdc__mediaArrow" aria-hidden="true">
-                    <svg viewBox="0 0 20 20" fill="none">
-                      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </span>
                 </a>
                 <h3 class="pdc__title">{p.client ?? p.titre}</h3>
                 {p.tags?.length > 0 && <ul class="pdc__tags">{p.tags.map((t) => <li>{t}</li>)}</ul>}
@@ -109,14 +104,6 @@ const isTexte = layout === "texte";
   .pdc--image .pdc__media:hover { border-color: #3b0800; border-bottom-width: 5px; }
   .pdc--image .pdc__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
   .pdc--image .pdc__media:hover img { transform: scale(1.05); }
-  .pdc--image .pdc__mediaArrow {
-    position: absolute; left: 20px; bottom: 20px; width: 56px; height: 56px;
-    display: flex; align-items: center; justify-content: center; border-radius: 999px;
-    background: #3b0800; color: var(--color-red-rock-50); opacity: 0; transform: translateY(8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  .pdc--image .pdc__media:hover .pdc__mediaArrow { opacity: 1; transform: translateY(0); }
-  .pdc--image .pdc__mediaArrow svg { width: 22px; height: 22px; }
   .pdc--image .pdc__ph { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-canyon-200), var(--color-red-rock-200)); }
   .pdc--image .pdc__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.75rem; color: #3b0800; margin: 1.25rem 0 0; }
 

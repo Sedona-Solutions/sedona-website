@@ -38,6 +38,14 @@ const tousArticles = (await getCollection("article", ({ data }) => estArticlePub
   .sort((a, b) => +new Date(b.date) - +new Date(a.date));
 const vedette = tousArticles.find((a) => a.vedette) ?? tousArticles[0];
 const autresArticles = tousArticles.filter((a) => a.slug !== vedette?.slug).slice(0, 4);
+
+// Évènement actif : celui dont la période d'affichage couvre la date du jour
+// (le plus récemment démarré si plusieurs se chevauchent).
+const maintenant = new Date();
+const evenement = (await getCollection("evenement"))
+  .map((e) => e.data)
+  .filter((e) => new Date(e.dateDebut) <= maintenant && maintenant <= new Date(e.dateFin))
+  .sort((a, b) => +new Date(b.dateDebut) - +new Date(a.dateDebut))[0];
 ---
 
 <BaseLayout title="Sedona — ESN technologique à Paris, Lyon et Toulon">
@@ -50,7 +58,7 @@ const autresArticles = tousArticles.filter((a) => a.slug !== vedette?.slug).slic
     <Projets section={home.projetsSection} projets={projets} />
     <Temoignages section={home.temoignagesSection} />
     <Clients section={home.clientsSection} />
-    <BlogPreview vedette={vedette} articles={autresArticles} />
+    <BlogPreview vedette={vedette} articles={autresArticles} evenement={evenement} />
   </div>
   <CtaFinal cta={home.ctaFinal} />
 </BaseLayout>

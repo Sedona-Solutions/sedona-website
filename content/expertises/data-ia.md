@@ -156,7 +156,3 @@ articlesSection:
     - IA
     - Data
 ---
-
-De la collecte à la visualisation, nous aidons nos clients à exploiter leurs
-données et à industrialiser des cas d'usage d'intelligence artificielle
-réellement utiles.
