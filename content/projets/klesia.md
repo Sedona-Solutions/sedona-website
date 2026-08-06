@@ -34,9 +34,5 @@ approche:
       texte: Une gestion de contenu souple et durable.
     - titre: Sécurité by design
       texte: Conformité intégrée dès la conception.
-resume: Refonte du site internet du groupe de protection sociale Klésia.
 date: 2025-04-01T00:00:00.000Z
 ---
-
-Modernisation et refonte du site internet de Klésia, pour une expérience plus
-claire et accessible au service des assurés.

@@ -1,0 +1,68 @@
+---
+// Bandeau évènement (cf. Figma node 4048:49887) : une image pleine largeur
+// (le texte/branding est déjà intégré à l'image fournie) avec un bouton en
+// pastille qui chevauche le bas de l'image, positionné à gauche/centre/droite.
+interface Props {
+  titre?: string;
+  image?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  position?: "gauche" | "centre" | "droite";
+}
+const { titre, image, ctaLabel, ctaHref, position = "droite" } = Astro.props;
+---
+
+{
+  image && (
+    <div class="event-banner">
+      <img class="event-banner__img" src={image} alt={titre || ""} />
+      {ctaLabel && ctaHref && (
+        <div class={`event-banner__cta event-banner__cta--${position}`}>
+          <a class="btn-flat-lg btn-flat-lg--white" href={ctaHref}>
+            <span class="btn-bg" aria-hidden="true" />
+            <span class="btn-front" aria-hidden="true" />
+            <span class="btn-label">{ctaLabel}</span>
+          </a>
+        </div>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .event-banner {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .event-banner__img {
+    display: block;
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  .event-banner__cta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(1.25rem, 3vw, 2.5rem);
+    display: flex;
+    padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+    pointer-events: none;
+  }
+  .event-banner__cta a { pointer-events: auto; }
+  .event-banner__cta--gauche { justify-content: flex-start; }
+  .event-banner__cta--centre { justify-content: center; }
+  .event-banner__cta--droite { justify-content: flex-end; }
+
+  @media (max-width: 640px) {
+    .event-banner__img { aspect-ratio: 4 / 3; }
+    .event-banner__cta {
+      position: static;
+      justify-content: center;
+      padding: 1.25rem 1rem 0;
+    }
+    .btn-flat-lg { padding: 16px 24px; font-size: 16px; }
+  }
+</style>

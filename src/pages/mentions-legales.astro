@@ -11,7 +11,7 @@ const p = entry.data;
 
 <BaseLayout title={`${p.titre} — Sedona`} description={p.intro}>
   <PageHeader eyebrow={p.eyebrow} titre={p.titre} intro={p.intro} />
-  <section class="container page-body">
+  <section class="container page-body" data-reveal>
     {p.dateMaj && <p class="page-body__maj">Dernière mise à jour : {p.dateMaj}</p>}
     <DownloadButton href={p.fichier} label={p.fichierLabel} />
     <div class="prose"><Content /></div>

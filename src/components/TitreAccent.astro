@@ -1,0 +1,40 @@
+---
+// Titre en texte simple avec un mot/une phrase mis en avant : `accent` doit être
+// une sous-chaîne exacte de `titre`. Si vide ou introuvable, on surligne par
+// défaut le dernier mot du titre (cf. `pillWord` sur les pages Domaine).
+interface Props {
+  titre?: string;
+  accent?: string;
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+  pillVariant?: string;
+}
+const { titre = "", accent = "", as = "h2", class: cls = "", pillVariant = "red-rock" } = Astro.props;
+const Tag = as;
+
+const t = titre.trim();
+let avant = "";
+let pastille = "";
+let apres = "";
+if (accent && t.includes(accent)) {
+  const i = t.indexOf(accent);
+  avant = t.slice(0, i);
+  pastille = accent;
+  apres = t.slice(i + accent.length);
+} else {
+  // Remonte les mots depuis la fin tant que la pastille ne contient que de la
+  // ponctuation (ex. "Pour qui ?" → surligne "qui ?", pas juste "?").
+  const mots = t.split(" ");
+  pastille = mots.pop() ?? "";
+  while (mots.length && !/[\p{L}\p{N}]/u.test(pastille)) {
+    pastille = `${mots.pop()} ${pastille}`;
+  }
+  avant = mots.length ? mots.join(" ") + " " : "";
+}
+---
+
+<Tag class={cls}>
+  {avant}
+  {pastille && <mark class={`hl hl--${pillVariant}`}>{pastille}</mark>}
+  {apres}
+</Tag>

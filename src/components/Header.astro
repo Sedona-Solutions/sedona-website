@@ -1,13 +1,26 @@
 ---
+import { getCollection } from "astro:content";
 import global from "../../content/global/index.json";
 import Logo from "./Logo.astro";
 const { navigation } = global;
-const { variant = "default" } = Astro.props;
 const ctaLabel = "Et si on parlait de vous ?";
 const ctaHref = "/contact";
+const { bgColor } = Astro.props;
+
+// Méga-menu "Domaines" : icônes/couleurs/résumés tirés du même contenu Tina
+// que la home (Expertises) et les pages offres, pour rester DRY et à jour.
+const ICON_BG = ["#d4f4e7", "#e5e7fa", "#fbd3cd"];
+const domaines = (await getCollection("expertise"))
+  .map((e) => ({ ...e.data, slug: e.id }))
+  .sort((a, b) => (a.affichage?.ordre ?? 99) - (b.affichage?.ordre ?? 99));
+
+const OFFRE_ORDRE = ["keycloak-run", "brieff", "ia-forge", "elastic", "move2cloud"];
+const COULEUR_HEX = { "red-rock": "#f8b3a9", ovni: "#b3b5ee", sunshine: "#f8d98b", cactus: "#a7e9d1", sky: "#a9e7e4" };
+const toutesOffres = await getCollection("offre");
+const offres = OFFRE_ORDRE.map((slug) => toutesOffres.find((o) => o.id === slug)).filter(Boolean);
 ---
 
-<header class={`site-header ${variant !== "default" ? "site-header--tinted site-header--" + variant : ""}`}>
+<header class={`site-header ${bgColor ? "site-header--custom" : ""}`} style={bgColor ? `--header-bg:${bgColor}` : undefined}>
   <div class="container site-header__inner">
     <a href="/" class="site-header__logo" aria-label="Accueil Sedona">
       <Logo />
@@ -18,6 +31,7 @@ const ctaHref = "/contact";
         {
           navigation.map((item) => {
             const hasMenu = item.sousMenu && item.sousMenu.length > 0;
+            const isDomaines = item.label === "Domaines";
             return (
               <li class={`site-nav__item ${hasMenu ? "has-menu" : ""}`}>
                 <a href={item.href} class="site-nav__link">
@@ -28,7 +42,36 @@ const ctaHref = "/contact";
                     </svg>
                   )}
                 </a>
-                {hasMenu && (
+                {hasMenu && isDomaines && (
+                  <div class="site-nav__mega">
+                    <div class="mega__domaines">
+                      {domaines.map((d) => (
+                        <a href={`/domaines/${d.slug}`} class="mega__row">
+                          <span class="mega__icon" style={`--bg:${ICON_BG[(d.affichage?.ordre ?? 1) - 1] ?? ICON_BG[0]}`}>
+                            {d.affichage?.icone && <img src={`/icons/${d.affichage.icone}.svg`} alt="" aria-hidden="true" />}
+                          </span>
+                          <span class="mega__row-text">
+                            <span class="mega__row-titre">{d.titre}</span>
+                            {d.affichage?.resume && <span class="mega__row-desc">{d.affichage.resume}</span>}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                    {offres.length > 0 && (
+                      <div class="mega__offres">
+                        <p class="mega__offres-titre">Nos offres clé en main</p>
+                        <div class="mega__badges">
+                          {offres.map((o) => (
+                            <a href={`/offres/${o.id}`} class="mega__badge" style={`--bg:${COULEUR_HEX[o.data.pillVariant] ?? "#a7e9d1"}`}>
+                              {o.data.titre}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {hasMenu && !isDomaines && (
                   <ul class="site-nav__menu">
                     {item.sousMenu.map((sub) => (
                       <li>
@@ -44,29 +87,144 @@ const ctaHref = "/contact";
       </ul>
     </nav>
 
-    <a href={ctaHref} class="site-header__cta">{ctaLabel}</a>
+    <a href={ctaHref} class="site-header__cta">
+      <span class="site-header__cta-bg" aria-hidden="true"></span>
+      <span class="site-header__cta-front" aria-hidden="true"></span>
+      <span class="site-header__cta-label">{ctaLabel}</span>
+    </a>
+
+    <button
+      type="button"
+      class="site-header__burger"
+      aria-expanded="false"
+      aria-controls="mobileNav"
+      aria-label="Ouvrir le menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+{
+  /* Panneau hors de <header> : ce dernier a un backdrop-filter, ce qui en
+     ferait le containing block d'un enfant position:fixed (au lieu du
+     viewport) et casserait le plein-écran du panneau. */
+}
+<div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__backdrop"></div>
+    <nav class="mobile-nav__panel" aria-label="Navigation mobile">
+      <ul class="mobile-nav__list">
+        {
+          navigation.map((item) => {
+            const hasMenu = item.sousMenu && item.sousMenu.length > 0;
+            const isDomaines = item.label === "Domaines";
+            return (
+              <li class="mobile-nav__item">
+                {hasMenu ? (
+                  <>
+                    <button type="button" class="mobile-nav__toggle" aria-expanded="false">
+                      {item.label}
+                      <svg viewBox="0 0 12 8" aria-hidden="true">
+                        <path d="M1 1.5L6 6.5L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
+                    <div class="mobile-nav__submenu">
+                      {isDomaines ? (
+                        <>
+                          {domaines.map((d) => (
+                            <a href={`/domaines/${d.slug}`} class="mobile-nav__row">
+                              <span class="mobile-nav__row-icon" style={`--bg:${ICON_BG[(d.affichage?.ordre ?? 1) - 1] ?? ICON_BG[0]}`}>
+                                {d.affichage?.icone && <img src={`/icons/${d.affichage.icone}.svg`} alt="" aria-hidden="true" />}
+                              </span>
+                              <span class="mobile-nav__row-text">
+                                <span class="mobile-nav__row-titre">{d.titre}</span>
+                              </span>
+                            </a>
+                          ))}
+                          {offres.length > 0 && (
+                            <div class="mobile-nav__offres">
+                              <p class="mobile-nav__offres-titre">Nos offres clé en main</p>
+                              <div class="mobile-nav__badges">
+                                {offres.map((o) => (
+                                  <a href={`/offres/${o.id}`} class="mobile-nav__badge" style={`--bg:${COULEUR_HEX[o.data.pillVariant] ?? "#a7e9d1"}`}>
+                                    {o.data.titre}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        item.sousMenu.map((sub) => (
+                          <a href={sub.href} class="mobile-nav__link">{sub.label}</a>
+                        ))
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <a href={item.href} class="mobile-nav__link mobile-nav__link--top">{item.label}</a>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <a href={ctaHref} class="mobile-nav__cta">
+        <span class="site-header__cta-bg" aria-hidden="true"></span>
+        <span class="site-header__cta-front" aria-hidden="true"></span>
+        <span class="site-header__cta-label">{ctaLabel}</span>
+      </a>
+    </nav>
+  </div>
+</div>
 
 <style>
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 30;
+    width: auto;
+    margin-inline: 0;
+    border: 1px solid transparent;
     background: color-mix(in srgb, var(--color-canyon-50) 90%, transparent);
     backdrop-filter: blur(8px);
+    border-radius: 0;
+    transition: top 0.3s ease, width 0.3s ease, margin-inline 0.3s ease,
+      border-radius 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   }
-  .site-header--salmon { background: #f8b3a9; }
-  .site-header--sunshine { background: #f8d98b; }
-  .site-header--lavande { background: #d0d3f5; }
-  .site-header--tinted {
+  /* Bloc de navigation flottant : déclenché au scroll (voir script plus bas),
+     pour garder le menu lisible même quand la Hero (ou une section sombre)
+     défile sous le header. Se réduit à la taille de son contenu (logo + nav + CTA). */
+  .site-header--custom:not(.site-header--floating) {
+    background: var(--header-bg);
+    backdrop-filter: none;
+    border-color: transparent;
+  }
+  .site-header--floating {
+    top: 16px;
+    width: fit-content;
+    margin-inline: auto;
+    border-color: color-mix(in srgb, #3b0800 40%, transparent);
+    border-radius: var(--radius-section-sm);
+    background: var(--color-canyon-50);
+  }
+  /* Menu mobile ouvert : le bandeau repasse en blanc uni pour raccorder
+     visuellement avec le panneau (lui-même blanc), quel que soit l'état
+     scroll/flottant ou la couleur custom de la page. */
+  .site-header--menu-open,
+  .site-header--menu-open.site-header--floating,
+  .site-header--menu-open.site-header--custom:not(.site-header--floating) {
+    background: #fff;
     backdrop-filter: none;
   }
-  .site-header--tinted .site-nav__link {
-    border-color: color-mix(in srgb, var(--color-red-rock-700) 30%, transparent);
-    background: color-mix(in srgb, #fff 35%, transparent);
+  .site-header--floating .site-header__inner {
+    padding-inline: 32px;
+    padding-right: 17px;
   }
   .site-header__inner {
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -74,11 +232,9 @@ const ctaHref = "/contact";
   }
   .site-header__logo {
     display: inline-flex;
+    flex: none;
     align-items: center;
-    color: var(--color-red-rock-700);
-  }
-  .site-header__logo:hover {
-    color: var(--color-primary);
+    color: var(--color-red-rock-950);
   }
 
   /* Navigation en capsules */
@@ -88,7 +244,7 @@ const ctaHref = "/contact";
   .site-nav__list {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -97,31 +253,32 @@ const ctaHref = "/contact";
     position: relative;
   }
   .site-nav__link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 1.15rem;
-    border: 1.5px solid color-mix(in srgb, var(--color-red-rock-700) 22%, transparent);
+    gap: 8px;
+    height: 37px;
+    padding: 12px;
+    border: 1px solid var(--color-red-rock-950);
     border-radius: 999px;
     background: #fff;
-    color: var(--color-red-rock-700);
+    color: var(--color-red-rock-950);
     font-family: var(--font-mono);
     font-weight: 400;
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
+    font-size: 18px;
+    letter-spacing: -0.5px;
     text-transform: uppercase;
     white-space: nowrap;
     transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
   .site-nav__link:hover,
   .site-nav__item:focus-within .site-nav__link {
-    background: var(--color-red-rock-700);
-    border-color: var(--color-red-rock-700);
+    background: var(--color-red-rock-950);
+    border-color: var(--color-red-rock-950);
     color: #fff;
   }
   .site-nav__chevron {
-    width: 0.7em;
-    height: auto;
+    width: 8px;
+    height: 4px;
     transition: transform 0.15s ease;
   }
   .site-nav__item.has-menu:hover .site-nav__chevron,
@@ -165,31 +322,399 @@ const ctaHref = "/contact";
     color: var(--color-primary);
   }
 
+  /* Méga-menu "Domaines" : 3 domaines à gauche (icône + titre + résumé),
+     offres clé en main à droite (pastilles), cf. maquette Figma dédiée. */
+  .site-nav__mega {
+    /* position: fixed pour pouvoir se centrer sur la largeur du viewport
+       (comme le conteneur principal du site), plutôt que sur la position
+       arbitraire de l'item "Domaines" dans la nav. */
+    position: fixed;
+    top: 76px;
+    left: 50%;
+    display: flex;
+    gap: 32px;
+    width: min(var(--content-max, 1312px), calc(100vw - 3rem));
+    padding: 32px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--color-neutral-700) 40%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+  .site-header--floating .site-nav__mega { top: 88px; }
+  .site-nav__item.has-menu:hover .site-nav__mega,
+  .site-nav__item.has-menu:focus-within .site-nav__mega {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mega__domaines { flex: 1 1 0; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .mega__row { display: flex; align-items: center; gap: 24px; border-radius: 12px; padding: 8px; margin: -8px; }
+  .mega__icon {
+    flex: none; width: 80px; height: 80px; border-radius: 8px; background: var(--bg, #d4f4e7);
+    display: grid; place-items: center;
+  }
+  .mega__icon img { width: 56px; height: 56px; }
+  .mega__row-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  /* Effet rollover façon CTA secondaire (.link-cta) : un trait fin toujours
+     visible, un second trait plus épais qui se révèle au survol. */
+  .mega__row-titre {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+    font-family: var(--font-sans); font-weight: 500; font-size: 1.25rem; letter-spacing: 0;
+    color: #42140d; text-transform: uppercase;
+  }
+  .mega__row-titre::before,
+  .mega__row-titre::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: currentColor;
+  }
+  .mega__row-titre::before { height: 1px; }
+  .mega__row-titre::after {
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .mega__row:hover .mega__row-titre::after { transform: scaleX(1); }
+  .mega__row-desc { font-family: var(--font-body); font-size: 0.875rem; letter-spacing: -0.16px; color: #3b0800; }
+
+  .mega__offres {
+    flex: none; width: 368px; background: var(--color-canyon-50); border-radius: 8px; padding: 24px;
+  }
+  .mega__offres-titre {
+    margin: 0 0 24px; font-family: var(--font-sans); font-weight: 500; font-size: 1.25rem; color: #42140d;
+  }
+  .mega__badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mega__badge {
+    background: var(--bg, #a7e9d1); color: #3b0800; font-family: var(--font-sans); font-weight: 500;
+    font-size: 1.5rem; letter-spacing: -0.15px; padding: 4px 24px; border-radius: 999px; white-space: nowrap;
+    transition: transform 0.2s ease;
+  }
+  .mega__badge:hover { transform: scale(0.97); }
+
   /* CTA principal (capsule marron) */
   .site-header__cta {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    padding: 0.7rem 1.4rem;
+    justify-content: center;
+    padding: 18.5px 24px;
     border-radius: 999px;
-    background: var(--color-red-rock-700);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
+    color: var(--color-red-rock-50);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 0.7;
+    letter-spacing: -0.18px;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: background 0.15s ease, transform 0.15s ease;
+    transition: transform 0.2s ease;
   }
+  /* Au survol, le bouton se tasse légèrement (scale 0.97), façon wisprflow.ai. */
   .site-header__cta:hover {
-    background: var(--color-red-rock-703);
-    color: #fff;
-    transform: translateY(-1px);
+    transform: scale(0.97);
+  }
+  .site-header__cta-bg,
+  .site-header__cta-front {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .site-header__cta-bg {
+    background: var(--color-red-rock-400);
+  }
+  .site-header__cta-front {
+    background: #3b0800;
+  }
+  .site-header__cta-label {
+    position: relative;
+  }
+
+  /* Bouton burger (mobile/tablette uniquement, cf. media query ci-dessous). */
+  .site-header__burger {
+    display: none;
+    flex: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-red-rock-950);
+    border-radius: 999px;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .site-header__burger span {
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-red-rock-950);
+    transition: transform 0.25s ease, opacity 0.25s ease, top 0.25s ease;
+  }
+  .site-header__burger span:nth-child(1) { top: 14px; }
+  .site-header__burger span:nth-child(2) { top: 19px; }
+  .site-header__burger span:nth-child(3) { top: 24px; }
+  .site-header__burger.is-open span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+  .site-header__burger.is-open span:nth-child(2) { opacity: 0; }
+  .site-header__burger.is-open span:nth-child(3) { top: 19px; transform: rotate(-45deg); }
+
+  /* Panneau de navigation mobile/tablette (menu burger). */
+  :global(body.no-scroll) { overflow: hidden; }
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    visibility: hidden;
+  }
+  .mobile-nav__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, #1a1210 55%, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 6rem 1.5rem 2rem;
+    overflow-y: auto;
+    background: #fff;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mobile-nav.is-open {
+    visibility: visible;
+  }
+  .mobile-nav.is-open .mobile-nav__backdrop {
+    opacity: 1;
+  }
+  .mobile-nav.is-open .mobile-nav__panel {
+    transform: translateX(0);
+  }
+  .mobile-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .mobile-nav__toggle,
+  .mobile-nav__link.mobile-nav__link--top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    background: none;
+    padding: 0.9rem 0.25rem;
+    border-bottom: 1px solid color-mix(in srgb, #3b0800 15%, transparent);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 1.125rem;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--color-red-rock-950);
+    cursor: pointer;
+  }
+  .mobile-nav__toggle svg {
+    width: 10px;
+    height: 6px;
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+  .mobile-nav__item.is-open .mobile-nav__toggle svg {
+    transform: rotate(180deg);
+  }
+  .mobile-nav__submenu {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5rem;
+    transition: max-height 0.3s ease;
+  }
+  .mobile-nav__item.is-open .mobile-nav__submenu {
+    max-height: 900px;
+  }
+  .mobile-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.25rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    color: #3b0800;
+  }
+
+  /* Ligne « domaine » : même langage que le méga-menu desktop (.mega__row),
+     juste réagencé en colonne pleine largeur pour le mobile. */
+  .mobile-nav__row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 4px;
+    border-radius: 12px;
+  }
+  .mobile-nav__row-icon {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    background: var(--bg, #d4f4e7);
+    display: grid;
+    place-items: center;
+  }
+  .mobile-nav__row-icon img {
+    width: 38px;
+    height: 38px;
+  }
+  .mobile-nav__row-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .mobile-nav__row-titre {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.0625rem;
+    letter-spacing: 0;
+    color: #42140d;
+    text-transform: uppercase;
+  }
+
+  /* Bloc « Nos offres clé en main » : même langage que le méga-menu desktop
+     (.mega__offres / .mega__badge), juste réagencé pour le mobile. */
+  .mobile-nav__offres {
+    background: var(--color-canyon-50);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 0.25rem 0 0.75rem;
+  }
+  .mobile-nav__offres-titre {
+    margin: 0 0 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.0625rem;
+    color: #42140d;
+  }
+  .mobile-nav__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mobile-nav__badge {
+    background: var(--bg, #a7e9d1);
+    color: #3b0800;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: -0.1px;
+    padding: 4px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .mobile-nav__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 18.5px 24px;
+    border-radius: 999px;
+    color: var(--color-red-rock-50);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 0.7;
+    letter-spacing: -0.18px;
+    text-transform: uppercase;
+    text-align: center;
   }
 
   @media (max-width: 1040px) {
-    .site-nav,
+    .site-nav {
+      display: none;
+    }
+    .site-header__burger {
+      display: inline-flex;
+    }
+  }
+  /* En dessous de la tablette, la capsule CTA n'a plus la place de tenir à
+     côté du logo et du burger : elle reste accessible en bas du panneau mobile. */
+  @media (max-width: 640px) {
     .site-header__cta {
       display: none;
     }
   }
 </style>
+
+<script>
+  const header = document.querySelector(".site-header");
+  const THRESHOLD = 24;
+
+  const onScroll = () => {
+    header?.classList.toggle("site-header--floating", window.scrollY > THRESHOLD);
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("astro:page-load", onScroll);
+
+  // Menu burger (mobile/tablette) : panneau coulissant + accordéons pour les sous-menus.
+  const burger = document.querySelector(".site-header__burger");
+  const mobileNav = document.getElementById("mobileNav");
+  const backdrop = mobileNav?.querySelector(".mobile-nav__backdrop");
+
+  const closeMobileNav = () => {
+    burger?.classList.remove("is-open");
+    burger?.setAttribute("aria-expanded", "false");
+    mobileNav?.classList.remove("is-open");
+    header?.classList.remove("site-header--menu-open");
+    document.body.classList.remove("no-scroll");
+  };
+  const openMobileNav = () => {
+    burger?.classList.add("is-open");
+    burger?.setAttribute("aria-expanded", "true");
+    mobileNav?.classList.add("is-open");
+    header?.classList.add("site-header--menu-open");
+    document.body.classList.add("no-scroll");
+  };
+
+  burger?.addEventListener("click", () => {
+    mobileNav?.classList.contains("is-open") ? closeMobileNav() : openMobileNav();
+  });
+  backdrop?.addEventListener("click", closeMobileNav);
+  mobileNav?.querySelectorAll(".mobile-nav__link, .mobile-nav__badge, .mobile-nav__cta").forEach((el) => {
+    el.addEventListener("click", closeMobileNav);
+  });
+  mobileNav?.querySelectorAll(".mobile-nav__toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.closest(".mobile-nav__item")?.classList.toggle("is-open");
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMobileNav();
+  });
+  document.addEventListener("astro:page-load", closeMobileNav);
+</script>

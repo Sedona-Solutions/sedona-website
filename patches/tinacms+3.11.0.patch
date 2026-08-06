@@ -1,0 +1,404 @@
+diff --git a/node_modules/tinacms/dist/index.js b/node_modules/tinacms/dist/index.js
+index 69093c7..eb25248 100644
+--- a/node_modules/tinacms/dist/index.js
++++ b/node_modules/tinacms/dist/index.js
+@@ -16082,6 +16082,7 @@ class TinaAdminApi {
+                     extension
+                     hasReferences
+                   }
++                  _values
+                 }
+               }
+             }
+@@ -16133,6 +16134,7 @@ class TinaAdminApi {
+                     filename
+                     extension
+                   }
++                  _values
+                 }
+               }
+             }
+@@ -18248,6 +18250,9 @@ const buildByLevel = (make) => ({
+ });
+ const headingItemsByLevel = buildByLevel((level) => {
+   const depth = level.slice(1);
++  if (level === "h6") {
++    return { description: "Caption", icon: Icons[level], label: "Caption", value: level };
++  }
+   return {
+     description: `Heading ${depth}`,
+     icon: Icons[level],
+@@ -18617,10 +18622,10 @@ const MarkToolbarButton = withRef(({ clear, nodeType, ...rest }, ref) => {
+   return /* @__PURE__ */ React__default.createElement(ToolbarButton, { ref, ...props, ...rest });
+ });
+ const highlightColors = [
+-  { label: "Yellow", value: "#FEF08A" },
+-  { label: "Green", value: "#BBF7D0" },
+-  { label: "Blue", value: "#BFDBFE" },
+-  { label: "Red", value: "#CC4141" }
++  { label: "Yellow", value: "#f8d98b" },
++  { label: "Green", value: "#a7e9d1" },
++  { label: "Blue", value: "#a9e7e4" },
++  { label: "Red", value: "#f8b3a9" }
+ ];
+ const BoldToolbarButton = () => /* @__PURE__ */ React__default.createElement(MarkToolbarButton, { tooltip: "Bold (⌘+B)", nodeType: BoldPlugin.key }, /* @__PURE__ */ React__default.createElement(Icons.bold, null));
+ const StrikethroughToolbarButton = () => /* @__PURE__ */ React__default.createElement(MarkToolbarButton, { tooltip: "Strikethrough", nodeType: StrikethroughPlugin.key }, /* @__PURE__ */ React__default.createElement(Icons.strikethrough, null));
+@@ -18686,6 +18691,72 @@ const useHighlightToolbar = () => {
+     rememberSelection
+   };
+ };
++const safeHighlightColors = [
++  { label: "Sunshine", value: "#f8d98b", suffix: "" },
++  { label: "Red rock", value: "#f8b3a9", suffix: "r" },
++  { label: "Cactus", value: "#a7e9d1", suffix: "c" },
++  { label: "Sky", value: "#a9e7e4", suffix: "k" },
++  { label: "Canyon", value: "#f1d1b7", suffix: "n" },
++  { label: "Ovni", value: "#d0d3f5", suffix: "o" }
++];
++const useSafeHighlightToolbar = () => {
++  const editor = useEditorRef();
++  const openState = useOpenState();
++  const savedSelection = React__default.useRef(editor.selection);
++  const rememberSelection = React__default.useCallback(() => {
++    if (editor.selection) {
++      savedSelection.current = structuredClone(editor.selection);
++    }
++  }, [editor]);
++  React__default.useEffect(() => {
++    if (openState.open) {
++      rememberSelection();
++    }
++  }, [openState.open, rememberSelection]);
++  const applySafeHighlight = React__default.useCallback(
++    (suffix) => {
++      if (savedSelection.current) {
++        editor.tf.select(structuredClone(savedSelection.current));
++      }
++      const text = editor.api.string();
++      if (text) {
++        editor.tf.insertText(`==${text}==${suffix || ""}`);
++      }
++      editor.tf.focus();
++      openState.onOpenChange(false);
++    },
++    [editor, openState]
++  );
++  return { applySafeHighlight, openState, rememberSelection };
++};
++const SafeHighlightColorToolbarButton = () => {
++  const { applySafeHighlight, openState, rememberSelection } = useSafeHighlightToolbar();
++  return /* @__PURE__ */ React__default.createElement(DropdownMenu$1, { modal: false, ...openState }, /* @__PURE__ */ React__default.createElement(DropdownMenuTrigger$1, { asChild: true }, /* @__PURE__ */ React__default.createElement(
++    ToolbarButton,
++    {
++      isDropdown: true,
++      showArrow: true,
++      pressed: openState.open,
++      tooltip: "Surlignage (fiable)",
++      onMouseDown: rememberSelection
++    },
++    /* @__PURE__ */ React__default.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React__default.createElement(Icons.highlight, null), /* @__PURE__ */ React__default.createElement("span", { className: "sr-only" }, "Surlignage (fiable)"))
++  )), /* @__PURE__ */ React__default.createElement(DropdownMenuContent$1, { align: "start", className: "min-w-[180px]" }, safeHighlightColors.map((color) => /* @__PURE__ */ React__default.createElement(
++    DropdownMenuItem$1,
++    {
++      key: color.value,
++      onSelect: () => applySafeHighlight(color.suffix)
++    },
++    /* @__PURE__ */ React__default.createElement(
++      "span",
++      {
++        className: "mr-2 inline-block size-4 rounded border border-gray-300",
++        style: { backgroundColor: color.value }
++      }
++    ),
++    color.label
++  ))));
++};
+ const HighlightColorToolbarButton = () => {
+   const { applyHighlight, inlineCodeActive, openState, rememberSelection } = useHighlightToolbar();
+   return /* @__PURE__ */ React__default.createElement(DropdownMenu$1, { modal: false, ...openState }, /* @__PURE__ */ React__default.createElement(DropdownMenuTrigger$1, { asChild: true }, /* @__PURE__ */ React__default.createElement(
+@@ -18948,10 +19019,10 @@ const toolbarItems = {
+     width: () => STANDARD_ICON_WIDTH,
+     Component: /* @__PURE__ */ React__default.createElement(StrikethroughToolbarButton, null)
+   },
+-  highlight: {
+-    label: "Highlight",
++  safeHighlight: {
++    label: "Surlignage (fiable)",
+     width: () => STANDARD_ICON_WIDTH,
+-    Component: /* @__PURE__ */ React__default.createElement(HighlightToolbarButton, null)
++    Component: /* @__PURE__ */ React__default.createElement(SafeHighlightColorToolbarButton, null)
+   },
+   italic: {
+     label: "Italic",
+@@ -73264,6 +73335,9 @@ const CollectionListPage = () => {
+   const [searchInput, setSearchInput] = useState("");
+   const { order = "asc", name: sortName } = JSON.parse(sortKey || "{}");
+   const [sortOrder, setSortOrder] = useState(order);
++  const [selectedPaths, setSelectedPaths] = React__default.useState(new Set());
++  const [pendingStatut, setPendingStatut] = React__default.useState("");
++  const [localSearch, setLocalSearch] = React__default.useState("");
+   const loc = useLocation();
+   const folder = useCollectionFolder();
+   useEffect(() => {
+@@ -73277,6 +73351,8 @@ const CollectionListPage = () => {
+     setPrevCursors([]);
+     setSearch("");
+     setSearchInput("");
++    setSelectedPaths(new Set());
++    setLocalSearch("");
+   }, [loc]);
+   useEffect(() => {
+     setVars((old) => ({
+@@ -73333,6 +73409,71 @@ const CollectionListPage = () => {
+         const documents = collection.documents.edges;
+         const admin = cms.api.admin;
+         const pageInfo = collection.documents.pageInfo;
++        const showBulkStatus = collectionName === "article";
++        const STATUT_OPTIONS = ["Brouillon", "Publi\xE9", "Archiv\xE9"];
++        const filteredDocuments = localSearch.trim() ? documents.filter((d2) => {
++          const sys = d2.node._sys;
++          const t = sys && (sys.title || sys.filename) || "";
++          return t.toLowerCase().includes(localSearch.trim().toLowerCase());
++        }) : documents;
++        const selectablePaths = filteredDocuments.filter((d2) => d2.node.__typename !== "Folder" && d2.node._sys).map((d2) => d2.node._sys.relativePath);
++        const toggleSelectPath = (path) => {
++          setSelectedPaths((prev) => {
++            const next = new Set(prev);
++            if (next.has(path)) next.delete(path);
++            else next.add(path);
++            return next;
++          });
++        };
++        const toggleSelectAll = () => {
++          setSelectedPaths((prev) => {
++            const allSelected = selectablePaths.length > 0 && selectablePaths.every((p) => prev.has(p));
++            return allSelected ? new Set() : new Set(selectablePaths);
++          });
++        };
++        const ARTICLE_FIELD_KEYS = ["titre", "date", "couverture", "extrait", "auteur", "avatar", "tempsLecture", "vedette", "tags", "body", "statut"];
++        const formatPubDate = (d) => {
++          if (!d) return "—";
++          try {
++            return new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" }).format(new Date(d));
++          } catch (e) {
++            return "—";
++          }
++        };
++        const applyBulkStatut = async (statutValue) => {
++          const paths = Array.from(selectedPaths);
++          let okCount = 0;
++          for (const relativePath of paths) {
++            try {
++              const existing = await admin.fetchDocument(collectionName, relativePath, true);
++              const values = (existing == null ? void 0 : existing.document) ? existing.document._values : void 0;
++              if (!values) {
++                throw new Error("Impossible de lire le document existant");
++              }
++              const params = {};
++              ARTICLE_FIELD_KEYS.forEach((key) => {
++                if (values[key] !== void 0) params[key] = values[key];
++              });
++              params.statut = statutValue;
++              await cms.api.tina.request(
++                `#graphql
++          mutation UpdateArticleStatut($relativePath: String!, $params: ArticleMutation!) {
++            updateArticle(relativePath: $relativePath, params: $params) { __typename }
++          }
++        `,
++                { variables: { relativePath, params } }
++              );
++              okCount++;
++            } catch (error2) {
++              cms.alerts.error(`Erreur lors de la mise \xE0 jour de ${relativePath}`);
++              console.error(error2);
++            }
++          }
++          cms.alerts.info(`Statut mis \xE0 jour pour ${okCount} article(s)`);
++          setSelectedPaths(new Set());
++          setPendingStatut("");
++          reFetchCollection();
++        };
+         if (((_a = collectionExtra == null ? void 0 : collectionExtra.ui) == null ? void 0 : _a.global) && !folder.fullyQualifiedName.startsWith("~/")) {
+           if (loading || collection.name !== collectionName) {
+             return /* @__PURE__ */ React__default.createElement(LoadingPage, null);
+@@ -73370,7 +73511,7 @@ const CollectionListPage = () => {
+         const allowCreateFolder = !isGlobalCollection && (((_p = (_o = collectionDefinition == null ? void 0 : collectionDefinition.ui) == null ? void 0 : _o.allowedActions) == null ? void 0 : _p.createFolder) ?? true);
+         const allowCreateNestedFolder = !isGlobalCollection && (((_r = (_q = collectionDefinition == null ? void 0 : collectionDefinition.ui) == null ? void 0 : _q.allowedActions) == null ? void 0 : _r.createNestedFolder) ?? true);
+         const folderView = folder.fullyQualifiedName !== "";
+-        return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, deleteModalOpen && !cms.api.tina.usingProtectedBranch() && /* @__PURE__ */ React__default.createElement(
++        return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, showBulkStatus && pendingStatut && /* @__PURE__ */ React__default.createElement(BulkStatusModal, { count: selectedPaths.size, statut: pendingStatut, close: () => setPendingStatut(""), applyFunc: () => applyBulkStatut(pendingStatut) }), deleteModalOpen && !cms.api.tina.usingProtectedBranch() && /* @__PURE__ */ React__default.createElement(
+           DeleteModal,
+           {
+             filename: vars.relativePath,
+@@ -73520,7 +73661,15 @@ const CollectionListPage = () => {
+             },
+             close: () => setFolderModalOpen(false)
+           }
+-        ), /* @__PURE__ */ React__default.createElement(PageHeader, null, /* @__PURE__ */ React__default.createElement("div", { className: "w-full mx-auto max-w-screen-xl" }, /* @__PURE__ */ React__default.createElement("h3", { className: "font-sans text-2xl text-tina-orange" }, collection.label ? collection.label : collection.name), /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col lg:flex-row justify-between lg:items-end pt-2" }, /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col md:flex-row gap-2 md:gap-4" }, (fields == null ? void 0 : fields.length) > 0 && /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, !search && /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col gap-2 items-start w-full md:w-auto" }, /* @__PURE__ */ React__default.createElement(
++        ), /* @__PURE__ */ React__default.createElement(PageHeader, null, /* @__PURE__ */ React__default.createElement("div", { className: "w-full mx-auto max-w-screen-xl" }, /* @__PURE__ */ React__default.createElement("div", { className: "flex items-center justify-between gap-4 flex-wrap" }, /* @__PURE__ */ React__default.createElement("h3", { className: "font-sans text-2xl text-tina-orange" }, collection.label ? collection.label : collection.name), !searchEnabled && /* @__PURE__ */ React__default.createElement(Callout, { calloutStyle: "info" }, " ", "You have not configured search.", " ", /* @__PURE__ */ React__default.createElement(
++          "a",
++          {
++            href: "https://tina.io/docs/r/content-search",
++            target: "_blank",
++            className: "underline hover:text-blue-700 transition-all duration-150"
++          },
++          "Read the docs"
++        ))), /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col lg:flex-row justify-between lg:items-end pt-2" }, /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col md:flex-row gap-2 md:gap-4" }, (fields == null ? void 0 : fields.length) > 0 && /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, !search && /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col gap-2 items-start w-full md:w-auto" }, /* @__PURE__ */ React__default.createElement(
+           "label",
+           {
+             htmlFor: "sort",
+@@ -73582,7 +73731,33 @@ const CollectionListPage = () => {
+               }
+             }
+           }
+-        ))), /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-1 flex-row gap-2 items-end w-full" }, searchEnabled ? /* @__PURE__ */ React__default.createElement(
++        ))), /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col gap-2 items-start w-full md:w-auto" }, /* @__PURE__ */ React__default.createElement(
++          "label",
++          {
++            htmlFor: "local-search",
++            className: "block font-sans text-xs font-semibold text-gray-500 whitespace-normal"
++          },
++          "Rechercher"
++        ), /* @__PURE__ */ React__default.createElement("input", {
++          id: "local-search",
++          type: "text",
++          placeholder: "Rechercher un article...",
++          value: localSearch,
++          onChange: (e) => setLocalSearch(e.target.value),
++          className: "shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block bg-white border border-gray-200 text-sm rounded-md py-2 px-3 leading-none w-full md:w-64"
++        })), showBulkStatus && selectedPaths.size > 0 && /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col gap-2 items-start w-full md:w-auto" }, /* @__PURE__ */ React__default.createElement(
++          "label",
++          {
++            htmlFor: "bulk-statut",
++            className: "block font-sans text-xs font-semibold text-gray-500 whitespace-normal"
++          },
++          `${selectedPaths.size} s\xE9lectionn\xE9(s) \xB7 Statut`
++        ), /* @__PURE__ */ React__default.createElement("select", {
++          id: "bulk-statut",
++          value: pendingStatut,
++          onChange: (e) => setPendingStatut(e.target.value),
++          className: "shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block bg-white border border-gray-200 text-sm rounded-md py-2 px-3 leading-none w-full md:w-48"
++        }, /* @__PURE__ */ React__default.createElement("option", { value: "" }, "Choisir un statut"), STATUT_OPTIONS.map((opt) => /* @__PURE__ */ React__default.createElement("option", { key: opt, value: opt }, opt)))), /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-1 flex-row gap-2 items-end w-full" }, searchEnabled && /* @__PURE__ */ React__default.createElement(
+           SearchInput,
+           {
+             cms,
+@@ -73595,15 +73770,7 @@ const CollectionListPage = () => {
+               setSearchInput(searchInput2);
+             }
+           }
+-        ) : /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col gap-2 items-start w-full md:w-auto" }, /* @__PURE__ */ React__default.createElement("div", { className: "block font-sans text-xs font-semibold opacity-0" }, " "), /* @__PURE__ */ React__default.createElement(Callout, { calloutStyle: "info" }, " ", "You have not configured search.", " ", /* @__PURE__ */ React__default.createElement(
+-          "a",
+-          {
+-            href: "https://tina.io/docs/r/content-search",
+-            target: "_blank",
+-            className: "underline hover:text-blue-700 transition-all duration-150"
+-          },
+-          "Read the docs"
+-        ))))), allowCreate && /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col md:flex-row items-start md:items-end gap-2 md:gap-0 pt-4 lg:pt-0" }, allowCreateNestedFolder && /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, /* @__PURE__ */ React__default.createElement(TooltipProvider, null, /* @__PURE__ */ React__default.createElement(Tooltip, null, /* @__PURE__ */ React__default.createElement(TooltipTrigger, { asChild: true }, /* @__PURE__ */ React__default.createElement(
++        ))), allowCreate && /* @__PURE__ */ React__default.createElement("div", { className: "flex flex-col md:flex-row items-start md:items-end gap-2 md:gap-0 pt-4 lg:pt-0" }, allowCreateNestedFolder && /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, /* @__PURE__ */ React__default.createElement(TooltipProvider, null, /* @__PURE__ */ React__default.createElement(Tooltip, null, /* @__PURE__ */ React__default.createElement(TooltipTrigger, { asChild: true }, /* @__PURE__ */ React__default.createElement(
+           Link$1,
+           {
+             onMouseDown: (evt) => {
+@@ -73683,20 +73850,13 @@ const CollectionListPage = () => {
+               return doc.node.__typename !== "Folder" && Boolean((_a2 = doc.node._sys) == null ? void 0 : _a2.title);
+             }
+           );
+-          return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, hasAnyDocuments && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement(
+-            "th",
+-            {
+-              className: tableHeadingCellStyle,
+-              colSpan: hasAnyTitles ? 1 : 2
+-            },
+-            hasAnyTitles ? "Title" : "Filename"
+-          ), hasAnyTitles && /* @__PURE__ */ React__default.createElement(
++          return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, hasAnyDocuments && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle, style: { width: "2.5rem" } }, /* @__PURE__ */ React__default.createElement("input", { type: "checkbox", checked: selectablePaths.length > 0 && selectablePaths.every((p) => selectedPaths.has(p)), onChange: toggleSelectAll })), /* @__PURE__ */ React__default.createElement(
+             "th",
+             {
+               className: tableHeadingCellStyle
+             },
+-            "Filename"
+-          ), /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Extension"), /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Template"), /* @__PURE__ */ React__default.createElement("th", null))), !hasAnyDocuments && hasAnyFolders && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Name"), /* @__PURE__ */ React__default.createElement(
++            hasAnyTitles ? "Title" : "Filename"
++          ), showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Date de publication"), showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Statut"), /* @__PURE__ */ React__default.createElement("th", null))), !hasAnyDocuments && hasAnyFolders && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Name"), /* @__PURE__ */ React__default.createElement(
+             "th",
+             {
+               className: tableHeadingCellStyle,
+@@ -73710,7 +73870,7 @@ const CollectionListPage = () => {
+               navigate,
+               collectionName
+             }
+-          ))) : null, documents.length > 0 && documents.map((document2) => {
++          ))) : null, filteredDocuments.length > 0 && filteredDocuments.map((document2) => {
+             var _a2;
+             if (document2.node.__typename === "Folder") {
+               return /* @__PURE__ */ React__default.createElement(
+@@ -73749,7 +73909,7 @@ const CollectionListPage = () => {
+                   "td",
+                   {
+                     className: "px-3 py-3",
+-                    colSpan: 4
++                    colSpan: showBulkStatus ? 3 : 1
+                   },
+                   /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-400 truncate" }, document2.node.path.substring(2).split("/").map((node) => {
+                     return /* @__PURE__ */ React__default.createElement("span", { key: node }, /* @__PURE__ */ React__default.createElement("span", { className: "text-gray-300 pr-0.5" }, "/"), /* @__PURE__ */ React__default.createElement("span", { className: "pr-0.5" }, node));
+@@ -73761,17 +73921,22 @@ const CollectionListPage = () => {
+               document2.node._sys.title
+             );
+             const subfolders = document2.node._sys.breadcrumbs.slice(0, -1).join("/");
++            const rowStatut = document2.node._values == null ? void 0 : document2.node._values.statut;
+             return /* @__PURE__ */ React__default.createElement(
+               "tr",
+               {
+                 className: tableRowStyle,
++                style: rowStatut === "Archivé" ? { opacity: 0.5 } : void 0,
+                 key: `document-${document2.node._sys.relativePath}`
+               },
++              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "pl-5 pr-3 py-3" }, /* @__PURE__ */ React__default.createElement("input", { type: "checkbox", checked: selectedPaths.has(document2.node._sys.relativePath), onChange: (e) => {
++                e.stopPropagation();
++                toggleSelectPath(document2.node._sys.relativePath);
++              }, onClick: (e) => e.stopPropagation() })),
+               /* @__PURE__ */ React__default.createElement(
+                 "td",
+                 {
+-                  className: "pl-5 pr-3 py-3",
+-                  colSpan: hasTitle ? 1 : 2
++                  className: "pl-5 pr-3 py-3"
+                 },
+                 /* @__PURE__ */ React__default.createElement(
+                   "a",
+@@ -73799,9 +73964,8 @@ const CollectionListPage = () => {
+                   /* @__PURE__ */ React__default.createElement("span", { className: "truncate block" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block truncate mb-1" }, !folderView && !hasTitle && subfolders && /* @__PURE__ */ React__default.createElement("span", { className: "text-xs text-gray-400" }, `${subfolders}/`), /* @__PURE__ */ React__default.createElement("span", null, hasTitle ? (_a2 = document2.node._sys) == null ? void 0 : _a2.title : document2.node._sys.filename)), /* @__PURE__ */ React__default.createElement("span", { className: "block text-xs text-gray-400" }, document2.node._sys.path))
+                 )
+               ),
+-              hasTitle && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900 truncate" }, !folderView && subfolders && /* @__PURE__ */ React__default.createElement("span", { className: "text-xs text-gray-400" }, `${subfolders}/`), /* @__PURE__ */ React__default.createElement("span", null, document2.node._sys.filename))),
+-              /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, document2.node._sys.extension)),
+-              /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, document2.node._sys.template)),
++              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900 whitespace-nowrap" }, formatPubDate(document2.node._values == null ? void 0 : document2.node._values.date))),
++              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, rowStatut === "Brouillon" ? /* @__PURE__ */ React__default.createElement("i", null, `(${rowStatut})`) : rowStatut || "—")),
+               /* @__PURE__ */ React__default.createElement("td", { className: "w-0" }, /* @__PURE__ */ React__default.createElement(
+                 OverflowMenu$1,
+                 {
+@@ -74059,6 +74223,23 @@ const Breadcrumb = ({ folder, navigate, collectionName }) => {
+ const NoDocumentsPlaceholder = () => {
+   return /* @__PURE__ */ React__default.createElement("div", { className: "text-center px-5 py-3 flex flex-col items-center justify-center shadow border border-gray-100 bg-gray-50 border-b border-gray-200 w-full max-w-full rounded-lg" }, /* @__PURE__ */ React__default.createElement("p", { className: "text-base italic font-medium text-gray-300" }, "No documents found."));
+ };
++const BulkStatusModal = ({ close: close2, count, statut, applyFunc }) => {
++  const [submitting, setSubmitting] = React__default.useState(false);
++  return /* @__PURE__ */ React__default.createElement(Modal, null, /* @__PURE__ */ React__default.createElement(PopupModal, null, /* @__PURE__ */ React__default.createElement(ModalHeader, { close: close2 }, "Changer le statut"), /* @__PURE__ */ React__default.createElement(ModalBody, { padded: true }, /* @__PURE__ */ React__default.createElement("p", null, `Appliquer le statut \xAB\xA0${statut}\xA0\xBB \xE0 ${count} article${count > 1 ? "s" : ""}\xA0?`)), /* @__PURE__ */ React__default.createElement(ModalActions, null, /* @__PURE__ */ React__default.createElement(Button$2, { style: { flexGrow: 2 }, onClick: close2, disabled: submitting }, "Annuler"), /* @__PURE__ */ React__default.createElement(
++    Button$2,
++    {
++      style: { flexGrow: 3 },
++      disabled: submitting,
++      onClick: async () => {
++        setSubmitting(true);
++        await applyFunc();
++        setSubmitting(false);
++        close2();
++      }
++    },
++    submitting ? "..." : "Confirmer"
++  ))));
++};
+ const DeleteModal = ({
+   close: close2,
+   deleteFunc,

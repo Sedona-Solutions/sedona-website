@@ -1,28 +1,32 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHeader from "../components/PageHeader.astro";
+import CtaFinal from "../components/home/CtaFinal.astro";
+import Hero from "../components/carrieres/Hero.astro";
+import Valeurs from "../components/carrieres/Valeurs.astro";
+import Jobs from "../components/carrieres/Jobs.astro";
+import Perks from "../components/carrieres/Perks.astro";
+import Words from "../components/carrieres/Words.astro";
+import Gallery from "../components/carrieres/Gallery.astro";
+import p from "../../content/carrieres/index.json";
 ---
 
-<BaseLayout title="Carrières — Sedona" description="Rejoignez la tribu Sedona.">
-  <PageHeader
-    eyebrow="Carrières"
-    titre="Rejoindre la tribu Sedona"
-    intro="On recrute des passionnés, pas des profils. La curiosité ne s'enseigne pas."
-  />
-
-  <section class="container prose page-body">
-    <p>
-      Nous cherchons celles et ceux qui souhaitent construire avec nous
-      l'entreprise dans laquelle ils aimeraient travailler.
-    </p>
-    <p>
-      Cette page accueillera prochainement nos offres et notre processus de
-      recrutement, fidèlement à la maquette Figma.
-    </p>
-    <p><a href="/contact">Discutons ensemble →</a></p>
-  </section>
+<BaseLayout title="Carrières — Sedona" description={p.hero?.intro}>
+  <div class="carrieres-stack">
+    <Hero hero={p.hero} />
+    <Valeurs valeurs={p.valeurs} />
+    <Jobs jobs={p.jobs} />
+    <Perks perks={p.perks} />
+    <Words words={p.words} />
+    <Gallery gallery={p.gallery} />
+  </div>
+  <CtaFinal cta={p.ctaFinal} />
 </BaseLayout>
 
 <style>
-  .page-body { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem); max-width: 760px; }
+  /* Fond sombre commun (même principe que la home et la page Histoire) : les
+     sections claires flottent dessus grâce à leurs coins arrondis ; les
+     sections déjà sombres (Valeurs, Words) s'y fondent sans radius propre. */
+  .carrieres-stack {
+    background: #3b0800;
+  }
 </style>

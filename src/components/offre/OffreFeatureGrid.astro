@@ -1,0 +1,68 @@
+---
+// Grille 2 colonnes icône + titre + texte, réutilisée pour "Ce que l'offre produit
+// pour vous" et pour "Vos bénéfices concrets" (mêmes props, données différentes).
+import { richTextToHtml } from "../../utils/richText.js";
+import { recolorIcon } from "../../utils/iconRecolor.js";
+import TitreAccent from "../TitreAccent.astro";
+const { eyebrow, titre, titreAccent, pillVariant, items = [], radius = "top", accentMid = "#b3b5ee" } = Astro.props;
+const radiusStyle =
+  radius === "top" ? "var(--radius-section-lg) var(--radius-section-lg) 0 0" : "0 0 var(--radius-section-lg) var(--radius-section-lg)";
+const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : null));
+---
+
+{
+  items.length > 0 && (
+    <section class="ofg" style={`--ofg-radius:${radiusStyle}`}>
+      <div class="container">
+        <header class="ofg__head" data-reveal>
+          {eyebrow && <p class="ofg__eyebrow">{eyebrow}</p>}
+          <TitreAccent titre={titre} accent={titreAccent} as="h2" class="ofg__title" pillVariant={pillVariant} />
+        </header>
+
+        <ul class="ofg__grid" data-reveal-group>
+          {items.map((it, i) => (
+            <li class="ofgc" data-reveal>
+              {icons[i] && (
+                <span class="ofgc__icon" aria-hidden="true">
+                  <Fragment set:html={icons[i]} />
+                </span>
+              )}
+              <h3 class="ofgc__title">{it.titre}</h3>
+              {it.texte && <div class="ofgc__text" set:html={richTextToHtml(it.texte)} />}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .ofg {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-radius: var(--ofg-radius);
+  }
+  .ofg__head { margin-bottom: clamp(2rem, 4vw, 3rem); text-align: center; }
+  .ofg__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
+  }
+  .ofg :global(.ofg__title) { margin: 0 auto; max-width: 32ch; color: #3b0800; }
+
+  .ofg__grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .ofgc { background: #fff; border-radius: 20px; padding: 1.75rem; }
+  .ofgc__icon {
+    display: grid; place-items: center; width: 56px; height: 56px; border-radius: 999px;
+    background: #42140d; margin-bottom: 1.25rem;
+  }
+  .ofgc__icon :global(svg) { width: 28px; height: 28px; }
+  .ofgc__title { font-family: var(--font-sans); font-weight: 700; font-size: 1.25rem; color: #3b0800; margin: 0 0 0.5rem; }
+  .ofgc__text :global(p) { font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #3b0800; margin: 0; }
+  .ofgc__text :global(p + p) { margin-top: 0.75em; }
+
+  @media (max-width: 760px) { .ofg__grid { grid-template-columns: 1fr; } }
+</style>

@@ -14,14 +14,18 @@
     "astro": "astro",
     "figma:list": "node --env-file=.env scripts/figma-export.mjs list",
     "figma:tokens": "node --env-file=.env scripts/figma-export.mjs tokens",
-    "figma:assets": "node --env-file=.env scripts/figma-export.mjs assets"
+    "figma:assets": "node --env-file=.env scripts/figma-export.mjs assets",
+    "postinstall": "patch-package"
   },
   "dependencies": {
-    "@tinacms/cli": "^2.4.4",
+    "@astrojs/markdown-remark": "^7.2.1",
+    "@tinacms/cli": "^2.5.6",
     "astro": "^6.4.4",
-    "tinacms": "^3.9.1"
+    "tinacms": "^3.11.0",
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "patch-package": "^8.0.1",
     "turndown": "^7.2.4"
   }
 }

@@ -1,0 +1,108 @@
+---
+// Page sur-mesure pour l'offre Brieff (design Figma dédié), distincte du template
+// générique utilisé par les 4 autres offres (voir src/pages/offres/[slug].astro).
+// Contenu piloté par Tina (collection "offre", entrée content/offres/brieff.md).
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import Hero from "../../components/brieff/Hero.astro";
+import Personas from "../../components/brieff/Personas.astro";
+import Constat from "../../components/brieff/Constat.astro";
+import CommentCaMarche from "../../components/brieff/CommentCaMarche.astro";
+import Incoherence from "../../components/brieff/Incoherence.astro";
+import Fonctionnalites from "../../components/brieff/Fonctionnalites.astro";
+import Impacts from "../../components/brieff/Impacts.astro";
+import Testimonial from "../../components/brieff/Testimonial.astro";
+import ReglesConformite from "../../components/brieff/ReglesConformite.astro";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+
+const entry = await getEntry("offre", "brieff");
+const d = entry.data;
+const pillVariant = d.pillVariant ?? "ovni";
+---
+
+<BaseLayout
+  title="Brieff — Sedona"
+  description="Lancez vos projets 10x plus vite avec Brieff : agents IA en salle virtuelle, détection d'incohérences, livrables automatisés."
+>
+  <div class="dark-stack">
+    <Hero
+      eyebrow={d.eyebrow}
+      titre={d.titre}
+      accroche={d.accroche}
+      accrocheAccent={d.accrocheAccent}
+      enBref={d.enBref}
+      illustration={d.illustration}
+      proof={d.heroProof}
+      pillVariant={pillVariant}
+    />
+    <Personas eyebrow={d.pourQui?.eyebrow} titre={d.pourQui?.titre} titreAccent={d.pourQui?.titreAccent} pillVariant={pillVariant} items={d.pourQui?.items ?? []} />
+    <Constat
+      eyebrow={d.constat?.eyebrow}
+      titre={d.constat?.titre}
+      titreAccent={d.constat?.titreAccent}
+      intro={d.constat?.intro}
+      colonneAvantTitre={d.constat?.colonneAvantTitre}
+      colonneApresTitre={d.constat?.colonneApresTitre}
+      avant={d.constat?.avant ?? []}
+      apres={d.constat?.apres ?? []}
+      pillVariant={pillVariant}
+    />
+    <CommentCaMarche
+      eyebrow={d.etapes?.eyebrow}
+      titre={d.etapes?.titre}
+      titreAccent={d.etapes?.titreAccent}
+      intro={d.etapes?.sousTitre}
+      image={d.etapes?.image}
+      items={d.etapes?.items ?? []}
+      pillVariant={pillVariant}
+    />
+    <Incoherence
+      eyebrow={d.incoherence?.eyebrow}
+      titre={d.incoherence?.titre}
+      titreAccent={d.incoherence?.titreAccent}
+      texte={d.incoherence?.texte}
+      illustration={d.incoherence?.illustration}
+      pillVariant={pillVariant}
+    />
+    <Fonctionnalites
+      eyebrow={d.produits?.eyebrow}
+      titre={d.produits?.titre}
+      titreAccent={d.produits?.titreAccent}
+      intro={d.produits?.intro}
+      items={d.produits?.items ?? []}
+      pillVariant={pillVariant}
+    />
+    <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} titreAccent={d.impacts?.titreAccent} pillVariant={pillVariant} items={d.impacts?.items ?? []} />
+    <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} />
+    <ReglesConformite
+      eyebrow={d.raisons?.eyebrow}
+      titre={d.raisons?.titre}
+      titreAccent={d.raisons?.titreAccent}
+      intro={d.raisons?.intro}
+      items={d.raisons?.items ?? []}
+      technosTitle={d.raisons?.technosTitle}
+      technos={d.raisons?.technos ?? []}
+      technosNote={d.raisons?.technosNote}
+      pillVariant={pillVariant}
+      accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni}
+    />
+  </div>
+  <CtaFinal
+    cta={{
+      ...d.ctaFinal,
+      pillVariant,
+      accentColor: ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni,
+    }}
+  />
+</BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires flottent dessus grâce à leurs
+     coins arrondis ; les sections déjà sombres (Personas, Incoherence, Impacts)
+     s'y fondent sans avoir besoin de leur propre arrondi. */
+  .dark-stack {
+    background: #3b0800;
+  }
+</style>

@@ -3,9 +3,11 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
+import ArticleCard from "../../components/blog/ArticleCard.astro";
+import { estArticlePublie } from "../../utils/articleVisibility";
 
-// Vedettes d'abord (carte image sur 2 rangées), puis du plus récent au plus ancien.
-const articles = (await getCollection("article"))
+// Vedettes d'abord, puis du plus récent au plus ancien.
+const articles = (await getCollection("article", ({ data }) => estArticlePublie(data.statut)))
   .map((a) => ({ ...a.data, slug: a.id }))
   .sort(
     (a, b) =>
@@ -16,22 +18,18 @@ const articles = (await getCollection("article"))
 const slug = (s = "") =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-// Catégories construites dynamiquement à partir des catégories réelles des
-// articles, classées par fréquence décroissante. Le compteur = nb d'articles.
+// Filtres construits à partir des tags réels des articles : seuls les tags
+// utilisés par plus d'un article apparaissent, classés par fréquence décroissante.
+const SEUIL_TAG = 1;
 const compteur = {};
-for (const a of articles) if (a.categorie) compteur[a.categorie] = (compteur[a.categorie] ?? 0) + 1;
+for (const a of articles) for (const t of a.tags ?? []) compteur[t] = (compteur[t] ?? 0) + 1;
 const filtres = [
-  { label: "Toutes les catégories", cat: "all", n: articles.length },
+  { label: "Tous les articles", cat: "all", n: articles.length },
   ...Object.keys(compteur)
+    .filter((t) => compteur[t] > SEUIL_TAG)
     .sort((x, y) => compteur[y] - compteur[x])
-    .map((c) => ({ label: c, cat: slug(c), n: compteur[c] })),
+    .map((t) => ({ label: t, cat: slug(t), n: compteur[t] })),
 ];
-
-const moisCap = (d) => {
-  const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
-  return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
-};
-const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
 ---
 
 <BaseLayout title="Blog — Sedona" description="Actualités, retours d'expérience et veille technologique de la tribu Sedona.">
@@ -52,51 +50,31 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
           filtres.map((fl, i) => (
             <li>
               <button class={`bfiltre ${i === 0 ? "is-active" : ""}`} type="button" data-cat={fl.cat}>
-                {fl.label}
-                <sup>{fl.n}</sup>
+                <span class="bfiltre__label">{fl.label}</span><sup>{fl.n}</sup>
               </button>
             </li>
           ))
         }
       </ul>
       <label class="bsearch">
+        <svg class="bsearch__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         <input type="search" placeholder="Rechercher..." aria-label="Rechercher un article" />
-        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <button type="button" class="bsearch__clear" aria-label="Effacer la recherche">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
       </label>
     </div>
   </nav>
 
+  <div class="dark-stack">
   <section class="bgrid">
-    <ul class="container bgrid__list">
+    <ul class="container bgrid__list" data-reveal-group>
       {
-        articles.map((a) =>
-          a.vedette && a.couverture ? (
-            <li class="bcard bcard--feature" data-cat={slug(a.categorie ?? "")} data-title={(a.titre ?? "").toLowerCase()}>
-              <a href={`/blog/${a.slug}`} class="fcard" style={`background-image:url(${a.couverture})`}>
-                <div class="fcard__body">
-                  {meta(a) && <p class="fcard__meta">{meta(a)}</p>}
-                  <h2 class="fcard__h">{a.titre}</h2>
-                  {a.tags?.length > 0 && <ul class="fcard__tags">{a.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
-                </div>
-              </a>
-            </li>
-          ) : (
-            <li class="bcard" data-cat={slug(a.categorie ?? "")} data-title={(a.titre ?? "").toLowerCase()}>
-              <a href={`/blog/${a.slug}`} class="pcard">
-                <div class="pcard__top">
-                  {a.avatar ? <img class="pcard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="pcard__avatar" aria-hidden="true" />}
-                  <span>
-                    <span class="pcard__byLabel">Publié par</span>
-                    <span class="pcard__author">{a.auteur}</span>
-                  </span>
-                </div>
-                {meta(a) && <p class="pcard__meta">{meta(a)}</p>}
-                <h2 class="pcard__h">{a.titre}</h2>
-                {a.tags?.length > 0 && <ul class="pcard__tags">{a.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
-              </a>
-            </li>
-          )
-        )
+        articles.map((a) => (
+          <li class="bcard" data-tags={(a.tags ?? []).map(slug).join(" ")} data-title={(a.titre ?? "").toLowerCase()} data-reveal>
+            <ArticleCard article={a} />
+          </li>
+        ))
       }
     </ul>
     <p class="bgrid__empty container" hidden>Aucun article ne correspond à votre recherche.</p>
@@ -117,10 +95,11 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
   </section>
 
   <CtaFinal cta={home.ctaFinal} />
+  </div>
 </BaseLayout>
 
 <script>
-  const TAILLE = 9;
+  const TAILLE = 18;
   const boutons = document.querySelectorAll<HTMLButtonElement>(".bfiltre");
   const cartes = Array.from(document.querySelectorAll<HTMLElement>(".bcard"));
   const vide = document.querySelector<HTMLElement>(".bgrid__empty");
@@ -128,6 +107,7 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
   const pager = document.querySelector<HTMLElement>(".pager");
   const pagination = document.querySelector<HTMLElement>(".pagination");
   const recherche = document.querySelector<HTMLInputElement>(".bsearch input");
+  const effacer = document.querySelector<HTMLButtonElement>(".bsearch__clear");
   const fleches = document.querySelectorAll<HTMLButtonElement>(".pager__arrow");
   const ancre = document.querySelector<HTMLElement>(".bfiltres");
   let cat = "all";
@@ -144,7 +124,7 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
   }
 
   const matches = () =>
-    cartes.filter((c) => (cat === "all" || c.dataset.cat === cat) && (q === "" || (c.dataset.title || "").includes(q)));
+    cartes.filter((c) => (cat === "all" || (c.dataset.tags || "").split(" ").includes(cat)) && (q === "" || (c.dataset.title || "").includes(q)));
 
   function rendre() {
     const liste = matches();
@@ -186,7 +166,21 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
     rendre();
     remonter();
   }));
-  recherche?.addEventListener("input", () => { q = recherche.value.trim().toLowerCase(); page = 1; rendre(); });
+  recherche?.addEventListener("input", () => {
+    q = recherche.value.trim().toLowerCase();
+    effacer?.classList.toggle("is-visible", recherche.value.length > 0);
+    page = 1;
+    rendre();
+  });
+  effacer?.addEventListener("click", () => {
+    if (!recherche) return;
+    recherche.value = "";
+    q = "";
+    effacer.classList.remove("is-visible");
+    recherche.focus();
+    page = 1;
+    rendre();
+  });
   rendre();
 </script>
 
@@ -195,45 +189,42 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
   .bhead { background: var(--color-canyon-50); padding-block: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
   .bhead__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.75rem, 7vw, 5.5rem); letter-spacing: -0.03em; color: #3b0800; }
   .hl--news { background: #e9b189; color: #3b0800; }
-  .bhead__sub { margin: 1.5rem auto 0; max-width: 64ch; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: var(--color-text-muted); }
+  .bhead__sub { margin: 1.5rem auto 0; max-width: 80ch; font-family: var(--font-sans); font-weight: 500; font-size: 1.25rem; line-height: 1.3; color: #3b0800; }
 
   /* Barre de filtres */
   .bfiltres { background: var(--color-canyon-50); }
   .bfiltres__row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem 1.5rem; padding-block: 1rem 2.5rem; }
-  .bfiltres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0; padding: 0; margin: 0; max-width: 70%; }
+  .bfiltres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; text-align: center; gap: 0.1rem 0; padding: 0; margin: 0; max-width: 70%; }
   .bfiltres__list li:not(:last-child) .bfiltre::after { content: "/"; margin: 0 0.4rem 0 0.6rem; color: var(--color-text-muted); font-weight: 400; }
-  .bfiltre { font-family: var(--font-sans); font-size: 1.25rem; color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
-  .bfiltre sup { font-size: 0.62em; color: var(--color-text-muted); margin-left: 0.15em; vertical-align: super; }
-  .bfiltre.is-active { font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
-  .bsearch { margin-left: auto; display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; border: 1px solid var(--color-border); border-radius: 999px; padding: 0.65rem 1.1rem; color: var(--color-text-muted); }
-  .bsearch svg { width: 18px; height: 18px; flex: none; }
+  .bfiltre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
+  .bfiltre sup { font-size: 0.5em; font-weight: 500; margin-left: 0.15em; vertical-align: super; }
+  .bfiltre__label { display: inline-block; }
+  /* Le trait souligne uniquement le libellé (pas le compteur en exposant) ; cf. /projets. */
+  .bfiltre.is-active .bfiltre__label {
+    background: url("/deco/filtre-underline.svg") repeat-x left bottom / auto 7px;
+    padding-bottom: 0.2rem;
+  }
+  .bsearch { margin-left: auto; display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; border: 1px solid var(--color-text); border-radius: 999px; padding: 0.65rem 1.1rem; color: var(--color-text); }
+  .bsearch__icon { width: 18px; height: 18px; flex: none; }
   .bsearch input { border: none; background: none; outline: none; font-family: var(--font-body); font-size: 1rem; color: #3b0800; min-width: 9rem; }
   .bsearch input::placeholder { color: var(--color-text-muted); }
+  /* Masque la croix native du navigateur (input[type=search]) : notre .bsearch__clear la remplace déjà. */
+  .bsearch input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; display: none; }
+  /* Icône « effacer » : mêmes proportions/couleur que le "+" des accordéons
+     (barres pleines arrondies), tournées à ±45° pour former une croix. */
+  .bsearch__clear { display: none; align-items: center; justify-content: center; flex: none; width: 18px; height: 18px; padding: 0; border: none; background: none; cursor: pointer; color: inherit; }
+  .bsearch__clear.is-visible { display: flex; }
+  .bsearch__clear svg { width: 14px; height: 14px; }
 
-  /* Grille (flux dense : la carte vedette occupe 2 rangées) */
-  .bgrid { background: var(--color-canyon-50); padding-block: 0 clamp(3rem, 6vw, 5rem); }
-  .bgrid__list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; grid-auto-rows: 300px; grid-auto-flow: row dense; }
-
-  /* Carte texte standard */
-  .pcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 1.75rem; color: #3b0800; height: 100%; }
-  .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
-  .pcard__avatar { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
-  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
-  .pcard__author { font-family: var(--font-body); font-weight: 600; }
-  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: auto 0 0.5rem; }
-  .pcard__h { font-family: var(--font-sans); font-weight: 600; font-size: 1.375rem; line-height: 1.2; margin: 0; }
-  .pcard__tags { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #3b0800; padding: 0.3em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
-
-  /* Carte vedette (image, sur 2 rangées) */
-  .bcard--feature { grid-row: span 2; }
-  .fcard { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; border-radius: 24px; overflow: hidden; background-size: cover; background-position: center; color: #fff; }
-  .fcard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(59, 8, 0, 0) 35%, rgba(59, 8, 0, 0.85) 100%); }
-  .fcard__body { position: relative; z-index: 1; padding: 1.75rem; }
-  .fcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: rgba(255, 255, 255, 0.85); margin: 0 0 0.6rem; }
-  .fcard__h { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.5rem, 2vw, 1.875rem); line-height: 1.15; margin: 0; }
-  .fcard__tags { list-style: none; padding: 0; margin: 1.1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .fcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #fff; padding: 0.3em 0.85em; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px; }
+  /* Grille : toutes les cartes ont le même ratio, avec ou sans image de couverture. */
+  .dark-stack { background: #3b0800; }
+  .bgrid {
+    background: var(--color-canyon-50);
+    padding-block: 0 clamp(3rem, 6vw, 5rem);
+    /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus du CtaFinal. */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .bgrid__list { list-style: none; padding: 0; margin-block: 0; margin-inline: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; grid-auto-rows: 320px; }
 
   .bgrid__empty { text-align: center; font-family: var(--font-sans); font-size: 1.25rem; color: var(--color-text-muted); margin-top: 2rem; }
 
@@ -244,13 +235,13 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
      de ses pastilles, pour ancrer la flèche juste à leur droite (et non au bord de page). */
   .pager { position: relative; width: fit-content; margin-inline: auto; display: flex; align-items: center; gap: 0.75rem; }
   /* Flèche griffonnée à droite du pager (réutilise l'asset de la page Projets). */
-  .pager__squiggle { position: absolute; left: calc(100% + 1.25rem); top: -2.5rem; width: clamp(74px, 6vw, 104px); height: auto; pointer-events: none; }
+  .pager__squiggle { position: absolute; left: calc(100% + 1.25rem); top: -5.5rem; width: clamp(74px, 6vw, 104px); height: auto; pointer-events: none; }
   .pager__nums { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
   /* Les boutons numéros sont créés en JS : styles en :global pour échapper au scope Astro. */
   .pager__arrow,
   .pager__nums :global(button) { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 999px; font-family: var(--font-sans); font-size: 1.25rem; color: #42140d; background: none; border: 1.5px solid rgba(66, 20, 13, 0.25); cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
   .pager__nums :global(button:hover) { border-color: #42140d; }
-  .pager__nums :global(button.is-active) { background: #42140d; color: #fdf4f3; border-color: #42140d; }
+  .pager__nums :global(button.is-active) { background: #42140d; color: var(--color-red-rock-50); border-color: #42140d; }
   .pager__arrow svg { width: 20px; height: 20px; }
   .pager__arrow:hover:not(:disabled) { border-color: #42140d; }
   .pager__arrow:disabled { opacity: 0.3; cursor: default; }
@@ -260,10 +251,7 @@ const meta = (a) => [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).
     .bfiltres__list { max-width: none; }
   }
   @media (max-width: 600px) {
-    .bgrid__list { grid-template-columns: 1fr; grid-auto-rows: auto; }
-    .bcard--feature { grid-row: auto; }
-    .fcard { min-height: 320px; }
-    .pcard { min-height: 260px; }
+    .bgrid__list { grid-template-columns: 1fr; grid-auto-rows: minmax(260px, auto); }
     .bsearch { margin-left: 0; }
     .pager__squiggle { display: none; }
   }

@@ -1,21 +1,35 @@
 ---
-import { getEntry, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHeader from "../components/PageHeader.astro";
-
-const entry = await getEntry("page", "histoire");
-const { Content } = await render(entry);
-const p = entry.data;
+import CtaFinal from "../components/home/CtaFinal.astro";
+import Hero from "../components/histoire/Hero.astro";
+import PhotoBand from "../components/histoire/PhotoBand.astro";
+import Manifeste from "../components/histoire/Manifeste.astro";
+import Timeline from "../components/histoire/Timeline.astro";
+import Offices from "../components/histoire/Offices.astro";
+import Engagements from "../components/histoire/Engagements.astro";
+import Team from "../components/histoire/Team.astro";
+import p from "../../content/histoire/index.json";
+import carrieres from "../../content/carrieres/index.json";
 ---
 
-<BaseLayout title={`${p.titre} — Sedona`} description={p.intro}>
-  <PageHeader eyebrow={p.eyebrow} titre={p.titre} intro={p.intro} />
-
-  <section class="container prose page-body">
-    <Content />
-  </section>
+<BaseLayout title="Notre histoire — Sedona" description={p.hero?.intro}>
+  <div class="histoire-stack">
+    <Hero hero={p.hero} />
+    <PhotoBand src={p.photoBand1} />
+    <Manifeste manifeste={p.manifeste} />
+    <Engagements engagements={p.engagements} />
+    <Timeline timeline={p.timeline} />
+    <Team team={p.team} membres={carrieres.hero?.membres} />
+    <Offices offices={p.offices} />
+  </div>
+  <CtaFinal cta={p.ctaFinal} />
 </BaseLayout>
 
 <style>
-  .page-body { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem); max-width: 760px; }
+  /* Fond sombre commun (même principe que la home) : les sections claires
+     flottent dessus grâce à leurs coins arrondis ; la Timeline, déjà sombre,
+     s'y fond sans avoir besoin de son propre radius. */
+  .histoire-stack {
+    background: #3b0800;
+  }
 </style>

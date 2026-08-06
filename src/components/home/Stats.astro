@@ -9,13 +9,13 @@ const splitVal = (v = "") => {
 
 <section class="manifeste">
   <div class="container manifeste__inner">
-    {intro && <p class="manifeste__intro">{intro}</p>}
+    {intro && <p class="manifeste__intro" data-reveal>{intro}</p>}
 
     {
       chips.length > 0 && (
-        <div class="manifeste__chips">
+        <div class="manifeste__chips" data-reveal-group>
           {chips.map((c, i) => (
-            <span class="mchip" style={`--bg:${chipBg[i % chipBg.length]}`}>{c}</span>
+            <span class="mchip" style={`--bg:${chipBg[i % chipBg.length]}`} data-reveal>{c}</span>
           ))}
         </div>
       )
@@ -23,11 +23,11 @@ const splitVal = (v = "") => {
 
     {
       stats.length > 0 && (
-        <dl class="manifeste__stats">
+        <dl class="manifeste__stats" data-reveal-group>
           {stats.map((s, i) => {
             const { num, suf } = splitVal(s.valeur);
             return (
-              <div class={`mstat ${i > 0 ? "mstat--sep" : ""}`}>
+              <div class={`mstat ${i > 0 ? "mstat--sep" : ""}`} data-reveal>
                 <dt class="mstat__value">
                   {num}
                   {suf && <span class="mstat__plus">{suf}</span>}
@@ -40,7 +40,7 @@ const splitVal = (v = "") => {
       )
     }
 
-    {cta?.label && <a class="manifeste__cta" href={cta.href}>{cta.label}</a>}
+    {cta?.label && <a class="manifeste__cta link-cta" href={cta.href} data-reveal>{cta.label}</a>}
 
     <img class="doodle doodle--r" src="/deco/squiggle-1.svg" alt="" aria-hidden="true" />
     <img class="doodle doodle--l" src="/deco/squiggle-2.svg" alt="" aria-hidden="true" />
@@ -50,7 +50,9 @@ const splitVal = (v = "") => {
 <style>
   .manifeste {
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 7vw, 5.5rem);
+    padding-block: clamp(3rem, 15.5vw, 11rem);
+    /* Coins hauts arrondis : flotte sur le fond sombre commun, au-dessus du Ticker. */
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
   }
   .manifeste__inner {
     position: relative;
@@ -109,7 +111,7 @@ const splitVal = (v = "") => {
     align-items: center;
   }
   .mstat--sep {
-    border-left: 1.5px dashed color-mix(in srgb, var(--color-neutral-700) 28%, transparent);
+    border-left: 1.5px dashed #3b0800;
   }
   .mstat__value {
     font-family: var(--font-sans);
@@ -135,18 +137,8 @@ const splitVal = (v = "") => {
   }
 
   .manifeste__cta {
-    display: inline-block;
     margin-top: clamp(2rem, 4vw, 3rem);
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 1.25rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #3b0800;
-    text-decoration: underline;
-    text-underline-offset: 6px;
   }
-  .manifeste__cta:hover { color: var(--color-primary); }
 
   .doodle {
     position: absolute;
@@ -157,5 +149,22 @@ const splitVal = (v = "") => {
   .doodle--l { width: 84px; top: 78%; left: -2%; }
   @media (max-width: 900px) {
     .doodle { display: none; }
+  }
+  @media (max-width: 560px) {
+    .manifeste__stats {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mstat {
+      width: 50%;
+    }
+    .mstat--sep {
+      border-left: none;
+    }
+    .mstat:not(:last-child) {
+      border-bottom: 1.5px dashed #3b0800;
+      padding-bottom: 2rem;
+    }
   }
 </style>

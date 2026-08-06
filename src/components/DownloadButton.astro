@@ -25,13 +25,13 @@ const { href, label } = Astro.props;
     padding: 0.9em 1.6em;
     border-radius: 999px;
     background: #3b0800;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     font-family: var(--font-sans);
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
     transition: background 0.15s ease, transform 0.15s ease;
   }
-  .dl-btn:hover { background: #5a1e12; color: #fdf4f3; transform: translateY(-1px); }
+  .dl-btn:hover { transform: translateY(-1px); }
   .dl-btn svg { width: 20px; height: 20px; flex: none; }
 </style>

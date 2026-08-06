@@ -8,13 +8,78 @@ const expertise = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/expertises" }),
   schema: z.object({
     titre: z.string(),
-    numero: z.string().optional(),
-    icone: z.string().optional(),
-    resume: z.string().optional(),
     accroche: z.string().optional(),
     illustration: z.string().optional(),
+    pillWord: z.string().optional(),
+    affichage: z
+      .object({
+        ordre: z.number().optional(),
+        icone: z.string().optional(),
+        resume: z.string().optional(),
+      })
+      .optional(),
     tags: z.array(z.string()).optional(),
-    ordre: z.number().optional(),
+    ticker: z.array(z.string()).optional(),
+    projets: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        layout: z.enum(["image", "texte"]).optional(),
+        projetsMisEnAvant: z.array(z.object({ projet: z.string().optional() })).optional(),
+        cartesTexte: z
+          .array(z.object({ titre: z.string().optional(), texte: z.string().optional(), client: z.string().optional() }))
+          .optional(),
+      })
+      .optional(),
+    methode: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        sousTitre: z.string().optional(),
+        phases: z.array(z.object({ titre: z.string().optional(), texte: z.string().optional() })).optional(),
+        technosTitre: z.string().optional(),
+        technos: z
+          .array(z.object({ nom: z.string().optional(), logo: z.string().optional(), badge: z.string().optional() }))
+          .optional(),
+      })
+      .optional(),
+    cqnf: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        layout: z.enum(["accordion", "cards"]).optional(),
+        items: z
+          .array(
+            z.object({
+              label: z.string().optional(),
+              icone: z.string().optional(),
+              texte: z.any().optional(),
+              client: z.string().optional(),
+              tags: z.array(z.string()).optional(),
+              images: z.array(z.string()).optional(),
+            }),
+          )
+          .optional(),
+      })
+      .optional(),
+    articlesSection: z
+      .object({
+        tagsLies: z.array(z.string()).optional(),
+      })
+      .optional(),
+    ctaFinal: z
+      .object({
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        description: z.string().optional(),
+        ctaLabel: z.string().optional(),
+        ctaHref: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -24,13 +89,13 @@ const projet = defineCollection({
     titre: z.string(),
     client: z.string().optional(),
     couverture: z.string().optional(),
+    bannerDetail: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    resume: z.string().optional(),
     accroche: z.string().optional(),
     annee: z.string().optional(),
     technos: z.array(z.object({ nom: z.string(), logo: z.string().optional() })).optional(),
-    // Couleur d'accent du hero / des cartes ("salmon" par défaut, "sunshine", "lavande"…).
-    accent: z.enum(["salmon", "sunshine", "lavande"]).optional(),
+    // Couleur d'accent du hero / des cartes ("red-rock" par défaut, "sunshine", "ovni"…).
+    accent: z.enum(["red-rock", "canyon", "sunshine", "cactus", "sky", "ovni"]).optional(),
     // Section « Le contexte » : intro + colonnes (Le défi / L'enjeu / Notre rôle) + mockups.
     contexte: z
       .object({
@@ -96,8 +161,142 @@ const article = defineCollection({
     avatar: z.string().optional(),
     tempsLecture: z.string().optional(),
     vedette: z.boolean().optional(),
-    categorie: z.string().optional(),
     tags: z.array(z.string()).optional(),
+    statut: z.enum(["Brouillon", "Publié", "Archivé"]).optional(),
+  }),
+});
+
+const evenement = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./content/evenements" }),
+  schema: z.object({
+    titre: z.string(),
+    image: z.string(),
+    ctaLabel: z.string().optional(),
+    ctaHref: z.string().optional(),
+    position: z.enum(["gauche", "centre", "droite"]).optional(),
+    dateDebut: z.coerce.date(),
+    dateFin: z.coerce.date(),
+  }),
+});
+
+const offre = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./content/offres" }),
+  schema: z.object({
+    titre: z.string(),
+    eyebrow: z.string().optional(),
+    accroche: z.string().optional(),
+    accrocheAccent: z.string().optional(),
+    enBref: z.string().optional(),
+    illustration: z.string().optional(),
+    pillVariant: z.enum(["cactus", "ovni", "red-rock", "sunshine", "sky"]).optional(),
+    heroProof: z
+      .object({
+        avatars: z.array(z.string()).optional(),
+        texte: z.string().optional(),
+      })
+      .optional(),
+    produits: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        items: z
+          .array(
+            z.object({
+              titre: z.string(),
+              texte: z.any().optional(),
+              icone: z.string().optional(),
+              image: z.string().optional(),
+              imageCaption: z.string().optional(),
+            }),
+          )
+          .optional(),
+      })
+      .optional(),
+    benefices: z
+      .object({
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), icone: z.string().optional() })).optional(),
+      })
+      .optional(),
+    pourQui: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        items: z.array(z.object({ titre: z.string(), sousTitre: z.string().optional(), texte: z.any().optional() })).optional(),
+      })
+      .optional(),
+    raisons: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), icone: z.string().optional() })).optional(),
+        technosTitle: z.string().optional(),
+        technos: z.array(z.object({ nom: z.string(), logo: z.string().optional() })).optional(),
+        technosNote: z.string().optional(),
+      })
+      .optional(),
+    etapes: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        sousTitre: z.string().optional(),
+        image: z.string().optional(),
+        items: z.array(z.object({ titre: z.string(), texte: z.any().optional() })).optional(),
+      })
+      .optional(),
+    constat: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        colonneAvantTitre: z.string().optional(),
+        colonneApresTitre: z.string().optional(),
+        avant: z.array(z.string()).optional(),
+        apres: z.array(z.string()).optional(),
+      })
+      .optional(),
+    incoherence: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        texte: z.any().optional(),
+        illustration: z.string().optional(),
+      })
+      .optional(),
+    impacts: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        items: z.array(z.object({ valeur: z.string(), label: z.string().optional(), note: z.string().optional() })).optional(),
+      })
+      .optional(),
+    temoignage: z
+      .object({
+        citation: z.string().optional(),
+        auteur: z.string().optional(),
+        role: z.string().optional(),
+        avatar: z.string().optional(),
+      })
+      .optional(),
+    ctaFinal: z
+      .object({
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        description: z.string().optional(),
+        ctaLabel: z.string().optional(),
+        ctaHref: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -114,4 +313,4 @@ const page = defineCollection({
   }),
 });
 
-export const collections = { expertise, projet, article, page };
+export const collections = { expertise, projet, article, page, offre, evenement };

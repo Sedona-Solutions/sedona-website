@@ -1,0 +1,82 @@
+---
+import TitreAccent from "../TitreAccent.astro";
+import TeamMarquee from "../TeamMarquee.astro";
+const { hero } = Astro.props;
+const membres = hero?.membres ?? [];
+---
+
+<section class="chero">
+  <div class="container chero__inner">
+    {hero?.eyebrow && <p class="chero__eyebrow" data-reveal>{hero.eyebrow}</p>}
+    <TitreAccent titre={hero?.titre} accent={hero?.titreAccent} as="h1" class="title-2 chero__title" pillVariant={hero?.titreCouleur} />
+    {hero?.intro && <p class="chero__intro" data-reveal>{hero.intro}</p>}
+
+    {
+      hero?.ctaLabel && (
+        <a class="chero__cta" href={hero.ctaHref} data-reveal>
+          <span class="chero__cta-bg" aria-hidden="true" />
+          <span class="chero__cta-front" aria-hidden="true" />
+          <span class="chero__cta-label">{hero.ctaLabel}</span>
+        </a>
+      )
+    }
+  </div>
+
+  <div class="chero__marquee-wrap" data-reveal>
+    <TeamMarquee membres={membres} />
+  </div>
+</section>
+
+<style>
+  .chero {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-canyon-50);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .chero__marquee-wrap { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+
+  .chero__inner { text-align: center; max-width: 1048px; }
+  .chero__eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: -0.18px;
+    font-size: 1.25rem;
+    color: #3b0800;
+    margin: 0 0 1rem;
+  }
+  .chero :global(.chero__title) { margin: 0 auto; }
+  .chero__intro {
+    margin: 2rem auto 0;
+    max-width: 60ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #3b0800;
+  }
+
+  .chero__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    color: var(--color-red-rock-50);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 0.7;
+    text-transform: uppercase;
+    letter-spacing: -0.18px;
+    padding: 21px 32px;
+    border-radius: 999px;
+    transition: transform 0.2s ease;
+  }
+  .chero__cta:hover { transform: scale(0.97); }
+  .chero__cta-bg, .chero__cta-front { position: absolute; inset: 0; border-radius: inherit; }
+  .chero__cta-bg { background: var(--color-red-rock-400); }
+  .chero__cta-front { background: #3b0800; }
+  .chero__cta-label { position: relative; }
+</style>

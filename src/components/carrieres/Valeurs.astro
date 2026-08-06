@@ -1,0 +1,63 @@
+---
+import { recolorIcon } from "../../utils/iconRecolor.js";
+
+const { valeurs } = Astro.props;
+const items = valeurs?.items ?? [];
+
+// Icônes numérotées (1, 2, 3…) en accent-color-2 (Cactus), plutôt que l'icône
+// libre + couleur par item définies dans le contenu.
+const icons = items.map((_, i) => recolorIcon(`number-${i + 1}`, "#a7e9d1"));
+---
+
+<section class="cval">
+  <div class="container">
+    <header class="cval__head" data-reveal>
+      {
+        valeurs?.eyebrow && (
+          <p class="cval__eyebrow">
+            <span class="cval__dot" aria-hidden="true" /> {valeurs.eyebrow}
+          </p>
+        )
+      }
+      {valeurs?.titre && <h2 class="cval__title">{valeurs.titre}</h2>}
+    </header>
+
+    <ul class="cval__grid" data-reveal-group>
+      {
+        items.map((it, i) => (
+          <li class="cval__card" data-reveal>
+            {icons[i] && <span class="cval__icon" aria-hidden="true"><Fragment set:html={icons[i]} /></span>}
+            <h3 class="cval__card-title">{it.titre}</h3>
+            {it.texte && <p class="cval__card-texte">{it.texte}</p>}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cval { background: #3b0800; padding-block: clamp(2.5rem, 7.8vw, 112px); }
+  .cval__head { margin: 0 auto clamp(2.5rem, 5vw, 3rem); }
+  .cval__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
+    font-size: 1.25rem; color: var(--color-red-rock-50); margin: 0 0 1rem;
+  }
+  .cval__dot { width: 10px; height: 10px; border-radius: 999px; background: #a9e7e4; flex: none; }
+  .cval__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.75rem, 3.4vw, 2.5rem); line-height: 1.2; color: var(--color-red-rock-50); }
+
+  .cval__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .cval__card { background: #42140d; border-radius: 24px; padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .cval__icon { width: 48px; height: 48px; display: block; }
+  .cval__icon :global(svg) { width: 100%; height: 100%; }
+  .cval__card-title { margin: 0; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--color-red-rock-50); }
+  .cval__card-texte { margin: 0; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: var(--color-red-rock-50); }
+
+  @media (max-width: 900px) {
+    .cval__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    .cval__grid { grid-template-columns: 1fr; }
+  }
+</style>

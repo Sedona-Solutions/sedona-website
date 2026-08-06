@@ -1,22 +1,33 @@
 ---
+import TitreAccent from "../TitreAccent.astro";
 const { section, projets = [] } = Astro.props;
 ---
 
 <section class="projets">
   <div class="container">
-    <header class="projets__head">
-      <h2 class="projets__title">
-        <span>Retour sur</span><br />
-        nos plus beaux <mark class="hl hl--sky">projets</mark>
-      </h2>
-      <img class="projets__arrow" src="/deco/arrow-down.svg" alt="" aria-hidden="true" />
-      {section?.intro && <p class="projets__intro">{section.intro}</p>}
+    <header class="projets__head" data-reveal>
+      <TitreAccent
+        titre={section?.titre}
+        accent={section?.titreAccent}
+        as="h2"
+        class="title-2 projets__title"
+        pillVariant={section?.titreCouleur}
+      />
+      <svg class="projets__arrow" data-draw viewBox="0 0 56 164" fill="none" aria-hidden="true">
+        <path
+          d="M42.2434 132.7C50.1704 123.498 62.2073 98.6916 46.9386 73.0807C27.8528 41.0671 -3.81478 64.6791 2.26893 82.4702C7.21695 96.9402 41.8089 100.558 50.2489 70.0012C56.9566 45.716 34.3552 6.03111 18.5385 1.50145M24.697 118.966C27.8802 131.01 29.0919 159.887 29.0919 159.887C29.0919 159.887 37.8978 148.739 48.0934 145.532"
+          stroke="#F18878"
+          stroke-width="3"
+          stroke-linecap="round"
+          pathLength="1"
+        />
+      </svg>
     </header>
 
-    <ul class="projets__grid">
+    <ul class="projets__grid" data-reveal-group>
       {
         projets.map((p) => (
-          <li class="proj">
+          <li class="proj" data-reveal>
             <a href={`/projets/${p.slug}`} class="proj__media">
               {p.couverture ? (
                 <img src={p.couverture} alt={p.titre} loading="lazy" />
@@ -25,7 +36,6 @@ const { section, projets = [] } = Astro.props;
               )}
             </a>
             <h3 class="proj__title">{p.client ?? p.titre}</h3>
-            {p.client && <p class="proj__sub">{p.titre}</p>}
             {p.tags?.length > 0 && (
               <ul class="proj__tags">
                 {p.tags.map((t) => (
@@ -38,8 +48,8 @@ const { section, projets = [] } = Astro.props;
       }
     </ul>
 
-    <div class="projets__all">
-      <a href="/projets">Voir tous nos projets</a>
+    <div class="projets__all" data-reveal>
+      <a class="link-cta" href="/projets">Voir tous nos projets</a>
     </div>
   </div>
 </section>
@@ -47,29 +57,43 @@ const { section, projets = [] } = Astro.props;
 <style>
   .projets {
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 7vw, 5.5rem);
+    padding-top: clamp(3rem, 15.5vw, 11rem);
+    padding-bottom: clamp(2.5rem, 7.9vw, 114px);
+    /* Coin haut arrondi : flotte sur le fond sombre commun, sous la section Offres. */
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
   }
   .projets__head {
     position: relative;
+    z-index: 2;
     text-align: center;
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
   .projets__title {
     margin: 0;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: clamp(2.25rem, 5.5vw, 5rem); /* 80px */
-    line-height: 1.05;
-    letter-spacing: -0.03em;
     color: #3b0800;
   }
   .projets__arrow {
     position: absolute;
-    top: 0;
-    right: 8%;
-    width: clamp(60px, 9vw, 150px);
-    height: auto;
+    /* Ancré depuis le bas (et non le haut) pour toujours déborder sur les
+       covers projets en dessous, quelle que soit la hauteur du titre. */
+    bottom: -60%;
+    right: 4%;
+    height: 176px;
+    width: auto;
     pointer-events: none;
+  }
+  /* Tracé « à la main » : la ligne se dessine à l'arrivée dans le viewport
+     (pathLength=1 normalise la longueur, voir data-draw dans BaseLayout). */
+  .projets__arrow path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .projets__arrow.is-drawn path {
+    stroke-dashoffset: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .projets__arrow path { transition: none; stroke-dashoffset: 0; }
   }
   .projets__intro {
     margin: 1.5rem auto 0;
@@ -85,19 +109,30 @@ const { section, projets = [] } = Astro.props;
     margin: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 4vw, 3rem) 2rem;
+    gap: 60px 2rem;
   }
   .proj__media {
+    position: relative;
     display: block;
     aspect-ratio: 16 / 11;
     border-radius: 18px;
     overflow: hidden;
     background: var(--color-neutral-100);
+    border: 1px solid transparent;
+    transition: border-color 0.25s ease, border-bottom-width 0.25s ease;
+  }
+  .proj__media:hover {
+    border-color: #3b0800;
+    border-bottom-width: 5px;
   }
   .proj__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .proj__media:hover img {
+    transform: scale(1.05);
   }
   .proj__placeholder {
     display: block;
@@ -132,9 +167,11 @@ const { section, projets = [] } = Astro.props;
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.875rem; /* 14px */
+    line-height: 20px;
+    letter-spacing: -0.16px;
     color: #3b0800;
-    padding: 0.35em 0.85em;
-    border: 1px solid var(--color-border);
+    padding: 2px 12px;
+    border: 1px solid color-mix(in srgb, #3b0800 40%, transparent);
     border-radius: 999px;
   }
 
@@ -142,17 +179,6 @@ const { section, projets = [] } = Astro.props;
     text-align: center;
     margin-top: clamp(2.5rem, 5vw, 4rem);
   }
-  .projets__all a {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 1.25rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #3b0800;
-    text-decoration: underline;
-    text-underline-offset: 6px;
-  }
-  .projets__all a:hover { color: var(--color-primary); }
 
   @media (max-width: 760px) {
     .projets__grid { grid-template-columns: 1fr; }

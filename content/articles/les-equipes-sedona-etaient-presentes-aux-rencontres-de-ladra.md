@@ -1,9 +1,25 @@
 ---
-titre: "Les équipes Sedona étaient présentes aux rencontres de l'ADRA"
+titre: 'Sedona aux rencontres de l''ADRA : l''IA au cœur des échanges'
 date: 2026-04-15T07:55:17.000Z
-extrait: "L'ADRA est l'Association des Directeurs à des Responsables Achats (https://adra-association.com/). Plusieurs fois par an elle organise des rencontres entre ses…"
+extrait: ''
 auteur: Rémy Poulachon
+avatar: /uploads/articles/collab/remy-p.png
 tempsLecture: 1 min de lecture
 categorie: Évènement
+tags:
+  - Rencontres
+  - Business
+statut: Publié
 ---
-L'ADRA est l'Association des Directeurs à des Responsables Achats (https://adra-association.com/). Plusieurs fois par an elle organise des rencontres entre ses membres et des sociétés sélectionnées par des "parrains" au sein de l'association. Le 9/04/26 Sedona a ainsi présenté ses offres et son positionnement face à l'IA lors d'une intervention auprès d'une cinquantaine de membres.   ![Présentation Poulachon à l'ADRA](https://sedona.fr/wp-content/uploads/2026/04/DSC01163-1-300x169.jpg)L'occasion pour nous de montrer également l'éventail de nos compétences techniques et fonctionnelles, d'échanger sur les différents projets que nous menons actuellement avec l'IA et partager quelques belles Success Stories de cette année. A l'issue de ces présentations, notre équipe a pu, lors d'un Speed Meeting, rencontrer les membres de l'ADRA et commencer à bâtir des partenariats sur des les sujets que nous maitrisons (IA, Développement Portails, Site Web, applications mobiles, etc..).   Une expérience enrichissante que nous renouvellerons très probablement. Nous profitons également de ce "post" pour remercier Pierre Alexandre pour nous avoir permis de participer à cet évènement. L'équipe SEDONA ![Participants aux rencontres de l'ADRA](https://sedona.fr/wp-content/uploads/2026/04/Intervenants-ADRA-300x108.jpg)
+
+Le 9 avril 2026, les équipes Sedona ont participé aux rencontres de l'ADRA, l'Association des Directeurs et Responsables Achats. Plusieurs fois par an, l'association réunit ses membres et quelques sociétés invitées par des « parrains » — une formule à taille humaine, où la qualité des échanges prime sur le nombre.
+
+![](/uploads/articles/wp/sedona-adra-2.jpg)
+
+Devant une cinquantaine de membres, nous avons présenté nos offres et, surtout, notre positionnement face à l'IA. L'occasion de dépasser les discours et de montrer concrètement l'étendue de nos compétences, techniques comme fonctionnelles : les projets IA que nous menons en ce moment, et quelques belles Success Stories de l'année.
+
+Place ensuite au Speed Meeting. Un format idéal pour aller à la rencontre des membres, comprendre leurs enjeux et poser les premières pierres de partenariats sur les sujets qu'on maîtrise : IA, portails, sites web, applications mobiles.
+
+![](/uploads/articles/wp/sedona-adra.jpg)
+
+Une expérience enrichissante, que nous comptons bien renouveler. Merci à Pierre Alexandre de nous avoir ouvert la porte de cet événement.

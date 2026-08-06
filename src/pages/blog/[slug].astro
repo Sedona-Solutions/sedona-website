@@ -3,9 +3,11 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
+import ArticleCard from "../../components/blog/ArticleCard.astro";
+import { estArticlePublie } from "../../utils/articleVisibility";
 
 export async function getStaticPaths() {
-  const items = await getCollection("article");
+  const items = await getCollection("article", ({ data }) => estArticlePublie(data.statut));
   return items.map((entry) => ({ params: { slug: entry.id }, props: { entry, arr: items } }));
 }
 
@@ -17,29 +19,30 @@ const moisCap = (d) => {
   const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
   return s.replace(/ ([a-zà-ÿ])/, (m, c) => " " + c.toUpperCase());
 };
-const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" · ");
+const tempsMatch = a.tempsLecture?.match(/\d+\s*min/i);
+const tempsLabel = a.tempsLecture && `Temps de lecture : ${tempsMatch ? tempsMatch[0] : a.tempsLecture}`;
+const meta = [a.date && `Publié le ${moisCap(a.date)}`, tempsLabel].filter(Boolean).join(" · ");
 
-// « À lire aussi » : on privilégie la même catégorie, puis on complète, max 3.
+// « À lire aussi » : on privilégie les articles qui partagent au moins un tag, puis on complète, max 3.
 const reste = arr.filter((e) => e.id !== entry.id).map((e) => ({ ...e.data, slug: e.id }));
-const memeCat = reste.filter((e) => a.categorie && e.categorie === a.categorie);
-const autres = [...memeCat, ...reste.filter((e) => !memeCat.includes(e))].slice(0, 3);
-const metaCard = (x) => [x.date && moisCap(x.date), x.tempsLecture].filter(Boolean).join(" · ");
+const tagsCommuns = reste.filter((e) => e.tags?.some((t) => a.tags?.includes(t)));
+const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))].slice(0, 3);
 ---
 
-<BaseLayout title={`${a.titre} — Sedona`} description={a.extrait}>
+<BaseLayout title={`${a.titre} — Sedona`} description={a.extrait} headerBg="#e9b189">
   <article>
     <header class="ahead">
       <div class="container ahead__inner">
         <nav class="ahead__bread" aria-label="Fil d'ariane">
           <a href="/">Accueil</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span>
-          <span class="ahead__cur">{a.categorie ?? "Article"}</span>
+          <span class="ahead__cur">{a.titre}</span>
         </nav>
         <h1 class="ahead__title">{a.titre}</h1>
         {a.extrait && <p class="ahead__chapo">{a.extrait}</p>}
 
         <div class="ahead__byline">
           {a.avatar ? <img class="ahead__avatar" src={a.avatar} alt="" /> : <span class="ahead__avatar" aria-hidden="true" />}
-          <div>
+          <div class="ahead__byline-text">
             {a.auteur && <span class="ahead__author">{a.auteur}</span>}
             {meta && <span class="ahead__meta">{meta}</span>}
           </div>
@@ -50,40 +53,55 @@ const metaCard = (x) => [x.date && moisCap(x.date), x.tempsLecture].filter(Boole
     </header>
 
     {a.couverture && (
-      <div class="acover container">
-        <img src={a.couverture} alt={a.titre} />
+      <div class="acover">
+        <div class="container">
+          <div class="acover__inner">
+            <img src={a.couverture} alt={a.titre} />
+          </div>
+        </div>
       </div>
     )}
 
-    <div class="abody container">
-      <div class="prose"><Content /></div>
-      <a class="abody__back" href="/blog">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Tous les articles
-      </a>
+    <div class="abody">
+      <div class="container abody__inner">
+        <div class="prose"><Content /></div>
+
+        <div class="apager" id="apager-share" data-title={a.titre}>
+          <img class="apager__deco" src="/deco/squiggle-6.svg" alt="" aria-hidden="true" />
+          <p class="apager__title">Vous aimez cet article, partagez-le !</p>
+          <div class="apager__row">
+            <a class="apager__btn" data-share="facebook" aria-label="Partager sur Facebook">
+              <svg viewBox="0 0 24 24" fill="var(--color-red-rock-50)"><path d="M13.06 13.3018V20H10.023V13.3018H7.5V10.5858H10.023V9.59763C10.023 5.92899 11.5357 4 14.7362 4C15.7174 4 15.9627 4.15976 16.5 4.28994V6.97633C15.8984 6.86982 15.7291 6.81065 15.1042 6.81065C14.3624 6.81065 13.9653 7.02367 13.6032 7.44379C13.2411 7.8639 13.06 8.59172 13.06 9.63314V10.5917H16.5L15.5772 13.3077H13.06V13.3018Z"/></svg>
+            </a>
+            <a class="apager__btn" data-share="x" aria-label="Partager sur X">
+              <svg viewBox="0 0 24 24" fill="var(--color-red-rock-50)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.67227 4H3L9.72535 12.701L3.43022 20H6.33875L11.1 14.4795L15.3277 19.9493H21L14.0793 10.9955L14.0915 11.0109L20.0504 4.10164H17.1418L12.7167 9.23256L8.67227 4ZM6.13099 5.52382H7.89685L17.869 18.4254H16.1032L6.13099 5.52382Z"/></svg>
+            </a>
+            <a class="apager__btn" data-share="linkedin" aria-label="Partager sur LinkedIn">
+              <svg viewBox="0 0 24 24" fill="var(--color-red-rock-50)"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.2051 9.75C15.303 9.75576 15.401 9.76096 15.4932 9.77246C17.0936 9.94579 18.001 10.9979 18.001 12.7832V18H15.4932V13.3379C15.4932 13.2223 15.4647 11.9678 14.0781 11.9678C13.6102 11.9678 13.194 12.176 12.9629 12.5918C12.6913 13.0887 12.7324 13.6669 12.7324 14.21V17.9648H10.2246V9.96875H12.6221V11.0381C12.6221 11.0381 12.6573 10.9801 12.7324 10.8818C13.01 10.5234 13.8016 9.69224 15.2051 9.75ZM8.70996 17.9424H6.20215V9.94629H8.70996V17.9424ZM7.45605 6C8.2601 6.00006 8.91211 6.65199 8.91211 7.45605C8.91205 8.26007 8.26007 8.91205 7.45605 8.91211C6.65199 8.91211 6.00006 8.2601 6 7.45605C6 6.65196 6.65196 6 7.45605 6Z"/></svg>
+            </a>
+            <button type="button" class="apager__btn" data-share="copy" aria-label="Copier le lien de l'article">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-red-rock-50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              <span class="apager__copied" aria-hidden="true">Lien copié !</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </article>
 
+  <div class="dark-stack">
   {
     autres.length > 0 && (
       <section class="arel">
         <div class="container">
-          <h2 class="arel__title">À <mark class="hl hl--canyon">lire aussi</mark></h2>
-          <ul class="arel__grid">
+          <div class="arel__head" data-reveal>
+            <h2 class="title-2 arel__title">À <mark class="hl hl--canyon">lire aussi</mark></h2>
+            <a class="link-cta arel__all" href="/blog">Voir tous les articles</a>
+          </div>
+          <ul class="arel__grid" data-reveal-group>
             {autres.map((x) => (
-              <li class="bcard">
-                <a href={`/blog/${x.slug}`} class="pcard">
-                  <div class="pcard__top">
-                    {x.avatar ? <img class="pcard__avatar" src={x.avatar} alt="" loading="lazy" /> : <span class="pcard__avatar" aria-hidden="true" />}
-                    <span>
-                      <span class="pcard__byLabel">Publié par</span>
-                      <span class="pcard__author">{x.auteur}</span>
-                    </span>
-                  </div>
-                  {metaCard(x) && <p class="pcard__meta">{metaCard(x)}</p>}
-                  <h3 class="pcard__h">{x.titre}</h3>
-                  {x.tags?.length > 0 && <ul class="pcard__tags">{x.tags.slice(0, 3).map((tg) => <li>{tg}</li>)}</ul>}
-                </a>
+              <li class="bcard" data-reveal>
+                <ArticleCard article={x} />
               </li>
             ))}
           </ul>
@@ -93,53 +111,170 @@ const metaCard = (x) => [x.date && moisCap(x.date), x.tempsLecture].filter(Boole
   }
 
   <CtaFinal cta={home.ctaFinal} />
+  </div>
 </BaseLayout>
 
+<script>
+  const share = document.getElementById("apager-share");
+  if (share) {
+    const title = share.dataset.title || document.title;
+    const url = encodeURIComponent(window.location.href);
+    const links = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      x: `https://twitter.com/intent/tweet?url=${url}&text=${encodeURIComponent(title)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+    };
+    share.querySelectorAll("[data-share]").forEach((el) => {
+      const kind = el.dataset.share;
+      if (kind === "copy") {
+        el.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(window.location.href);
+          el.classList.add("is-copied");
+          setTimeout(() => el.classList.remove("is-copied"), 1600);
+        });
+      } else {
+        el.href = links[kind];
+        el.target = "_blank";
+        el.rel = "noopener";
+      }
+    });
+  }
+</script>
+
 <style>
+  /* Fond commun : comble les coins arrondis de .abody (sinon la page blanche y transparaît). */
+  article { background: var(--color-canyon-300); }
+
   /* En-tête de lecture */
-  .ahead { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem); }
-  .ahead__inner { max-width: 820px; }
+  .ahead { background: var(--color-canyon-300); padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem); }
+  .ahead__inner { max-width: 980px; }
   .ahead__bread { font-family: var(--font-body); font-size: 0.875rem; color: #3b0800; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); }
   .ahead__bread a { color: #3b0800; font-weight: 600; }
   .ahead__bread span { margin: 0 0.35rem; }
-  .ahead__cur { font-weight: 400; }
-  .ahead__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.02em; color: #3b0800; }
-  .ahead__chapo { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.4; color: #3b0800; }
+  .ahead__cur { font-weight: 400; opacity: 0.8; }
+  .ahead__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em; color: #3b0800; }
+  .ahead__chapo { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.125rem, 1.6vw, 1.5rem); line-height: 1.25; color: #3b0800; }
 
-  .ahead__byline { display: flex; align-items: center; gap: 0.75rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
-  .ahead__avatar { width: 48px; height: 48px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
-  .ahead__author { display: block; font-family: var(--font-body); font-weight: 600; color: #3b0800; }
-  .ahead__meta { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
+  .ahead__byline { position: relative; display: flex; align-items: center; margin-top: clamp(1.75rem, 4vw, 2.5rem); padding-top: clamp(1.5rem, 3vw, 1.75rem); border-top: dashed 1px; border-color: #3b0800; }
+  .ahead__avatar { left: 0; top: -4px; width: 56px; height: 56px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-50), var(--color-red-rock-300)); border: 2px solid var(--color-canyon-300); }
+  .ahead__byline-text { padding-left: 16px; }
+  .ahead__author { display: block; font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; line-height: 1.2; color: #3b0800; }
+  .ahead__meta { display: block; font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.375; letter-spacing: -0.18px; color: #3b0800; opacity: 0.8; }
 
   .ahead__tags { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .ahead__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; color: #3b0800; padding: 0.35em 0.9em; border: 1px solid var(--color-border); border-radius: 999px; }
+  .ahead__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; line-height: 20px; letter-spacing: -0.16px; color: #3b0800; padding: 2px 12px; border: 1px solid color-mix(in srgb, #3b0800 40%, transparent); border-radius: 999px; }
 
-  /* Couverture */
-  .acover { margin-top: clamp(1.5rem, 3vw, 2.5rem); }
-  .acover img { display: block; width: 100%; max-height: 560px; object-fit: cover; border-radius: 24px; }
+  /* Couverture : encart inset (112px) dans le conteneur principal */
+  .acover { background: var(--color-canyon-300); padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .acover__inner { max-width: 1088px; margin-inline: auto; }
+  .acover img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 24px; }
 
   /* Corps de l'article */
-  .abody { padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); }
-  .abody .prose { max-width: 760px; margin-inline: auto; }
-  .abody__back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 760px; margin: clamp(2.5rem, 5vw, 3.5rem) auto 0; font-family: var(--font-sans); font-weight: 600; color: var(--color-primary); }
-  .abody__back svg { width: 20px; height: 20px; }
+  .abody { background: var(--color-canyon-50); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; padding-top: clamp(2.5rem, 6vw, 6rem); }
+  .abody__inner { max-width: 1088px; padding-block: 0 clamp(3rem, 6vw, 5rem); }
+  .abody .prose { max-width: 980px; margin-inline: auto; padding-bottom: 3rem; font-size: 1.125rem; line-height: 1.55; color: #3b0800; }
+  /* <Content /> rend le markdown à la volée : ces éléments ne portent pas
+     l'attribut de scope d'Astro (même limite que set:html), d'où le :global()
+     pour que les règles ci-dessous les atteignent malgré tout. */
+  .abody .prose :global(h1) { font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em; color: #3b0800; margin-top: 0; }
+  .abody .prose :global(h2) { font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1; letter-spacing: -0.01em; color: #3b0800; margin-top: 3rem; }
+  .abody .prose :global(h3) { font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; color: #3b0800; margin-top: 2.5rem; }
+  .abody .prose :global(h4) { font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; color: #3b0800; margin-top: 2rem; }
+  .abody .prose :global(h5) { font-family: var(--font-sans); font-weight: 700; font-size: 1.125rem; line-height: 1.3; color: #3b0800; margin-top: 1.75rem; }
+  /* "Caption" dans l'admin (relabellé depuis Heading 6, voir patches/tinacms+*.patch) —
+     Label-3 (12px/18px, -0.14px), suit la progression Label-1 (16/22) / Label-2 (14/20). */
+  .abody .prose :global(h6) { font-family: var(--font-body); font-weight: 400; font-size: 0.75rem; line-height: 1.5; letter-spacing: -0.14px; color: var(--color-text-muted); margin-top: 1.75rem; }
+  .abody .prose :global(li) { margin-bottom: 0.5rem; }
+  .abody .prose :global(strong) { font-weight: 700; }
+  .abody .prose :global(s), .abody .prose :global(del) { color: var(--color-text-muted); }
+
+  /* Highlight : bouton "Surlignage (fiable)" (voir remarkManualHighlight.mjs) — 6 accent
+     colors de la maquette, écrites en ==mot==[r|c|k|n|o] plutôt que via le marquage
+     natif de Tina (bug de perte de texte à la sauvegarde, contourné côté éditeur). */
+  .abody .prose :global(.tina-hl) { padding: 0.05em 0.35em; border-radius: 4px; color: #3b0800; }
+  .abody .prose :global(.tina-hl--sunshine) { background: var(--color-sunshine-200); }
+  .abody .prose :global(.tina-hl--redrock) { background: var(--color-red-rock-300); }
+  .abody .prose :global(.tina-hl--cactus) { background: var(--color-cactus-200); }
+  .abody .prose :global(.tina-hl--sky) { background: var(--color-sky-200); }
+  .abody .prose :global(.tina-hl--canyon) { background: var(--color-canyon-200); }
+  .abody .prose :global(.tina-hl--ovni) { background: var(--color-ovni-200); }
+
+  .abody .prose :global(code) { font-family: var(--font-mono); font-size: 0.9em; background: color-mix(in srgb, #3b0800 8%, transparent); border-radius: 4px; padding: 0.15em 0.4em; }
+  .abody .prose :global(pre) { font-family: var(--font-mono); font-size: 0.9375rem; line-height: 1.6; border-radius: 12px; padding: 1.5rem; overflow-x: auto; }
+  .abody .prose :global(pre code) { background: none; padding: 0; }
+
+  .abody .prose :global(table) { width: 100%; border-collapse: collapse; font-size: 1rem; }
+  .abody .prose :global(th), .abody .prose :global(td) { padding: 0.75rem 1rem; border: 1px solid color-mix(in srgb, #3b0800 20%, transparent); text-align: left; }
+  .abody .prose :global(th) { font-family: var(--font-sans); font-weight: 600; background: color-mix(in srgb, #3b0800 6%, transparent); }
+
+  .abody .prose :global(hr) { margin: 2.5rem 0; border: dashed 1px; border-color: #42140D; }
+  .abody .prose :global(img) { margin-inline: auto; max-width: 48rem; height: auto; }
+  /* Image cliquable (ex. vignette YouTube) : [![alt](image)](lien) en Markdown standard —
+     on retire le style de lien par défaut (couleur/soulignement) sur l'image elle-même. */
+  .abody .prose :global(a:has(img)) { text-decoration: none; color: inherit; }
+
+  .abody .prose :global(.video-embed) {
+    position: relative;
+    width: 100%;
+    max-width: 48rem;
+    aspect-ratio: 16 / 9;
+    margin: 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .abody .prose :global(.video-embed iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .abody .prose :global(blockquote) {
+    background: #3b0800;
+    color: var(--color-red-rock-50);
+    margin: 2.5rem 10rem;
+    padding: clamp(1.75rem, 5vw, 3.5rem);
+    border-radius: 12px;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    letter-spacing: -0.15px;
+  }
+  .abody .prose :global(blockquote p) { margin: 0; }
+
+  /* Bloc partage */
+  .apager { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; padding-top: clamp(2.5rem, 5vw, 3.5rem); }
+  .apager__deco { position: absolute; right: 16%; top: -25%; width: 120px; height: auto; transform: rotate(-135deg); pointer-events: none; }
+  .apager__title { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.75rem; line-height: 1.2; letter-spacing: -0.01em; text-align: center; color: #3b0800; }
+  .apager__row { display: flex; align-items: center; gap: 0.5rem; }
+  .apager__btn { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 999px; background: #3b0800; border: none; transition: transform 0.2s ease; }
+  .apager__btn:hover { transform: scale(0.94); }
+  .apager__btn svg { width: 24px; height: 24px; }
+  .apager__copied { position: absolute; bottom: calc(100% + 0.5rem); left: 50%; transform: translateX(-50%); white-space: nowrap; background: #3b0800; color: var(--color-red-rock-50); font-family: var(--font-body); font-size: 0.75rem; padding: 0.35rem 0.6rem; border-radius: 999px; opacity: 0; transition: opacity 0.2s ease; }
+  .apager__btn.is-copied .apager__copied { opacity: 1; }
 
   /* À lire aussi */
-  .arel { background: var(--color-canyon-50); padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--color-border); }
-  .arel__title { font-family: var(--font-sans); font-weight: 600; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; color: #3b0800; margin: 0 0 clamp(2rem, 4vw, 2.5rem); }
+  .dark-stack { background: #3b0800; }
+  .arel {
+    background: var(--color-canyon-50);
+    padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--color-border);
+    /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus du CtaFinal. */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .arel__head { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin: 0 0 clamp(2rem, 4vw, 2.5rem); }
+  .arel__title { margin: 0; }
   .arel__title .hl { line-height: 1.2; }
-  .arel__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-
-  .pcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--color-border); border-radius: 24px; padding: 1.75rem; color: #3b0800; height: 100%; }
-  .pcard__top { display: flex; align-items: center; gap: 0.6rem; }
-  .pcard__avatar { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-300), var(--color-red-rock-300)); }
-  .pcard__byLabel { display: block; font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); }
-  .pcard__author { font-family: var(--font-body); font-weight: 600; }
-  .pcard__meta { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-muted); margin: 1.5rem 0 0.5rem; }
-  .pcard__h { font-family: var(--font-sans); font-weight: 600; font-size: 1.375rem; line-height: 1.2; margin: 0 0 auto; }
-  .pcard__tags { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .pcard__tags li { font-family: var(--font-body); font-weight: 500; font-size: 0.8125rem; color: #3b0800; padding: 0.3em 0.85em; border: 1px solid var(--color-border); border-radius: 999px; }
+  .arel__all { flex: none; }
+  .arel__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; grid-auto-rows: 300px; }
 
   @media (max-width: 900px) { .arel__grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .arel__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .arel__grid { grid-template-columns: 1fr; }
+    .arel__head { flex-direction: column; align-items: flex-start; }
+    .apager__deco { display: none; }
+  }
 </style>

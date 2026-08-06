@@ -7,13 +7,14 @@ const logos = section?.logos ?? [];
 {
   logos.length > 0 && (
     <section class="clients">
-      <div class="container clients__inner">
-        {titre && <p class="clients__title">{titre}</p>}
-        <ul class="clients__logos" aria-label="Nos clients">
-          {logos.map((c, i) => (
+      <div class="container">{titre && <p class="clients__title" data-reveal>{titre}</p>}</div>
+
+      <div class="clients__row">
+        <ul class="clients__track" aria-label="Nos clients">
+          {[...logos, ...logos].map((c, i) => (
             <>
               {i > 0 && <li class="clients__star" aria-hidden="true">✦</li>}
-              <li class="clients__item">
+              <li class="clients__item" aria-hidden={i >= logos.length ? "true" : undefined}>
                 {c.logo ? <img src={c.logo} alt={c.nom} loading="lazy" /> : <span>{c.nom}</span>}
               </li>
             </>
@@ -27,55 +28,58 @@ const logos = section?.logos ?? [];
 <style>
   .clients {
     background: #3b0800;
-    color: #fdf4f3;
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
-  }
-  .clients__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(2rem, 5vw, 3.5rem);
-    text-align: center;
+    color: var(--color-red-rock-50);
+    padding-block: clamp(2.5rem, 7.8vw, 112px);
+    /* Pas d'arrondi ici : la section se fond dans le fond sombre commun
+       (.home-stack) ; ce sont Témoignages et BlogPreview qui portent le rayon. */
   }
   .clients__title {
+    margin: 0 0 clamp(2rem, 5vw, 3.5rem);
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 1.25rem;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
+    text-align: center;
   }
-  .clients__logos {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: clamp(0.75rem, 2.5vw, 2.5rem);
+
+  /* Défilement continu, pleine largeur d'écran (façon unlimitedtemplate.framer.website) :
+     vitesse constante, pas de fondu sur les bords, pas de pause au survol. */
+  .clients__row { overflow: hidden; }
+  .clients__track {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-wrap: nowrap; align-items: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
+    width: max-content;
+    animation: clients-scroll 40s linear infinite;
   }
+  @keyframes clients-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .clients__track { animation: none; }
+  }
+
   .clients__star {
-    color: #fdf4f3;
-    opacity: 0.8;
-    font-size: 0.9rem;
+    /* Même taille/couleur que l'étoile du bandeau défilant plus haut (Ticker) —
+       0.75em de son texte, clamp(1.5rem, 3vw, 2.5rem). */
+    color: var(--color-red-rock-50);
+    font-size: clamp(1.125rem, 2.25vw, 1.875rem);
     flex: none;
   }
   .clients__item {
-    flex: 0 1 auto;
+    flex: none;
     display: flex;
     justify-content: center;
-  }
-  @media (max-width: 760px) {
-    .clients__logos { flex-wrap: wrap; justify-content: center; }
   }
   .clients__item img {
     height: clamp(20px, 2.4vw, 34px);
     width: auto;
-    max-width: 100%;
+    max-width: none;
     opacity: 0.92;
   }
   .clients__item span {
     font-weight: 700;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
+    white-space: nowrap;
   }
 </style>

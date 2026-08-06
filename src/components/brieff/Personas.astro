@@ -1,0 +1,79 @@
+---
+import { richTextToHtml } from "../../utils/richText.js";
+import TitreAccent from "../TitreAccent.astro";
+
+const {
+  eyebrow = "À qui s'adresse cette offre ?",
+  titre,
+  titreAccent,
+  pillVariant,
+  items = [],
+} = Astro.props;
+---
+
+<section class="bpers">
+  <div class="container bpers__inner">
+    <header class="bpers__head" data-reveal>
+      <p class="bpers__eyebrow">
+        <span class="dot" aria-hidden="true"></span> {eyebrow}
+      </p>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bpers__title" pillVariant={pillVariant} />
+    </header>
+
+    <ul class="bpers__grid" data-reveal-group>
+      {items.map((it: { titre?: string; sousTitre?: string; texte?: string }) => (
+        <li class="bpc" data-reveal>
+          <div class="bpc__inner">
+            <h3 class="bpc__role">{it.titre}</h3>
+            {it.sousTitre && <h4 class="bpc__titre">{it.sousTitre}</h4>}
+            {it.texte && <div class="bpc__text" set:html={richTextToHtml(it.texte)} />}
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <img class="bpers__illu" src="/deco/illus_brieff_mini.svg" alt="" aria-hidden="true" loading="lazy" />
+  </div>
+</section>
+
+<style>
+  .bpers { background: #3b0800; padding-block: clamp(3rem, 6vw, 5rem); position: relative; overflow: hidden; }
+  .bpers__inner { position: relative; }
+  .bpers__head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .bpers__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-red-rock-50); margin: 0 0 1.25rem;
+  }
+  .bpers__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--color-ovni-300); flex: none; }
+  .bpers :global(.bpers__title) {
+    margin: 0; max-width: 30ch; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.2; letter-spacing: -0.01em; color: var(--color-red-rock-50);
+  }
+
+  .bpers__grid {
+    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    width: 100%; position: relative;
+  }
+  .bpc {
+    border: 1px dashed #f5ede8;
+    border-radius: 24px; padding: 2.5rem; min-height: 278px;
+    display: flex; align-items: flex-start;
+  }
+  .bpc__inner { width: 100%; padding-bottom: 1.5rem; border-bottom: 1px dashed #42140d; }
+  .bpc__role {
+    margin: 0 0 0.5rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem;
+    letter-spacing: -0.02em; color: var(--color-red-rock-50);
+  }
+  .bpc__titre { margin: 0 0 0.75rem; font-family: var(--font-body); font-weight: 400; font-size: 1rem; letter-spacing: -0.01em; color: var(--color-ovni-200); }
+  .bpc__text :global(p) { margin: 0; font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.375; color: var(--color-red-rock-50); }
+  .bpc__text :global(p + p) { margin-top: 0.75em; }
+
+  /* Mord légèrement le bord droit du dernier bloc (dans sa zone de padding),
+     sans jamais recouvrir son texte ; peut être coupée par le bord de l'écran. */
+  .bpers__illu { position: absolute; z-index: 10; left: calc(100% - 36px); bottom: -1.5rem; width: 250px; height: auto; pointer-events: none; }
+
+  @media (max-width: 1100px) { .bpers__illu { display: none; } }
+  @media (max-width: 900px) { .bpers__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .bpers__grid { grid-template-columns: 1fr; } .bpc { min-height: 0; } }
+</style>

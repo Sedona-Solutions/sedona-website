@@ -1,0 +1,58 @@
+---
+import NumberBadge from "../NumberBadge.astro";
+import { richTextToHtml } from "../../utils/richText.js";
+import TitreAccent from "../TitreAccent.astro";
+const { eyebrow, titre, titreAccent, pillVariant, items = [], accentMid = "#b3b5ee" } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="opq">
+      <div class="container">
+        <header class="opq__head" data-reveal>
+          {eyebrow && <p class="opq__eyebrow">{eyebrow}</p>}
+          <TitreAccent titre={titre} accent={titreAccent} as="h2" class="opq__title" pillVariant={pillVariant} />
+        </header>
+
+        <ul class="opq__grid" data-reveal-group>
+          {items.map((it, i) => (
+            <li class="opqc" data-reveal>
+              <NumberBadge n={i + 1} color={accentMid} size={48} class="opqc__badge" />
+              <h3 class="opqc__title">{it.titre}</h3>
+              {it.texte && <div class="opqc__text" set:html={richTextToHtml(it.texte)} />}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .opq {
+    background: #3b0800;
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+  .opq__head { text-align: center; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .opq__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-red-rock-50); margin-bottom: 1rem;
+  }
+  .opq :global(.opq__title) { margin: 0 auto; max-width: 24ch; color: var(--color-red-rock-50); }
+
+  .opq__grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+  }
+  .opqc {
+    border: 1.5px dashed var(--color-red-rock-50); border-radius: 20px; padding: 1.75rem 1.5rem;
+    text-align: center; display: flex; flex-direction: column; align-items: center;
+  }
+  .opqc__badge { margin-bottom: 1rem; }
+  .opqc__title { font-family: var(--font-sans); font-weight: 700; font-size: 1.125rem; color: var(--color-red-rock-50); margin: 0 0 0.5rem; }
+  .opqc__text :global(p) { font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.45; color: var(--color-red-rock-50); opacity: 0.85; margin: 0; }
+  .opqc__text :global(p + p) { margin-top: 0.6em; }
+
+  @media (max-width: 900px) { .opq__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { .opq__grid { grid-template-columns: 1fr; } }
+</style>

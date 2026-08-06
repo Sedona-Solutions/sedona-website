@@ -17,10 +17,10 @@ const legal = [
 const annee = 2026;
 
 const icones = {
-  facebook: `<path d="M13.5 9H11V7.5c0-.7.3-1 1-1h1.5V4h-2C9.5 4 8.5 5.3 8.5 7v2H7v2.5h1.5V20H11v-8.5h1.8L13.5 9z"/>`,
-  x: `<path d="M14.2 4h2.3l-5 5.7L17.5 20h-4.3l-3.3-4.4L6 20H3.7l5.4-6.1L4 4h4.4l3 4 3.8-4zm-.8 14.4h1.3L7.3 5.3H6L13.4 18.4z"/>`,
-  linkedin: `<path d="M7 9H4.5v9H7V9zM5.7 4.5A1.4 1.4 0 105.7 7.3a1.4 1.4 0 000-2.8zM19.5 13.3c0-2.4-1.3-3.5-3-3.5-1.4 0-2 .8-2.3 1.3V9H11.7c0 .7 0 9 0 9h2.5v-5c0-.3 0-.5.1-.7.2-.5.6-1 1.4-1 1 0 1.4.8 1.4 1.9V18h2.5l-.1-4.7z"/>`,
-  youtube: `<path d="M21 8.5s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C15.4 5.4 12 5.4 12 5.4h0s-3.4 0-6.2.2c-.4.1-1.3.1-2 .9-.6.6-.8 2-.8 2S3 10.1 3 11.8v1.1c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.7.8 1.7.8 2.1.9 1.6.1 6 .2 6 .2s3.4 0 6.2-.2c.4-.1 1.3-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.1c0-1.7-.2-3.3-.2-3.3zM10.2 14.7V9.9l4.3 2.4-4.3 2.4z"/>`,
+  facebook: `<path d="M13.06 13.3018V20H10.023V13.3018H7.5V10.5858H10.023V9.59763C10.023 5.92899 11.5357 4 14.7362 4C15.7174 4 15.9627 4.15976 16.5 4.28994V6.97633C15.8984 6.86982 15.7291 6.81065 15.1042 6.81065C14.3624 6.81065 13.9653 7.02367 13.6032 7.44379C13.2411 7.8639 13.06 8.59172 13.06 9.63314V10.5917H16.5L15.5772 13.3077H13.06V13.3018Z"/>`,
+  x: `<path fill-rule="evenodd" clip-rule="evenodd" d="M8.67227 4H3L9.72535 12.701L3.43022 20H6.33875L11.1 14.4795L15.3277 19.9493H21L14.0793 10.9955L14.0915 11.0109L20.0504 4.10164H17.1418L12.7167 9.23256L8.67227 4ZM6.13099 5.52382H7.89685L17.869 18.4254H16.1032L6.13099 5.52382Z"/>`,
+  linkedin: `<path fill-rule="evenodd" clip-rule="evenodd" d="M15.2051 9.75C15.303 9.75576 15.401 9.76096 15.4932 9.77246C17.0936 9.94579 18.001 10.9979 18.001 12.7832V18H15.4932V13.3379C15.4932 13.2223 15.4647 11.9678 14.0781 11.9678C13.6102 11.9678 13.194 12.176 12.9629 12.5918C12.6913 13.0887 12.7324 13.6669 12.7324 14.21V17.9648H10.2246V9.96875H12.6221V11.0381C12.6221 11.0381 12.6573 10.9801 12.7324 10.8818C13.01 10.5234 13.8016 9.69224 15.2051 9.75ZM8.70996 17.9424H6.20215V9.94629H8.70996V17.9424ZM7.45605 6C8.2601 6.00006 8.91211 6.65199 8.91211 7.45605C8.91205 8.26007 8.26007 8.91205 7.45605 8.91211C6.65199 8.91211 6.00006 8.2601 6 7.45605C6 6.65196 6.65196 6 7.45605 6Z"/>`,
+  youtube: `<path fill-rule="evenodd" clip-rule="evenodd" d="M18.7426 5.5C20.5469 5.5 22 7.0386 22 8.93091V15.0691C22.0073 16.9691 20.5469 18.5 18.7426 18.5H5.25734C3.45333 18.4996 2 16.9612 2 15.0691V8.93091C2 7.03113 3.46063 5.50036 5.25734 5.5H18.7426ZM9.8693 15.058L15.5413 11.9032L9.8693 8.75V15.058Z"/>`,
 };
 const reseaux = [
   { nom: "Facebook", url: "#", icone: "facebook" },
@@ -73,7 +73,7 @@ const reseaux = [
 <style>
   .ftr {
     background: #3b0800;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
     padding-block: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2rem);
   }
   .ftr__top {
@@ -93,7 +93,7 @@ const reseaux = [
     font-size: 1.25rem; /* 20px */
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   .ftr__col a:hover { color: var(--color-canyon-300); }
 
@@ -107,7 +107,7 @@ const reseaux = [
     font-family: var(--font-body);
     font-size: 1rem;
     margin: 0.75rem 0 1.5rem;
-    color: color-mix(in srgb, #fdf4f3 85%, transparent);
+    color: color-mix(in srgb, var(--color-red-rock-50) 85%, transparent);
   }
   .ftr__social ul {
     list-style: none;
@@ -123,6 +123,10 @@ const reseaux = [
     height: 48px;
     border-radius: 999px;
     background: #fcf6f0;
+    transition: transform 0.2s ease;
+  }
+  .ftr__social a:hover {
+    transform: scale(0.97);
   }
   .ftr__social svg { width: 22px; height: 22px; }
 
@@ -133,12 +137,12 @@ const reseaux = [
     flex-wrap: wrap;
     gap: 1rem;
     padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid color-mix(in srgb, #fdf4f3 14%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-red-rock-50) 14%, transparent);
   }
   .ftr__copy {
     font-family: var(--font-body);
     font-size: 0.875rem;
-    color: color-mix(in srgb, #fdf4f3 80%, transparent);
+    color: color-mix(in srgb, var(--color-red-rock-50) 80%, transparent);
     margin: 0;
   }
   .ftr__legal {
@@ -149,10 +153,10 @@ const reseaux = [
   .ftr__legal a {
     font-family: var(--font-sans);
     font-size: 1rem;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
   .ftr__legal a:hover { color: var(--color-canyon-300); }
-  .ftr__bar { color: color-mix(in srgb, #fdf4f3 40%, transparent); }
+  .ftr__bar { color: color-mix(in srgb, var(--color-red-rock-50) 40%, transparent); }
 
   @media (max-width: 820px) {
     .ftr__top { grid-template-columns: 1fr 1fr; }

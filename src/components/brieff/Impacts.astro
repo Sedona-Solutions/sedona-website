@@ -1,0 +1,58 @@
+---
+import TitreAccent from "../TitreAccent.astro";
+const { eyebrow = "Impacts mesurables", titre, titreAccent, items = [], pillVariant } = Astro.props;
+---
+
+<section class="bimp">
+  <div class="container">
+    <header class="bimp__head" data-reveal>
+      <p class="bimp__eyebrow"><span class="dot" aria-hidden="true"></span> {eyebrow}</p>
+      <TitreAccent titre={titre} accent={titreAccent} as="h4" class="bimp__title" pillVariant={pillVariant} />
+    </header>
+
+    <dl class="bimp__stats" data-reveal-group>
+      {items.map((s: { valeur?: string; label?: string; note?: string }, i: number) => (
+        <div class={`bstat ${i > 0 ? "bstat--sep" : ""}`} data-reveal>
+          <dt class="bstat__value">{s.valeur}</dt>
+          <dd class="bstat__label">{s.label}</dd>
+          {s.note && <dd class="bstat__note">{s.note}</dd>}
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .bimp { background: #3b0800; padding-block: clamp(3rem, 6vw, 5rem); }
+  .bimp__head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .bimp__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-red-rock-50); margin: 0 0 1rem;
+  }
+  .bimp__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--color-ovni-300); flex: none; }
+  .bimp :global(.bimp__title) { margin: 0; color: var(--color-red-rock-50); }
+  /* Sur fond sombre, pas de pastille colorée (réservée aux fonds clairs) :
+     le mot mis en avant reste en texte simple, même couleur que le titre. */
+  .bimp :global(.bimp__title .hl) {
+    display: inline; background: none; color: inherit; padding: 0; border-radius: 0; transform: none;
+  }
+  .bimp :global(.bimp__title .hl:hover) { animation: none; }
+
+  .bimp__stats { display: flex; flex-wrap: wrap; justify-content: center; margin: 0; }
+  .bstat { flex: 1 1 0; min-width: 220px; padding-inline: clamp(1rem, 3vw, 2.5rem); text-align: center; }
+  .bstat:first-child { padding-left: clamp(1rem, 3vw, 2.5rem); }
+  .bstat--sep { border-left: 1.5px dashed color-mix(in srgb, var(--color-red-rock-50) 40%, transparent); }
+  .bstat__value {
+    font-family: var(--font-sans); font-weight: 400; font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1; letter-spacing: -0.03em; color: var(--color-red-rock-50); margin: 0;
+  }
+  .bstat__label { margin: 0.75rem 0 0; font-family: var(--font-sans); font-weight: 700; font-size: 1.0625rem; color: var(--color-red-rock-50); }
+  .bstat__note { margin: 0.35rem 0 0; font-family: var(--font-body); font-size: 0.875rem; line-height: 1.4; color: color-mix(in srgb, var(--color-red-rock-50) 70%, transparent); }
+
+  @media (max-width: 700px) {
+    .bimp__stats { flex-direction: column; gap: 2rem; }
+    .bstat--sep { border-left: none; border-top: 1.5px dashed color-mix(in srgb, var(--color-red-rock-50) 40%, transparent); padding-top: 1.5rem; }
+    .bstat:first-child { padding-left: clamp(1rem, 3vw, 2.5rem); }
+  }
+</style>

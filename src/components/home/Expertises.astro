@@ -1,42 +1,44 @@
 ---
+import TitreAccent from "../TitreAccent.astro";
 const { section, expertises = [] } = Astro.props;
-const segs = section?.titre ?? [];
+// Fond au survol par domaine (bg/accent-color-1/2/3 "variant" du design system Figma),
+// dans l'ordre d'affichage (tri par `ordre` : Produits digitaux, Data & IA, Infra & Sécurité).
+const CARD_HOVER_BG = ["#d4f4e7", "#e5e7fa", "#fbd3cd"];
 ---
 
 <section class="expertises">
   <div class="container">
-    <header class="expertises__head">
-      <h2 class="expertises__title">
-        {
-          segs.map((s) =>
-            s.couleur && s.couleur !== "none" ? (
-              <>
-                <br />
-                <mark class={`hl hl--${s.couleur}`}>{s.texte.trim()}</mark>{" "}
-              </>
-            ) : (
-              <span>{s.texte}</span>
-            ),
-          )
-        }
-      </h2>
+    <header class="expertises__head" data-reveal>
+      <TitreAccent
+        titre={section?.titre}
+        accent={section?.titreAccent}
+        as="h2"
+        class="title-2 expertises__title"
+        pillVariant={section?.titreCouleur}
+      />
       {section?.intro && <p class="expertises__intro">{section.intro}</p>}
     </header>
 
-    <ul class="expertises__grid">
+    <ul class="expertises__grid" data-reveal-group>
       {
-        expertises.map((e) => (
-          <li class="exp-card">
-            {e.icone && <img class="exp-card__icon" src={`/icons/exp-${e.icone}.svg`} alt="" aria-hidden="true" />}
-            <h3 class="exp-card__title">{e.titre}</h3>
-            {e.resume && <p class="exp-card__text">{e.resume}</p>}
-            {e.tags?.length > 0 && (
-              <ul class="exp-card__tags">
-                {e.tags.map((tg) => (
-                  <li>{tg}</li>
-                ))}
-              </ul>
-            )}
+        expertises.map((e, i) => (
+          <li data-reveal>
+            <a
+              href={`/domaines/${e.slug}`}
+              class="exp-card"
+              style={`--hover-bg:${CARD_HOVER_BG[i % CARD_HOVER_BG.length]}`}
+            >
+              {e.affichage?.icone && <img class="exp-card__icon" src={`/icons/${e.affichage.icone}.svg`} alt="" aria-hidden="true" />}
+              <h3 class="exp-card__title">{e.titre}</h3>
+              {e.affichage?.resume && <p class="exp-card__text">{e.affichage.resume}</p>}
+              {e.tags?.length > 0 && (
+                <ul class="exp-card__tags">
+                  {e.tags.map((tg) => (
+                    <li>{tg}</li>
+                  ))}
+                </ul>
+              )}
+            </a>
           </li>
         ))
       }
@@ -47,7 +49,10 @@ const segs = section?.titre ?? [];
 <style>
   .expertises {
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 7vw, 6rem);
+    padding-top: 0;
+    padding-bottom: clamp(3rem, 15.5vw, 11rem);
+    /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus de la section Offres. */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
   }
   .expertises__head {
     display: grid;
@@ -58,11 +63,6 @@ const segs = section?.titre ?? [];
   }
   .expertises__title {
     margin: 0;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: clamp(2.25rem, 5.5vw, 5rem); /* 80px */
-    line-height: 1.05;
-    letter-spacing: -0.03em;
     color: #3b0800;
   }
   .expertises__title .hl {
@@ -85,14 +85,26 @@ const segs = section?.titre ?? [];
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
+  .expertises__grid > li {
+    display: flex;
+  }
   .exp-card {
     background: #fff;
     border-radius: 24px;
     padding: 2.5rem;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-red-rock-950);
+    border-bottom-width: 1px;
     display: flex;
     flex-direction: column;
+    width: 100%;
     min-height: 470px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease, border-bottom-width 0.2s ease;
+  }
+  .exp-card:hover {
+    background: var(--hover-bg, #fff);
+    border-bottom-width: 10px;
   }
   .exp-card__icon {
     width: auto;
@@ -107,7 +119,7 @@ const segs = section?.titre ?? [];
     font-size: 1.5rem; /* 24px */
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    color: var(--color-red-rock-700);
+    color: var(--color-red-rock-950);
     margin: 3rem 0 0;
   }
   .exp-card__text {
@@ -121,7 +133,7 @@ const segs = section?.titre ?? [];
     list-style: none;
     padding: 1.25rem 0 0;
     margin: 1.5rem 0 0;
-    border-top: 1px dashed var(--color-border);
+    border-top: 1px dashed #3b0800;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -130,10 +142,16 @@ const segs = section?.titre ?? [];
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.875rem; /* 14px */
+    line-height: 20px;
+    letter-spacing: -0.16px;
     color: #3b0800;
-    padding: 0.35em 0.85em;
-    border: 1px solid var(--color-border);
+    padding: 2px 12px;
+    border: 1px solid color-mix(in srgb, #3b0800 40%, transparent);
     border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+  .exp-card:hover .exp-card__tags li {
+    background: #fff;
   }
 
   @media (max-width: 900px) {

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sedona-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 4321
+    },
+    {
+      "name": "sedona-dev-cms",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:cms"],
+      "port": 4321
+    }
+  ]
+}

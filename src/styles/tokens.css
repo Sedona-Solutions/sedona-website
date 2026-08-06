@@ -20,10 +20,10 @@
   --color-neutral-400: #baa094;
   --color-neutral-500: #967c70;
   --color-neutral-600: #6b5c55;
-  --color-neutral-702: #4e4038;
-  --color-neutral-701: #352b24;
-  --color-neutral-703: #241a14;
-  --color-neutral-700: #1a1210;
+  --color-neutral-700: #4e4038;
+  --color-neutral-800: #352b24;
+  --color-neutral-900: #241a14;
+  --color-neutral-950: #1a1210;
 
   /* --- Red Rock (couleur signature) --- */
   --color-red-rock-50: #fdf4f3;
@@ -33,10 +33,10 @@
   --color-red-rock-400: #f18878;
   --color-red-rock-500: #e76450;
   --color-red-rock-600: #d3452f;
-  --color-red-rock-702: #b13724;
-  --color-red-rock-701: #933021;
-  --color-red-rock-703: #7a2e22;
-  --color-red-rock-700: #42140d;
+  --color-red-rock-700: #b13724;
+  --color-red-rock-800: #933021;
+  --color-red-rock-900: #7a2e22;
+  --color-red-rock-950: #42140d;
 
   /* --- Canyon (orangé) --- */
   --color-canyon-50: #fcf6f0;
@@ -46,10 +46,10 @@
   --color-canyon-400: #de8959;
   --color-canyon-500: #d97445;
   --color-canyon-600: #c8552e;
-  --color-canyon-702: #a64228;
-  --color-canyon-701: #863627;
-  --color-canyon-703: #6d2e22;
-  --color-canyon-700: #3b1510;
+  --color-canyon-700: #a64228;
+  --color-canyon-800: #863627;
+  --color-canyon-900: #6d2e22;
+  --color-canyon-950: #3b1510;
 
   /* --- Sunshine (jaune) --- */
   --color-sunshine-50: #fef9ec;
@@ -59,10 +59,10 @@
   --color-sunshine-400: #f3aa2d;
   --color-sunshine-500: #eb8916;
   --color-sunshine-600: #d16610;
-  --color-sunshine-702: #ad4811;
-  --color-sunshine-701: #8d3812;
-  --color-sunshine-703: #752e13;
-  --color-sunshine-700: #421605;
+  --color-sunshine-700: #ad4811;
+  --color-sunshine-800: #8d3812;
+  --color-sunshine-900: #752e13;
+  --color-sunshine-950: #421605;
 
   /* --- Cactus (vert) --- */
   --color-cactus-50: #f2fbf7;
@@ -72,10 +72,10 @@
   --color-cactus-400: #5ac5a4;
   --color-cactus-500: #2ca17e;
   --color-cactus-600: #218167;
-  --color-cactus-702: #1c6954;
-  --color-cactus-701: #1c5345;
-  --color-cactus-703: #1c463c;
-  --color-cactus-700: #0b2923;
+  --color-cactus-700: #1c6954;
+  --color-cactus-800: #1c5345;
+  --color-cactus-900: #1c463c;
+  --color-cactus-950: #0b2923;
 
   /* --- Sky (cyan) --- */
   --color-sky-50: #f2fbfa;
@@ -85,10 +85,10 @@
   --color-sky-400: #5abfbf;
   --color-sky-500: #309b9d;
   --color-sky-600: #247b7e;
-  --color-sky-702: #216265;
-  --color-sky-701: #1e4e51;
-  --color-sky-703: #1e4245;
-  --color-sky-700: #0b2629;
+  --color-sky-700: #216265;
+  --color-sky-800: #1e4e51;
+  --color-sky-900: #1e4245;
+  --color-sky-950: #0b2629;
 
   /* --- Ovni (violet) --- */
   --color-ovni-50: #f1f2fc;
@@ -98,21 +98,22 @@
   --color-ovni-400: #9794e5;
   --color-ovni-500: #8176d9;
   --color-ovni-600: #7460cb;
-  --color-ovni-702: #6450b2;
-  --color-ovni-701: #524390;
-  --color-ovni-703: #453b74;
-  --color-ovni-700: #292343;
+  --color-ovni-700: #6450b2;
+  --color-ovni-800: #524390;
+  --color-ovni-900: #453b74;
+  --color-ovni-950: #292343;
 
   /* === Rôles sémantiques === */
   --color-primary: var(--color-red-rock-600);
-  --color-primary-hover: var(--color-red-rock-702);
+  --color-primary-hover: var(--color-red-rock-700);
   --color-primary-soft: var(--color-red-rock-100);
   --color-accent: var(--color-sunshine-500);
 
   --color-bg: var(--color-white);
   --color-surface: var(--color-neutral-50);
-  --color-text: var(--color-neutral-700);
+  --color-text: var(--color-neutral-950);
   --color-text-muted: var(--color-neutral-500);
+  --color-text-inverse: var(--color-red-rock-50);
   --color-border: var(--color-neutral-200);
 
   /* === Typographie (polices de marque : Space Grotesk + Space Mono) === */
@@ -143,4 +144,10 @@
   /* Mise en page */
   --content-max: 1312px;
   --radius: 12px;
+
+  /* Rayons de section (inspirés de wisprflow.ai) : arrondis généreux aux
+     jonctions entre sections de couleurs différentes, réduits sur mobile. */
+  --radius-section-lg: clamp(40px, 6vw, 80px);
+  --radius-section-md: clamp(32px, 5vw, 64px);
+  --radius-section-sm: clamp(24px, 3.5vw, 40px);
 }

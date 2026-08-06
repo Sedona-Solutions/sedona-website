@@ -1,0 +1,104 @@
+---
+// Bloc "Pourquoi Sedona" façon colonnes numérotées séparées par des filets
+// (cf. référence fournie) : gros numéro, titre, texte, sans carte ni fond coloré.
+// Le mot mis en avant est rendu en italique mono, pas en pastille colorée —
+// c'est le seul bloc du site à utiliser ce style, cf. TitreAccent.astro.
+import { richTextToHtml } from "../../utils/richText.js";
+const { eyebrow = "Pourquoi Sedona", titre = "", titreAccent = "", items = [] } = Astro.props;
+
+const t = titre.trim();
+let avant = "";
+let accentMot = "";
+let apres = "";
+if (titreAccent && t.includes(titreAccent)) {
+  const i = t.indexOf(titreAccent);
+  avant = t.slice(0, i);
+  accentMot = titreAccent;
+  apres = t.slice(i + titreAccent.length);
+} else if (t) {
+  const mots = t.split(" ");
+  accentMot = mots.pop() ?? "";
+  while (mots.length && !/[\p{L}\p{N}]/u.test(accentMot)) {
+    accentMot = `${mots.pop()} ${accentMot}`;
+  }
+  avant = mots.length ? mots.join(" ") + " " : "";
+}
+---
+
+{
+  items.length > 0 && (
+    <section class="orz">
+      <div class="container">
+        <header class="orz__head" data-reveal>
+          <p class="orz__eyebrow">{eyebrow}</p>
+          {t && (
+            <h2 class="orz__title">
+              {avant}
+              {accentMot && <em>{accentMot}</em>}
+              {apres}
+            </h2>
+          )}
+        </header>
+
+        <ol class="orz__list" style={`--orz-cols:${items.length}`} data-reveal-group>
+          {items.map((it, i) => (
+            <li class="orzc" data-reveal>
+              <span class="orzc__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <h3 class="orzc__title">{it.titre}</h3>
+              {it.texte && <div class="orzc__text" set:html={richTextToHtml(it.texte)} />}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .orz {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+  }
+  .orz__head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .orz__eyebrow {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1.25rem;
+  }
+  .orz__eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #f8b3a9; flex: none; }
+  .orz__title { margin: 0; max-width: 40ch; color: #3b0800; }
+  .orz__title em {
+    font-family: var(--font-mono); font-style: italic; font-weight: 400;
+  }
+
+  .orz__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(var(--orz-cols, 4), 1fr);
+    border-top: 1px solid color-mix(in srgb, #3b0800 20%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, #3b0800 20%, transparent);
+  }
+  .orzc {
+    padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+    border-left: 1px solid color-mix(in srgb, #3b0800 20%, transparent);
+  }
+  .orzc:first-child { border-left: none; }
+  .orzc__n {
+    display: block; font-family: var(--font-sans); font-weight: 700; font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1; letter-spacing: -0.02em; color: #3b0800; margin-bottom: 1.25rem;
+  }
+  .orzc__title { font-family: var(--font-sans); font-weight: 700; font-size: 1.125rem; color: #3b0800; margin: 0 0 0.5rem; }
+  .orzc__text :global(p) { font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.5; color: #3b0800; margin: 0; }
+  .orzc__text :global(p + p) { margin-top: 0.6em; }
+
+  @media (max-width: 900px) {
+    .orz__list { grid-template-columns: 1fr 1fr; }
+    .orzc:nth-child(2) { border-left: 1px solid color-mix(in srgb, #3b0800 20%, transparent); }
+    .orzc:nth-child(odd) { border-left: none; }
+  }
+  @media (max-width: 560px) {
+    .orz__list { grid-template-columns: 1fr; }
+    .orzc { border-left: none !important; border-top: 1px solid color-mix(in srgb, #3b0800 20%, transparent); }
+    .orzc:first-child { border-top: none; }
+  }
+</style>

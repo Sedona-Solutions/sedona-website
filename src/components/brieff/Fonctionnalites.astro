@@ -1,0 +1,40 @@
+---
+import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
+import AccentAccordion from "../AccentAccordion.astro";
+import TitreAccent from "../TitreAccent.astro";
+
+const {
+  eyebrow = "Les fonctionnalités phares",
+  titre,
+  titreAccent,
+  intro,
+  items = [],
+  pillVariant = "ovni",
+} = Astro.props;
+
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
+---
+
+<section class="bfonc">
+  <div class="container">
+    <header class="bfonc__head" data-reveal>
+      <p class="bfonc__eyebrow">{eyebrow}</p>
+      <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bfonc__title" pillVariant={pillVariant} />
+      {intro && <p class="bfonc__intro">{intro}</p>}
+    </header>
+
+    <AccentAccordion items={items} accentMid={accentMid} accentLight={accentLight} groupName="bfonc-accordion" />
+  </div>
+</section>
+
+<style>
+  .bfonc { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); border-radius: var(--radius-section-lg); }
+  .bfonc__head { max-width: 80ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bfonc__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .bfonc :global(.bfonc__title) { margin: 0; color: #3b0800; }
+  .bfonc__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
+</style>

@@ -1,0 +1,92 @@
+---
+import TitreAccent from "../TitreAccent.astro";
+const { hero } = Astro.props;
+---
+
+<section class="hhero">
+  <img class="hhero__deco hhero__deco--1" src="/deco/squiggle-1-sunshine.svg" alt="" aria-hidden="true" />
+  <img class="hhero__deco hhero__deco--2" src="/deco/squiggle-1.svg" alt="" aria-hidden="true" />
+  <div class="container hhero__inner">
+    {hero?.eyebrow && <p class="hhero__eyebrow" data-reveal>{hero.eyebrow}</p>}
+    <TitreAccent titre={hero?.titre} accent={hero?.titreAccent} as="h1" class="title-2 hhero__title" pillVariant={hero?.titreCouleur} />
+    {hero?.intro && <p class="hhero__intro" data-reveal>{hero.intro}</p>}
+    {
+      hero?.ctaLabel && (
+        <a class="hhero__cta" href={hero.ctaHref} data-reveal>
+          <span class="hhero__cta-bg" aria-hidden="true" />
+          <span class="hhero__cta-front" aria-hidden="true" />
+          <span class="hhero__cta-label">{hero.ctaLabel}</span>
+        </a>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .hhero {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: var(--color-canyon-50);
+    padding-block: clamp(2.5rem, 6vw, 7rem);
+    /* Coins bas arrondis : la bande photo (derrière, z-index inférieur) apparaît
+       dans l'échancrure plutôt que d'être recouverte à plat. */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .hhero__inner {
+    text-align: center;
+  }
+  .hhero__eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: -0.18px;
+    font-size: 1.25rem;
+    color: #3b0800;
+    margin: 0 0 1rem;
+  }
+  .hhero__deco { position: absolute; pointer-events: none; width: 57px; height: auto; }
+  .hhero__deco--1 { left: 10%; top: 12%; transform: rotate(72deg); }
+  .hhero__deco--2 { right: 14%; bottom: 16%; transform: rotate(20deg); }
+  @media (max-width: 720px) {
+    .hhero__deco { display: none; }
+  }
+  .hhero :global(.hhero__title) {
+    margin: 0 auto;
+    max-width: 26ch;
+  }
+  .hhero__intro {
+    margin: 1.75rem auto 0;
+    max-width: 52ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    line-height: 1.35;
+    color: #3b0800;
+  }
+  .hhero__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    color: var(--color-red-rock-50);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 0.7;
+    text-transform: uppercase;
+    letter-spacing: -0.18px;
+    padding: 21px 32px;
+    border-radius: 999px;
+    transition: transform 0.2s ease;
+  }
+  .hhero__cta:hover { transform: scale(0.97); }
+  .hhero__cta-bg, .hhero__cta-front { position: absolute; inset: 0; border-radius: inherit; }
+  .hhero__cta-bg { background: var(--color-red-rock-400); }
+  .hhero__cta-front { background: #3b0800; }
+  .hhero__cta-label { position: relative; }
+
+  @media (max-width: 640px) {
+    .hhero :global(.hhero__title) { max-width: none; }
+  }
+</style>

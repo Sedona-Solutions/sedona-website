@@ -7,17 +7,18 @@ import Hero from "../components/home/Hero.astro";
 import Ticker from "../components/home/Ticker.astro";
 import Stats from "../components/home/Stats.astro";
 import Expertises from "../components/home/Expertises.astro";
+import Offres from "../components/home/Offres.astro";
 import Projets from "../components/home/Projets.astro";
 import Temoignages from "../components/home/Temoignages.astro";
 import Clients from "../components/home/Clients.astro";
 import BlogPreview from "../components/home/BlogPreview.astro";
-import Scallop from "../components/home/Scallop.astro";
 import CtaFinal from "../components/home/CtaFinal.astro";
+import { estArticlePublie } from "../utils/articleVisibility";
 
 // Expertises triées par ordre d'affichage.
 const expertises = (await getCollection("expertise"))
   .map((e) => ({ ...e.data, slug: e.id }))
-  .sort((a, b) => (a.ordre ?? 99) - (b.ordre ?? 99));
+  .sort((a, b) => (a.affichage?.ordre ?? 99) - (b.affichage?.ordre ?? 99));
 
 // Projets : ceux mis en avant si renseignés, sinon les plus récents.
 const tousProjets = (await getCollection("projet"))
@@ -28,26 +29,45 @@ const misEnAvant = (home.projetsSection?.projetsMisEnAvant ?? [])
   .filter(Boolean);
 const projets =
   misEnAvant.length > 0
-    ? tousProjets.filter((p) => misEnAvant.some((m) => m.includes(p.slug)))
-    : tousProjets.slice(0, 6);
+    ? tousProjets.filter((p) => misEnAvant.some((m) => m.includes(p.slug))).slice(0, 4)
+    : tousProjets.slice(0, 4);
 
 // Articles : 1 à la une + 4 autres.
-const tousArticles = (await getCollection("article"))
+const tousArticles = (await getCollection("article", ({ data }) => estArticlePublie(data.statut)))
   .map((a) => ({ ...a.data, slug: a.id }))
   .sort((a, b) => +new Date(b.date) - +new Date(a.date));
 const vedette = tousArticles.find((a) => a.vedette) ?? tousArticles[0];
 const autresArticles = tousArticles.filter((a) => a.slug !== vedette?.slug).slice(0, 4);
+
+// Évènement actif : celui dont la période d'affichage couvre la date du jour
+// (le plus récemment démarré si plusieurs se chevauchent).
+const maintenant = new Date();
+const evenement = (await getCollection("evenement"))
+  .map((e) => e.data)
+  .filter((e) => new Date(e.dateDebut) <= maintenant && maintenant <= new Date(e.dateFin))
+  .sort((a, b) => +new Date(b.dateDebut) - +new Date(a.dateDebut))[0];
 ---
 
 <BaseLayout title="Sedona — ESN technologique à Paris, Lyon et Toulon">
-  <Hero hero={home.hero} />
-  <Ticker items={home.ticker} />
-  <Stats intro={home.intro} chips={home.chips} stats={home.stats} cta={home.statsCta} />
-  <Expertises section={home.expertisesSection} expertises={expertises} />
-  <Projets section={home.projetsSection} projets={projets} />
-  <Temoignages section={home.temoignagesSection} />
-  <Clients section={home.clientsSection} />
-  <BlogPreview vedette={vedette} articles={autresArticles} />
-  <Scallop />
+  <div class="home-stack">
+    <Hero hero={home.hero} />
+    <Ticker items={home.ticker} />
+    <Stats intro={home.intro} chips={home.chips} stats={home.stats} cta={home.statsCta} />
+    <Expertises section={home.expertisesSection} expertises={expertises} />
+    <Offres section={home.offresSection} offres={home.offresSection?.offres ?? []} />
+    <Projets section={home.projetsSection} projets={projets} />
+    <Temoignages section={home.temoignagesSection} />
+    <Clients section={home.clientsSection} />
+    <BlogPreview vedette={vedette} articles={autresArticles} evenement={evenement} />
+  </div>
   <CtaFinal cta={home.ctaFinal} />
 </BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires (Hero, Stats…) flottent dessus
+     grâce à leurs coins arrondis ; Ticker et Clients, déjà sombres, s'y fondent
+     sans avoir besoin de leur propre arrondi. */
+  .home-stack {
+    background: #3b0800;
+  }
+</style>

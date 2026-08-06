@@ -1,0 +1,147 @@
+---
+import TitreAccent from "../TitreAccent.astro";
+const { section, offres = [] } = Astro.props;
+// Teintes accordées aux illustrations de chaque offre (accent-color-N variant/light, cf. Figma).
+const CARD_BG = {
+  "Brieff": "#e5e7fa",
+  "Keycloak": "#d4f4e7",
+  "IA Forge": "#fbd3cd",
+  "Elastic": "#fdeec9",
+};
+const FALLBACK_CARD_BG = ["#e5e7fa", "#d4f4e7", "#fbd3cd", "#fdeec9"];
+// Légère bascule alterné (façon cartes éparpillées), cf. maquette Figma node 3966-15377.
+const ROTATIONS = [-3, 0, -4, 3];
+---
+
+{
+  offres.length > 0 && (
+    <section class="offres">
+      <div class="container">
+        <header class="offres__head" data-reveal>
+          {section?.titre && (
+            <TitreAccent
+              titre={section.titre}
+              accent={section?.titreAccent}
+              as="h2"
+              class="title-2 title-2--inverse offres__title"
+              pillVariant={section?.titreCouleur}
+            />
+          )}
+          {section?.intro && <p class="offres__intro">{section.intro}</p>}
+        </header>
+
+        <ul class="offres__grid">
+          {offres.map((o, i) => (
+            <li
+              class="offre-card"
+              style={`--card-bg:${CARD_BG[o.titre] ?? FALLBACK_CARD_BG[i % FALLBACK_CARD_BG.length]}; --card-rotate:${ROTATIONS[i % ROTATIONS.length]}deg;`}
+            >
+              <a class="offre-card__link" href={o.ctaHref || "/contact"} data-reveal>
+                {o.titre && <p class="offre-card__title">{o.titre}</p>}
+                {o.illustration ? (
+                  <img class="offre-card__illu" src={o.illustration} alt="" aria-hidden="true" loading="lazy" />
+                ) : (
+                  <div class="offre-card__placeholder" aria-hidden="true" />
+                )}
+                {o.accroche && <p class="offre-card__desc">{o.accroche}</p>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .offres {
+    background: #3b0800;
+    color: var(--color-red-rock-50);
+    padding-block: clamp(2.5rem, 7.8vw, 112px);
+  }
+  .offres__head {
+    grid-template-columns: 1fr 320px;
+    align-items: start;
+    gap: var(--space-md);
+    margin-bottom: 48px;
+  }
+  .offres__title {
+    margin: 0;
+    max-width: 60ch;
+  }
+  .offres__title .hl { line-height: 1.4; }
+  .offres__intro {
+    margin-top: 2rem;
+    max-width: 46ch;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    line-height: 1.4;
+    color: var(--color-red-rock-50);
+    opacity: 0.85;
+  }
+
+  /* Les 4 cartes tiennent sur une seule ligne en se chevauchant légèrement
+     (façon deck éparpillé) ; en dessous de 900px, elles passent en grille 2x2. */
+  .offres__grid {
+    list-style: none; margin: 0; padding: 24px 0;
+    display: flex; flex-wrap: nowrap; justify-content: center;
+  }
+
+  .offre-card { display: flex; transform: rotate(var(--card-rotate, 0deg)); transition: transform 0.25s ease; }
+  .offre-card:not(:first-child) { margin-left: -56px; }
+  .offre-card:hover { transform: rotate(0deg) translateY(-6px); z-index: 1; }
+
+  .offre-card__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 316px;
+    background: var(--card-bg, #fff);
+    border: 1px solid #42140d;
+    border-radius: 24px;
+    padding: 48px;
+    text-decoration: none;
+  }
+
+  .offre-card__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.016em;
+    color: #42140d;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .offre-card__illu { width: 100%; height: 220px; object-fit: contain; }
+  .offre-card__placeholder { width: 100%; height: 220px; border-radius: 16px; background: color-mix(in srgb, #fff 55%, transparent); }
+
+  .offre-card__desc {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    letter-spacing: -0.014em;
+    color: #3b0800;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .offres__head { grid-template-columns: 1fr; }
+    .offres__intro { max-width: none; margin-top: 1rem; }
+    .offres__grid {
+      display: grid; grid-template-columns: 1fr; gap: 16px;
+    }
+    .offre-card,
+    .offre-card:not(:first-child),
+    .offre-card:hover { transform: none; margin-left: 0; }
+    .offre-card__link { width: 100%; }
+  }
+  @media (max-width: 400px) {
+    .offre-card__link { padding: 32px; }
+  }
+</style>

@@ -10,7 +10,7 @@ const { eyebrow, titre, intro } = Astro.props;
 <header class="page-header">
   <div class="container">
     {eyebrow && <p class="page-header__eyebrow">{eyebrow}</p>}
-    <h1 class="page-header__title">{titre}</h1>
+    <h1 class="title-2 page-header__title">{titre}</h1>
     {intro && <p class="page-header__intro">{intro}</p>}
   </div>
 </header>
@@ -29,12 +29,6 @@ const { eyebrow, titre, intro } = Astro.props;
     margin-bottom: 1rem;
   }
   .page-header__title {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: #3b0800;
     max-width: 18ch;
   }
   .page-header__intro {

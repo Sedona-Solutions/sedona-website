@@ -1,32 +1,38 @@
 ---
-import TitreSegments from "../TitreSegments.astro";
+import TitreAccent from "../TitreAccent.astro";
 const { cta } = Astro.props;
+const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
 ---
 
 <section class="cta">
   <div class="container">
-    <div class="cta__frame">
+    <div class="cta__frame" data-reveal style={cta?.accentColor ? `--cta-accent:${cta.accentColor}` : undefined}>
       <span class="cta__corner cta__corner--tl" aria-hidden="true"></span>
       <span class="cta__corner cta__corner--tr" aria-hidden="true"></span>
       <span class="cta__corner cta__corner--bl" aria-hidden="true"></span>
       <span class="cta__corner cta__corner--br" aria-hidden="true"></span>
 
-      <img class="cta__mascotte" src="/deco/mascotte.png" alt="" aria-hidden="true" />
+      <img class="cta__mascotte" src="/deco/mascotte.svg" alt="" aria-hidden="true" />
 
-      <div class="cta__content">
-        <img class="cta__lines" src="/deco/cta-lines.svg" alt="" aria-hidden="true" />
+      <div class="cta__content cta__content--centered">
         <div class="cta__titleWrap">
-          <TitreSegments segments={cta?.titre} as="h2" class="cta__title" />
-          <img class="cta__cursor" src="/deco/cursor.svg" alt="" aria-hidden="true" />
+          <img class="cta__lines" src="/deco/cta-lines.svg" alt="" aria-hidden="true" />
+          <TitreAccent titre={cta?.titre} accent={cta?.titreAccent} as="h2" class="cta__title" pillVariant={ctaPillVariant} />
         </div>
+        {cta?.description && <p class="cta__sub">{cta.description}</p>}
         <div class="cta__actions">
-          {cta?.ctaLabel && <a class="cta__btn" href={cta.ctaHref}>{cta.ctaLabel}</a>}
-          {cta?.email && (
-            <span class="cta__emailWrap">
-              <a class="cta__email" href={`mailto:${cta.email}`}>{cta.email}</a>
-              <img class="cta__squiggle" src="/deco/cta-squiggle.svg" alt="" aria-hidden="true" />
-            </span>
-          )}
+          <span class="cta__actions-before">
+            <img class="cta__circle" src="/deco/circle.svg" alt="" aria-hidden="true" />
+          </span>
+          {
+            cta?.ctaLabel && (
+              <a class="cta__btn" href={cta.ctaHref}>
+                <span class="cta__btn-bg" aria-hidden="true" />
+                <span class="cta__btn-front" aria-hidden="true" />
+                <span class="cta__btn-label">{cta.ctaLabel}</span>
+              </a>
+            )
+          }
         </div>
       </div>
     </div>
@@ -43,8 +49,9 @@ const { cta } = Astro.props;
     position: relative;
     max-width: 1158px;
     margin-inline: auto;
-    border: 1.5px dashed color-mix(in srgb, #f18878 60%, transparent);
-    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 3.5rem) clamp(2.5rem, 5vw, 4.5rem) clamp(5rem, 10vw, 10.5rem);
+    /* Par défaut : bg/brand (Red rock/400) ; sinon la couleur d'accent de la page. */
+    border: 1.5px dashed var(--cta-accent, #f18878);
+    padding: 72px 140px;
     min-height: 360px;
     display: flex;
     align-items: center;
@@ -53,7 +60,7 @@ const { cta } = Astro.props;
     position: absolute;
     width: 30px;
     height: 30px;
-    background: #f18878;
+    background: var(--cta-accent, #f18878);
     border: 1.5px solid #3b0800;
     border-radius: 4px;
   }
@@ -74,80 +81,108 @@ const { cta } = Astro.props;
     z-index: 1;
   }
 
-  .cta__content { position: relative; width: 100%; }
+  .cta__content { position: relative; width: 100%; text-align: left; }
+  /* Variante avec description (pages offres/domaines) : contenu centré dans le
+     cadre, contrairement à la variante home (sans description) alignée à gauche. */
+  .cta__content--centered { text-align: center; }
+  .cta__content--centered .cta__sub { margin-inline: auto; }
+  /* Le bouton doit rester pile au centre du cadre malgré la pastille (largeur
+     fixe) placée avant lui — un triptyque 1fr/auto/1fr garde le bouton dans la
+     colonne du milieu, la 3e colonne (vide) équilibrant la gouttière. */
+  .cta__content--centered .cta__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 2rem;
+  }
+  .cta__content--centered .cta__actions-before {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
   .cta__lines {
     position: absolute;
-    top: -2.25rem;
-    left: 0.5rem;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
     width: 38px;
     height: auto;
   }
-  .cta__titleWrap { position: relative; }
+  /* inline-block : le cadre se resserre sur le titre (centré par le parent),
+     pour que la déco reste ferrée sur son coin haut-gauche quel que soit le texte. */
+  .cta__titleWrap { position: relative; display: inline-block; }
   .cta :global(.cta__title) {
+    display: inline;
     margin: 0;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: clamp(2.25rem, 5vw, 5rem); /* 80px */
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: #fdf4f3;
+    color: var(--color-red-rock-50);
   }
-  .cta__cursor {
-    position: absolute;
-    top: 3.5rem;
-    right: 17.5%;
-    width: clamp(28px, 3vw, 44px);
-    height: auto;
+  /* Sur les pages avec une couleur d'accent (domaines, offres), la pastille du
+     titre reprend cette couleur plutôt que celle choisie dans le contenu ; le
+     repli (#f8b3a9 = .hl--red-rock) couvre la home, qui ne définit pas --cta-accent. */
+  .cta :global(.cta__title mark.hl) {
+    background: var(--cta-accent, #f8b3a9);
   }
   .cta__sub {
-    margin: 1.5rem 0 0;
-    max-width: 30ch;
+    margin: 2rem 0 0;
+    max-width: 46ch;
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* 24px */
-    color: #fdf4f3;
+    line-height: 1.3;
+    color: var(--color-red-rock-50);
   }
   .cta__actions {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 2rem;
     flex-wrap: wrap;
     margin-top: 2.25rem;
   }
+  /* Variante non centrée : le groupe n'existe que pour la variante centrée
+     (grid) ; ici il est transparent pour la mise en page flex. */
+  .cta__actions-before {
+    display: contents;
+  }
   .cta__btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    padding: 1em 2em;
+    justify-content: center;
+    padding: 21px 32px;
     border-radius: 999px;
-    background: #fcf6f0;
     color: #3b0800;
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 1.25rem;
+    line-height: 0.7;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
-    transition: background 0.15s ease;
+    letter-spacing: -0.18px;
+    transition: transform 0.2s ease;
   }
-  .cta__btn:hover { background: #fff; color: #3b0800; }
-  .cta__email {
-    font-family: var(--font-sans);
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    color: #fdf4f3;
-    text-decoration: underline;
-    text-underline-offset: 5px;
+  .cta__btn:hover {
+    transform: scale(0.97);
   }
-  .cta__email:hover { color: var(--color-canyon-300); }
-  .cta__emailWrap { position: relative; display: inline-flex; align-items: center; }
-  .cta__squiggle {
+  .cta__btn-bg,
+  .cta__btn-front {
     position: absolute;
-    left: 100%;
-    bottom: -1.4rem;
-    margin-left: 0.6rem;
-    width: clamp(48px, 5vw, 82px);
-    height: auto;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .cta__btn-bg {
+    background: var(--color-red-rock-400);
+  }
+  .cta__btn-front {
+    background: #fcf6f0;
+  }
+  .cta__btn-label {
+    position: relative;
+  }
+  .cta__circle {
+    width: 20px;
+    height: 20px;
+    flex: none;
     pointer-events: none;
   }
 
@@ -158,7 +193,16 @@ const { cta } = Astro.props;
       text-align: center;
     }
     .cta__mascotte { position: static; transform: none; margin: 0 auto 1.5rem; }
-    .cta__cursor, .cta__lines, .cta__squiggle { display: none; }
+    .cta__lines { display: none; }
     .cta__actions { justify-content: center; }
+    /* Le triptyque desktop (grid 1fr auto 1fr) n'a plus de sens sur une seule
+       colonne : on repasse en flex empilé/centré, gouttière redevenue transparente. */
+    .cta__content--centered .cta__actions {
+      display: flex;
+      flex-direction: column;
+    }
+    .cta__content--centered .cta__actions-before {
+      display: contents;
+    }
   }
 </style>
