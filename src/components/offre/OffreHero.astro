@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 import { ACCENT_LIGHT } from "../../data/offreAccents.js";
 
 const {
@@ -27,7 +28,7 @@ const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus;
         {enBref}
       </p>
     )}
-    {illustration && <img class="ohero__illu" src={illustration} alt="" aria-hidden="true" />}
+    {illustration && <Media class="ohero__illu" src={illustration} alt="" aria-hidden="true" width={720} loading="eager" />}
     <a class="ohero__btn" href={ctaHref}>{ctaLabel}</a>
   </div>
 </section>

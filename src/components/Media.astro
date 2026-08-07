@@ -1,0 +1,40 @@
+---
+// Remplace `<img>` pour les images pilotées par le CMS, sans rien changer côté Tina :
+// les chemins restent ceux stockés dans le contenu (`/uploads/...`) et les fichiers
+// restent dans public/uploads/, où le media manager les écrit et les relit.
+//
+// Le pont se fait par `import.meta.glob`, qui résout ces fichiers à la compilation en
+// ImageMetadata exploitables par astro:assets — on récupère donc conversion WebP/AVIF,
+// srcset et surtout width/height (qui suppriment les sauts de mise en page).
+//
+// Tout ce que le glob ne couvre pas (SVG, images distantes, chemin absent du dossier)
+// retombe sur un `<img>` classique : une image mal référencée dégrade l'affichage au
+// lieu de casser le build. `npm run audit:images` liste les images matricielles qui
+// passent par ce fallback (les SVG, eux, y passent par conception).
+import { Image } from "astro:assets";
+import { resolveUpload } from "../utils/resolveUpload.js";
+
+interface Props {
+  src?: string;
+  alt?: string;
+  /** Largeur de rendu en pixels CSS. La densité d'écran est gérée par
+   *  `image.breakpoints` (astro.config.mjs) : ne pas la pré-multiplier ici. */
+  width?: number;
+  [key: string]: unknown;
+}
+
+// 1440 = largeur maximale utile sur ce site (conteneur le plus large).
+const { src, alt = "", width, loading = "lazy", ...rest } = Astro.props;
+
+const meta = resolveUpload(src);
+// Ne jamais agrandir : une source plus petite que la cible est servie à sa taille.
+const renderWidth = meta ? Math.min(width ?? 1440, meta.width) : width;
+---
+
+{
+  meta ? (
+    <Image src={meta} alt={alt} width={renderWidth} loading={loading} {...rest} />
+  ) : (
+    src && <img src={src} alt={alt} width={width} loading={loading} {...rest} />
+  )
+}

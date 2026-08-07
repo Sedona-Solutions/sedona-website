@@ -1,5 +1,6 @@
 ---
 import TitreAccent from "../TitreAccent.astro";
+import Media from "../Media.astro";
 const { gallery } = Astro.props;
 const photos = gallery?.photos ?? [];
 ---
@@ -17,7 +18,7 @@ const photos = gallery?.photos ?? [];
         <ul class="cgal__grid" data-reveal-group>
           {photos.map((src, i) => (
             <li class={`cgal__item cgal__item--${i % 7}`} data-reveal>
-              <img src={src} alt="" loading="lazy" />
+              <Media src={src} alt="" width={640} />
             </li>
           ))}
         </ul>

@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 import { richTextToHtml } from "../../utils/richText.js";
 import TitreAccent from "../TitreAccent.astro";
 
@@ -23,7 +24,7 @@ const {
 
     {image && (
       <div class="bccm__image" data-reveal>
-        <img src={image} alt="Interface Brieff : agents, journal et suivi d'avancement" loading="lazy" />
+        <Media src={image} alt="Interface Brieff : agents, journal et suivi d'avancement" width={880} />
       </div>
     )}
 
