@@ -46,11 +46,11 @@ Le tout emballé dans un format Far West qui rendait la matière digeste. OAuth 
 
 Le quiz Java de ==José== et ==Jean-Michel==r était la session **la plus interactive de ces deux jours** — et de loin. Smartphones comme buzzers, pièges classiques du langage (nulls, immutabilité, égalité, collections, compilation), salle entièrement impliquée. Un format qui rappelle qu'on peut apprendre des choses sérieuses sans rester passif. Et que même avec des années de Java derrière soi, il reste des surprises, des nuances.
 
-![](https://sedona.fr/wp-content/uploads/2026/05/Image-3-169x300.jpg)
+![](/uploads/articles/wp/devoxx2026-Image-3-169x300.jpg)
 
 Pour le fun ils ont posé les questions du quiz à Chatgpt et Claude **et ils ont eu respectivement la note de 12/20 et 17/20** comme quoi il reste toujours des subtilités dans le langage Java que même l’IA n’a pu déceler !     
 
-![Quiz](https://sedona.fr/wp-content/uploads/2026/05/Image-4-300x169.jpg)
+![Quiz](/uploads/articles/wp/devoxx2026-Image-4-300x169.jpg)
 
 ## Ce que je retiens de cette édition
 

@@ -14,7 +14,7 @@ tags:
 statut: Publié
 ---
 
-### ![Logiciel libre](https://sedona.fr/wp-content/uploads/2026/05/shared-image-300x225.jpg)Le futur du logiciel libre pour toi, moi et... les IAs
+### ![Logiciel libre](/uploads/articles/wp/devoxx2026-shared-image-300x225.jpg)Le futur du logiciel libre pour toi, moi et... les IAs
 
 \==Alex Snaps==r, contributeur chez Red Hat avec plus de 30 ans d'expérience dans l'open source, livre une réflexion de fond sur l'impact de l'IA générative sur les communautés du logiciel libre. Les outils IA sont désormais partout dans nos workflows — mais qu'est-ce que ça change vraiment, et qu'est-ce qui ne doit pas changer ? Il pointe un paradoxe de confiance : les plateformes sur lesquelles repose l'écosystème open source sont aujourd'hui les mêmes qui entraînent leurs modèles sur le code que les communautés leur ont confié. Il distingue également la **complexité accidentelle** (friction liée aux outils) de la **complexité essentielle** (inhérente au problème) : l'IA peut aider sur la première, mais elle ne remplace pas la compréhension réelle du problème.
 
@@ -26,7 +26,7 @@ statut: Publié
 
 Alex conclut positivement : les valeurs fondamentales de l'open source — transparence, responsabilité partagée, confiance — n'ont pas changé. Ce qui change, c'est l'intentionnalité qu'il faut désormais mettre dans leur application.
 
-### ![Spring Security](https://sedona.fr/wp-content/uploads/2026/05/shared-image-1-225x300.jpg)Autorisation avec Spring Security : permissions, rôles et plus encore
+### ![Spring Security](/uploads/articles/wp/devoxx2026-shared-image-1-225x300.jpg)Autorisation avec Spring Security : permissions, rôles et plus encore
 
 \==Daniel Garnier-Moiroux==, engineer chez Spring, propose un deep dive de 3h sur la gestion avancée de l'autorisation avec Spring Security. L'objectif : aller bien au-delà du simple contrôle par rôle et comprendre les mécanismes internes pour implémenter des règles d'accès robustes et maintenables. La session couvre trois niveaux d'autorisation : au niveau des requêtes HTTP, des méthodes, et des objets retournés. Le speaker insiste sur un principe clé : **séparer les règles d'autorisation du code métier**, pour les rendre testables indépendamment.
 
@@ -39,7 +39,7 @@ Alex conclut positivement : les valeurs fondamentales de l'open source — trans
 
 Une session dense et pratique, idéale pour les équipes qui souhaitent industrialiser leur gestion des accès sans sacrifier la lisibilité ni la testabilité.
 
-### ![Back end Spring](https://sedona.fr/wp-content/uploads/2026/05/shared-image-2-300x225.jpg)Performance de backend Spring : les techniques que tout dev devrait connaître
+### ![Back end Spring](/uploads/articles/wp/devoxx2026-shared-image-2-300x225.jpg)Performance de backend Spring : les techniques que tout dev devrait connaître
 
 \==Florian Beaufumé==c, architecte logiciel freelance et expert Java/Spring depuis plus de 15 ans, présente un tour d'horizon des optimisations de performance backend. La session s'articule en trois axes : **identifier** les problèmes, **optimiser**, puis **mesurer**. Le speaker commence par les erreurs JPA les plus courantes : des relations chargées systématiquement alors qu'elles ne sont pas nécessaires, générant des requêtes SQL en cascade invisibles mais coûteuses. La règle d'or — *configurer en lazy, mais charger en eager au cas par cas* — est simple mais rarement appliquée correctement. 
 

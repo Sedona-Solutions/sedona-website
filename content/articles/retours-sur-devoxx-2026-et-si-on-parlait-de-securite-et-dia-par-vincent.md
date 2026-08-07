@@ -15,7 +15,7 @@ tags:
 statut: Publié
 ---
 
-![Guillaume Laforge](https://sedona.fr/wp-content/uploads/2026/05/Guillaume-Laforge-300x172.png)
+![Guillaume Laforge](/uploads/articles/wp/Guillaume-Laforge-300x172.png)
 
 ### **Les design patterns agentiques dont vous êtes le héros** *par Guillaume Laforge*
 
@@ -31,7 +31,7 @@ Guillaume Laforge y présente une liste de design patterns pour orchestrer ses a
 * "GOAP" (Goal Oriented Action Planning) — planifier les actions de l'agent à rebours depuis un objectif final, technique issue des jeux vidéo.
 * "Ralph Wiggum / Coding agent loop" — boucle itérative où l'agent génère du code, l'exécute, observe les erreurs et recommence naïvement jusqu'à obtenir un résultat valide ; une référence au personnage des Simpson connu pour sa logique circulaire et candide.
 
-![Erwan Gereec](https://sedona.fr/wp-content/uploads/2026/05/Erwan-Gereec-300x200.jpg)
+![Erwan Gereec](/uploads/articles/wp/Erwan-Gereec-300x200.jpg)
 
 ### \*\*API Security 2026 : Comment éviter de finir sur Have I Been Pwned ? \*\**par Mickaël Barroux*
 
