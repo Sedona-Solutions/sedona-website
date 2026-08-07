@@ -1,7 +1,7 @@
 import { readFileSync, statSync, unlinkSync, rmdirSync, readdirSync } from "node:fs";
-import { join, relative, extname, sep } from "node:path";
+import { join, relative, extname, sep, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { RASTER, RASTER_ALTERNATION, walk, humanBytes } from "./uploads.mjs";
+import { RASTER, walk, humanBytes } from "./uploads.mjs";
 
 // Les images de public/uploads/ doivent rester à leur place pour TinaCMS (le media
 // manager les y écrit et les y relit), mais elles n'ont aucune raison d'être publiées
@@ -19,10 +19,16 @@ import { RASTER, RASTER_ALTERNATION, walk, humanBytes } from "./uploads.mjs";
 const SCANNED = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".txt"]);
 const PRUNABLE = ["uploads", "_astro"];
 
-// Ancré sur le `/` initial : sans cela, la classe gourmande parcourt puis retrace
-// chaque suite de caractères du CSS et du JS minifiés — 55 fois plus lent pour un
-// ensemble de références identique.
-const IMAGE_REF = new RegExp(`/[^"'()\\s,]*?\\.(?:${RASTER_ALTERNATION})`, "gi");
+// On cherche le nom de fichier littéralement dans le texte produit, plutôt que d'y
+// reconnaître une forme d'URL : les noms venant du CMS contiennent apostrophes,
+// virgules ou parenthèses, qu'aucune classe de caractères ne délimite proprement.
+// Un nom mal reconnu passerait pour non référencé et l'image serait supprimée du
+// build — un 404 en production. À noms identiques dans deux dossiers, on conserve
+// les deux : mieux vaut publier une image de trop qu'en perdre une.
+const isReferenced = (haystack, file) => {
+  const name = basename(file);
+  return haystack.includes(name) || haystack.includes(encodeURIComponent(name));
+};
 
 /** Supprime récursivement les dossiers devenus vides sous `root`. */
 function removeEmptyDirs(root, dir) {
@@ -40,15 +46,12 @@ export default function pruneUnusedImages() {
         const outDir = fileURLToPath(dir);
         const files = walk(outDir);
 
-        // Toute chaîne ressemblant à un chemin d'image, quel que soit l'attribut qui
-        // la porte (src, srcset, href, url(), ou une URL construite en JS).
-        const referenced = new Set();
-        for (const file of files) {
-          if (!SCANNED.has(extname(file).toLowerCase())) continue;
-          for (const m of readFileSync(file, "utf-8").matchAll(IMAGE_REF)) {
-            referenced.add(decodeURIComponent(m[0]).replace(/^\//, ""));
-          }
-        }
+        // Tout le texte produit par le build, quel que soit l'attribut qui porte la
+        // référence : src, srcset, href, url() en CSS, ou une URL construite en JS.
+        const haystack = files
+          .filter((f) => SCANNED.has(extname(f).toLowerCase()))
+          .map((f) => readFileSync(f, "utf-8"))
+          .join("\n");
 
         let removed = 0;
         let freed = 0;
@@ -56,7 +59,7 @@ export default function pruneUnusedImages() {
           if (!RASTER.has(extname(file).toLowerCase())) continue;
           const rel = relative(outDir, file);
           if (!PRUNABLE.includes(rel.split(sep)[0])) continue;
-          if (referenced.has(rel.split(sep).join("/"))) continue;
+          if (isReferenced(haystack, file)) continue;
           freed += statSync(file).size;
           unlinkSync(file);
           removed++;
