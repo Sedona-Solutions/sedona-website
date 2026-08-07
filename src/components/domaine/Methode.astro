@@ -75,6 +75,14 @@ arrowSvg = arrowSvg.replace("<svg ", `<svg class="methode__arrow" `);
     padding-block: clamp(3rem, 6vw, 11rem);
     /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus des Skills. */
     border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+    /* .methode__row (mode scroll) déborde jusqu'aux bords de l'écran via
+       margin-inline: calc(50% - 50vw). Sur les navigateurs qui réservent la
+       place de la scrollbar verticale (Windows, Firefox...), 100vw compte cette
+       largeur en plus du viewport visible : le rail dépasse alors de quelques
+       pixels à droite et provoque un scroll horizontal sur toute la page.
+       overflow-x: hidden ici contient ce débord au niveau de la section,
+       avant qu'il ne remonte jusqu'à <body>. */
+    overflow-x: hidden;
   }
   .methode__container { position: relative; }
   /* :global() — le squiggle inliné via set:html (cf. frontmatter) n'a pas
