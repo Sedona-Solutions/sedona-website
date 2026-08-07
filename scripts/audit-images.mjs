@@ -74,7 +74,8 @@ for (const file of htmlFiles) {
     imgTotal++;
     if (/\bwidth=/.test(tag) && /\bheight=/.test(tag)) imgWithDims++;
     if (/\bloading=/.test(tag)) imgWithLoading++;
-    if (!/\balt=/.test(tag)) imgWithoutAlt++;
+    // `alt=""` est sérialisé `alt` par Astro : l'attribut nu vaut une valeur vide.
+    if (!/\balt\b/.test(tag)) imgWithoutAlt++;
 
     const src = tag.match(/\bsrc="([^"]+)"/)?.[1];
     // Image matricielle encore servie depuis public/ : hors pipeline d'optimisation.
@@ -86,8 +87,11 @@ for (const file of htmlFiles) {
 
   // Tout média référencé doit exister dans le build (attrape les chemins CMS erronés).
   for (const m of html.matchAll(/(?:src|href)="(\/[^":?#]+)"/g)) {
+    // Les noms de fichiers venant du CMS peuvent contenir des espaces : l'URL est
+    // percent-encodée dans le HTML, le fichier ne l'est pas sur disque.
     const url = m[1];
-    if (MEDIA.has(extname(url).toLowerCase()) && !existsSync(join(DIST, url))) missing.add(url);
+    const onDisk = decodeURIComponent(url);
+    if (MEDIA.has(extname(onDisk).toLowerCase()) && !existsSync(join(DIST, onDisk))) missing.add(url);
   }
 }
 
