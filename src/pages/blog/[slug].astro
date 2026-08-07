@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
 import ArticleCard from "../../components/blog/ArticleCard.astro";
+import Media from "../../components/Media.astro";
 import { estArticlePublie } from "../../utils/articleVisibility";
 
 export async function getStaticPaths() {
@@ -41,7 +42,7 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
         {a.extrait && <p class="ahead__chapo">{a.extrait}</p>}
 
         <div class="ahead__byline">
-          {a.avatar ? <img class="ahead__avatar" src={a.avatar} alt="" /> : <span class="ahead__avatar" aria-hidden="true" />}
+          {a.avatar ? <Media class="ahead__avatar" src={a.avatar} alt="" width={56} /> : <span class="ahead__avatar" aria-hidden="true" />}
           <div class="ahead__byline-text">
             {a.auteur && <span class="ahead__author">{a.auteur}</span>}
             {meta && <span class="ahead__meta">{meta}</span>}
@@ -56,7 +57,7 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
       <div class="acover">
         <div class="container">
           <div class="acover__inner">
-            <img src={a.couverture} alt={a.titre} />
+            <Media src={a.couverture} alt={a.titre} width={1088} loading="eager" />
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 // Hero spécifique à la page Brieff (design Figma dédié, pas le template générique des offres).
 // Contenu piloté par Tina (collection "offre" > entrée brieff.md).
 const {
@@ -36,7 +37,7 @@ if (accroche.includes(motAMettreEnAvant)) {
         <div class="bhero__proof">
           {proof.avatars?.length > 0 && (
             <div class="bhero__avatars">
-              {proof.avatars.map((src: string) => <img src={src} alt="" loading="lazy" />)}
+              {proof.avatars.map((src: string) => <Media src={src} alt="" width={48} />)}
             </div>
           )}
           <p class="bhero__proof-text"><!-- TODO: chiffre réel à confirmer --> {proof.texte}</p>
@@ -50,7 +51,7 @@ if (accroche.includes(motAMettreEnAvant)) {
     </div>
 
     <div class="bhero__illu-wrap">
-      {illustration && <img class="bhero__illu" src={illustration} alt="Salle de réunion virtuelle Brieff" loading="eager" />}
+      {illustration && <Media class="bhero__illu" src={illustration} alt="Salle de réunion virtuelle Brieff" width={720} loading="eager" />}
     </div>
   </div>
 </section>

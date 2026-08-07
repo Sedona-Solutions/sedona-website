@@ -1,4 +1,5 @@
 ---
+import Media from "../../components/Media.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
@@ -59,7 +60,7 @@ const clients = home.clientsSection?.logos ?? [];
         projets.map((p) => (
           <li class="pcard" data-cat={slug(p.tags?.[0] ?? "")} data-reveal>
             <a href={`/projets/${p.slug}`} class="pcard__media">
-              {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pcard__ph" aria-hidden="true" />}
+              {p.couverture ? <Media src={p.couverture} alt={p.titre} width={560} /> : <span class="pcard__ph" aria-hidden="true" />}
             </a>
             <h2 class="pcard__title">{p.client ?? p.titre}</h2>
             {p.tags?.length > 0 && <ul class="pcard__tags">{p.tags.map((tg) => <li>{tg}</li>)}</ul>}

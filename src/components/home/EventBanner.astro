@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 // Bandeau évènement (cf. Figma node 4048:49887) : une image pleine largeur
 // (le texte/branding est déjà intégré à l'image fournie) avec un bouton en
 // pastille qui chevauche le bas de l'image, positionné à gauche/centre/droite.
@@ -15,7 +16,7 @@ const { titre, image, ctaLabel, ctaHref, position = "droite" } = Astro.props;
 {
   image && (
     <div class="event-banner">
-      <img class="event-banner__img" src={image} alt={titre || ""} />
+      <Media class="event-banner__img" src={image} alt={titre || ""} width={800} />
       {ctaLabel && ctaHref && (
         <div class={`event-banner__cta event-banner__cta--${position}`}>
           <a class="btn-flat-lg btn-flat-lg--white" href={ctaHref}>

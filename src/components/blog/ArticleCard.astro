@@ -2,6 +2,8 @@
 // Carte article partagée par le blog, la home, les pages Domaine et « à lire aussi » :
 // même composant partout, avec deux variantes selon la présence d'une image de
 // couverture (l'image ne dépend plus du flag "vedette", juste de `couverture`).
+import Media from "../Media.astro";
+
 const { article: a } = Astro.props;
 
 const moisCap = (d: string) => {
@@ -13,9 +15,9 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
 
 {a.couverture ? (
   <a href={`/blog/${a.slug}`} class="acard acard--img">
-    <img class="acard__img" src={a.couverture} alt="" loading="lazy" />
+    <Media class="acard__img" src={a.couverture} alt="" width={560} />
     <div class="acard__top">
-      {a.avatar ? <img class="acard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
         <span class="acard__author">{a.auteur}</span>
@@ -30,7 +32,7 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
 ) : (
   <a href={`/blog/${a.slug}`} class="acard acard--plain">
     <div class="acard__top">
-      {a.avatar ? <img class="acard__avatar" src={a.avatar} alt="" loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
         <span class="acard__author">{a.auteur}</span>

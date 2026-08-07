@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 import NumberBadge from "../NumberBadge.astro";
 import TitreAccent from "../TitreAccent.astro";
 
@@ -48,7 +49,7 @@ const isTexte = layout === "texte";
           : projets.map((p) => (
               <li class="pdc pdc--image" data-reveal>
                 <a href={`/projets/${p.slug}`} class="pdc__media">
-                  {p.couverture ? <img src={p.couverture} alt={p.titre} loading="lazy" /> : <span class="pdc__ph" aria-hidden="true" />}
+                  {p.couverture ? <Media src={p.couverture} alt={p.titre} width={560} /> : <span class="pdc__ph" aria-hidden="true" />}
                 </a>
                 <h3 class="pdc__title">{p.client ?? p.titre}</h3>
                 {p.tags?.length > 0 && <ul class="pdc__tags">{p.tags.map((t) => <li>{t}</li>)}</ul>}
