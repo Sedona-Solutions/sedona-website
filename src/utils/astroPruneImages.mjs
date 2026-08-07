@@ -14,12 +14,17 @@ import { RASTER, walk, humanBytes } from "./uploads.mjs";
 
 const SCANNED = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".txt"]);
 
-// Uniquement _astro : ce que Rollup y émet en double est un artefact de build, sans
-// URL publique promise à personne. `dist/uploads/` est en revanche la copie fidèle de
-// public/, et doit le rester — c'est le contrat du dossier, dont dépendent les
-// previews du media manager Tina en production (l'admin est déployé avec le site et
-// les demande à /uploads/...), ainsi que tout lien direct vers une image.
-const PRUNABLE = ["_astro"];
+// Le build ne publie que ce qui est atteignable : une image qu'aucune page, aucun CSS
+// et aucun script ne référence n'a pas à être déployée. Cela vaut pour les copies
+// hachées de _astro/ comme pour les originaux de uploads/, dont Media.astro sert
+// désormais des versions optimisées.
+//
+// Ce choix suppose que rien ne demande une image par une URL construite ailleurs que
+// dans le site. Deux cas le remettraient en cause : l'activation de Tina Cloud, dont
+// le media manager est servi depuis /admin/ en production et charge ses previews
+// depuis /uploads/... ; et des liens entrants vers une image (permalien, partage,
+// référencement). À réévaluer le jour où l'un des deux se présente.
+const PRUNABLE = ["uploads", "_astro"];
 
 // On cherche le nom de fichier littéralement dans le texte produit, plutôt que d'y
 // reconnaître une forme d'URL : les noms venant du CMS contiennent apostrophes,
