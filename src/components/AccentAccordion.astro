@@ -129,10 +129,10 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
   .acca__imgPlaceholder { flex: 1; min-width: 0; aspect-ratio: 400 / 300; background: #e8e8e8; border-radius: 16px; overflow: hidden; }
   .acca__imgPlaceholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .acca__imgWrap {
-    margin-top: 1.5rem; aspect-ratio: 496 / 343; border: 8px solid #fff; border-radius: 12px;
+    margin-top: 1.5rem; border: 8px solid #fff; border-radius: 12px;
     overflow: hidden; box-shadow: 0 16px 32px -12px color-mix(in srgb, #3b0800 25%, transparent);
   }
-  .acca__imgWrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .acca__imgWrap img { display: block; max-width: 100%; height: auto; }
   p.acca__caption {
     margin: 1rem 0 0; font-family: var(--font-body); font-size: 0.875rem; line-height: 1.4;
     letter-spacing: -0.01em; color: #3b0800; text-align: center;
