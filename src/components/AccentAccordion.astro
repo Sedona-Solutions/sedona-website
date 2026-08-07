@@ -81,12 +81,20 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
 <style>
   .acca__list { display: flex; flex-direction: column; gap: 1rem; max-width: 1088px; margin: 0 auto; }
   .acca {
+    --acca-pad-y: 1.75rem;
+    --acca-pad-x: 2.5rem;
     background: #fff; border: 1px solid #42140d; border-bottom-width: 1px; border-radius: 24px;
-    padding: 1.75rem 2.5rem; transition: background 0.2s ease, border-bottom-width 0.2s ease;
+    transition: background 0.2s ease, border-bottom-width 0.2s ease;
   }
   .acca:hover { background: var(--accent-light, #fff); border-bottom-width: 10px; }
   .acca[open] { background: var(--accent-light, #fff); }
-  .acca__row { display: flex; align-items: center; gap: 1.25rem; cursor: pointer; list-style: none; }
+  /* Le padding vit sur .acca__row (le <summary>) plutôt que sur .acca : c'est le
+     seul élément dont le clic ouvre l'accordéon, donc toute la carte blanche
+     doit lui appartenir pour rester cliquable, pas seulement le texte. */
+  .acca__row {
+    display: flex; align-items: center; gap: 1.25rem; cursor: pointer; list-style: none;
+    padding: var(--acca-pad-y) var(--acca-pad-x);
+  }
   .acca__row::-webkit-details-marker { display: none; }
   .acca__icon { flex: none; width: 40px; height: 40px; display: grid; place-items: center; }
   .acca__icon :global(svg) { width: 100%; height: 100%; }
@@ -96,7 +104,10 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
   .acca__plus::before { top: 10px; left: 0; width: 22px; height: 2px; }
   .acca__plus::after { top: 0; left: 10px; width: 2px; height: 22px; }
   .acca[open] .acca__plus::after { transform: scaleY(0); opacity: 0; }
-  .acca__body { padding-top: 1.5rem; }
+  /* margin-top négatif : compense le padding-bottom de .acca__row pour retrouver
+     le même espacement visuel qu'avant (padding porté par .acca) entre le texte
+     du header et le corps déplié. */
+  .acca__body { padding: 0 var(--acca-pad-x) var(--acca-pad-y); margin-top: -0.25rem; }
   /* Legacy : texte + 1 visuel captionné, décalé sous le titre (cf. Fonctionnalités Brieff).
      Hauteur libre, relative au contenu (texte + image) — pas de ratio imposé. */
   .acca__body > .acca__legacy { padding-left: calc(280px + 1.25rem); }
@@ -128,7 +139,8 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
   }
 
   @media (max-width: 700px) {
-    .acca { padding: 1.5rem; }
+    .acca { --acca-pad-y: 1.5rem; --acca-pad-x: 1.5rem; }
+    .acca__body { margin-top: 0; }
     .acca__title { font-size: 1rem; }
     .acca__body > .acca__legacy { padding-left: 0; }
     .acca__contentRow { flex-direction: column; gap: 1.25rem; }
