@@ -4,7 +4,7 @@ import { unified } from '@astrojs/markdown-remark';
 import remarkManualHighlight from './src/utils/remarkManualHighlight.mjs';
 import remarkImageCaptionLink from './src/utils/remarkImageCaptionLink.mjs';
 import remarkVideoEmbed from './src/utils/remarkVideoEmbed.mjs';
-import remarkImageDimensions from './src/utils/remarkImageDimensions.mjs';
+import remarkPublicImages from './src/utils/remarkPublicImages.mjs';
 import pruneUnusedImages from './src/utils/astroPruneImages.mjs';
 
 // https://astro.build/config
@@ -13,9 +13,10 @@ import pruneUnusedImages from './src/utils/astroPruneImages.mjs';
 export default defineConfig({
   site: process.env.SITE_URL || 'https://preview.sedona.fr',
   integrations: [pruneUnusedImages()],
+  image: { layout: 'constrained', breakpoints: [640, 960, 1280, 1600] },
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkManualHighlight, remarkImageCaptionLink, remarkVideoEmbed, remarkImageDimensions],
+      remarkPlugins: [remarkManualHighlight, remarkImageCaptionLink, remarkVideoEmbed, remarkPublicImages],
     }),
   },
 });
