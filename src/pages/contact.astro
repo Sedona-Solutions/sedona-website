@@ -230,6 +230,11 @@ const DELAIS = ["Dès que possible", "Dans 1 à 3 mois", "Dans 3 à 6 mois", "Ph
 </script>
 
 <style>
+  /* .contact a ses 4 coins arrondis (pas de fond sombre commun derrière, contrairement
+     aux autres pages) : sans ça, le fond blanc de <body> transparaît dans les coins. */
+  :global(body) {
+    background: var(--color-canyon-50);
+  }
   .contact {
     background: var(--color-canyon-50);
     padding-block: clamp(3rem, 6vw, 5rem);
