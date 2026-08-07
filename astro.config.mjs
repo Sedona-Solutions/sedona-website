@@ -4,6 +4,7 @@ import { unified } from '@astrojs/markdown-remark';
 import remarkManualHighlight from './src/utils/remarkManualHighlight.mjs';
 import remarkImageCaptionLink from './src/utils/remarkImageCaptionLink.mjs';
 import remarkVideoEmbed from './src/utils/remarkVideoEmbed.mjs';
+import remarkImageDimensions from './src/utils/remarkImageDimensions.mjs';
 import pruneUnusedImages from './src/utils/astroPruneImages.mjs';
 
 // https://astro.build/config
@@ -14,7 +15,7 @@ export default defineConfig({
   integrations: [pruneUnusedImages()],
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkManualHighlight, remarkImageCaptionLink, remarkVideoEmbed],
+      remarkPlugins: [remarkManualHighlight, remarkImageCaptionLink, remarkVideoEmbed, remarkImageDimensions],
     }),
   },
 });
