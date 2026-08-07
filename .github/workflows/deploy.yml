@@ -27,6 +27,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Astro caches optimized images under node_modules/.astro/assets. Restored after
+      # `npm ci`, which wipes node_modules — otherwise Sharp reprocesses every image
+      # on each run.
+      - uses: actions/cache@v4
+        with:
+          path: node_modules/.astro/assets
+          key: astro-assets-${{ github.sha }}
+          restore-keys: astro-assets-
       - run: npm run build
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5

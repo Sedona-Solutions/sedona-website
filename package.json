@@ -11,6 +11,7 @@
     "build": "astro build",
     "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
+    "audit:images": "node scripts/audit-images.mjs",
     "astro": "astro",
     "figma:list": "node --env-file=.env scripts/figma-export.mjs list",
     "figma:tokens": "node --env-file=.env scripts/figma-export.mjs tokens",
