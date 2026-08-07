@@ -14,7 +14,12 @@ import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
 
 export async function getStaticPaths() {
   const items = await getCollection("offre");
-  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  // Brieff a sa propre page sur-mesure (./brieff.astro) qui consomme la même entrée
+  // de collection. Sans cette exclusion, la route est générée deux fois : Astro donne
+  // la priorité à la page statique, mais émet un avertissement de conflit au build.
+  return items
+    .filter((entry) => entry.id !== "brieff")
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;

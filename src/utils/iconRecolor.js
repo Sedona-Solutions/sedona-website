@@ -1,17 +1,24 @@
-import fs from "node:fs";
-import { fileURLToPath } from "node:url";
+const iconModules = import.meta.glob("../../public/icons/*.svg", { query: "?raw", import: "default", eager: true });
+
+const iconsByName = Object.fromEntries(
+  Object.entries(iconModules).map(([path, content]) => [path.replace("../../public/icons/", "").replace(".svg", ""), content]),
+);
 
 // Couleurs structurelles à ne jamais recolorer (contours, fonds blancs "papier"...).
 const KEEP = new Set(["#fff", "#ffffff", "white", "none", "#42140d", "#000", "#000000", "black", "currentcolor"]);
+
+/** Contenu brut d'une icône de public/icons/, ou `null` si elle n'existe pas. */
+export function readIcon(iconName) {
+  return iconsByName[iconName] ?? null;
+}
 
 /** Lit un icône dans public/icons/ et recolore ses teintes d'accent avec `accentColor`.
  *  Retourne `null` (au lieu de planter le build) si le fichier n'existe pas —
  *  certaines références d'icônes dans le contenu ne correspondent plus aux
  *  fichiers présents après une réorganisation de public/icons/. */
 export function recolorIcon(iconName, accentColor) {
-  const path = fileURLToPath(new URL(`../../public/icons/${iconName}.svg`, import.meta.url));
-  if (!fs.existsSync(path)) return null;
-  let svg = fs.readFileSync(path, "utf-8");
+  let svg = readIcon(iconName);
+  if (svg == null) return null;
   svg = svg.replace(/(fill|stroke)="([^"]+)"/g, (match, attr, color) => {
     if (KEEP.has(color.toLowerCase())) return match;
     return `${attr}="${accentColor}"`;

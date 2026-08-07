@@ -1,7 +1,7 @@
 ---
 titre: Modernisation et refonte du site internet
 client: Klésia
-couverture: /uploads/projets/klesia.png
+couverture: /uploads/projets/klesia-cover.png
 accroche: Simplifier l'accès aux services pour les assurés d'un grand groupe de protection sociale.
 annee: 2022 - 2023
 tags:

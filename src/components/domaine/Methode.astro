@@ -1,6 +1,5 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import squiggle9 from "../../../public/deco/squiggle-9.svg?raw";
 import NumberBadge from "../NumberBadge.astro";
 import TitreAccent from "../TitreAccent.astro";
 import { richTextToHtml } from "../../utils/richText.js";
@@ -14,8 +13,7 @@ const technos = data?.technos ?? [];
 // squiggle-9.svg (même fichier que carrieres/Perks.astro), recoloré à la couleur
 // d'accent de la page — même méthode que NumberBadge.astro (lecture + remplacement
 // du stroke, retrait de width/height pour laisser le CSS piloter la taille).
-const arrowSvgPath = fileURLToPath(new URL("../../../public/deco/squiggle-9.svg", import.meta.url));
-let arrowSvg = readFileSync(arrowSvgPath, "utf-8");
+let arrowSvg = squiggle9;
 arrowSvg = arrowSvg.replace(/stroke="[^"]+"/, `stroke="${arrowColor ?? accentMid}"`);
 arrowSvg = arrowSvg.replace(/ width="[^"]*"/, "").replace(/ height="[^"]*"/, "");
 arrowSvg = arrowSvg.replace("<svg ", `<svg class="methode__arrow" `);

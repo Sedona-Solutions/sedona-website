@@ -1,7 +1,7 @@
 ---
 titre: Modernisation et refonte du site internet
 client: Insee
-couverture: /uploads/projets/klesia-cover.png
+couverture: /uploads/projets/insee-cover.png
 tags:
   - Service publique
   - App Web

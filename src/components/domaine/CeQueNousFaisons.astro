@@ -1,6 +1,5 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import cqnfSquiggle from "../../../public/deco/cqnf-squiggle.svg?raw";
 import AccentAccordion from "../AccentAccordion.astro";
 import NumberBadge from "../NumberBadge.astro";
 import TitreAccent from "../TitreAccent.astro";
@@ -11,8 +10,7 @@ const { data, pillVariant = "cactus", accentMid = "#a7e9d1", accentLight = "#d4f
 // cqnf-squiggle.svg recoloré à la couleur d'accent de la page (bg/accent-color-1) —
 // même méthode que Methode.astro (lecture + remplacement du stroke, retrait de
 // width/height pour laisser le CSS piloter la taille).
-const squiggleSvgPath = fileURLToPath(new URL("../../../public/deco/cqnf-squiggle.svg", import.meta.url));
-let squiggleSvg = readFileSync(squiggleSvgPath, "utf-8");
+let squiggleSvg = cqnfSquiggle;
 squiggleSvg = squiggleSvg.replace(/stroke="[^"]+"/, `stroke="${accentMid}"`);
 squiggleSvg = squiggleSvg.replace(/ width="[^"]*"/, "").replace(/ height="[^"]*"/, "");
 squiggleSvg = squiggleSvg.replace("<svg ", `<svg class="cqnf__squiggle" `);

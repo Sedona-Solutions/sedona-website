@@ -1,8 +1,7 @@
 ---
 // Badge numéroté réutilisable (public/icons/number-1.svg à number-10.svg),
 // recoloré dynamiquement à la couleur d'accent de la page/du domaine.
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { readIcon } from "../utils/iconRecolor.js";
 
 interface Props {
   n: number;
@@ -12,8 +11,8 @@ interface Props {
 }
 const { n, color = "#B3B5EE", size = 40, class: cls = "" } = Astro.props;
 
-const svgPath = fileURLToPath(new URL(`../../public/icons/number-${n}.svg`, import.meta.url));
-let svg = readFileSync(svgPath, "utf-8");
+let svg = readIcon(`number-${n}`);
+if (svg == null) throw new Error(`NumberBadge : public/icons/number-${n}.svg introuvable`);
 svg = svg.replace(/#B3B5EE/gi, color);
 // Retire les attributs width/height d'origine (80x80) : sinon ils entrent en conflit
 // avec la règle globale `svg { max-width:100%; height:auto }` et déforment le badge.
