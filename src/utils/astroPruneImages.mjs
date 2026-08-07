@@ -3,21 +3,23 @@ import { join, relative, extname, sep, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { RASTER, walk, humanBytes } from "./uploads.mjs";
 
-// Les images de public/uploads/ doivent rester à leur place pour TinaCMS (le media
-// manager les y écrit et les y relit), mais elles n'ont aucune raison d'être publiées
-// telles quelles : Media.astro en sert des versions optimisées depuis _astro/.
+// Le glob de Media.astro fait entrer chaque image de public/uploads/ dans le graphe
+// de build : Rollup en émet donc l'original dans _astro/, y compris pour les fichiers
+// dont seules les variantes optimisées sont réellement servies, et pour ceux
+// qu'aucune page n'affiche. Ces copies n'ont pas d'URL publique — elles portent un
+// nom haché — et personne ne peut y faire référence.
 //
-// Deux sources de doublons dans le build :
-//   - public/uploads/ est copié intégralement par Astro, migré ou non ;
-//   - Rollup émet dans _astro/ tout fichier atteint par le glob de Media.astro,
-//     y compris les originaux dont seules les variantes sont réellement servies.
-//
-// Cette intégration supprime, après build, les images matricielles qu'aucun fichier
-// produit ne référence. On ne touche ni aux SVG, ni aux PDF, ni aux vidéos, et on
-// s'interdit tout dossier autre que uploads/ et _astro/.
+// Cette intégration les retire après build. Astro en supprime déjà une partie de
+// lui-même, mais seulement pour les images qu'il a transformées.
 
 const SCANNED = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".txt"]);
-const PRUNABLE = ["uploads", "_astro"];
+
+// Uniquement _astro : ce que Rollup y émet en double est un artefact de build, sans
+// URL publique promise à personne. `dist/uploads/` est en revanche la copie fidèle de
+// public/, et doit le rester — c'est le contrat du dossier, dont dépendent les
+// previews du media manager Tina en production (l'admin est déployé avec le site et
+// les demande à /uploads/...), ainsi que tout lien direct vers une image.
+const PRUNABLE = ["_astro"];
 
 // On cherche le nom de fichier littéralement dans le texte produit, plutôt que d'y
 // reconnaître une forme d'URL : les noms venant du CMS contiennent apostrophes,
