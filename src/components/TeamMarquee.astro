@@ -36,7 +36,7 @@ const tintFor = (m, i) => (m.couleur && m.couleur !== "none" ? COULEUR_HEX[m.cou
                 {m.nom && <span class="team-marquee__nom">{m.nom}</span>}
                 {m.role && <span class="team-marquee__role">{m.role}</span>}
               </span>
-              {m.photo && <Media class="team-marquee__photo" src={m.photo} alt={m.nom} width={320} loading="lazy" />}
+              {m.photo && <Media class="team-marquee__photo" src={m.photo} alt={m.nom} width={320} />}
             </li>
           ))}
         </ul>

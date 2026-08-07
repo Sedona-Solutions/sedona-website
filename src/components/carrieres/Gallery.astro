@@ -18,7 +18,7 @@ const photos = gallery?.photos ?? [];
         <ul class="cgal__grid" data-reveal-group>
           {photos.map((src, i) => (
             <li class={`cgal__item cgal__item--${i % 7}`} data-reveal>
-              <Media src={src} alt="" width={640} loading="lazy" />
+              <Media src={src} alt="" width={640} />
             </li>
           ))}
         </ul>

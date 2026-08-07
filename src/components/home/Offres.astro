@@ -40,7 +40,7 @@ const ROTATIONS = [-3, 0, -4, 3];
               <a class="offre-card__link" href={o.ctaHref || "/contact"} data-reveal>
                 {o.titre && <p class="offre-card__title">{o.titre}</p>}
                 {o.illustration ? (
-                  <Media class="offre-card__illu" src={o.illustration} alt="" aria-hidden="true" width={480} loading="lazy" />
+                  <Media class="offre-card__illu" src={o.illustration} alt="" aria-hidden="true" width={480} />
                 ) : (
                   <div class="offre-card__placeholder" aria-hidden="true" />
                 )}

@@ -1,9 +1,29 @@
 ---
+import { getImage } from "astro:assets";
 import Media from "../Media.astro";
 import TitreAccent from "../TitreAccent.astro";
+import { resolveUpload } from "../../utils/resolveUpload.js";
 const { section } = Astro.props;
-const temoignages = section?.temoignages ?? [];
+
+// Le carrousel remplace l'avatar en JS. Comme la balise porte un `srcset` (que le
+// navigateur privilégie sur `src`), il faut lui fournir les deux valeurs optimisées :
+// les variantes sont donc calculées ici, au build, et sérialisées avec le témoignage.
+const AVATAR = 64; // largeur CSS de .tcard__avatar
+const temoignages = await Promise.all(
+  (section?.temoignages ?? []).map(async (t) => {
+    const meta = resolveUpload(t.avatar);
+    if (!meta) return t;
+    const img = await getImage({ src: meta, width: Math.min(AVATAR, meta.width) });
+    return { ...t, avatarSrc: img.src, avatarSrcset: img.srcSet?.attribute ?? "" };
+  }),
+);
 const t = temoignages[0];
+
+// Le chemin d'origine n'est sérialisé que faute de variante optimisée : l'exposer
+// inutilement obligerait à publier l'image brute à côté de celle réellement servie.
+const temoignagesJson = JSON.stringify(
+  temoignages.map(({ avatar, ...reste }) => (reste.avatarSrc ? reste : { ...reste, avatar })),
+);
 const total = String(temoignages.length).padStart(2, "0");
 ---
 
@@ -22,7 +42,7 @@ const total = String(temoignages.length).padStart(2, "0");
               <blockquote class="tcard__quote">“{t.citation}”</blockquote>
               <div class="tcard__author">
                 {t.avatar
-                  ? <Media class="tcard__avatar" src={t.avatar} alt="" width={96} loading="lazy" />
+                  ? <Media class="tcard__avatar" src={t.avatar} alt="" width={AVATAR} />
                   : <span class="tcard__avatar" />}
                 <span>
                   <span class="tcard__name">{t.auteur}</span>
@@ -35,12 +55,12 @@ const total = String(temoignages.length).padStart(2, "0");
       }
       {
         t && (
-          <article class="tcard" id="tcard" data-temoignages={JSON.stringify(temoignages)}>
+          <article class="tcard" id="tcard" data-temoignages={temoignagesJson}>
             <div class="tcard__testimonial" id="tcardTestimonial">
               <blockquote class="tcard__quote" id="tcardQuote">“{t.citation}”</blockquote>
               <div class="tcard__author">
                 {t.avatar
-                  ? <Media class="tcard__avatar" id="tcardAvatar" src={t.avatar} alt="" width={96} loading="lazy" />
+                  ? <Media class="tcard__avatar" id="tcardAvatar" src={t.avatar} alt="" width={AVATAR} />
                   : <span class="tcard__avatar" id="tcardAvatar" aria-hidden="true" />}
                 <span>
                   <span class="tcard__name" id="tcardName">{t.auteur}</span>
@@ -118,7 +138,11 @@ const total = String(temoignages.length).padStart(2, "0");
       const t = data[index];
       if (!t) return;
       quote.textContent = `“${t.citation}”`;
-      if (avatar.tagName === "IMG") avatar.src = t.avatar || "";
+      if (avatar.tagName === "IMG") {
+        // `srcset` prime sur `src` : remplacer les deux, sinon l'avatar ne change pas.
+        (avatar as HTMLImageElement).srcset = t.avatarSrcset || "";
+        (avatar as HTMLImageElement).src = t.avatarSrc || t.avatar || "";
+      }
       name.textContent = t.auteur || "";
       role.textContent = t.role || "";
       role.style.display = t.role ? "" : "none";

@@ -13,7 +13,7 @@ const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illus
       {texte && <div class="bincoh__text" set:html={richTextToHtml(texte)} />}
     </div>
     <div class="bincoh__illu-wrap">
-      {illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} loading="lazy" />}
+      {illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} />}
     </div>
   </div>
 </section>

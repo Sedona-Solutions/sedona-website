@@ -44,7 +44,7 @@ const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icon
         <ul class="btechno__row">
           {technos.map((t: { nom?: string; logo?: string }) => (
             <li class="btc">
-              <span class="btc__icon">{t.logo && <Media src={t.logo} alt="" aria-hidden="true" width={56} />}</span>
+              <span class="btc__icon">{t.logo && <Media src={t.logo} alt="" aria-hidden="true" width={28} />}</span>
               <span class="btc__nom">{t.nom}</span>
             </li>
           ))}

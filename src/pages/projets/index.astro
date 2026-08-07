@@ -60,7 +60,7 @@ const clients = home.clientsSection?.logos ?? [];
         projets.map((p) => (
           <li class="pcard" data-cat={slug(p.tags?.[0] ?? "")} data-reveal>
             <a href={`/projets/${p.slug}`} class="pcard__media">
-              {p.couverture ? <Media src={p.couverture} alt={p.titre} width={560} loading="lazy" /> : <span class="pcard__ph" aria-hidden="true" />}
+              {p.couverture ? <Media src={p.couverture} alt={p.titre} width={560} /> : <span class="pcard__ph" aria-hidden="true" />}
             </a>
             <h2 class="pcard__title">{p.client ?? p.titre}</h2>
             {p.tags?.length > 0 && <ul class="pcard__tags">{p.tags.map((tg) => <li>{tg}</li>)}</ul>}
@@ -89,7 +89,7 @@ const clients = home.clientsSection?.logos ?? [];
   <section class="autres">
     <div class="container" data-reveal>
       <h2 class="autres__title">Ces <mark class="hl hl--sunshine">clients</mark> ont aussi tenté l'aventure avec nous</h2>
-      <Media class="autres__logos" src="/uploads/clients/clients-logos.png" alt="Logos de nos clients" width={1200} loading="lazy" />
+      <Media class="autres__logos" src="/uploads/clients/clients-logos.png" alt="Logos de nos clients" width={1200} />
     </div>
   </section>
 

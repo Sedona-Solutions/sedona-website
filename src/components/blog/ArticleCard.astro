@@ -15,9 +15,9 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
 
 {a.couverture ? (
   <a href={`/blog/${a.slug}`} class="acard acard--img">
-    <Media class="acard__img" src={a.couverture} alt="" width={560} loading="lazy" />
+    <Media class="acard__img" src={a.couverture} alt="" width={560} />
     <div class="acard__top">
-      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
         <span class="acard__author">{a.auteur}</span>
@@ -32,7 +32,7 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
 ) : (
   <a href={`/blog/${a.slug}`} class="acard acard--plain">
     <div class="acard__top">
-      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} loading="lazy" /> : <span class="acard__avatar" aria-hidden="true" />}
+      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
         <span class="acard__author">{a.auteur}</span>

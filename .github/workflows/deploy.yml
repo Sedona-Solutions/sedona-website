@@ -33,9 +33,14 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: node_modules/.astro/assets
-          key: astro-assets-${{ github.sha }}
+          # Keyed on the sources, so an unchanged image set reuses the cache exactly
+          # instead of re-uploading it on every run.
+          key: astro-assets-${{ hashFiles('public/uploads/**', 'astro.config.mjs') }}
           restore-keys: astro-assets-
       - run: npm run build
+      # Fails if a raster image is still served straight from /uploads/, i.e. outside
+      # the optimization pipeline — and if any referenced asset is missing from dist.
+      - run: npm run audit:images -- --strict
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

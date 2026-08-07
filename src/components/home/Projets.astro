@@ -31,7 +31,7 @@ const { section, projets = [] } = Astro.props;
           <li class="proj" data-reveal>
             <a href={`/projets/${p.slug}`} class="proj__media">
               {p.couverture ? (
-                <Media src={p.couverture} alt={p.titre} width={560} loading="lazy" />
+                <Media src={p.couverture} alt={p.titre} width={560} />
               ) : (
                 <span class="proj__placeholder" aria-hidden="true" />
               )}

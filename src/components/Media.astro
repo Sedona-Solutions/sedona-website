@@ -9,53 +9,32 @@
 //
 // Tout ce que le glob ne couvre pas (SVG, images distantes, chemin absent du dossier)
 // retombe sur un `<img>` classique : une image mal référencée dégrade l'affichage au
-// lieu de casser le build. `npm run audit:images` liste ce qui passe par ce fallback.
+// lieu de casser le build. `npm run audit:images` liste les images matricielles qui
+// passent par ce fallback (les SVG, eux, y passent par conception).
 import { Image } from "astro:assets";
-
-// Rollup émet dans _astro/ tous les fichiers atteints par ce glob, y compris ceux
-// qu'aucune page n'affiche (un glob paresseux n'y change rien, c'est vérifié) : ces
-// originaux dupliqués sont retirés du build par le nettoyage post-build.
-const files = import.meta.glob<ImageMetadata>("../../public/uploads/**/*.{png,jpg,jpeg,webp,avif}", {
-  eager: true,
-  import: "default",
-});
+import { resolveUpload } from "../utils/resolveUpload.js";
 
 interface Props {
   src?: string;
   alt?: string;
-  /** Largeur de rendu maximale ; le srcset est dérivé de cette valeur. */
+  /** Largeur de rendu en pixels CSS. La densité d'écran est gérée par
+   *  `image.breakpoints` (astro.config.mjs) : ne pas la pré-multiplier ici. */
   width?: number;
-  /** Surcharge les largeurs générées, quand la dérivation par défaut ne convient pas. */
-  widths?: number[];
-  /** Passé tel quel à <Image> pour affiner le choix de résolution. */
-  sizes?: string;
-  class?: string;
-  loading?: "lazy" | "eager";
   [key: string]: unknown;
 }
 
-// 1440 = largeur maximale utile sur ce site (conteneur le plus large en écran 2x).
-const { src, alt = "", width, widths, sizes, ...rest } = Astro.props;
+// 1440 = largeur maximale utile sur ce site (conteneur le plus large).
+const { src, alt = "", width, loading = "lazy", ...rest } = Astro.props;
 
-const meta = src ? files[`../../public/uploads/${src.replace(/^\/uploads\//, "")}`] : undefined;
+const meta = resolveUpload(src);
 // Ne jamais agrandir : une source plus petite que la cible est servie à sa taille.
 const renderWidth = meta ? Math.min(width ?? 1440, meta.width) : width;
-
-// Sans `widths`, `layout="constrained"` génère une dizaine de variantes jusqu'à 2880px
-// — hors de proportion avec un site qui plafonne à 1440. On garde trois paliers :
-// mobile, taille de rendu, et une réserve pour les écrans à forte densité.
-const derivedWidths =
-  widths ??
-  (meta
-    ? [...new Set([Math.round(renderWidth! / 2), renderWidth!, Math.round(renderWidth! * 1.5)])]
-        .filter((w) => w > 0 && w <= meta.width)
-    : undefined);
 ---
 
 {
   meta ? (
-    <Image src={meta} alt={alt} width={renderWidth} widths={derivedWidths} sizes={sizes} layout="constrained" {...rest} />
+    <Image src={meta} alt={alt} width={renderWidth} loading={loading} {...rest} />
   ) : (
-    src && <img src={src} alt={alt} width={width} {...rest} />
+    src && <img src={src} alt={alt} width={width} loading={loading} {...rest} />
   )
 }

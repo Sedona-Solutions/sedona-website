@@ -70,11 +70,11 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
       <section class="pctx">
         <div class="container pctx__row" data-reveal>
           {ctx.media ? (
-            <div class="pctx__media pctx__media--single"><Media src={ctx.media} alt="" width={1280} loading="lazy" /></div>
+            <div class="pctx__media pctx__media--single"><Media src={ctx.media} alt="" width={1280} /></div>
           ) : ctx.images?.length > 0 ? (
             <div class="pctx__media">
-              {ctx.images[0] && <Media class="pctx__ph pctx__ph--back" src={ctx.images[0]} alt="" width={326} loading="lazy" />}
-              {ctx.images[1] && <Media class="pctx__ph pctx__ph--front" src={ctx.images[1]} alt="" width={326} loading="lazy" />}
+              {ctx.images[0] && <Media class="pctx__ph pctx__ph--back" src={ctx.images[0]} alt="" width={326} />}
+              {ctx.images[1] && <Media class="pctx__ph pctx__ph--front" src={ctx.images[1]} alt="" width={326} />}
               <div class="pctx__fade" aria-hidden="true" />
             </div>
           ) : null}
@@ -123,11 +123,11 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
             )}
           </div>
           {p.defis.media ? (
-            <div class="pdefis__media pdefis__media--single"><Media src={p.defis.media} alt="" width={1280} loading="lazy" /></div>
+            <div class="pdefis__media pdefis__media--single"><Media src={p.defis.media} alt="" width={1280} /></div>
           ) : p.defis.images?.length > 0 ? (
             <div class="pdefis__media">
-              {p.defis.images[0] && <Media class="pdefis__tablet" src={p.defis.images[0]} alt="" width={1100} loading="lazy" />}
-              {p.defis.images[1] && <Media class="pdefis__phone" src={p.defis.images[1]} alt="" width={400} loading="lazy" />}
+              {p.defis.images[0] && <Media class="pdefis__tablet" src={p.defis.images[0]} alt="" width={1100} />}
+              {p.defis.images[1] && <Media class="pdefis__phone" src={p.defis.images[1]} alt="" width={400} />}
             </div>
           ) : null}
         </div>
@@ -187,7 +187,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
           </ul>
           {p.approche.galerie?.length > 0 && (
             <ul class="pappr__gal">
-              {p.approche.galerie.map((g) => <li><Media src={g} alt="" width={1280} loading="lazy" /></li>)}
+              {p.approche.galerie.map((g) => <li><Media src={g} alt="" width={1280} /></li>)}
             </ul>
           )}
         </div>
@@ -207,7 +207,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
             <blockquote>“{temoignage.citation} ”</blockquote>
             <figcaption>
               {temoignage.avatar ? (
-                <Media class="ptemoin__avatar" src={temoignage.avatar} alt="" width={64} loading="lazy" />
+                <Media class="ptemoin__avatar" src={temoignage.avatar} alt="" width={64} />
               ) : (
                 <span class="ptemoin__avatar" aria-hidden="true" />
               )}
@@ -233,7 +233,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
           <ul class="pstack__list" data-reveal-group>
             {technos.map((tc) => (
               <li class="techno" data-reveal>
-                <span class="techno__icon">{tc.logo && <Media src={tc.logo} alt="" aria-hidden="true" width={56} />}</span>
+                <span class="techno__icon">{tc.logo && <Media src={tc.logo} alt="" aria-hidden="true" width={28} />}</span>
                 <span class="techno__nom">{tc.nom}</span>
               </li>
             ))}
@@ -248,7 +248,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
     galerie.length > 0 && (
       <section class="pgal">
         <div class="container" data-reveal-group>
-          {galerie.map((g) => <Media class="pgal__img" src={g} alt="" width={1280} loading="lazy" data-reveal />)}
+          {galerie.map((g) => <Media class="pgal__img" src={g} alt="" width={1280} data-reveal />)}
         </div>
       </section>
     )
@@ -264,7 +264,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
             {autres.map((a) => (
               <li class="plc" data-reveal>
                 <a href={`/projets/${a.slug}`} class="plc__media">
-                  {a.couverture ? <Media src={a.couverture} alt={a.titre} width={440} loading="lazy" /> : <span class="plc__ph" aria-hidden="true" />}
+                  {a.couverture ? <Media src={a.couverture} alt={a.titre} width={440} /> : <span class="plc__ph" aria-hidden="true" />}
                 </a>
                 <h3 class="plc__title">{a.client ?? a.titre}</h3>
                 {a.tags?.length > 0 && <ul class="plc__tags">{a.tags.slice(0, 4).map((tg) => <li>{tg}</li>)}</ul>}

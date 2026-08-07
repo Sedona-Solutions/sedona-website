@@ -19,7 +19,7 @@ const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
         <blockquote class="btest__card" data-reveal>
           <p class="btest__quote">"{temoignage.citation}"</p>
           <footer class="btest__foot">
-            {temoignage.avatar && <Media class="btest__avatar" src={temoignage.avatar} alt="" width={96} loading="lazy" />}
+            {temoignage.avatar && <Media class="btest__avatar" src={temoignage.avatar} alt="" width={96} />}
             <div>
               <cite class="btest__auteur">{temoignage.auteur}</cite>
               <p class="btest__role">{temoignage.role}</p>

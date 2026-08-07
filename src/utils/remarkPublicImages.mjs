@@ -1,6 +1,7 @@
 import { visit } from "unist-util-visit";
 import { relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { UPLOADS_PREFIX } from "./uploads.mjs";
 
 // Tina écrit les images du corps d'un article en chemin absolu (`/uploads/...`), que
 // le pipeline d'Astro laisse passer tel quel : servi brut, sans conversion ni
@@ -16,18 +17,28 @@ import { fileURLToPath } from "node:url";
 
 const PUBLIC_DIR = fileURLToPath(new URL("../../public", import.meta.url));
 
+// Largeur de rendu de la colonne de texte d'un article. Sans elle, Astro retombe sur
+// la largeur intrinsèque du fichier : une photo déposée en pleine résolution est alors
+// servie telle quelle (5000px et 2,3 Mo pour la plus lourde du site). C'est le pendant
+// du `width` que Media.astro passe pour les images de composants.
+const LARGEUR_CORPS_ARTICLE = 1088;
+
 export default function remarkPublicImages() {
   return (tree, file) => {
     const mdDir = dirname(file.path ?? file.history?.[0] ?? "");
     if (!mdDir) return;
 
     visit(tree, "image", (node) => {
-      if (!node.url?.startsWith("/uploads/")) return;
+      if (!node.url?.startsWith(UPLOADS_PREFIX)) return;
       let rel = relative(mdDir, PUBLIC_DIR + node.url);
       // `relative` peut produire un chemin sans préfixe explicite ; Astro attend une
       // référence relative reconnaissable pour la traiter comme un asset local.
       if (!rel.startsWith(".")) rel = "./" + rel;
       node.url = rel;
+
+      // rehype-images d'Astro reprend ces propriétés et les passe à getImage().
+      node.data ??= {};
+      node.data.hProperties = { width: LARGEUR_CORPS_ARTICLE, ...node.data.hProperties };
     });
   };
 }

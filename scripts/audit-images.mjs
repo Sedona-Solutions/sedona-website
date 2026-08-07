@@ -8,34 +8,16 @@
 //
 // Usage : node scripts/audit-images.mjs [--strict] [--json]
 
-import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
+import { readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { RASTER, MEDIA, UPLOADS_PREFIX, walk, humanBytes } from "../src/utils/uploads.mjs";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIST = join(ROOT, "dist");
 
-const RASTER = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"]);
-const MEDIA = new Set([...RASTER, ".svg", ".ico", ".pdf", ".mp4", ".webm"]);
-
 const strict = process.argv.includes("--strict");
 const asJson = process.argv.includes("--json");
-
-/** Liste récursivement les fichiers d'un dossier. */
-function walk(dir, out = []) {
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, entry.name);
-    if (entry.isDirectory()) walk(full, out);
-    else out.push(full);
-  }
-  return out;
-}
-
-const human = (bytes) => {
-  if (bytes < 1024) return `${bytes} o`;
-  if (bytes < 1024 ** 2) return `${(bytes / 1024).toFixed(0)} Ko`;
-  return `${(bytes / 1024 ** 2).toFixed(1)} Mo`;
-};
 
 if (!existsSync(DIST)) {
   console.error("dist/ absent — lancer `npm run build` d'abord.");
@@ -79,7 +61,7 @@ for (const file of htmlFiles) {
 
     const src = tag.match(/\bsrc="([^"]+)"/)?.[1];
     // Image matricielle encore servie depuis public/ : hors pipeline d'optimisation.
-    if (src?.startsWith("/uploads/") && RASTER.has(extname(src).toLowerCase())) {
+    if (src?.startsWith(UPLOADS_PREFIX) && RASTER.has(extname(src).toLowerCase())) {
       if (!rawUploads.has(src)) rawUploads.set(src, new Set());
       rawUploads.get(src).add(page);
     }
@@ -106,15 +88,15 @@ if (asJson) {
   console.log(JSON.stringify(report, null, 2));
 } else {
   const pct = (n, d) => (d === 0 ? "—" : `${((n / d) * 100).toFixed(0)} %`);
-  console.log(`\n  Poids du build      ${human(totalBytes)}`);
-  console.log(`  dont images         ${human(imageBytes)} (${pct(imageBytes, totalBytes)})`);
-  console.log(`  dont optimisées     ${human(optimizedBytes)} (${pct(optimizedBytes, imageBytes)} des images)`);
+  console.log(`\n  Poids du build      ${humanBytes(totalBytes)}`);
+  console.log(`  dont images         ${humanBytes(imageBytes)} (${pct(imageBytes, totalBytes)})`);
+  console.log(`  dont optimisées     ${humanBytes(optimizedBytes)} (${pct(optimizedBytes, imageBytes)} des images)`);
   console.log(`\n  Balises <img>       ${imgTotal}`);
   console.log(`  avec width+height   ${imgWithDims} (${pct(imgWithDims, imgTotal)})`);
   console.log(`  avec loading        ${imgWithLoading} (${pct(imgWithLoading, imgTotal)})`);
   console.log(`  sans alt            ${imgWithoutAlt}`);
   console.log(`\n  Images /uploads/ non optimisées : ${rawUploads.size}`);
-  if (rawUploads.size > 0 && strict) {
+  if (rawUploads.size > 0) {
     for (const [src, pages] of [...rawUploads].slice(0, 20)) {
       console.log(`    ${src}  →  ${[...pages].slice(0, 3).join(", ")}${pages.size > 3 ? ` (+${pages.size - 3})` : ""}`);
     }

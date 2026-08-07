@@ -16,7 +16,7 @@ const logos = section?.logos ?? [];
             <>
               {i > 0 && <li class="clients__star" aria-hidden="true">✦</li>}
               <li class="clients__item" aria-hidden={i >= logos.length ? "true" : undefined}>
-                {c.logo ? <Media src={c.logo} alt={c.nom} width={240} loading="lazy" /> : <span>{c.nom}</span>}
+                {c.logo ? <Media src={c.logo} alt={c.nom} width={240} /> : <span>{c.nom}</span>}
               </li>
             </>
           ))}

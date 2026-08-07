@@ -1,6 +1,7 @@
-import { readdirSync, readFileSync, statSync, unlinkSync, rmdirSync } from "node:fs";
+import { readFileSync, statSync, unlinkSync, rmdirSync, readdirSync } from "node:fs";
 import { join, relative, extname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { RASTER, RASTER_ALTERNATION, walk, humanBytes } from "./uploads.mjs";
 
 // Les images de public/uploads/ doivent rester à leur place pour TinaCMS (le media
 // manager les y écrit et les y relit), mais elles n'ont aucune raison d'être publiées
@@ -15,18 +16,13 @@ import { fileURLToPath } from "node:url";
 // produit ne référence. On ne touche ni aux SVG, ni aux PDF, ni aux vidéos, et on
 // s'interdit tout dossier autre que uploads/ et _astro/.
 
-const RASTER = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"]);
 const SCANNED = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".txt"]);
 const PRUNABLE = ["uploads", "_astro"];
 
-function walk(dir, out = []) {
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, entry.name);
-    if (entry.isDirectory()) walk(full, out);
-    else out.push(full);
-  }
-  return out;
-}
+// Ancré sur le `/` initial : sans cela, la classe gourmande parcourt puis retrace
+// chaque suite de caractères du CSS et du JS minifiés — 55 fois plus lent pour un
+// ensemble de références identique.
+const IMAGE_REF = new RegExp(`/[^"'()\\s,]*?\\.(?:${RASTER_ALTERNATION})`, "gi");
 
 /** Supprime récursivement les dossiers devenus vides sous `root`. */
 function removeEmptyDirs(root, dir) {
@@ -49,9 +45,8 @@ export default function pruneUnusedImages() {
         const referenced = new Set();
         for (const file of files) {
           if (!SCANNED.has(extname(file).toLowerCase())) continue;
-          const text = readFileSync(file, "utf-8");
-          for (const m of text.matchAll(/[^"'()\s,]+\.(?:png|jpe?g|webp|avif|gif)/gi)) {
-            referenced.add(decodeURIComponent(m[0].replace(/^.*?(?=\/)/, "")).replace(/^\//, ""));
+          for (const m of readFileSync(file, "utf-8").matchAll(IMAGE_REF)) {
+            referenced.add(decodeURIComponent(m[0]).replace(/^\//, ""));
           }
         }
 
@@ -69,7 +64,7 @@ export default function pruneUnusedImages() {
 
         if (removed > 0) {
           removeEmptyDirs(outDir, outDir);
-          logger.info(`${removed} images non référencées retirées du build (${(freed / 1024 ** 2).toFixed(1)} Mo)`);
+          logger.info(`${removed} images non référencées retirées du build (${humanBytes(freed)})`);
         }
       },
     },
