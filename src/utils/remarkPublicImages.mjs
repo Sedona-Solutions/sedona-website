@@ -25,8 +25,11 @@ const LARGEUR_CORPS_ARTICLE = 1088;
 
 export default function remarkPublicImages() {
   return (tree, file) => {
-    const mdDir = dirname(file.path ?? file.history?.[0] ?? "");
-    if (!mdDir) return;
+    // Sans chemin de fichier, impossible de calculer une référence relative : la
+    // réécriture produirait un chemin résolu depuis le répertoire courant, donc faux.
+    const mdPath = file.path ?? file.history?.[0];
+    if (!mdPath) return;
+    const mdDir = dirname(mdPath);
 
     visit(tree, "image", (node) => {
       if (!node.url?.startsWith(UPLOADS_PREFIX)) return;

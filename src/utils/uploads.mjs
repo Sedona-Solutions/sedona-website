@@ -16,9 +16,6 @@ export const RASTER = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif"
 /** Tout média susceptible d'être référencé depuis une page, matriciel ou non. */
 export const MEDIA = new Set([...RASTER, ".svg", ".ico", ".pdf", ".mp4", ".webm"]);
 
-/** Alternative d'extensions dérivée de RASTER, pour composer des expressions régulières. */
-export const RASTER_ALTERNATION = [...RASTER].map((e) => e.slice(1)).join("|");
-
 /** Liste récursivement les fichiers d'un dossier. */
 export function walk(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
