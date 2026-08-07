@@ -233,7 +233,7 @@ const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolor
           <ul class="pstack__list" data-reveal-group>
             {technos.map((tc) => (
               <li class="techno" data-reveal>
-                <span class="techno__icon">{tc.logo && <img src={tc.logo} alt="" aria-hidden="true" />}</span>
+                <span class="techno__icon">{tc.logo && <Media src={tc.logo} alt="" aria-hidden="true" width={56} />}</span>
                 <span class="techno__nom">{tc.nom}</span>
               </li>
             ))}

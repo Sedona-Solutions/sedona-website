@@ -2,13 +2,15 @@
 // Bande photo plein cadre (juste après le Hero) : même traitement que .pcover
 // sur les pages projets, avec une marge négative pour remonter sous les coins
 // arrondis des sections voisines plutôt qu'un bord net.
+import Media from "../Media.astro";
+
 const { src, alt = "" } = Astro.props;
 ---
 
 {
   src && (
     <section class="pband">
-      <img class="pband__img" {src} {alt} loading="lazy" />
+      <Media class="pband__img" {src} {alt} width={1440} loading="lazy" />
     </section>
   )
 }
