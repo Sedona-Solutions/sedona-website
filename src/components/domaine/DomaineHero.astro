@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 const {
   titre = "",
   accroche,
@@ -29,7 +30,7 @@ if (pillWord && t.includes(pillWord)) {
     <p class="dhero__eyebrow">Domaines d'intervention</p>
     <h1 class="title-2 dhero__title">{avant}<mark class={`hl hl--${pillVariant}`}>{pastille}</mark>{apres}</h1>
     {accroche && <p class="dhero__accroche">{accroche}</p>}
-    {illustration && <img class="dhero__illu" src={illustration} alt="" aria-hidden="true" />}
+    {illustration && <Media class="dhero__illu" src={illustration} alt="" aria-hidden="true" width={720} loading="eager" />}
     <a class="dhero__btn" href={ctaHref}>{ctaLabel}</a>
   </div>
 </section>

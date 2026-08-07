@@ -2,6 +2,8 @@
 // Ligne de photos de l'équipe en défilement continu (façon marquee), réutilisée
 // telle quelle entre "Notre histoire" (section Team) et le Hero de "Carrières"
 // (cf. maquette Figma node 3978-24937) — mêmes réglages (taille, vitesse) partout.
+import Media from "./Media.astro";
+
 const { membres = [] } = Astro.props;
 
 const TINTS = ["#f18878", "#e5e7fa", "#f8d98b", "#a7e9d1", "#a9e7e4", "#f1d1b7"];
@@ -34,7 +36,7 @@ const tintFor = (m, i) => (m.couleur && m.couleur !== "none" ? COULEUR_HEX[m.cou
                 {m.nom && <span class="team-marquee__nom">{m.nom}</span>}
                 {m.role && <span class="team-marquee__role">{m.role}</span>}
               </span>
-              {m.photo && <img class="team-marquee__photo" src={m.photo} alt={m.nom} loading="lazy" />}
+              {m.photo && <Media class="team-marquee__photo" src={m.photo} alt={m.nom} width={320} loading="lazy" />}
             </li>
           ))}
         </ul>

@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 import TitreAccent from "../TitreAccent.astro";
 const { section } = Astro.props;
 const temoignages = section?.temoignages ?? [];
@@ -21,7 +22,7 @@ const total = String(temoignages.length).padStart(2, "0");
               <blockquote class="tcard__quote">“{t.citation}”</blockquote>
               <div class="tcard__author">
                 {t.avatar
-                  ? <img class="tcard__avatar" src={t.avatar} alt="" loading="lazy" />
+                  ? <Media class="tcard__avatar" src={t.avatar} alt="" width={96} loading="lazy" />
                   : <span class="tcard__avatar" />}
                 <span>
                   <span class="tcard__name">{t.auteur}</span>
@@ -39,7 +40,7 @@ const total = String(temoignages.length).padStart(2, "0");
               <blockquote class="tcard__quote" id="tcardQuote">“{t.citation}”</blockquote>
               <div class="tcard__author">
                 {t.avatar
-                  ? <img class="tcard__avatar" id="tcardAvatar" src={t.avatar} alt="" loading="lazy" />
+                  ? <Media class="tcard__avatar" id="tcardAvatar" src={t.avatar} alt="" width={96} loading="lazy" />
                   : <span class="tcard__avatar" id="tcardAvatar" aria-hidden="true" />}
                 <span>
                   <span class="tcard__name" id="tcardName">{t.auteur}</span>

@@ -1,4 +1,5 @@
 ---
+import Media from "./Media.astro";
 // Accordéon "icône + titre" réutilisable (Ce que nous faisons / fonctionnalités
 // Brieff...) : icône 40x40 recolorée à la couleur d'accent de la page, titre
 // 18px, survol + état ouvert teintés en couleur d'accent claire, image +
@@ -53,7 +54,7 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
                   <div class="acca__images">
                     {it.images.slice(0, 3).map((src) => (
                       <div class="acca__imgPlaceholder">
-                        <img src={src} alt="" loading="lazy" />
+                        <Media src={src} alt="" width={640} loading="lazy" />
                       </div>
                     ))}
                   </div>
@@ -66,7 +67,7 @@ const icons = items.map((it) => (it.icone ? recolorIcon(it.icone, accentMid) : n
               {it.client && <p class="acca__client"><strong>Client : {it.client}</strong></p>}
               {it.image && (
                 <>
-                  <div class="acca__imgWrap"><img src={it.image} alt="" loading="lazy" /></div>
+                  <div class="acca__imgWrap"><Media src={it.image} alt="" width={640} loading="lazy" /></div>
                   {it.imageCaption && <p class="acca__caption">{it.imageCaption}</p>}
                 </>
               )}

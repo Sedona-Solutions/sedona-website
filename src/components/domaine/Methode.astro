@@ -1,4 +1,5 @@
 ---
+import Media from "../Media.astro";
 import squiggle9 from "../../../public/deco/squiggle-9.svg?raw";
 import NumberBadge from "../NumberBadge.astro";
 import TitreAccent from "../TitreAccent.astro";
@@ -55,7 +56,7 @@ arrowSvg = arrowSvg.replace("<svg ", `<svg class="methode__arrow" `);
           <ul class="technos" data-reveal-group>
             {technos.map((t) => (
               <li class="techno" data-reveal>
-                <span class="techno__icon"><img src={t.logo} alt="" aria-hidden="true" /></span>
+                <span class="techno__icon"><Media src={t.logo} alt="" aria-hidden="true" width={56} /></span>
                 <span class="techno__body">
                   {t.badge && <span class="techno__badge">{t.badge}</span>}
                   <span class="techno__nom">{t.nom}</span>
