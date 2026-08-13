@@ -1,6 +1,7 @@
 import { defineConfig } from "tinacms";
 import { ColorSwatchDropdown } from "./fields/ColorSwatchDropdown";
 import { ProjectsLayoutToggle } from "./fields/ProjectsLayoutToggle";
+import { LogoActiveToggle } from "./fields/LogoActiveToggle";
 
 // Branche utilisée par Tina Cloud (laisser "main" en local).
 const branch =
@@ -146,6 +147,7 @@ export default defineConfig({
             ui: { itemProps: (i: { ville?: string }) => ({ label: i?.ville }) },
             fields: [
               { type: "string", name: "ville", label: "Ville" },
+              { type: "string", name: "label", label: "Sous-titre (ex. Agence Rhônes-Alpes)" },
               { type: "string", name: "adresse", label: "Adresse", ui: { component: "textarea" } },
               { type: "string", name: "telephone", label: "Téléphone" },
             ],
@@ -331,11 +333,18 @@ export default defineConfig({
                 name: "logos",
                 label: "Logos clients",
                 list: true,
-                ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
+                ui: { itemProps: (i: { nom?: string; actif?: boolean }) => ({ label: i?.actif === false ? `${i?.nom} (masqué)` : i?.nom }) },
                 fields: [
+                  { type: "boolean", name: "actif", label: "Afficher sur la home" },
                   { type: "string", name: "nom", label: "Nom" },
                   { type: "image", name: "logo", label: "Logo" },
                 ],
+              },
+              {
+                type: "string",
+                name: "_logosVisibilityToggle",
+                label: "_logosVisibilityToggle",
+                ui: { component: LogoActiveToggle },
               },
             ],
           },

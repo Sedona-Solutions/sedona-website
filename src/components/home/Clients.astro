@@ -1,7 +1,7 @@
 ---
 const { section } = Astro.props;
 const titre = section?.titre;
-const logos = section?.logos ?? [];
+const logos = (section?.logos ?? []).filter((c: { actif?: boolean }) => c.actif !== false);
 
 // Ces SVG n'ont pas d'attribut width/height sur la balise racine (seulement un
 // viewBox) : utilisés en <img>, le navigateur ne leur trouve aucune taille
