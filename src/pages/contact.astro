@@ -16,13 +16,16 @@ const BUDGETS = [
   "Pas encore défini",
 ];
 
-const agenceIcon = recolorIcon("location-pin-direction", "#42140d");
+// Mêmes couleurs par agence que sur la page Notre histoire (accent-color-1/2/3).
+const ICON_COLOR: Record<string, string> = { Lyon: "#b3b5ee", Paris: "#f8b3a9", Toulon: "#a7e9d1" };
+const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("flag-heart", ICON_COLOR[a.ville] ?? "#a7e9d1"));
 ---
 
 <BaseLayout
   title="Contact — Sedona"
   description="Et si on parlait de vous ? Discutons de vos projets et trouvons la solution adaptée."
 >
+  <div class="dark-stack">
   <section class="chero">
     <svg class="cdeco cdeco--1" viewBox="0 0 94.0314 137.766" fill="none" aria-hidden="true">
       <path
@@ -142,17 +145,27 @@ const agenceIcon = recolorIcon("location-pin-direction", "#42140d");
     </div>
   </section>
 
+  <div class="csep" aria-hidden="true"></div>
+
   <section class="cvisit">
     <div class="container cvisit__container">
       <header class="cvisit__head" data-reveal>
+        <svg class="cdeco cdeco--4" viewBox="0 0 73 80" fill="none" aria-hidden="true">
+          <path
+            d="M10 32.7838L28 4M24.1429 52.6126C32.0714 46.003 49.6 32.7838 56.2857 32.7838M32.5 75C40 73.5075 56.8 71.418 64 75"
+            stroke="var(--color-sunshine-600)"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
         <TitreAccent titre="Venez nous rendre visite" accent="visite" as="h2" class="title-2 cvisit__title" pillVariant="sunshine" />
         <p class="cvisit__sub">Discutons de vos projets ou buvons simplement un café !</p>
       </header>
 
       <ul class="cvisit__grid" data-reveal-group>
-        {agences.map((a: { ville: string; label?: string; adresse?: string }) => (
+        {agences.map((a: { ville: string; label?: string; adresse?: string }, i: number) => (
           <li class="cagence" data-reveal>
-            {agenceIcon && <span class="cagence__icon" set:html={agenceIcon} />}
+            {agenceIcons[i] && <span class="cagence__icon" aria-hidden="true" set:html={agenceIcons[i]} />}
             <h3 class="cagence__ville">{a.ville}</h3>
             {a.label && <p class="cagence__label">{a.label.toUpperCase()}</p>}
             {a.adresse && <p class="cagence__adresse">{a.adresse}</p>}
@@ -163,6 +176,7 @@ const agenceIcon = recolorIcon("location-pin-direction", "#42140d");
       <img class="cvisit__cactus" src="/deco/contact-cool-cactus.svg" alt="" aria-hidden="true" loading="lazy" />
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <script>
@@ -211,9 +225,13 @@ const agenceIcon = recolorIcon("location-pin-direction", "#42140d");
 </script>
 
 <style>
-  /* Fond sombre commun (même pattern que les autres pages) : sans ça, les coins
-     arrondis en bas de .cvisit n'ont rien de sombre à révéler avant le footer. */
-  :global(body) {
+  /* Fond sombre commun (même pattern que les autres pages, cf. .dark-stack sur
+     /projets, /blog, /offres/[slug]…) : sans ça, les coins arrondis en bas de
+     .cvisit n'ont rien de sombre à révéler avant le footer. Un fond sur body
+     ferait aussi apparaître ce sombre à travers le header (translucide) tout
+     en haut de page, contrairement aux autres pages : on le scope donc à ce
+     wrapper plutôt qu'au body. */
+  .dark-stack {
     background: #3b0800;
   }
 
@@ -324,7 +342,22 @@ const agenceIcon = recolorIcon("location-pin-direction", "#42140d");
   }
   @media (max-width: 1200px) { .cvisit__cactus { display: none; } }
 
-  .cvisit__head { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+  .csep {
+    height: 96px;
+    background: var(--color-canyon-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .csep::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: color-mix(in srgb, #3b0800 20%, transparent);
+  }
+
+  .cvisit__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+  .cdeco--4 { width: 60px; height: auto; left: calc(72% + 195px); top: -60px; transform: rotate(275deg) scaleY(-1); }
   .cvisit :global(.cvisit__title) { margin: 0 auto; color: #3b0800; }
   .cvisit__sub { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; color: #3b0800; }
 

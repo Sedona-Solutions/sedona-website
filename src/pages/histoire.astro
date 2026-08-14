@@ -20,6 +20,7 @@ import carrieres from "../../content/carrieres/index.json";
     <Engagements engagements={p.engagements} />
     <Timeline timeline={p.timeline} />
     <Team team={p.team} membres={carrieres.hero?.membres} />
+    <div class="csep" aria-hidden="true"></div>
     <Offices offices={p.offices} />
   </div>
   <CtaFinal cta={p.ctaFinal} />
@@ -31,5 +32,22 @@ import carrieres from "../../content/carrieres/index.json";
      s'y fond sans avoir besoin de son propre radius. */
   .histoire-stack {
     background: #3b0800;
+  }
+
+  /* Séparateur entre Team et Offices (même pattern que .csep sur /contact,
+     entre le formulaire et "Venez nous rendre visite") : un bandeau de la
+     même teinte claire que les 2 blocs, avec un simple trait vertical centré. */
+  .csep {
+    height: 96px;
+    background: var(--color-canyon-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .csep::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: color-mix(in srgb, #3b0800 20%, transparent);
   }
 </style>
