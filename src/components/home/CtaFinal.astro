@@ -24,15 +24,22 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
           <span class="cta__actions-before">
             <img class="cta__circle" src="/deco/circle.svg" alt="" aria-hidden="true" />
           </span>
-          {
-            cta?.ctaLabel && (
-              <a class="cta__btn" href={cta.ctaHref}>
-                <span class="cta__btn-bg" aria-hidden="true" />
-                <span class="cta__btn-front" aria-hidden="true" />
-                <span class="cta__btn-label">{cta.ctaLabel}</span>
+          <span class="cta__btnGroup">
+            {
+              cta?.ctaLabel && (
+                <a class="cta__btn" href={cta.ctaHref}>
+                  <span class="cta__btn-bg" aria-hidden="true" />
+                  <span class="cta__btn-front" aria-hidden="true" />
+                  <span class="cta__btn-label">{cta.ctaLabel}</span>
+                </a>
+              )
+            }
+            {cta?.ctaLabel2 && (
+              <a class="cta__btn2 link-cta" href={cta.ctaHref2}>
+                {cta.ctaLabel2}
               </a>
-            )
-          }
+            )}
+          </span>
         </div>
       </div>
     </div>
@@ -140,10 +147,22 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
     flex-wrap: wrap;
     margin-top: 2.25rem;
   }
-  /* Variante non centrée : le groupe n'existe que pour la variante centrée
-     (grid) ; ici il est transparent pour la mise en page flex. */
-  .cta__actions-before {
+  /* Variante non centrée : les groupes n'existent que pour la variante centrée
+     (grid) ; ici ils sont transparents pour la mise en page flex. */
+  .cta__actions-before,
+  .cta__btnGroup {
     display: contents;
+  }
+  .cta__content--centered .cta__btnGroup {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cta__btn2 {
+    color: var(--color-red-rock-50);
+    font-size: 1.25rem;
   }
   .cta__btn {
     position: relative;
@@ -203,6 +222,9 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
     }
     .cta__content--centered .cta__actions-before {
       display: contents;
+    }
+    .cta__content--centered .cta__btnGroup {
+      flex-direction: column;
     }
   }
 </style>

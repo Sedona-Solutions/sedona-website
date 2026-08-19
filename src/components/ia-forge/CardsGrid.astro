@@ -1,0 +1,115 @@
+---
+// Grille 3 colonnes icône + titre + texte, réutilisée pour "Pourquoi choisir
+// Sedona Forge" (fond sombre) et "Vos bénéfices concrets" (fond clair) sur la
+// page IA Forge — mêmes props, seule la variante `dark` change l'habillage.
+import { recolorIcon } from "../../utils/iconRecolor.js";
+import { richTextToHtml } from "../../utils/richText.js";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+import TitreAccent from "../TitreAccent.astro";
+
+const {
+  eyebrow,
+  titre,
+  titreAccent,
+  intro,
+  decoration,
+  pillVariant = "red-rock",
+  items = [],
+  dark = false,
+  accentColor = "#fdf4f3",
+  radiusBottom = false,
+  withDot = true,
+} = Astro.props;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
+const icons = items.map((it: { icone?: string }) => (it.icone ? recolorIcon(it.icone, accentColor) : null));
+// `richTextToHtml` accepte aussi bien une chaîne markdown (champ `pourquoi`,
+// propre à IA Forge) qu'un arbre rich-text Tina (champ `benefices`, partagé
+// avec le template générique des offres).
+const textesHtml = items.map((it: { texte?: unknown }) => richTextToHtml(it.texte));
+---
+
+{
+  items.length > 0 && (
+    <section class={`icg ${dark ? "icg--dark" : ""} ${radiusBottom ? "icg--radius-bottom" : ""}`}>
+      <div class="container">
+        <header class="icg__head" data-reveal>
+          {decoration && <img class="icg__deco" src={decoration} alt="" aria-hidden="true" />}
+          {eyebrow && (
+            <p class={`icg__eyebrow ${withDot ? "" : "icg__eyebrow--plain"}`}>
+              {withDot && <span class="dot" aria-hidden="true" style={`background:${accentMid}`} />} {eyebrow}
+            </p>
+          )}
+          <TitreAccent titre={titre} accent={titreAccent} as="h3" class={`icg__title ${withDot ? "" : "icg__title--lg"}`} pillVariant={pillVariant} />
+          {intro && <p class={`icg__intro ${withDot ? "" : "icg__intro--lg"}`}>{intro}</p>}
+        </header>
+
+        <ul class="icg__grid" data-reveal-group>
+          {items.map((it: { titre?: string; texte?: string }, i: number) => (
+            <li class="icgc" data-reveal>
+              {icons[i] && (
+                <span class="icgc__icon" aria-hidden="true">
+                  <Fragment set:html={icons[i]} />
+                </span>
+              )}
+              <h4 class="icgc__title">{it.titre}</h4>
+              {textesHtml[i] && <div class="icgc__text" set:html={textesHtml[i]} />}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .icg { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); }
+  .icg--dark { background: #3b0800; }
+  .icg--radius-bottom { border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .icg__head { position: relative; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .icg__deco { position: absolute; right: -40px; top: 20px; width: 140px; height: auto; transform: rotate(15deg); pointer-events: none; }
+  @media (max-width: 900px) {
+    .icg__deco { display: none; }
+  }
+  .icg__intro {
+    margin: 1.5rem 0 0; max-width: 70ch; font-family: var(--font-body); font-size: 1.125rem;
+    line-height: 1.5; color: #3b0800;
+  }
+  .icg__intro--lg {
+    font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.25;
+  }
+  .icg--dark .icg__intro { color: var(--color-red-rock-50); }
+  .icg__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .icg--dark .icg__eyebrow { color: var(--color-red-rock-50); }
+  .icg__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--color-red-rock-300); flex: none; }
+  .icg__eyebrow--plain { display: block; font-size: 1.25rem; letter-spacing: -0.01em; }
+  .icg :global(.icg__title) {
+    margin: 0; max-width: 40ch; color: #3b0800;
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.2; letter-spacing: -0.01em;
+  }
+  .icg :global(.icg__title--lg) { font-size: clamp(2rem, 4.4vw, 4rem); }
+  .icg--dark :global(.icg__title) { color: var(--color-red-rock-50); }
+  .icg--dark :global(.icg__title .hl) {
+    display: inline; background: none; color: inherit; padding: 0; border-radius: 0; transform: none;
+  }
+  .icg--dark :global(.icg__title .hl:hover) { animation: none; }
+
+  .icg__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .icgc { background: #42140d; border-radius: 24px; padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .icg:not(.icg--dark) .icgc { background: #fff; }
+  .icgc__icon { display: block; width: 48px; height: 48px; flex: none; }
+  .icgc__icon :global(svg) { width: 100%; height: 100%; }
+  .icgc__title { margin: 0; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: var(--color-red-rock-50); }
+  .icg:not(.icg--dark) .icgc__title { color: #3b0800; }
+  .icgc__text :global(p) { margin: 0; font-family: var(--font-body); font-size: 1rem; line-height: 1.375; color: var(--color-red-rock-50); }
+  .icgc__text :global(p + p) { margin-top: 0.6em; }
+  .icg:not(.icg--dark) .icgc__text :global(p) { color: #3b0800; }
+
+  @media (max-width: 900px) {
+    .icg__grid { grid-template-columns: 1fr; }
+  }
+</style>

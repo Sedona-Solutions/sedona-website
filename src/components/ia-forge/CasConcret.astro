@@ -1,0 +1,60 @@
+---
+// Cas client concret (page IA Forge) : texte + 2 chiffres à gauche, illustration
+// à droite. Même langage que le Hero (mêmes proportions colonne texte/image).
+import Media from "../Media.astro";
+
+const { eyebrow = "Cas concret", titre, texte, illustration, stats = [] } = Astro.props;
+---
+
+<section class="icc">
+  <div class="container icc__row">
+    <div class="icc__col">
+      <p class="icc__eyebrow">{eyebrow}</p>
+      <h2 class="icc__title">{titre}</h2>
+      {texte && <p class="icc__texte">{texte}</p>}
+
+      {stats.length > 0 && (
+        <dl class="icc__stats">
+          {stats.map((s: { valeur?: string; label?: string }, i: number) => (
+            <div class={`icc__stat ${i > 0 ? "icc__stat--sep" : ""}`}>
+              <dt class="icc__stat-value">{s.valeur}</dt>
+              <dd class="icc__stat-label">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+
+    <div class="icc__illu-wrap">
+      {illustration && <Media class="icc__illu" src={illustration} alt="" width={532} />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .icc { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .icc__row {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+    gap: clamp(2rem, 4vw, 10rem); align-items: center;
+  }
+  .icc__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .icc__title { margin: 0; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2rem, 4.4vw, 4rem); line-height: 1.1; color: #3b0800; }
+  .icc__texte { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: #3b0800; }
+
+  .icc__stats { display: flex; gap: 2rem; margin: 2rem 0 0; }
+  .icc__stat { flex: 1 1 0; }
+  .icc__stat--sep { border-left: 1px dashed color-mix(in srgb, #3b0800 30%, transparent); padding-left: 2rem; }
+  .icc__stat-value { margin: 0; font-family: var(--font-sans); font-weight: 700; font-size: 2rem; letter-spacing: -0.02em; color: #3b0800; }
+  .icc__stat-label { margin: 0.5rem 0 0; font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: #3b0800; }
+
+  .icc__illu-wrap { border-radius: 20px; overflow: hidden; }
+  .icc__illu { width: 100%; height: auto; display: block; }
+
+  @media (max-width: 900px) {
+    .icc__row { grid-template-columns: 1fr; }
+    .icc__illu-wrap { order: -1; }
+  }
+</style>
