@@ -1,4 +1,5 @@
 ---
+_template: generique
 titre: Keycloak Run
 accroche: Sécuriser vos applications sans réinventer la roue
 enBref: >-

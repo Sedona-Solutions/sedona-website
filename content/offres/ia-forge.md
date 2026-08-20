@@ -26,7 +26,8 @@ heroProof:
     - /uploads/articles/collab/elsa-m.png
   texte: Nos clients et les membres de notre tribu utilisent FORGE
 impacts:
-  eyebrow: Quelques chiffres
+  eyebrow: Impacts mesurables
+  titre: Des chiffres qui parlent d’eux-même.
   items:
     - valeur: '4'
       label: points de contrôle humain
@@ -75,9 +76,11 @@ incoherence:
   eyebrow: Notre moteur de spécification
   titre: 'Une interface unifiée, des agents IA spécialisés.'
   texte: |
-    **BRIEFF structure la phase amont** en vous faisant dialoguer avec des agents IA spécialisés. Le résultat : des spécifications complètes, cohérentes et exploitables immédiatement par la FORGE.
+    **BRIEFF structure la phase amont**, basée sur la méthodologie BMAD, en vous faisant dialoguer avec des agents IA spécialisés. Le résultat : des spécifications complètes, cohérentes et exploitables immédiatement par la FORGE.
 
-    Basé sur la méthodologie BMAD — pour transformer une idée en backlog prêt à construire, en quelques heures plutôt qu'en semaines.
+
+
+    [VOIR L'OFFRE BRIEFF →](/offres/brieff)
   illustration: /uploads/offre/ia-forge-specification.png
 plans:
   eyebrow: Comment nous travaillons ensemble ?
@@ -87,7 +90,7 @@ plans:
   items:
     - categorie: AMORÇEAGE
       titre: Audit & POC
-      texte: On refait une de vos fonctionnalités avec Sedona Forge. Testez avant de vous engager.
+      texte: On refait une de vos fonctionnalités avec Sedona Forge.
       icone: illus_audit
       points:
         - Cadrage express avec BRIEFF
@@ -97,12 +100,12 @@ plans:
       note: Forfait court (quelques jours seulement)
     - categorie: CONSTRUCTION
       titre: Build Sprint
-      texte: 'Un MVP de portail, CMS ou mini-ERP livré en quelques semaines, budget et périmètre fixés.'
+      texte: Un MVP de portail ou CMS livré en quelques semaines.
       icone: illus_maintenance
       points:
         - Cadrage amont avec Brieff
         - Équipe agile pluridisciplinaire
-        - Les 4 portes de contrôle
+        - 4 points de contrôle
         - 'Budget ferme, engagement de résultat'
         - Liberté technologique totale
       ctaLabel: Choisir cette offre
@@ -110,7 +113,7 @@ plans:
       highlight: true
     - categorie: ÉVOLUTION
       titre: Roadmap à la carte
-      texte: 'Un forfait mensuel flexible : vous gérez vos priorités et ajustez les fonctionnalités quand vous voulez.'
+      texte: 'Un forfait mensuel flexible : vous gérez et ajustez vos priorités.'
       icone: illlus_tests
       points:
         - Aucune dépendance éditeur
@@ -135,11 +138,7 @@ benefices:
   eyebrow: Une liberté créative
   titre: 'Vous avez le droit de tester, le droit d''oser.'
   titreAccent: tester
-  intro: >-
-    Quand le coût d'une idée s'effondre, tout devient possible. Sedona FORGE
-    ouvre un champ de possibles que les progiciels vous interdisaient :
-    essayez, mesurez, ajustez — et réinventez vos produits sans crainte de
-    l'échec.
+  intro: 'Quand le coût d''une idée s''effondre, tout devient possible. Sedona FORGE ouvre un champ de possibles que les progiciels vous interdisaient : essayez, mesurez, ajustez — et réinventez vos produits sans crainte de l''échec.'
   items:
     - titre: Tester sans risque
       texte: |
@@ -154,12 +153,14 @@ benefices:
         Votre technologie, vos intégrations, vos ambitions. L'IA lève les barrières ; l'expert garantit la solidité.
       icone: data-ia
 ctaFinal:
-  titre: Passez à FORGE ?
+  titre: Et si vous testiez la FORGE ?
   titreAccent: FORGE ?
-  description: 'Et si on régénérait l''une de vos fonctionnalités, pour voir ? Un échange de 30 minutes pour cadrer votre cas d''usage et estimer le gain. La preuve, avant l''engagement.'
+  description: 'Et si on regénérait l''une de vos fonctionnalités, pour voir ? Un échange de 30 minutes pour cadrer votre cas d''usage et estimer le gain.'
   ctaLabel: Demander une démo
   ctaHref: /contact
   ctaLabel2: Prendre rendez-vous
   ctaHref2: /contact
+  illustration: /uploads/offre/illus_IA_Forge_mini.svg
+_template: iaForge
 ---
 

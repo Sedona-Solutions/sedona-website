@@ -696,248 +696,341 @@ export default defineConfig({
       // ---------------------------------------------------------------
       // Offres clé en main (pages détail, liées depuis le bloc Offres home)
       // ---------------------------------------------------------------
-      {
-        name: "offre",
-        label: "Offres clé en main",
-        path: "content/offres",
-        format: "md",
-        fields: [
-          {
-            type: "string",
-            name: "pillVariant",
-            label: "Couleur d'accent",
-            ui: { component: ColorSwatchDropdown },
-            options: [
-              { value: "cactus", label: "Vert (cactus)", color: "#71d7b4" },
-              { value: "ovni", label: "Violet (ovni)", color: "#b3b5ee" },
-              { value: "red-rock", label: "Rose (red rock)", color: "#f8b3a9" },
-              { value: "sunshine", label: "Jaune (sunshine)", color: "#f5c254" },
-              { value: "sky", label: "Bleu (sky)", color: "#75d3d0" },
-            ],
-          },
-          { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
-          { type: "string", name: "eyebrow", label: "Sur-titre" },
-          { type: "string", name: "accroche", label: "Accroche (grand titre du hero)", ui: { component: "textarea" } },
-          {
-            type: "string",
-            name: "accrocheAccent",
-            label: "Mot mis en avant (pill) dans l'accroche",
-            description: "Doit être une sous-chaîne exacte de l'Accroche. Si vide, le Titre (nom de l'offre) est utilisé par défaut.",
-          },
-          { type: "string", name: "enBref", label: "En bref (paragraphe d'intro)", ui: { component: "textarea" } },
-          { type: "image", name: "illustration", label: "Illustration du hero" },
-          {
-            type: "object", name: "heroProof", label: "Preuve sociale (sous le hero)",
-            fields: [
-              { type: "image", name: "avatars", label: "Avatars", list: true },
-              { type: "string", name: "texte", label: "Texte (ex. chiffre à confirmer)" },
-            ],
-          },
-          {
-            type: "object", name: "impacts", label: "Impacts mesurables (bande sombre, optionnel)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              {
-                type: "object", name: "items", label: "Chiffres", list: true,
-                ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
-                fields: [
-                  { type: "string", name: "valeur", label: "Valeur (ex. -70%)" },
-                  { type: "string", name: "label", label: "Légende" },
-                  { type: "string", name: "note", label: "Note (optionnel)", ui: { component: "textarea" } },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "constat", label: "Le constat (avant / après, optionnel)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
-              { type: "string", name: "colonneAvantTitre", label: "Titre colonne « avant »" },
-              { type: "string", name: "colonneApresTitre", label: "Titre colonne « après »" },
-              { type: "string", name: "avant", label: "Frictions (colonne « avant »)", list: true },
-              { type: "string", name: "apres", label: "Changements (colonne « après »)", list: true },
-            ],
-          },
-          {
-            type: "object", name: "etapes", label: "Comment ça marche ?",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "sousTitre", label: "Sous-titre" },
-              { type: "image", name: "image", label: "Capture d'écran (optionnel)" },
-              {
-                type: "object", name: "items", label: "Étapes", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                  { type: "string", name: "resultat", label: "Résultat (optionnel, ex. « Faisabilité + backlog validés »)" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "incoherence", label: "Détection (bloc 2 colonnes, optionnel)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "rich-text", name: "texte", label: "Texte" },
-              { type: "image", name: "illustration", label: "Illustration" },
-            ],
-          },
-          {
-            type: "object", name: "produits", label: "Les fonctionnalités",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
-              {
-                type: "object", name: "items", label: "Livrables", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                  { type: "string", name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
-                  { type: "image", name: "image", label: "Image (optionnel, capture d'écran de la fonctionnalité)" },
-                  { type: "string", name: "imageCaption", label: "Légende de l'image (optionnel)" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "plans", label: "Offres tarifaires (3 cols)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
-              {
-                type: "object", name: "items", label: "Formats", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "categorie", label: "Catégorie (ex. AMORÇAGE)" },
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "string", name: "texte", label: "Description", ui: { component: "textarea" } },
-                  { type: "string", name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
-                  { type: "string", name: "points", label: "Points inclus", list: true },
-                  { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
-                  { type: "string", name: "note", label: "Note sous le bouton" },
-                  { type: "boolean", name: "highlight", label: "Mettre en avant (fond accent)" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "casConcret", label: "Cas concret",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { type: "string", name: "titre", label: "Titre" },
-              { type: "string", name: "texte", label: "Texte", ui: { component: "textarea" } },
-              { type: "image", name: "illustration", label: "Illustration" },
-              {
-                type: "object", name: "stats", label: "Chiffres", list: true,
-                ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
-                fields: [
-                  { type: "string", name: "valeur", label: "Valeur (ex. 0€)" },
-                  { type: "string", name: "label", label: "Légende" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "temoignage", label: "Témoignage client",
-            fields: [
-              { type: "string", name: "citation", label: "Citation", ui: { component: "textarea" } },
-              { type: "string", name: "auteur", label: "Auteur" },
-              { type: "string", name: "role", label: "Fonction" },
-              { type: "image", name: "avatar", label: "Photo" },
-            ],
-          },
-          {
-            type: "object", name: "benefices", label: "Bloc 3 colonnes",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Description (optionnel)", ui: { component: "textarea" } },
-              {
-                type: "object", name: "items", label: "Bénéfices", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                  { type: "string", name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "pourQui", label: "Pour qui ?",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              {
-                type: "object", name: "items", label: "Profils", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Rôle" },
-                  { type: "string", name: "sousTitre", label: "Sous-titre (optionnel, ex. « 3–5 projets en parallèle »)" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object", name: "raisons", label: "Infos complémentaires (section grid)",
-            fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre (optionnel)" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
-              {
-                type: "object", name: "items", label: "Raisons", list: true,
-                ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
-                fields: [
-                  { type: "string", name: "titre", label: "Titre" },
-                  { type: "rich-text", name: "texte", label: "Texte" },
-                  { type: "string", name: "icone", label: "Icône (optionnel, nom de fichier dans /icons, sans .svg)" },
-                ],
-              },
-              { type: "string", name: "technosTitle", label: "Titre technos (optionnel)" },
-              {
-                type: "object", name: "technos", label: "Technos", list: true,
-                ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
-                fields: [
-                  { type: "string", name: "nom", label: "Nom" },
-                  { type: "image", name: "logo", label: "Logo" },
-                ],
-              },
-              { type: "string", name: "technosNote", label: "Note technos (optionnel)", ui: { component: "textarea" } },
-            ],
-          },
-          {
-            type: "object", name: "ctaFinal", label: "Bandeau d'appel final",
-            fields: [
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
-              { type: "string", name: "ctaLabel", label: "Bouton — libellé" },
-              { type: "string", name: "ctaHref", label: "Bouton — lien" },
-              { type: "string", name: "ctaLabel2", label: "Bouton secondaire — libellé (optionnel)" },
-              { type: "string", name: "ctaHref2", label: "Bouton secondaire — lien (optionnel)" },
-            ],
-          },
-        ],
-      },
+      // Chaque offre bespoke (Brieff, IA Forge, Elastic) a sa propre page et
+      // n'utilise pas les mêmes sections que les autres : on utilise donc les
+      // "templates" Tina (un jeu de champs différent par entrée, au lieu d'un
+      // unique `fields` partagé) pour que l'admin n'affiche, pour chaque offre,
+      // que les blocs réellement utilisés par sa page.
+      (() => {
+        const offrePillVariant = {
+          type: "string" as const,
+          name: "pillVariant",
+          label: "Couleur d'accent",
+          ui: { component: ColorSwatchDropdown },
+          options: [
+            { value: "cactus", label: "Vert (cactus)", color: "#71d7b4" },
+            { value: "ovni", label: "Violet (ovni)", color: "#b3b5ee" },
+            { value: "red-rock", label: "Rose (red rock)", color: "#f8b3a9" },
+            { value: "sunshine", label: "Jaune (sunshine)", color: "#f5c254" },
+            { value: "sky", label: "Bleu (sky)", color: "#75d3d0" },
+          ],
+        };
+        const offreTitre = { type: "string" as const, name: "titre", label: "Titre", isTitle: true, required: true };
+        const offreEyebrow = { type: "string" as const, name: "eyebrow", label: "Sur-titre" };
+        const offreAccroche = { type: "string" as const, name: "accroche", label: "Accroche (grand titre du hero)", ui: { component: "textarea" } };
+        const offreAccrocheAccent = {
+          type: "string" as const,
+          name: "accrocheAccent",
+          label: "Mot mis en avant (pill) dans l'accroche",
+          description: "Doit être une sous-chaîne exacte de l'Accroche. Si vide, le Titre (nom de l'offre) est utilisé par défaut.",
+        };
+        const offreEnBref = { type: "string" as const, name: "enBref", label: "En bref (paragraphe d'intro)", ui: { component: "textarea" } };
+        const offreIllustration = { type: "image" as const, name: "illustration", label: "Illustration du hero" };
+        const offreHeroProof = {
+          type: "object" as const, name: "heroProof", label: "Preuve sociale (sous le hero)",
+          fields: [
+            { type: "image" as const, name: "avatars", label: "Avatars", list: true },
+            { type: "string" as const, name: "texte", label: "Texte (ex. chiffre à confirmer)" },
+          ],
+        };
+        const offrePourQui = {
+          type: "object" as const, name: "pourQui", label: "Bloc 4 colonnes (bande sombre)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            {
+              type: "object" as const, name: "items", label: "Profils", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Rôle" },
+                { type: "string" as const, name: "sousTitre", label: "Sous-titre (optionnel, ex. « 3–5 projets en parallèle »)" },
+                { type: "rich-text" as const, name: "texte", label: "Texte" },
+              ],
+            },
+          ],
+        };
+        const offreImpacts = {
+          type: "object" as const, name: "impacts", label: "KPI (bande sombre)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            {
+              type: "object" as const, name: "items", label: "Chiffres", list: true,
+              ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
+              fields: [
+                { type: "string" as const, name: "valeur", label: "Valeur (ex. -70%)" },
+                { type: "string" as const, name: "label", label: "Légende" },
+                { type: "string" as const, name: "note", label: "Note (optionnel)", ui: { component: "textarea" } },
+              ],
+            },
+          ],
+        };
+        const offreConstat = {
+          type: "object" as const, name: "constat", label: "Le constat (avant / après, optionnel)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Intro", ui: { component: "textarea" } },
+            { type: "string" as const, name: "colonneAvantTitre", label: "Titre colonne « avant »" },
+            { type: "string" as const, name: "colonneApresTitre", label: "Titre colonne « après »" },
+            { type: "string" as const, name: "avant", label: "Frictions (colonne « avant »)", list: true },
+            { type: "string" as const, name: "apres", label: "Changements (colonne « après »)", list: true },
+          ],
+        };
+        const offreEtapes = {
+          type: "object" as const, name: "etapes", label: "Comment ça marche ?",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "sousTitre", label: "Sous-titre" },
+            { type: "image" as const, name: "image", label: "Capture d'écran (optionnel)" },
+            {
+              type: "object" as const, name: "items", label: "Étapes", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "rich-text" as const, name: "texte", label: "Texte" },
+                { type: "string" as const, name: "resultat", label: "Résultat (optionnel, ex. « Faisabilité + backlog validés »)" },
+              ],
+            },
+          ],
+        };
+        const offreIncoherence = {
+          type: "object" as const, name: "incoherence", label: "Bloc 2 colonnes (bande sombre)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "rich-text" as const, name: "texte", label: "Texte" },
+            { type: "image" as const, name: "illustration", label: "Illustration" },
+          ],
+        };
+        const offreProduits = {
+          type: "object" as const, name: "produits", label: "Les fonctionnalités",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
+            {
+              type: "object" as const, name: "items", label: "Livrables", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "rich-text" as const, name: "texte", label: "Texte" },
+                { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+                { type: "image" as const, name: "image", label: "Image (optionnel, capture d'écran de la fonctionnalité)" },
+                { type: "string" as const, name: "imageCaption", label: "Légende de l'image (optionnel)" },
+              ],
+            },
+          ],
+        };
+        const offrePlans = {
+          type: "object" as const, name: "plans", label: "Offres tarifaires (3 cols)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Intro", ui: { component: "textarea" } },
+            {
+              type: "object" as const, name: "items", label: "Formats", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "categorie", label: "Catégorie (ex. AMORÇAGE)" },
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "string" as const, name: "texte", label: "Description", ui: { component: "textarea" } },
+                { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+                { type: "string" as const, name: "points", label: "Points inclus", list: true },
+                { type: "string" as const, name: "ctaLabel", label: "Bouton — libellé" },
+                { type: "string" as const, name: "note", label: "Note sous le bouton" },
+                { type: "boolean" as const, name: "highlight", label: "Mettre en avant (fond accent)" },
+              ],
+            },
+          ],
+        };
+        const offreCasConcret = {
+          type: "object" as const, name: "casConcret", label: "Cas concret",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { type: "string" as const, name: "titre", label: "Titre" },
+            { type: "string" as const, name: "texte", label: "Texte", ui: { component: "textarea" } },
+            { type: "image" as const, name: "illustration", label: "Illustration" },
+            {
+              type: "object" as const, name: "stats", label: "Chiffres", list: true,
+              ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
+              fields: [
+                { type: "string" as const, name: "valeur", label: "Valeur (ex. 0€)" },
+                { type: "string" as const, name: "label", label: "Légende" },
+              ],
+            },
+          ],
+        };
+        const offreTemoignage = {
+          type: "object" as const, name: "temoignage", label: "Témoignage client",
+          fields: [
+            { type: "string" as const, name: "citation", label: "Citation", ui: { component: "textarea" } },
+            { type: "string" as const, name: "auteur", label: "Auteur" },
+            { type: "string" as const, name: "role", label: "Fonction" },
+            { type: "image" as const, name: "avatar", label: "Photo" },
+          ],
+        };
+        const offreBenefices = {
+          type: "object" as const, name: "benefices", label: "Bloc 3 colonnes",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Description (optionnel)", ui: { component: "textarea" } },
+            {
+              type: "object" as const, name: "items", label: "Bénéfices", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "rich-text" as const, name: "texte", label: "Texte" },
+                { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+              ],
+            },
+          ],
+        };
+        const offreRaisons = {
+          type: "object" as const, name: "raisons", label: "Bloc grille 2 colonnes",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Intro (optionnel)", ui: { component: "textarea" } },
+            {
+              type: "object" as const, name: "items", label: "Raisons", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "rich-text" as const, name: "texte", label: "Texte" },
+                { type: "string" as const, name: "icone", label: "Icône (optionnel, nom de fichier dans /icons, sans .svg)" },
+              ],
+            },
+            { type: "string" as const, name: "technosTitle", label: "Titre technos (optionnel)" },
+            {
+              type: "object" as const, name: "technos", label: "Technos", list: true,
+              ui: { itemProps: (i: { nom?: string }) => ({ label: i?.nom }) },
+              fields: [
+                { type: "string" as const, name: "nom", label: "Nom" },
+                { type: "image" as const, name: "logo", label: "Logo" },
+              ],
+            },
+            { type: "string" as const, name: "technosNote", label: "Note technos (optionnel)", ui: { component: "textarea" } },
+          ],
+        };
+        const offreCtaFinal = {
+          type: "object" as const, name: "ctaFinal", label: "Bandeau d'appel final",
+          fields: [
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "description", label: "Description", ui: { component: "textarea" } },
+            { type: "string" as const, name: "ctaLabel", label: "Bouton — libellé" },
+            { type: "string" as const, name: "ctaHref", label: "Bouton — lien" },
+            { type: "string" as const, name: "ctaLabel2", label: "Bouton secondaire — libellé (optionnel)" },
+            { type: "string" as const, name: "ctaHref2", label: "Bouton secondaire — lien (optionnel)" },
+            { type: "image" as const, name: "illustration", label: "Illustration (mascotte, optionnel — cactus par défaut)" },
+          ],
+        };
+
+        return {
+          name: "offre",
+          label: "Offres clé en main",
+          path: "content/offres",
+          format: "md",
+          templates: [
+            {
+              name: "generique",
+              label: "Offre générique",
+              fields: [
+                offrePillVariant,
+                offreTitre,
+                offreAccroche,
+                offreEnBref,
+                offreIllustration,
+                offreProduits,
+                offreBenefices,
+                offrePourQui,
+                offreRaisons,
+                offreEtapes,
+                offreCtaFinal,
+              ],
+            },
+            {
+              name: "brieff",
+              label: "Brieff (sur-mesure)",
+              fields: [
+                offrePillVariant,
+                offreTitre,
+                offreEyebrow,
+                offreAccroche,
+                offreAccrocheAccent,
+                offreEnBref,
+                offreIllustration,
+                offreHeroProof,
+                offrePourQui,
+                offreConstat,
+                offreEtapes,
+                offreIncoherence,
+                offreProduits,
+                offreImpacts,
+                offreTemoignage,
+                offreRaisons,
+                offreCtaFinal,
+              ],
+            },
+            {
+              name: "iaForge",
+              label: "IA Forge (sur-mesure)",
+              fields: [
+                offrePillVariant,
+                offreTitre,
+                offreEyebrow,
+                offreAccroche,
+                offreAccrocheAccent,
+                offreEnBref,
+                offreIllustration,
+                offreHeroProof,
+                offreImpacts,
+                offreConstat,
+                offreEtapes,
+                offreIncoherence,
+                offrePlans,
+                offreCasConcret,
+                offreTemoignage,
+                offreBenefices,
+                offreCtaFinal,
+              ],
+            },
+            {
+              name: "elastic",
+              label: "Elastic (sur-mesure)",
+              fields: [
+                offrePillVariant,
+                offreTitre,
+                offreEyebrow,
+                offreAccroche,
+                offreAccrocheAccent,
+                offreEnBref,
+                offreIllustration,
+                offreHeroProof,
+                offrePourQui,
+                offreRaisons,
+                offreEtapes,
+                offreIncoherence,
+                offrePlans,
+                offreTemoignage,
+                offreCtaFinal,
+              ],
+            },
+          ],
+        };
+      })(),
 
       // ---------------------------------------------------------------
       // Blog / Actualités

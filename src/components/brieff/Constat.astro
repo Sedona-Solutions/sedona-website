@@ -1,5 +1,5 @@
 ---
-import { ACCENT_LIGHT } from "../../data/offreAccents.js";
+import { ACCENT_LIGHT, ACCENT_DARK } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
 
 const {
@@ -14,6 +14,7 @@ const {
   pillVariant = "ovni",
 } = Astro.props;
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
+const accentDark = ACCENT_DARK[pillVariant] ?? ACCENT_DARK.ovni;
 ---
 
 <section class="bconst">
@@ -33,11 +34,11 @@ const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
           ))}
         </ul>
       </div>
-      <div class="bconst__col bconst__col--after" style={`--bconst-accent:${accentLight}`} data-reveal>
+      <div class="bconst__col bconst__col--after" style={`--bconst-accent:${accentLight};--bconst-accent-dark:${accentDark}`} data-reveal>
         <svg class="bconst__squiggle" viewBox="0 0 73 80" fill="none" aria-hidden="true">
           <path
             d="M10 32.7838L28 4M24.1429 52.6126C32.0714 46.003 49.6 32.7838 56.2857 32.7838M32.5 75C40 73.5075 56.8 71.418 64 75"
-            stroke="var(--color-red-rock-500)"
+            stroke={accentDark}
             stroke-width="3"
             stroke-linecap="round"
           />
@@ -79,7 +80,7 @@ const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
   .bconst__list li:first-child { padding-top: 0; }
   .mark { flex: none; font-size: 1.125rem; font-weight: 700; }
   .mark--x { color: var(--color-red-rock-600); }
-  .mark--check { color: var(--color-red-rock-500); }
+  .mark--check { color: var(--bconst-accent-dark, var(--color-red-rock-500)); }
 
   @media (max-width: 860px) {
     .bconst__row { grid-template-columns: 1fr; }

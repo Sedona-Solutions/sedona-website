@@ -75,6 +75,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
       intro={d.plans?.intro}
       items={d.plans?.items ?? []}
       pillVariant={pillVariant}
+      offreTitre={d.titre}
     />
     <CardsGrid
       eyebrow={d.pourquoi?.eyebrow}
@@ -110,6 +111,8 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
       ...d.ctaFinal,
       pillVariant,
       accentColor: accentMid,
+      offreTitre: d.titre,
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
     }}
   />
 </BaseLayout>
@@ -120,5 +123,23 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
      "Pourquoi nous choisir") s'y fondent sans avoir besoin de leur propre arrondi. */
   .dark-stack {
     background: #3b0800;
+  }
+
+  /* Overrides spécifiques à IA Forge pour les décos du Hero (squiggle-9 / squiggle-2,
+     cf. brieff/Hero.astro) : pas de squiggle-2, et le squiggle-9 repositionné + recoloré
+     en red-rock-400 plutôt que l'accent-300 par défaut du composant. */
+  :global(.bhero__squiggle2) {
+    display: none;
+  }
+  :global(.bhero__deco) {
+    top: auto;
+    right: auto;
+    bottom: 70px;
+    left: -40px;
+    width: 140px;
+    transform: rotate(-225deg);
+  }
+  :global(.bhero__deco svg path) {
+    stroke: #f18878;
   }
 </style>

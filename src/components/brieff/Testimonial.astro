@@ -4,7 +4,8 @@ import Media from "../Media.astro";
 // l'entrée ne renseigne rien, on retombe sur un témoignage de la home.
 import home from "../../../content/home/index.json";
 const { citation, auteur, role, avatar, radius = "top" } = Astro.props;
-const radiusClass = radius === "bottom" ? "btest--radius-bottom" : radius === "none" ? "btest--radius-none" : "";
+const radiusClass =
+  radius === "bottom" ? "btest--radius-bottom" : radius === "none" ? "btest--radius-none" : radius === "all" ? "btest--radius-all" : "";
 const fallback = home.temoignagesSection?.temoignages?.[1];
 const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
 ---
@@ -64,6 +65,9 @@ const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
   }
   .btest--radius-none {
     border-radius: 0;
+  }
+  .btest--radius-all {
+    border-radius: var(--radius-section-lg);
   }
   .btest__frame { position: relative; display: flex; flex-direction: column; align-items: center; }
 

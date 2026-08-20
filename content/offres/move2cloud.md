@@ -1,4 +1,5 @@
 ---
+_template: generique
 titre: Move2Cloud
 accroche: Migrez vers le cloud sans casser la prod
 enBref: >-

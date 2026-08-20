@@ -174,10 +174,13 @@ raisons:
       logo: /technos/vertex-ai.svg
   technosNote: 'Intégration à suivre : Cursor CLI, GitHub Copilot CLI, Codex (OpenAI CLI) et tous les CLI compatibles avec stream-json.'
 ctaFinal:
-  titre: Prêt à tester BRIEFF ?
+  titre: Prêt à lancer BRIEFF ?
   titreAccent: BRIEFF ?
   description: 'Une session d''1h suffit pour comprendre comment l''outil s''adapterait à votre contexte, vos clients et vos projets récurrents.'
   ctaLabel: Demander une démo
   ctaHref: /contact
+  ctaLabel2: Prendre rendez-vous
+  illustration: /uploads/offre/illus_brieff_mini.svg
+_template: brieff
 ---
 

@@ -14,12 +14,12 @@ import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
 
 export async function getStaticPaths() {
   const items = await getCollection("offre");
-  // Brieff et IA Forge ont leur propre page sur-mesure (./brieff.astro,
-  // ./ia-forge.astro) qui consomme la même entrée de collection. Sans cette
-  // exclusion, la route est générée deux fois : Astro donne la priorité à la
-  // page statique, mais émet un avertissement de conflit au build.
+  // Brieff, IA Forge et Elastic ont leur propre page sur-mesure (./brieff.astro,
+  // ./ia-forge.astro, ./elastic.astro) qui consomme la même entrée de collection.
+  // Sans cette exclusion, la route est générée deux fois : Astro donne la
+  // priorité à la page statique, mais émet un avertissement de conflit au build.
   return items
-    .filter((entry) => entry.id !== "brieff" && entry.id !== "ia-forge")
+    .filter((entry) => !["brieff", "ia-forge", "elastic"].includes(entry.id))
     .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
@@ -55,6 +55,8 @@ const pillVariant = d.pillVariant ?? "cactus";
       ...d.ctaFinal,
       pillVariant,
       accentColor: ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus,
+      offreTitre: d.titre,
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
     }}
   />
 </BaseLayout>

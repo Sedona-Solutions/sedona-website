@@ -339,6 +339,7 @@ const offre = defineCollection({
         ctaHref: z.string().optional(),
         ctaLabel2: z.string().optional(),
         ctaHref2: z.string().optional(),
+        illustration: z.string().optional(),
       })
       .optional(),
   }),

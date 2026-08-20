@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TitreAccent from "../components/TitreAccent.astro";
 import { recolorIcon } from "../utils/iconRecolor.js";
@@ -7,6 +8,7 @@ import carrieres from "../../content/carrieres/index.json";
 
 const { agences } = global;
 const postes = (carrieres.jobs?.items ?? []).map((j: { titre: string }) => j.titre);
+const offres = (await getCollection("offre")).map((o) => o.data.titre).filter(Boolean);
 
 const BUDGETS = [
   "Moins de 10 000 €",
@@ -89,6 +91,14 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
               <select name="budget">
                 <option value="">Sélectionner un budget</option>
                 {BUDGETS.map((b) => <option value={b}>{b}</option>)}
+              </select>
+            </label>
+            <label class="cfield cfield--full">
+              <span>Offre souhaitée</span>
+              <select name="offre" id="offreSelect">
+                <option value="">Sélectionner une offre</option>
+                {offres.map((o) => <option value={o}>{o}</option>)}
+                <option value="Autre">Autre / pas encore défini</option>
               </select>
             </label>
             <label class="cfield cfield--full">
@@ -204,6 +214,18 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => setType(tab.getAttribute("data-type")));
     });
+
+    // Pré-remplissage depuis un lien "Choisir cette offre" / "Demander une démo"
+    // sur une page offre (ex. /contact?offre=Elastic).
+    const offreParam = new URLSearchParams(location.search).get("offre");
+    if (offreParam) {
+      const offreSelect = document.getElementById("offreSelect");
+      if (offreSelect instanceof HTMLSelectElement) {
+        const hasOption = [...offreSelect.options].some((o) => o.value === offreParam);
+        offreSelect.value = hasOption ? offreParam : "Autre";
+      }
+      setType("projet");
+    }
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();

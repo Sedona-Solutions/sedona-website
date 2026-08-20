@@ -13,13 +13,16 @@ const {
   image,
   items = [],
   pillVariant = "ovni",
+  radius = "bottom",
 } = Astro.props;
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
 const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 const numberIcons = items.map((_: unknown, i: number) => recolorIcon(`number-${i + 1}`, accentMid));
+const radiusClass =
+  radius === "top" ? "bccm--radius-top" : radius === "none" ? "bccm--radius-none" : radius === "all" ? "bccm--radius-all" : "";
 ---
 
-<section class="bccm">
+<section class={`bccm ${radiusClass}`}>
   <div class="container">
     <header class="bccm__head" data-reveal>
       <svg class="bccm__deco" viewBox="0 0 73 81" fill="none" aria-hidden="true">
@@ -57,6 +60,9 @@ const numberIcons = items.map((_: unknown, i: number) => recolorIcon(`number-${i
 
 <style>
   .bccm { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .bccm--radius-top { border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .bccm--radius-none { border-radius: 0; }
+  .bccm--radius-all { border-radius: var(--radius-section-lg); }
   .bccm__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
   .bccm__deco { position: absolute; right: 0; bottom: 20px; width: 172px; height: auto; transform: rotate(145deg); pointer-events: none; }
   @media (max-width: 900px) {
