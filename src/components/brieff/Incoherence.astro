@@ -1,9 +1,10 @@
 ---
 import Media from "../Media.astro";
+import CoverageGrid from "./CoverageGrid.astro";
 import { richTextToHtml } from "../../utils/richText.js";
 import { ACCENT_MID } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
-const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illustration, pillVariant = "ovni" } = Astro.props;
+const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illustration, pillVariant = "ovni", coverage = false } = Astro.props;
 const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 ---
 
@@ -15,7 +16,11 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
       {texte && <div class="bincoh__text" set:html={richTextToHtml(texte)} />}
     </div>
     <div class="bincoh__illu-wrap">
-      {illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} />}
+      {coverage ? (
+        <CoverageGrid pillVariant={pillVariant} />
+      ) : (
+        illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} />
+      )}
     </div>
   </div>
 </section>

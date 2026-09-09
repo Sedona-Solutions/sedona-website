@@ -3,8 +3,8 @@ import TitreAccent from "../TitreAccent.astro";
 import { withOffre } from "../../utils/contactLink.js";
 const { cta } = Astro.props;
 const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
-const ctaHref = withOffre(cta?.ctaHref, cta?.offreTitre);
-const ctaHref2 = withOffre(cta?.ctaHref2, cta?.offreTitre);
+const ctaHref = withOffre(cta?.ctaHref, cta?.offreTitre, cta?.sousOffre);
+const ctaHref2 = withOffre(cta?.ctaHref2, cta?.offreTitre, cta?.sousOffre2);
 const mascotte = cta?.illustration || "/deco/mascotte.svg";
 ---
 

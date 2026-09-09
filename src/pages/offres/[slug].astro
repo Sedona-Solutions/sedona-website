@@ -14,12 +14,13 @@ import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
 
 export async function getStaticPaths() {
   const items = await getCollection("offre");
-  // Brieff, IA Forge et Elastic ont leur propre page sur-mesure (./brieff.astro,
-  // ./ia-forge.astro, ./elastic.astro) qui consomme la même entrée de collection.
-  // Sans cette exclusion, la route est générée deux fois : Astro donne la
-  // priorité à la page statique, mais émet un avertissement de conflit au build.
+  // Brieff, IA Forge, Elastic et Keycloak Run ont leur propre page sur-mesure
+  // (./brieff.astro, ./ia-forge.astro, ./elastic.astro, ./keycloak-run.astro) qui
+  // consomme la même entrée de collection. Sans cette exclusion, la route est
+  // générée deux fois : Astro donne la priorité à la page statique, mais émet un
+  // avertissement de conflit au build.
   return items
-    .filter((entry) => !["brieff", "ia-forge", "elastic"].includes(entry.id))
+    .filter((entry) => !["brieff", "ia-forge", "elastic", "keycloak-run"].includes(entry.id))
     .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 

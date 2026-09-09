@@ -103,7 +103,7 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
             </label>
             <label class="cfield cfield--full">
               <span>Votre message*</span>
-              <textarea name="message" rows="4" placeholder="Dites-en nous en un peu plus..." required></textarea>
+              <textarea name="message" rows="8" placeholder="Dites-en nous en un peu plus..." required></textarea>
             </label>
           </div>
 
@@ -225,6 +225,45 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
         offreSelect.value = hasOption ? offreParam : "Autre";
       }
       setType("projet");
+    }
+
+    // Exemple de message adapté à l'offre (et, si connu via le lien d'origine,
+    // au palier précis de l'offre — ex. RUN / RUN+ / Audit pre-RUN) sélectionnée.
+    // Placeholder uniquement, jamais pré-rempli à la place de l'utilisateur.
+    const MESSAGE_PLACEHOLDERS: Record<string, string> = {
+      Keycloak:
+        "Bonjour, nous exploitons Keycloak en interne et cherchons un accompagnement RUN/RUN+ pour les mises à jour, la supervision et le support en cas d’incident...",
+      "IA Forge":
+        "Bonjour, nous voulons remplacer un progiciel coûteux par une application sur-mesure développée avec l’IA, sous contrôle d’experts...",
+      Brieff:
+        "Bonjour, nous avons un projet à cadrer avant développement — besoins encore flous, specs à clarifier avec vos experts...",
+      Elastic:
+        "Bonjour, nous cherchons à mettre en place ou optimiser notre stack Elastic (recherche, logs, observabilité)...",
+    };
+    const SOUS_OFFRE_PLACEHOLDERS: Record<string, string> = {
+      "Keycloak::RUN":
+        "Bonjour, nous souhaitons souscrire à l’offre Keycloak RUN pour déléguer l’exploitation de notre plateforme en heures ouvrées...",
+      "Keycloak::RUN+":
+        "Bonjour, nous souhaitons souscrire à l’offre Keycloak RUN+ pour bénéficier de la supervision temps réel et de l’astreinte...",
+      "Keycloak::Audit pre-RUN":
+        "Bonjour, nous aimerions réaliser un audit pre-RUN de notre plateforme Keycloak avant de démarrer un accompagnement RUN...",
+    };
+    const DEFAULT_MESSAGE_PLACEHOLDER = "Dites-en nous en un peu plus...";
+    const messageTextarea = form.querySelector('textarea[name="message"]');
+    const offreSelectEl = document.getElementById("offreSelect");
+    if (messageTextarea instanceof HTMLTextAreaElement && offreSelectEl instanceof HTMLSelectElement) {
+      // Le palier précis (sousOffre) ne vient que du lien d'origine : dès que
+      // l'utilisateur retouche lui-même le sélecteur, on l'oublie.
+      let sousOffre = new URLSearchParams(location.search).get("sousOffre");
+      const updateMessagePlaceholder = () => {
+        const key = sousOffre ? `${offreSelectEl.value}::${sousOffre}` : "";
+        messageTextarea.placeholder = SOUS_OFFRE_PLACEHOLDERS[key] ?? MESSAGE_PLACEHOLDERS[offreSelectEl.value] ?? DEFAULT_MESSAGE_PLACEHOLDER;
+      };
+      offreSelectEl.addEventListener("change", () => {
+        sousOffre = null;
+        updateMessagePlaceholder();
+      });
+      updateMessagePlaceholder();
     }
 
     form.addEventListener("submit", (e) => {

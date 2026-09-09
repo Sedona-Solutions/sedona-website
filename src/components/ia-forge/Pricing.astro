@@ -11,6 +11,9 @@ const { eyebrow, titre, titreAccent, intro, items = [], pillVariant = "red-rock"
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT["red-rock"];
 const accentDark = ACCENT_DARK[pillVariant] ?? ACCENT_DARK["red-rock"];
 const radiusClass = radius === "top" ? "ipr--radius-top" : radius === "bottom" ? "ipr--radius-bottom" : radius === "none" ? "ipr--radius-none" : "";
+// Grille pensée pour 3 cartes (IA Forge, Elastic) : avec moins d'offres
+// (Keycloak Run : RUN / RUN+), on centre plutôt que d'étirer sur 3 colonnes.
+const gridClass = items.length === 2 ? "ipr__grid--2" : "";
 const icons = items.map((it: { icone?: string }) => (it.icone ? recolorDecoIllustration(it.icone, accentDark) : null));
 ---
 
@@ -24,7 +27,7 @@ const icons = items.map((it: { icone?: string }) => (it.icone ? recolorDecoIllus
           {intro && <p class="ipr__intro">{intro}</p>}
         </header>
 
-        <ul class="ipr__grid" data-reveal-group>
+        <ul class={`ipr__grid ${gridClass}`} data-reveal-group>
           {items.map((it: { categorie?: string; titre?: string; texte?: string; icone?: string; points?: string[]; ctaLabel?: string; note?: string; highlight?: boolean }, i: number) => (
             <li class={`iprc ${it.highlight ? "iprc--highlight" : ""}`} style={`--iprc-accent:${accentLight};--iprc-check:${accentDark}`} data-reveal>
               {icons[i] && <span class="iprc__icon" aria-hidden="true" set:html={icons[i]} />}
@@ -39,7 +42,7 @@ const icons = items.map((it: { icone?: string }) => (it.icone ? recolorDecoIllus
                 </ul>
               )}
               <div class="iprc__foot">
-                {it.ctaLabel && <a class="iprc__cta" href={withOffre("/contact", offreTitre)}>{it.ctaLabel}</a>}
+                {it.ctaLabel && <a class="iprc__cta" href={withOffre("/contact", offreTitre, it.titre)}>{it.ctaLabel}</a>}
                 {it.note && <p class="iprc__note">{it.note}</p>}
               </div>
             </li>
@@ -64,6 +67,7 @@ const icons = items.map((it: { icone?: string }) => (it.icone ? recolorDecoIllus
   .ipr__intro { margin: 2rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.25; color: #3b0800; }
 
   .ipr__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: start; }
+  .ipr__grid--2 { grid-template-columns: repeat(2, minmax(0, 420px)); justify-content: center; }
   .iprc {
     background: #fff; border-radius: 32px; padding: 3rem;
     display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; height: 100%;

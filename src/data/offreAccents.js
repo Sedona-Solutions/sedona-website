@@ -42,3 +42,14 @@ export const ACCENT_300 = {
   sky: "#75d3d0",
   canyon: "#e9b189",
 };
+
+// Palier 200 ("brand/accent-color-2" dans Figma), utilisé pour la grille de
+// couverture Keycloak Run (cases actives + chiffres clés).
+export const ACCENT_200 = {
+  cactus: "#a7e9d1",
+  ovni: "#d0d3f5",
+  "red-rock": "#fbd3cd",
+  sunshine: "#f8d98b",
+  sky: "#a9e7e4",
+  canyon: "#f1d1b7",
+};

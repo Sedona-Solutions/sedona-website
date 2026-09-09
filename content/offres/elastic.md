@@ -142,6 +142,7 @@ ctaFinal:
   ctaHref: /contact
   ctaLabel2: Prendre rendez-vous
   ctaHref2: /contact
+  illustration: /uploads/offre/illus_elastic_mini.svg
 _template: elastic
 ---
 

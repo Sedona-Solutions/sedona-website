@@ -799,8 +799,107 @@ export default defineConfig({
             },
           ],
         };
+        const offreEtapesItemsAvantApres = {
+          type: "object" as const, name: "items", label: "Cartes", list: true,
+          ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+          fields: [
+            { type: "string" as const, name: "titre", label: "Titre" },
+            { type: "rich-text" as const, name: "texte", label: "Texte" },
+            { type: "string" as const, name: "icone", label: "Icône (optionnel, nom de fichier dans /icons, sans .svg — sinon numéro auto)" },
+            { type: "string" as const, name: "tag", label: "Petit libellé coloré (optionnel, ex. « Premium »)" },
+            { type: "boolean" as const, name: "highlight", label: "Mettre en avant (fond accent)" },
+          ],
+        };
+        // Variante à onglets de "Comment ça marche ?" (page Keycloak Run uniquement) :
+        // deux jeux de cartes ("avant"/"après" la production) au lieu d'une liste plate.
+        const offreEtapesKeycloak = {
+          type: "object" as const, name: "etapes", label: "Comment ça marche ? (à onglets)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "sousTitre", label: "Sous-titre" },
+            { type: "image" as const, name: "image", label: "Capture d'écran (optionnel)" },
+            {
+              type: "object" as const, name: "avant", label: "Onglet « Avant la production »",
+              fields: [
+                { type: "string" as const, name: "label", label: "Libellé de l'onglet" },
+                { ...offreEtapesItemsAvantApres },
+              ],
+            },
+            {
+              type: "object" as const, name: "apres", label: "Onglet « Après la production »",
+              fields: [
+                { type: "string" as const, name: "label", label: "Libellé de l'onglet" },
+                { ...offreEtapesItemsAvantApres },
+              ],
+            },
+          ],
+        };
+        const offreChronologie = {
+          type: "object" as const, name: "chronologie", label: "Chronologie d'un incident (2 images, bande sombre)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "string" as const, name: "intro", label: "Sous-titre" },
+            {
+              type: "object" as const, name: "run", label: "Image « offre RUN »",
+              fields: [
+                { type: "string" as const, name: "label", label: "Libellé" },
+                { type: "image" as const, name: "image", label: "Image" },
+              ],
+            },
+            {
+              type: "object" as const, name: "runPlus", label: "Image « offre RUN+ »",
+              fields: [
+                { type: "string" as const, name: "label", label: "Libellé" },
+                { type: "image" as const, name: "image", label: "Image" },
+              ],
+            },
+          ],
+        };
+        const offrePerimetre = {
+          type: "object" as const, name: "perimetre", label: "Périmètre par offre (3 onglets)",
+          fields: [
+            {
+              type: "object" as const, name: "tabs", label: "Onglets", list: true,
+              ui: { itemProps: (t: { label?: string }) => ({ label: t?.label }) },
+              fields: [
+                { type: "string" as const, name: "label", label: "Libellé de l'onglet" },
+                { type: "string" as const, name: "eyebrow", label: "Sur-titre (optionnel)" },
+                { ...titreTexte },
+                { ...titreAccentTexte },
+                { type: "string" as const, name: "intro", label: "Introduction" },
+                {
+                  type: "object" as const, name: "items", label: "Cartes (4)", list: true,
+                  ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+                  fields: [
+                    { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+                    { type: "string" as const, name: "titre", label: "Titre" },
+                    { type: "string" as const, name: "points", label: "Puces", list: true },
+                  ],
+                },
+                {
+                  type: "object" as const, name: "banner", label: "Bandeau d'engagements (3)", list: true,
+                  fields: [{ type: "rich-text" as const, name: "texte", label: "Texte (sélectionnez pour mettre en gras où vous voulez)" }],
+                },
+              ],
+            },
+          ],
+        };
         const offreIncoherence = {
           type: "object" as const, name: "incoherence", label: "Bloc 2 colonnes (bande sombre)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            { ...titreAccentTexte },
+            { type: "rich-text" as const, name: "texte", label: "Texte" },
+            { type: "image" as const, name: "illustration", label: "Illustration" },
+          ],
+        };
+        const offreMoteurSpecification = {
+          type: "object" as const, name: "moteurSpecification", label: "Bloc 2 colonnes (bande sombre)",
           fields: [
             { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
             { ...titreTexte },
@@ -1004,6 +1103,28 @@ export default defineConfig({
                 offreCasConcret,
                 offreTemoignage,
                 offreBenefices,
+                offreCtaFinal,
+              ],
+            },
+            {
+              name: "keycloakRun",
+              label: "Keycloak Run (sur-mesure)",
+              fields: [
+                offrePillVariant,
+                offreTitre,
+                offreEyebrow,
+                offreAccroche,
+                offreAccrocheAccent,
+                offreEnBref,
+                offreIllustration,
+                offreHeroProof,
+                offreMoteurSpecification,
+                offreEtapesKeycloak,
+                offreIncoherence,
+                offrePerimetre,
+                offreChronologie,
+                offrePlans,
+                offreTemoignage,
                 offreCtaFinal,
               ],
             },
@@ -1264,16 +1385,31 @@ export default defineConfig({
           },
           {
             type: "object",
-            name: "team",
-            label: "Notre tribu (équipe)",
+            name: "stats",
+            label: "Bloc chiffres clés (Créativité, Innovation…)",
             fields: [
-              { type: "string", name: "eyebrow", label: "Sur-titre" },
-              { ...titreTexte },
-              { ...titreAccentTexte },
-              { ...couleurTitre },
-              { type: "string", name: "intro", label: "Intro (2 lignes)", ui: { component: "textarea" } },
-              { type: "string", name: "merciTitre", label: "Titre du remerciement" },
-              { type: "string", name: "merciTexte", label: "Texte du remerciement", ui: { component: "textarea" } },
+              { type: "string", name: "intro", label: "Phrase d'introduction", ui: { component: "textarea" } },
+              { type: "string", name: "chips", label: "Mots-clés (Créativité, Innovation…)", list: true },
+              {
+                type: "object",
+                name: "stats",
+                label: "Chiffres clés",
+                list: true,
+                ui: { itemProps: (i: { valeur?: string }) => ({ label: i?.valeur }) },
+                fields: [
+                  { type: "string", name: "valeur", label: "Valeur (ex. 25+)" },
+                  { type: "string", name: "label", label: "Libellé" },
+                ],
+              },
+              {
+                type: "object",
+                name: "cta",
+                label: "Lien sous les chiffres",
+                fields: [
+                  { type: "string", name: "label", label: "Libellé" },
+                  { type: "string", name: "href", label: "Lien" },
+                ],
+              },
             ],
           },
           {

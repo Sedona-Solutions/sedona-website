@@ -75,10 +75,9 @@ etapes:
 incoherence:
   eyebrow: Notre moteur de spécification
   titre: 'Une interface unifiée, des agents IA spécialisés.'
+  titreAccent: agents IA spécialisés
   texte: |
     **BRIEFF structure la phase amont**, basée sur la méthodologie BMAD, en vous faisant dialoguer avec des agents IA spécialisés. Le résultat : des spécifications complètes, cohérentes et exploitables immédiatement par la FORGE.
-
-
 
     [VOIR L'OFFRE BRIEFF →](/offres/brieff)
   illustration: /uploads/offre/ia-forge-specification.png
