@@ -30,6 +30,10 @@ const { articles = [], pillVariant = "cactus" } = Astro.props;
     background: var(--color-canyon-50);
     /* Pas de padding bas : le liseré festonné vient se coller au bloc CTA. */
     padding-block: clamp(3rem, 6vw, 11rem) 0;
+    /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus du CtaFinal
+       (même principe que les autres pages, ex. BlogPreview sur la home). */
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+    overflow: hidden;
   }
   .bd__head {
     display: flex;

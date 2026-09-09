@@ -1,5 +1,6 @@
 ---
 import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
+import { recolorDecoIllustration } from "../../utils/iconRecolor.js";
 import AccentAccordion from "../AccentAccordion.astro";
 import TitreAccent from "../TitreAccent.astro";
 
@@ -14,11 +15,13 @@ const {
 
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
 const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
+const squiggle5Svg = recolorDecoIllustration("squiggle-5", "#b3b5ee");
 ---
 
 <section class="bfonc">
   <div class="container">
     <header class="bfonc__head" data-reveal>
+      {squiggle5Svg && <span class="bfonc__squiggle" aria-hidden="true"><Fragment set:html={squiggle5Svg} /></span>}
       <p class="bfonc__eyebrow">{eyebrow}</p>
       <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bfonc__title" pillVariant={pillVariant} />
       {intro && <p class="bfonc__intro">{intro}</p>}
@@ -30,11 +33,17 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 
 <style>
   .bfonc { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); border-radius: var(--radius-section-lg); }
-  .bfonc__head { max-width: 80ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bfonc__head { position: relative; max-width: 100ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bfonc__squiggle {
+    position: absolute; right: -300px; top: 30px; width: 188px; height: auto;
+    transform: rotate(-106deg); pointer-events: none;
+  }
+  .bfonc__squiggle :global(svg) { width: 100%; height: auto; display: block; }
+  @media (max-width: 700px) { .bfonc__squiggle { display: none; } }
   .bfonc__eyebrow {
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
   .bfonc :global(.bfonc__title) { margin: 0; color: #3b0800; }
-  .bfonc__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
+  .bfonc__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.4; color: #3b0800; }
 </style>

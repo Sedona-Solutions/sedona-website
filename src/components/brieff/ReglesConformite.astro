@@ -2,6 +2,8 @@
 import Media from "../Media.astro";
 import { richTextToHtml } from "../../utils/richText.js";
 import { recolorIcon } from "../../utils/iconRecolor.js";
+import { ACCENT_LIGHT, ACCENT_DARK } from "../../data/offreAccents.js";
+import squiggle5 from "../../../public/deco/squiggle-5.svg?raw";
 import TitreAccent from "../TitreAccent.astro";
 
 const {
@@ -15,14 +17,26 @@ const {
   technosNote,
   pillVariant = "ovni",
   accentMid = "#b3b5ee",
+  radius = "bottom",
 } = Astro.props;
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
+const accentDark = ACCENT_DARK[pillVariant] ?? ACCENT_DARK.ovni;
 
 const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icone, accentMid) : null));
+
+// squiggle-5.svg (même méthode que domaine/Methode.astro) : lecture + remplacement
+// du stroke à l'accent "dark" de la page, retrait de width/height pour laisser le CSS piloter la taille.
+let squiggleSvg = squiggle5;
+squiggleSvg = squiggleSvg.replace(/stroke="[^"]+"/, `stroke="${accentDark}"`);
+squiggleSvg = squiggleSvg.replace(/ width="[^"]*"/, "").replace(/ height="[^"]*"/, "");
+const radiusClass =
+  radius === "top" ? "bregl--radius-top" : radius === "none" ? "bregl--radius-none" : radius === "all" ? "bregl--radius-all" : "";
 ---
 
-<section class="bregl">
+<section class={`bregl ${radiusClass}`}>
   <div class="container">
     <header class="bregl__head" data-reveal>
+      <span class="bregl__squiggle" aria-hidden="true"><Fragment set:html={squiggleSvg} /></span>
       <p class="bregl__eyebrow">{eyebrow}</p>
       <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bregl__title" pillVariant={pillVariant} />
       {intro && <p class="bregl__intro">{intro}</p>}
@@ -30,7 +44,7 @@ const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icon
 
     <ul class="bregl__grid" data-reveal-group>
       {items.map((r: { titre?: string; texte?: string; icone?: string }, i: number) => (
-        <li class="brglc">
+        <li class="brglc" style={`background:${accentLight}`}>
           {icons[i] && <span class="brglc__icon" aria-hidden="true"><Fragment set:html={icons[i]} /></span>}
           <h3 class="brglc__titre">{r.titre}</h3>
           <div class="brglc__text" set:html={richTextToHtml(r.texte)} />
@@ -56,14 +70,23 @@ const icons = items.map((r: { icone?: string }) => (r.icone ? recolorIcon(r.icon
 </section>
 
 <style>
-  .bregl { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
-  .bregl__head { max-width: 80ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bregl { background: var(--color-canyon-50); padding-block: 11rem; border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .bregl--radius-top { border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .bregl--radius-none { border-radius: 0; }
+  .bregl--radius-all { border-radius: var(--radius-section-lg); }
+  .bregl__head { position: relative; max-width: 120ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bregl__squiggle {
+    position: absolute; right: -110px; bottom: 60px; width: 140px; height: auto;
+    transform: rotate(250deg); pointer-events: none;
+  }
+  .bregl__squiggle :global(svg) { width: 100%; height: auto; display: block; }
+  @media (max-width: 700px) { .bregl__squiggle { display: none; } }
   .bregl__eyebrow {
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
   .bregl :global(.bregl__title) { margin: 0; color: #3b0800; }
-  .bregl__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
+  .bregl__intro { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.4; color: #3b0800; }
 
   .bregl__grid {
     list-style: none; margin: 0 0 clamp(3rem, 6vw, 4rem); padding: 0;

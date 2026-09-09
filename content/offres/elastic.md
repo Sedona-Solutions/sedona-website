@@ -1,238 +1,148 @@
 ---
-titre: Elastic
-accroche: 'Vos données, exploitables en temps réel'
-enBref: >-
-  Notre offre Elastic centralise vos données de recherche, vos logs et votre
-  observabilité dans une stack taillée pour vos usages métier. Nous concevons,
-  déployons et maintenons votre cluster, du dimensionnement initial aux tableaux
-  de bord opérationnels.
-illustration: /deco/illus_Elastic.png
 pillVariant: sunshine
-produits:
-  titre: Ce qu'Elastic produit pour vous
-  items:
-    - titre: Recherche full-text avancée
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Une expérience de recherche rapide et pertinente sur vos
-                  contenus et catalogues.
-      icone: flowchart-3
-    - titre: Monitoring & alerting temps réel
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Détection des anomalies et alertes configurées sur vos
-                  indicateurs critiques.
-      icone: windows-tabs
-    - titre: Centralisation des logs
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Tous vos logs applicatifs et infra rassemblés dans un point
-                  d'observation unique.
-      icone: cloud-devops
-    - titre: Dashboards sur-mesure
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Des visualisations Kibana adaptées à vos métiers et vos
-                  équipes.
-      icone: money-graph-bar
-benefices:
-  titre: Vos bénéfices concrets
-  items:
-    - titre: Une vision unifiée de votre SI
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Logs, métriques et recherche dans un seul outil, partagé par
-                  toutes vos équipes.
-      icone: money-graph-bar
-    - titre: Des incidents détectés plus tôt
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Alerting proactif pour réduire le temps moyen de détection et
-                  de résolution.
-      icone: windows-tabs
-    - titre: Une plateforme dimensionnée pour durer
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Architecture pensée pour absorber la croissance de vos volumes
-                  de données.
-      icone: network
-    - titre: Un cluster maintenu par des experts
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Mises à jour, sauvegardes et supervision assurées par nos
-                  équipes.
-      icone: audit-data
+titre: Elastic
+eyebrow: Offres clé en main
+accroche: "Vos données, exploitables en temps réel avec\LELASTIC"
+accrocheAccent: ELASTIC
+enBref: 'Nous mettons en œuvre, optimisons et formons vos équipes sur la suite Elastic (moteur de recherche, centralisation de logs, monitoring applicatif...)'
+illustration: /uploads/offre/elastic-brick-presentation.png
+heroProof:
+  avatars:
+    - /uploads/articles/avatar-7.png
+    - /uploads/articles/avatar-9.png
+    - /uploads/articles/avatar-2.png
+  texte: XXX de nos clients formés sur ELASTIC par nos équipes
 pourQui:
-  titre: Pour qui ?
+  eyebrow: À QUI S’ADRESSE CETTE OFFRE ?
+  titre: "Ce qu'Elastic produit pour\_vous."
+  titreAccent: ''
   items:
-    - titre: DSI / Responsable infrastructure
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: Centraliser l'observabilité de tout le système d'information.
-    - titre: Équipe DevOps / SRE
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: Réduire le temps de détection et de diagnostic des incidents.
-    - titre: Product Owner e-commerce / contenu
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: Offrir une recherche rapide et pertinente à vos utilisateurs.
-    - titre: Responsable data / BI
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Construire des dashboards opérationnels partagés avec le
-                  métier.
+    - titre: DSI
+      sousTitre: '######'
+      texte: |
+        Créez des docs produit rapidement et partagez un dashboard client, avec une vigilance automatique pour assurer la cohérence.
+    - titre: ÉQUIPE DEVOPS
+      sousTitre: '####'
+      texte: |
+        Réduisez le temps de détection et de diagnostic des incidents.
+    - titre: PRODUCT OWNER
+      sousTitre: '####'
+      texte: |
+        Offrez une recherche rapide et pertinente à vos utilisateurs.
+    - titre: RESPONSABLE DATA/BI
+      sousTitre: '####'
+      texte: |
+        Construisez des dashboards opérationnels partagés avec le métier.
 raisons:
-  titre: Quatre raisons de nous faire confiance.
-  titreAccent: raisons
+  eyebrow: DE QUOI PARLE-T-ON ?
+  titre: "Une suite open source\Lde haute performance"
+  titreAccent: open source
+  intro: 'Reconnue pour collecter, traiter, interroger et visualiser de gros volumes de données, la suite Elastic est nativement pensée pour fonctionner en cluster — performances et haute disponibilité au rendez-vous.'
   items:
-    - titre: Nous exploitons Elastic sur nos propres projets
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Chaque configuration proposée est éprouvée en conditions
-                  réelles avant d'être déployée chez vous.
-    - titre: Nous maîtrisons vos enjeux de volumétrie
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Nos consultants dimensionnent les clusters pour tenir la
-                  charge, pas seulement pour la démo.
-    - titre: Nous vous accompagnons de bout en bout
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Installation, migration des données existantes, formation de
-                  vos équipes et support continu.
-    - titre: Vous gardez la maîtrise de votre stack
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Architecture ouverte, documentée, sans dépendance à un
-                  prestataire unique.
+    - titre: Moteur de recherche
+      texte: "Recherche pertinente et instantanée sur de gros corpus.\L\L\n"
+      icone: audit-data
+    - titre: Centralisation de logs
+      texte: |
+        Rassemblez et exploitez tous vos logs au même endroit.
+      icone: programming-script
+    - titre: Monitoring applicatif
+      texte: |
+        Suivez les performances de vos applications en temps réel.
+      icone: windows-speedtest
+    - titre: Tableaux de bord
+      texte: |
+        Visualisez et partagez vos indicateurs clés.
+      icone: money-graph-bar
+    - titre: Extraction & transformation
+      texte: |
+        Faites circuler la donnée entre vos sources.
+      icone: cloud-migration
+    - titre: Cluster & haute dispo
+      texte: |
+        Une architecture pensée pour la performance et la résilience : volumétrie importante, disponibilité continue, temps de réponse maîtrisés.
+      icone: network
 etapes:
-  titre: Comment on démarre ensemble
-  sousTitre: >-
-    Nous cadrons vos sources de données et déployons progressivement votre stack
-    Elastic.
+  eyebrow: NOTRE méthodologie
+  titre: '###########'
+  titreAccent: '######'
+  sousTitre: Nous cadrons vos sources de données et déployons progressivement votre stack Elastic.
+  image: /uploads/offre/elastic-focus.png
   items:
     - titre: Audit de votre besoin
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Cartographie de vos sources de données, logs et cas d'usage de
-                  recherche.
+      texte: |
+        Cartographie de vos sources de données, logs et cas d’usage de recherche.
+      resultat: ''
     - titre: Déploiement pilote
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: Mise en place d'un premier cluster sur un périmètre restreint.
+      texte: |
+        Mise en place d’un premier cluster sur un périmètre restreint.
+      resultat: ''
     - titre: Montée en charge
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Extension progressive à l'ensemble de vos données et de vos
-                  équipes.
-    - titre: Supervision & évolutions
-      texte:
-        type: root
-        children:
-          - type: p
-            children:
-              - type: text
-                text: >-
-                  Nous restons disponibles pour faire évoluer dashboards et
-                  alerting.
+      texte: |
+        Extension progressive à l’ensemble de vos données et de vos équipes.
+      resultat: ''
+    - titre: Supervisions & évolutions
+      texte: |
+        Nous restons disponible pour faire évoluer vos dashboards et alerting.
+      resultat: ''
+incoherence:
+  eyebrow: Formation
+  titre: 'Apprenez auprès de nos formateurs, devenez un expert.'
+  texte: |
+    Une formation adaptée, animée par un expert reconnu et rompu aux projets Elastic. Des sessions régulières et des séminaires dédiés avec notre partenaire Elastic.
+
+    [VOIR LES PROCHAINES SESSIONS →](####)
+  illustration: /uploads/offre/elastic-formation.svg
+plans:
+  eyebrow: Comment nous travaillons ensemble ?
+  titre: 'Elastic, une solution modulaire'
+  titreAccent: modulaire
+  intro: 'Trois briques, activables ensemble ou séparément, selon votre maturité sur Elastic.'
+  items:
+    - categorie: '01'
+      titre: 'Installation, formation & réalisation'
+      texte: ''
+      icone: illlus_customize-product
+      points:
+        - Installation et mise en œuvre d'Elasticsearch
+        - Formation complète sur 3 jours
+        - 'Analyse de volumétrie, typologie de solutions, migration Cloud'
+      ctaLabel: Choisir cette offre
+      note: Forfait avec engagement de résultat
+    - categorie: '02'
+      titre: Expertise & conseil
+      texte: ''
+      icone: illlus_gathering-data-2
+      points:
+        - 'Analyse, mapping et optimisation des requêtes'
+        - 'Conseil sur les paramètres d''optimisation (requêtes, index, configuration)'
+        - Audit du système en place et recommandations
+      ctaLabel: Choisir cette offre
+      note: Forfait court (quelques jours seulement)
+      highlight: true
+    - categorie: '03'
+      titre: Conseil en intégration
+      texte: ''
+      icone: illlus_online-learning-2
+      points:
+        - 'Installation et configuration optimale de Kibana, Beats et Logstash'
+        - Conseil sur Elasticsearch sous Liferay
+      ctaLabel: Choisir cette offre
+      note: Forfait court (quelques jours seulement)
+temoignage:
+  citation: 'Nous peinions à optimiser les requêtes de recherche sur notre environnement de documents légaux. Sedona a remis notre infrastructure « à plat » très rapidement : elle répond désormais aux sollicitations de nos clients sans aucun ralentissement — et la formation dispensée par leur expert nous a rendus autonomes.'
+  auteur: A. Drouet
+  role: Responsable Informatique d'un client grand compte
+  avatar: /uploads/articles/client-gg.png
 ctaFinal:
-  titre: 'Prêt à tester Elastic ?'
-  titreAccent: 'Elastic ?'
-  description: >-
-    Une session d'1h suffit pour comprendre comment Elastic s'adapterait à
-    votre contexte, vos équipes et vos projets récurrents.
-  ctaLabel: Parlons de votre projet
+  titre: Un projet ELASTIC ou une infra ELK à optimiser ?
+  titreAccent: ELASTIC
+  description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout.'
+  ctaLabel: Demander une démo
   ctaHref: /contact
+  ctaLabel2: Prendre rendez-vous
+  ctaHref2: /contact
+  illustration: /uploads/offre/illus_elastic_mini.svg
+_template: elastic
 ---
+

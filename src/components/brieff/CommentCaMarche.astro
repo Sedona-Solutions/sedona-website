@@ -1,6 +1,8 @@
 ---
 import Media from "../Media.astro";
 import { richTextToHtml } from "../../utils/richText.js";
+import { recolorIcon } from "../../utils/iconRecolor.js";
+import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
 
 const {
@@ -11,12 +13,26 @@ const {
   image,
   items = [],
   pillVariant = "ovni",
+  radius = "bottom",
 } = Astro.props;
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
+const numberIcons = items.map((_: unknown, i: number) => recolorIcon(`number-${i + 1}`, accentMid));
+const radiusClass =
+  radius === "top" ? "bccm--radius-top" : radius === "none" ? "bccm--radius-none" : radius === "all" ? "bccm--radius-all" : "";
 ---
 
-<section class="bccm">
+<section class={`bccm ${radiusClass}`}>
   <div class="container">
     <header class="bccm__head" data-reveal>
+      <svg class="bccm__deco" viewBox="0 0 73 81" fill="none" aria-hidden="true">
+        <path
+          d="M28.5513 16.4462C24.9634 20.6213 19.5155 31.8768 26.4262 43.4973C35.0646 58.023 49.3975 47.3094 46.644 39.237C44.4045 32.6715 28.7479 31.0299 24.9279 44.8946C21.892 55.9136 32.1215 73.92 39.2803 75.9752M36.4929 22.6776C35.0522 17.2129 34.5037 4.11057 34.5037 4.11057C34.5037 4.11057 30.5181 9.1688 25.9035 10.6237"
+          stroke={accentMid}
+          stroke-width="1.37"
+          stroke-linecap="round"
+        />
+      </svg>
       <p class="bccm__eyebrow">{eyebrow}</p>
       <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bccm__title" pillVariant={pillVariant} />
       {intro && <p class="bccm__intro">{intro}</p>}
@@ -29,12 +45,13 @@ const {
     )}
 
     <ol class="bccm__steps" data-reveal-group>
-      {items.map((s: { titre?: string; texte?: string }, i: number) => (
-        <li class={`bccm__step ${i === 0 ? "is-first" : ""}`}>
+      {items.map((s: { titre?: string; texte?: string; resultat?: string }, i: number) => (
+        <li class={`bccm__step ${i === 0 ? "is-first" : ""}`} style={i === 0 ? `--bccm-accent:${accentLight}` : undefined}>
           {i > 0 && <span class="bccm__connector" aria-hidden="true"></span>}
-          <img class="bccm__number" src={`/icons/number-${i + 1}.svg`} alt="" aria-hidden="true" />
+          {numberIcons[i] && <span class="bccm__number" aria-hidden="true" set:html={numberIcons[i]} />}
           <h3 class="bccm__stepTitle">{s.titre}</h3>
           <div class="bccm__stepText" set:html={richTextToHtml(s.texte)} />
+          {s.resultat && <p class="bccm__resultat">✓ {s.resultat}</p>}
         </li>
       ))}
     </ol>
@@ -42,8 +59,15 @@ const {
 </section>
 
 <style>
-  .bccm { background: var(--color-canyon-50); padding-block: clamp(3rem, 6vw, 5rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
-  .bccm__head { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bccm { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .bccm--radius-top { border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .bccm--radius-none { border-radius: 0; }
+  .bccm--radius-all { border-radius: var(--radius-section-lg); }
+  .bccm__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bccm__deco { position: absolute; right: 0; bottom: 20px; width: 172px; height: auto; transform: rotate(145deg); pointer-events: none; }
+  @media (max-width: 900px) {
+    .bccm__deco { display: none; }
+  }
   .bccm__eyebrow {
     font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
@@ -51,7 +75,7 @@ const {
   .bccm :global(.bccm__title) { margin: 0 auto; max-width: 24ch; color: #3b0800; }
   .bccm__intro {
     margin: 2.5rem auto 0; max-width: 72ch; font-family: var(--font-sans); font-weight: 500;
-    font-size: 1.125rem; line-height: 1.4; color: #3b0800;
+    font-size: 1.5rem; line-height: 1.4; color: #3b0800;
   }
 
   .bccm__image {
@@ -60,7 +84,6 @@ const {
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid color-mix(in srgb, #3b0800 15%, transparent);
-    box-shadow: 0 24px 48px -12px color-mix(in srgb, #3b0800 25%, transparent);
   }
   .bccm__image img { width: 100%; height: auto; display: block; }
 
@@ -68,15 +91,26 @@ const {
   .bccm__step {
     position: relative; background: #fff; border-radius: 20px; padding: 2rem 1.75rem; text-align: left;
   }
-  .bccm__step.is-first { background: var(--color-ovni-100); }
+  .bccm__step.is-first { background: var(--bccm-accent, var(--color-ovni-100)); }
   .bccm__connector {
     position: absolute; top: 2.9rem; left: -1.5rem; width: 1.5rem;
     border-top: 2px dotted color-mix(in srgb, #3b0800 40%, transparent);
   }
-  .bccm__number { width: 40px; height: 40px; margin-bottom: 1.5rem; }
+  .bccm__number { display: block; width: 40px; height: 40px; margin-bottom: 1.5rem; }
+  .bccm__number :global(svg) { width: 100%; height: 100%; }
   .bccm__stepTitle { margin: 0 0 0.75rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.25rem; color: #3b0800; }
   .bccm__stepText :global(p) { margin: 0; font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.5; color: #3b0800; }
   .bccm__stepText :global(p + p) { margin-top: 0.6em; }
+  .bccm__resultat {
+    margin: 0.75rem 0 0;
+    color: var(--color-red-rock-600);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.5556;
+    letter-spacing: -0.25px;
+  }
 
   @media (max-width: 900px) {
     .bccm__steps { grid-template-columns: 1fr 1fr; }

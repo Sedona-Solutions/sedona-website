@@ -1,12 +1,14 @@
 ---
+import { ACCENT_MID } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
 const { eyebrow = "Impacts mesurables", titre, titreAccent, items = [], pillVariant } = Astro.props;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 ---
 
 <section class="bimp">
   <div class="container">
     <header class="bimp__head" data-reveal>
-      <p class="bimp__eyebrow"><span class="dot" aria-hidden="true"></span> {eyebrow}</p>
+      <p class="bimp__eyebrow"><span class="dot" aria-hidden="true" style={`background:${accentMid}`}></span> {eyebrow}</p>
       <TitreAccent titre={titre} accent={titreAccent} as="h4" class="bimp__title" pillVariant={pillVariant} />
     </header>
 

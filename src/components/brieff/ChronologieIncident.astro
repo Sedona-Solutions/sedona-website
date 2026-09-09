@@ -1,0 +1,69 @@
+---
+// Section "Chronologie d'un incident" (page Keycloak Run uniquement) : plus de
+// grille de cartes icône+texte, juste 2 images (une par offre, RUN / RUN+)
+// illustrant le même scénario d'incident sous les deux niveaux de service.
+import Media from "../Media.astro";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+import TitreAccent from "../TitreAccent.astro";
+
+const {
+  eyebrow = "Chronologie d'un incident",
+  titre,
+  titreAccent,
+  intro,
+  run,
+  runPlus,
+  pillVariant = "cactus",
+} = Astro.props;
+
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus;
+const images = [run, runPlus].filter((it) => it?.image);
+---
+
+{
+  images.length > 0 && (
+    <section class="bchr">
+      <div class="container">
+        <header class="bchr__head" data-reveal>
+          <p class="bchr__eyebrow">
+            <span class="dot" aria-hidden="true" style={`background:${accentMid}`} /> {eyebrow}
+          </p>
+          <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bchr__title" pillVariant={pillVariant} />
+          {intro && <p class="bchr__intro">{intro}</p>}
+        </header>
+
+        <div class="bchr__images">
+          {images.map((it: { label?: string; image?: string }) => (
+            <div class="bchr__imgWrap" data-reveal>
+              <Media class="bchr__img" src={it.image} alt={it.label ?? ""} width={1120} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .bchr { background: #3b0800; padding-block: clamp(3rem, 6vw, 5rem); }
+  .bchr__head { max-width: 68ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .bchr__eyebrow {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-red-rock-50); margin: 0 0 1.25rem;
+  }
+  .bchr__eyebrow .dot { width: 10px; height: 10px; border-radius: 999px; flex: none; }
+  .bchr :global(.bchr__title) {
+    margin: 0; font-family: var(--font-sans); font-weight: 600;
+    font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.2; letter-spacing: -0.01em; color: var(--color-red-rock-50);
+  }
+  .bchr :global(.bchr__title .hl) {
+    display: inline; background: none; color: inherit; padding: 0; border-radius: 0; transform: none;
+  }
+  .bchr :global(.bchr__title .hl:hover) { animation: none; }
+  .bchr__intro { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: var(--color-red-rock-50); opacity: 0.9; }
+
+  .bchr__images { display: flex; flex-direction: column; gap: 1.5rem; }
+  .bchr__imgWrap { border-radius: 20px; overflow: hidden; }
+  .bchr__img { width: 100%; height: auto; display: block; }
+</style>

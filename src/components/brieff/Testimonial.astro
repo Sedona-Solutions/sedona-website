@@ -3,19 +3,39 @@ import Media from "../Media.astro";
 // Contenu piloté par Tina (collection "offre" > champ "temoignage") ; si
 // l'entrée ne renseigne rien, on retombe sur un témoignage de la home.
 import home from "../../../content/home/index.json";
-const { citation, auteur, role, avatar } = Astro.props;
+const { citation, auteur, role, avatar, radius = "top" } = Astro.props;
+const radiusClass =
+  radius === "bottom" ? "btest--radius-bottom" : radius === "none" ? "btest--radius-none" : radius === "all" ? "btest--radius-all" : "";
 const fallback = home.temoignagesSection?.temoignages?.[1];
 const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
 ---
 
 {
   temoignage && (
-    <section class="btest">
+    <section class={`btest ${radiusClass}`}>
       <div class="container btest__frame">
-        <img class="btest__ring btest__ring--lg" src="/deco/btest-ring-ovni.svg" alt="" aria-hidden="true" />
-        <img class="btest__ring btest__ring--sm" src="/deco/btest-ring-ovni-light.svg" alt="" aria-hidden="true" />
-        <img class="btest__squiggle btest__squiggle--1" src="/deco/btest-squiggle-16.svg" alt="" aria-hidden="true" />
-        <img class="btest__squiggle btest__squiggle--2" src="/deco/btest-squiggle-32.svg" alt="" aria-hidden="true" />
+        <svg class="btest__ring btest__ring--lg" viewBox="0 0 43 43" fill="none" aria-hidden="true">
+          <circle cx="21.5" cy="21.5" r="20" stroke="var(--color-red-rock-300)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <svg class="btest__ring btest__ring--sm" viewBox="0 0 26.4783 26.4783" fill="none" aria-hidden="true">
+          <circle cx="13.2391" cy="13.2391" r="11.7391" stroke="var(--color-red-rock-200)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <svg class="btest__squiggle btest__squiggle--1" viewBox="0 0 52.0937 75.5005" fill="none" aria-hidden="true">
+          <path
+            d="M50.0211 1.50029C51.0211 6.50029 51.4211 16.7003 45.0211 17.5003C37.0211 18.5003 31.0208 18.0003 29.5208 23.5003C28.0208 29.0003 33.0208 42.5003 23.0208 44.0003C13.0208 45.5003 8.52054 44.0003 4.02072 51.5003C-0.291423 58.6875 2.02078 67.0003 3.0211 74.0003"
+            stroke="var(--color-sunshine-200)"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+        <svg class="btest__squiggle btest__squiggle--2" viewBox="0 0 52.0937 75.5005" fill="none" aria-hidden="true">
+          <path
+            d="M50.0211 1.50029C51.0211 6.50029 51.4211 16.7003 45.0211 17.5003C37.0211 18.5003 31.0208 18.0003 29.5208 23.5003C28.0208 29.0003 33.0208 42.5003 23.0208 44.0003C13.0208 45.5003 8.52054 44.0003 4.02072 51.5003C-0.291423 58.6875 2.02078 67.0003 3.0211 74.0003"
+            stroke="var(--color-sunshine-100)"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
         <blockquote class="btest__card" data-reveal>
           <p class="btest__quote">"{temoignage.citation}"</p>
           <footer class="btest__foot">
@@ -37,8 +57,17 @@ const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
     position: relative;
     overflow: hidden;
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 15.5vw, 11rem) clamp(2.5rem, 6.7vw, 96px);
+    padding-block: clamp(2.5rem, 6.7vw, 96px);
     border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0;
+  }
+  .btest--radius-bottom {
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+  }
+  .btest--radius-none {
+    border-radius: 0;
+  }
+  .btest--radius-all {
+    border-radius: var(--radius-section-lg);
   }
   .btest__frame { position: relative; display: flex; flex-direction: column; align-items: center; }
 
@@ -71,10 +100,10 @@ const temoignage = citation ? { citation, auteur, role, avatar } : fallback;
   }
 
   .btest__ring, .btest__squiggle { position: absolute; pointer-events: none; }
-  .btest__ring--lg { width: 46px; height: 46px; left: 1130px; top: 451.68px; }
-  .btest__ring--sm { width: 27px; height: 27px; left: 619px; top: 22.68px; }
-  .btest__squiggle--1 { width: 57px; height: 80px; left: 1467px; top: 33.09px; }
-  .btest__squiggle--2 { width: 57px; height: 80px; left: 149.49px; top: 358.32px; transform: rotate(75deg); }
+  .btest__ring--lg { width: 46px; height: 46px; left: 420px; top: -60px; }
+  .btest__ring--sm { width: 27px; height: 27px; left: 789px; bottom: -90px; }
+  .btest__squiggle--1 { width: 57px; height: 80px; right: 0; top: 33.09px; }
+  .btest__squiggle--2 { width: 57px; height: 80px; left: 0; top: 318.32px; transform: rotate(75deg); }
 
   @media (max-width: 900px) {
     .btest__ring, .btest__squiggle { display: none; }

@@ -70,12 +70,73 @@ arrowSvg = arrowSvg.replace("<svg ", `<svg class="methode__arrow" `);
   </div>
 </section>
 
+<script>
+  // Drag-to-scroll à la souris : le scroll horizontal natif (trackpad/molette)
+  // n'est pas évident à découvrir. Le tactile défile déjà nativement au doigt,
+  // donc on ignore les pointeurs "touch"/"pen" (uniquement "mouse").
+  const initMethodeDrag = () => {
+    document.querySelectorAll(".methode__row:not(.methode__row--grid)").forEach((rail) => {
+      let dragging = false;
+      let moved = false;
+      let startX = 0;
+      let startScroll = 0;
+
+      rail.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse") return;
+        dragging = true;
+        moved = false;
+        startX = e.clientX;
+        startScroll = rail.scrollLeft;
+        rail.classList.add("is-dragging");
+        rail.setPointerCapture(e.pointerId);
+      });
+
+      rail.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        rail.scrollLeft = startScroll - dx;
+      });
+
+      const stop = (e) => {
+        dragging = false;
+        rail.classList.remove("is-dragging");
+        rail.releasePointerCapture(e.pointerId);
+      };
+      rail.addEventListener("pointerup", stop);
+      rail.addEventListener("pointercancel", stop);
+
+      // Empêche le clic (ex. lien dans une carte) de se déclencher juste après un drag.
+      rail.addEventListener(
+        "click",
+        (e) => {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        },
+        true
+      );
+    });
+  };
+  initMethodeDrag();
+  document.addEventListener("astro:page-load", initMethodeDrag);
+</script>
+
 <style>
   .methode {
     background: var(--color-canyon-50);
     padding-block: clamp(3rem, 6vw, 11rem);
     /* Coin bas arrondi : flotte sur le fond sombre commun, au-dessus des Skills. */
     border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+    /* .methode__row (mode scroll) déborde jusqu'aux bords de l'écran via
+       margin-inline: calc(50% - 50vw). Sur les navigateurs qui réservent la
+       place de la scrollbar verticale (Windows, Firefox...), 100vw compte cette
+       largeur en plus du viewport visible : le rail dépasse alors de quelques
+       pixels à droite et provoque un scroll horizontal sur toute la page.
+       overflow-x: hidden ici contient ce débord au niveau de la section,
+       avant qu'il ne remonte jusqu'à <body>. */
+    overflow-x: hidden;
   }
   .methode__container { position: relative; }
   /* :global() — le squiggle inliné via set:html (cf. frontmatter) n'a pas
@@ -119,6 +180,14 @@ arrowSvg = arrowSvg.replace("<svg ", `<svg class="methode__arrow" `);
     scroll-padding-inline: max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2));
   }
   .methode__row::-webkit-scrollbar { display: none; }
+  /* Drag-to-scroll (voir <script> ci-dessus) : curseur grab/grabbing, snap et
+     sélection de texte coupés le temps du drag pour ne pas parasiter le geste. */
+  .methode__row:not(.methode__row--grid) { cursor: grab; }
+  .methode__row.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
   /* Infra & Sécurité (layout="grid") : grille statique 2x2, pas de scroll. */
   .methode__row--grid {
     grid-auto-flow: unset;

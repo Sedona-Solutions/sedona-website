@@ -1,19 +1,26 @@
 ---
 import Media from "../Media.astro";
+import CoverageGrid from "./CoverageGrid.astro";
 import { richTextToHtml } from "../../utils/richText.js";
+import { ACCENT_MID } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
-const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illustration, pillVariant = "ovni" } = Astro.props;
+const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illustration, pillVariant = "ovni", coverage = false } = Astro.props;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 ---
 
 <section class="bincoh">
   <div class="container bincoh__row">
     <div class="bincoh__col">
-      <p class="bincoh__eyebrow"><span class="dot" aria-hidden="true"></span> {eyebrow}</p>
+      <p class="bincoh__eyebrow"><span class="dot" aria-hidden="true" style={`background:${accentMid}`}></span> {eyebrow}</p>
       <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bincoh__title" pillVariant={pillVariant} />
       {texte && <div class="bincoh__text" set:html={richTextToHtml(texte)} />}
     </div>
     <div class="bincoh__illu-wrap">
-      {illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} />}
+      {coverage ? (
+        <CoverageGrid pillVariant={pillVariant} />
+      ) : (
+        illustration && <Media class="bincoh__illu" src={illustration} alt="Détection d'incohérences par Iris" width={720} />
+      )}
     </div>
   </div>
 </section>
@@ -43,6 +50,7 @@ const { eyebrow = "Détection d'incohérences", titre, titreAccent, texte, illus
   .bincoh__text { margin: 1.5rem 0 0; }
   .bincoh__text :global(p) { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: var(--color-red-rock-50); opacity: 0.9; margin: 0; }
   .bincoh__text :global(p + p) { margin-top: 0.75em; }
+  .bincoh__text :global(a) { color: var(--color-text-inverse); text-decoration: underline; }
 
   .bincoh__illu-wrap { border-radius: 20px; overflow: hidden; }
   .bincoh__illu { width: 100%; height: auto; display: block; }

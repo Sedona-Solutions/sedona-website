@@ -1,4 +1,5 @@
 ---
+import { ACCENT_LIGHT, ACCENT_DARK } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
 
 const {
@@ -12,6 +13,8 @@ const {
   apres = [],
   pillVariant = "ovni",
 } = Astro.props;
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.ovni;
+const accentDark = ACCENT_DARK[pillVariant] ?? ACCENT_DARK.ovni;
 ---
 
 <section class="bconst">
@@ -31,8 +34,15 @@ const {
           ))}
         </ul>
       </div>
-      <div class="bconst__col bconst__col--after" data-reveal>
-        <img class="bconst__squiggle" src="/deco/squiggle-8.svg" alt="" aria-hidden="true" />
+      <div class="bconst__col bconst__col--after" style={`--bconst-accent:${accentLight};--bconst-accent-dark:${accentDark}`} data-reveal>
+        <svg class="bconst__squiggle" viewBox="0 0 73 80" fill="none" aria-hidden="true">
+          <path
+            d="M10 32.7838L28 4M24.1429 52.6126C32.0714 46.003 49.6 32.7838 56.2857 32.7838M32.5 75C40 73.5075 56.8 71.418 64 75"
+            stroke={accentDark}
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
         <h3 class="bconst__colTitle">{colonneApresTitre}</h3>
         <ul class="bconst__list bconst__list--after">
           {apres.map((t: string) => (
@@ -52,11 +62,11 @@ const {
     text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800; margin: 0 0 1rem;
   }
   .bconst :global(.bconst__title) { margin: 0 auto; max-width: 22ch; color: #3b0800; }
-  .bconst__intro { margin: 3rem auto 0; max-width: 62ch; font-family: var(--font-sans); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: #3b0800; }
+  .bconst__intro { margin: 3rem auto 0; max-width: 62ch; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; line-height: 1.4; color: #3b0800; }
 
   .bconst__row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
   .bconst__col { background: #fff; border-radius: 24px; padding: 2.5rem 3rem; }
-  .bconst__col--after { background: var(--color-ovni-100); position: relative; }
+  .bconst__col--after { background: var(--bconst-accent, var(--color-ovni-100)); position: relative; }
   .bconst__squiggle { position: absolute; left: -20px; top: -30px; width: 73px; height: 80px; z-index: 1; pointer-events: none; transform: rotate(-98deg); }
   .bconst__colTitle { margin: 0 0 1.75rem; font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; color: #3b0800; }
 
@@ -70,7 +80,7 @@ const {
   .bconst__list li:first-child { padding-top: 0; }
   .mark { flex: none; font-size: 1.125rem; font-weight: 700; }
   .mark--x { color: var(--color-red-rock-600); }
-  .mark--check { color: var(--color-ovni-500); }
+  .mark--check { color: var(--bconst-accent-dark, var(--color-red-rock-500)); }
 
   @media (max-width: 860px) {
     .bconst__row { grid-template-columns: 1fr; }

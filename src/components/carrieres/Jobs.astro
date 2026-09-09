@@ -7,9 +7,12 @@ const items = jobs?.items ?? [];
 <section class="cjobs" id="jobs">
   <div class="container">
     <header class="cjobs__head" data-reveal>
-      {jobs?.eyebrow && <p class="cjobs__eyebrow">{jobs.eyebrow}</p>}
-      <TitreAccent titre={jobs?.titre} accent={jobs?.titreAccent} as="h2" class="cjobs__title" pillVariant={jobs?.titreCouleur} />
-      {jobs?.intro && <p class="cjobs__intro">{jobs.intro}</p>}
+      <div class="cjobs__head-text">
+        {jobs?.eyebrow && <p class="cjobs__eyebrow">{jobs.eyebrow}</p>}
+        <TitreAccent titre={jobs?.titre} accent={jobs?.titreAccent} as="h2" class="cjobs__title" pillVariant={jobs?.titreCouleur} />
+        {jobs?.intro && <p class="cjobs__intro">{jobs.intro}</p>}
+      </div>
+      <img class="cjobs__deco" src="/deco/illus_search.svg" alt="" aria-hidden="true" />
     </header>
 
     <ul class="cjobs__list" data-reveal-group>
@@ -43,20 +46,28 @@ const items = jobs?.items ?? [];
 </section>
 
 <style>
-  .cjobs { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
-  .cjobs__head { max-width: 720px; margin: 0 auto clamp(2.5rem, 5vw, 3rem); text-align: center; }
+  .cjobs { position: relative; overflow: hidden; background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .cjobs__head {
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    max-width: 1088px; margin: 0 auto clamp(2.5rem, 5vw, 3rem);
+  }
+  .cjobs__head-text { max-width: 720px; }
+  .cjobs__deco { flex: none; width: clamp(140px, 16vw, 220px); height: auto; pointer-events: none; }
+  @media (max-width: 900px) {
+    .cjobs__deco { display: none; }
+  }
   .cjobs__eyebrow {
     font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
     font-size: 1.25rem; color: #3b0800; margin: 0 0 1rem;
   }
-  .cjobs :global(.cjobs__title) { margin: 0 auto; color: #3b0800; }
+  .cjobs :global(.cjobs__title) { margin: 0; color: #3b0800; }
   .cjobs__intro { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; }
 
   .cjobs__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; max-width: 1088px; margin-inline: auto; }
   .cjobs__item { background: #fff; border: 1px solid #3b0800; border-radius: 24px; overflow: hidden; }
   .cjobs__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 2rem; cursor: pointer; list-style: none; }
   .cjobs__row::-webkit-details-marker { display: none; }
-  .cjobs__row-text { display: flex; flex-direction: column; gap: 0.25rem; }
+  .cjobs__row-text { display: flex; flex-direction: column; }
   .cjobs__row-titre { font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #3b0800; }
   .cjobs__meta { font-family: var(--font-body); font-weight: 400; font-size: 0.875rem; color: #3b0800; }
   .cjobs__plus { position: relative; flex: none; width: 22px; height: 22px; }

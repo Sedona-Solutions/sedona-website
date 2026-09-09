@@ -159,14 +159,15 @@
       }
     ]
   },
-  "team": {
-    "eyebrow": "Notre tribu",
-    "titre": "Passionnés, disponibles et à l'écoute",
-    "titreAccent": "à l'écoute",
-    "titreCouleur": "ovni",
-    "intro": "Chefs de projet, designers UX/UI, développeurs : des experts passionnés, disponibles et à l'écoute.",
-    "merciTitre": "Merci également aux anciens",
-    "merciTexte": "Sébastien, Victor, Édouard, Arnaud, Nicolas, Florian, Aurélia, Mathilde, Coraline, Aimen, Charles, Romain, Camille, Jugurta, Antoine, Benoît, Rémi, Tiago, Elsa, Kim, Franck, Philippe, Stéphane, Anaïs, Nathalie, Farah, Aurélie…"
+  "stats": {
+    "intro": "Une même conviction depuis 1998 : conjuguer expertise technique et écoute humaine.",
+    "chips": ["Créativité", "Innovation", "Stratégie"],
+    "stats": [
+      { "valeur": "25+", "label": "années d'expérience dans le service" },
+      { "valeur": "200+", "label": "projets menés avec succès" },
+      { "valeur": "50+", "label": "collaborateurs sur tout le territoire" }
+    ],
+    "cta": { "label": "Voir nos projets", "href": "/projets" }
   },
   "ctaFinal": {
     "titre": "Envie d'écrire la suite avec nous ?",

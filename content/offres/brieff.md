@@ -4,7 +4,7 @@ titre: Brieff
 eyebrow: Offres clé en main
 accroche: 'Lancez vos projets 10x plus vite, avec Brieff'
 enBref: 'BRIEFF rassemble des agents IA dans une salle virtuelle, utilise vos sources, crée vos livrables, détecte les incohérences et suit chaque décision.'
-illustration: /deco/illustration-brieff-meetingroom.svg
+illustration: /uploads/offre/illustration-brieff-meetingroom.png
 heroProof:
   avatars:
     - /uploads/articles/collab/jerome-c.png
@@ -99,7 +99,7 @@ produits:
       image: /uploads/offre/brieff-visual-impact.png
       imageCaption: "Visual Impact, la démonstration animée — la cascade des répercussions animée en 3 phases\_"
     - titre: 'What-If Engine, aide à la décision'
-      texte: "Simulez un arbitrage avant de le prendre. Jours-homme économisés, artefacts orphelins, et talking points COPIL prêts à coller.\n\n**Deux scénarios d'arbitrage : **\n\n* **Retirer :** Brieff calcule les artefacts orphelins, tests/recettes en cascade, ADR à archiver, jours-homme économisés. \n* **Ajouter :** un agent « Estimator » produit une estimation chiffrée — epics / stories / tests / ADR à créer, effort en jours-homme, artefacts existants à modifier, risques, dépendances, titres de stories suggérés.\_\n"
+      texte: "Simulez un arbitrage avant de le prendre. Jours-homme économisés, artefacts orphelins, et talking points COPIL prêts à coller.\n\n\\*\\*Deux scénarios d'arbitrage : \\*\\*\n\n* **Retirer :** Brieff calcule les artefacts orphelins, tests/recettes en cascade, ADR à archiver, jours-homme économisés.\n* **Ajouter :** un agent « Estimator » produit une estimation chiffrée — epics / stories / tests / ADR à créer, effort en jours-homme, artefacts existants à modifier, risques, dépendances, titres de stories suggérés.\_\n"
       icone: cursor-choose
       image: /uploads/offre/brieff-what-if-engine.png
       imageCaption: What-If Engine — simulation d'arbitrage avec talking points COPIL prêts à coller
@@ -114,12 +114,12 @@ produits:
       image: /uploads/offre/brieff-sprint-cockpit.png
       imageCaption: Sprint Cockpit — timeline des 6 sprints planifiés + kanban du sprint en cours
     - titre: Roadmap stratégique sur 12 mois
-      texte: "**Le livrable que votre COMEX et vos sponsors veulent voir :** releases trimestrielles, epics rattachés, progression cumulée. \n\nLa Roadmap est calculée dynamiquement depuis les statuts du Sprint Cockpit, pilotez vos sprints — toujours à jour, jamais déphasée\_\n"
+      texte: "**Le livrable que votre COMEX et vos sponsors veulent voir :** releases trimestrielles, epics rattachés, progression cumulée.\n\nLa Roadmap est calculée dynamiquement depuis les statuts du Sprint Cockpit, pilotez vos sprints — toujours à jour, jamais déphasée\_\n"
       icone: location-pin-direction
       image: /uploads/offre/brieff-roadmap.png
       imageCaption: "Roadmap : swim lanes par release trimestrielle, epics rattachés avec leur progression \Là ajuster par drag-and-drop\_"
     - titre: Cartographie documentaire
-      texte: "En cours de cadrage, les artefacts s'accumulent : epics, user stories, tests, cahier de recette, audit RGAA, sprints, architecture. \n\n**Quel test couvre quelle story ? Quelle story est planifiée dans quel sprint ? La carte répond visuellement.\_**\n"
+      texte: "En cours de cadrage, les artefacts s'accumulent : epics, user stories, tests, cahier de recette, audit RGAA, sprints, architecture.\n\n\\*\\*Quel test couvre quelle story ? Quelle story est planifiée dans quel sprint ? La carte répond visuellement.\_\\*\\*\n"
       icone: network
       image: /uploads/offre/brieff-cartographie.png
       imageCaption: "Navigation visuelle epic → stories → artefacts liés (tests, recette, RGAA, sprints, architecture)\_"
@@ -174,10 +174,13 @@ raisons:
       logo: /technos/vertex-ai.svg
   technosNote: 'Intégration à suivre : Cursor CLI, GitHub Copilot CLI, Codex (OpenAI CLI) et tous les CLI compatibles avec stream-json.'
 ctaFinal:
-  titre: Prêt à tester BRIEFF ?
+  titre: Prêt à lancer BRIEFF ?
   titreAccent: BRIEFF ?
   description: 'Une session d''1h suffit pour comprendre comment l''outil s''adapterait à votre contexte, vos clients et vos projets récurrents.'
   ctaLabel: Demander une démo
   ctaHref: /contact
+  ctaLabel2: Prendre rendez-vous
+  illustration: /uploads/offre/illus_brieff_mini.svg
+_template: brieff
 ---
 

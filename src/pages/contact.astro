@@ -1,347 +1,443 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import home from "../../content/home/index.json";
+import TitreAccent from "../components/TitreAccent.astro";
+import { recolorIcon } from "../utils/iconRecolor.js";
 import global from "../../content/global/index.json";
+import carrieres from "../../content/carrieres/index.json";
 
-const { agences, email } = global;
-const temoignage = home.temoignagesSection?.temoignages?.[0];
+const { agences } = global;
+const postes = (carrieres.jobs?.items ?? []).map((j: { titre: string }) => j.titre);
+const offres = (await getCollection("offre")).map((o) => o.data.titre).filter(Boolean);
 
-const PROFILS = [
-  "Dirigeant / Direction générale",
-  "DSI / Directeur technique",
-  "Chef de projet / PMO",
-  "Responsable produit / marketing",
-  "Autre",
+const BUDGETS = [
+  "Moins de 10 000 €",
+  "10 000 – 30 000 €",
+  "30 000 – 100 000 €",
+  "Plus de 100 000 €",
+  "Pas encore défini",
 ];
 
-const BESOINS = [
-  "Produits digitaux (site, app, UX/UI)",
-  "Data & IA",
-  "Infra & sécurité / Cloud",
-  "Une offre clé en main (Keycloak, Brieff, IA Forge…)",
-  "Accompagnement / conseil",
-  "Autre / à définir",
-];
-
-const DELAIS = ["Dès que possible", "Dans 1 à 3 mois", "Dans 3 à 6 mois", "Phase d'exploration"];
+// Mêmes couleurs par agence que sur la page Notre histoire (accent-color-1/2/3).
+const ICON_COLOR: Record<string, string> = { Lyon: "#b3b5ee", Paris: "#f8b3a9", Toulon: "#a7e9d1" };
+const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("flag-heart", ICON_COLOR[a.ville] ?? "#a7e9d1"));
 ---
 
-<BaseLayout title="Contact — Sedona" description="Un échange, pas un cahier des charges. Parlons de votre projet.">
-  <section class="contact">
-    <div class="container contact__grid">
-      <aside class="contact__intro" data-reveal>
-        <p class="contact__eyebrow">Contact</p>
-        <h1 class="contact__title">Un échange, <em>pas un cahier des charges.</em></h1>
-        <p class="contact__lead">
-          On vous pose quelques questions de cadrage pour préparer un échange utile. Pas de relance commerciale insistante — promis.
-        </p>
+<BaseLayout
+  title="Contact — Sedona"
+  description="Et si on parlait de vous ? Discutons de vos projets et trouvons la solution adaptée."
+>
+  <div class="dark-stack">
+  <section class="chero">
+    <svg class="cdeco cdeco--1" viewBox="0 0 94.0314 137.766" fill="none" aria-hidden="true">
+      <path
+        d="M29.9266 120.978C41.6674 118.183 65.8201 105.212 68.5037 75.6923C71.8583 38.7924 32.6305 39.3696 27.1322 57.2423C22.6604 71.7786 48.3413 94.8368 72.9611 75.1396C92.5278 59.4851 97.5361 14.3591 87.4725 1.50007M23.8464 99.6987C19.3728 111.253 3.48863 135.218 3.48863 135.218C3.48863 135.218 17.0718 131.366 27.1354 134.721"
+        stroke="#F8D98B"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+    <svg class="cdeco cdeco--2" viewBox="0 0 52.0937 75.5005" fill="none" aria-hidden="true">
+      <path
+        d="M50.0211 1.50029C51.0211 6.50029 51.4211 16.7003 45.0211 17.5003C37.0211 18.5003 31.0208 18.0003 29.5208 23.5003C28.0208 29.0003 33.0208 42.5003 23.0208 44.0003C13.0208 45.5003 8.52054 44.0003 4.02072 51.5003C-0.291423 58.6875 2.02078 67.0003 3.0211 74.0003"
+        stroke="#E9B189"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+    <svg class="cdeco cdeco--3" viewBox="0 0 52.0937 75.5005" fill="none" aria-hidden="true">
+      <path
+        d="M50.0211 1.50029C51.0211 6.50029 51.4211 16.7003 45.0211 17.5003C37.0211 18.5003 31.0208 18.0003 29.5208 23.5003C28.0208 29.0003 33.0208 42.5003 23.0208 44.0003C13.0208 45.5003 8.52054 44.0003 4.02072 51.5003C-0.291423 58.6875 2.02078 67.0003 3.0211 74.0003"
+        stroke="#D0D3F5"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
 
-        <ul class="contact__meta">
-          <li>
-            <span class="contact__meta-label">Email</span>
-            <a href={`mailto:${email}`}>{email}</a>
-          </li>
-          <li>
-            <span class="contact__meta-label">Disponibilité</span>
-            <span>Lun - Ven · 9h - 18h</span>
-          </li>
-          <li>
-            <span class="contact__meta-label">Délai de réponse</span>
-            <span>Sous 48h ouvrées</span>
-          </li>
-          <li>
-            <span class="contact__meta-label">Engagement</span>
-            <span>Aucun · premier échange offert</span>
-          </li>
-        </ul>
+    <div class="container chero__inner" data-reveal>
+      <p class="chero__eyebrow">Et si on parlait de vous ?</p>
+      <TitreAccent
+        titre="Discutons de vos projets et trouvons ensemble la solution"
+        accent="Discutons"
+        as="h1"
+        class="title-2 chero__title"
+        pillVariant="ovni"
+      />
+    </div>
 
-        {temoignage && (
-          <blockquote class="contact__quote">
-            <p>“{temoignage.citation}”</p>
-            <cite>— {temoignage.auteur} · {temoignage.role}</cite>
-          </blockquote>
-        )}
-      </aside>
-
-      <div class="contact__card" data-reveal>
-        <ol class="contact__steps" aria-hidden="true">
-          <li class="step is-active" data-step-indicator="1"><span class="step__n">01</span>Profil</li>
-          <li class="step" data-step-indicator="2"><span class="step__n">02</span>Projet</li>
-          <li class="step" data-step-indicator="3"><span class="step__n">03</span>Coordonnées</li>
-        </ol>
+    <div class="ccard-wrap" data-reveal>
+      <div class="ccard">
+        <div class="ccard__head">
+          <h2 class="ccard__title" id="ccardTitle">Votre projet</h2>
+          <div class="ccard__tabs" role="tablist">
+            <button type="button" class="ctab is-active" data-type="projet" data-title="Votre projet" role="tab" aria-selected="true">J’ai un projet</button>
+            <button type="button" class="ctab" data-type="postuler" data-title="Votre futur job" role="tab" aria-selected="false">Postuler</button>
+            <button type="button" class="ctab" data-type="autre" data-title="Votre demande" role="tab" aria-selected="false">Autre demande</button>
+          </div>
+        </div>
 
         <form id="contactForm" novalidate>
           <input type="text" name="website_url" id="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="type_demande" id="typeDemande" value="projet" />
 
-          <fieldset class="panel" data-panel="1">
-            <legend class="panel__title">Quel est votre profil ?</legend>
-            <div class="option-grid" data-required="true">
-              {PROFILS.map((p) => (
-                <label class="option-card">
-                  <input type="radio" name="profil" value={p} />
-                  <span>{p}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset class="panel" data-panel="2" hidden>
-            <legend class="panel__title">Votre projet.</legend>
-            <p class="panel__sub">Vos besoins — plusieurs choix possibles</p>
-            <div class="option-grid">
-              {BESOINS.map((b) => (
-                <label class="option-card option-card--check">
-                  <input type="checkbox" name="besoins" value={b} />
-                  <span>{b}</span>
-                </label>
-              ))}
-            </div>
-            <p class="panel__sub panel__sub--spaced">Quand souhaitez-vous démarrer ?</p>
-            <div class="option-grid option-grid--tight" data-required="true">
-              {DELAIS.map((d) => (
-                <label class="option-card">
-                  <input type="radio" name="delai" value={d} />
-                  <span>{d}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset class="panel" data-panel="3" hidden>
-            <legend class="panel__title">Vos coordonnées.</legend>
-            <div class="field-grid">
-              <label class="field"><input type="text" name="prenom" placeholder="Prénom *" required /></label>
-              <label class="field"><input type="text" name="nom" placeholder="Nom *" required /></label>
-              <label class="field"><input type="email" name="email" placeholder="Email professionnel *" required /></label>
-              <label class="field"><input type="tel" name="telephone" placeholder="Téléphone (optionnel)" /></label>
-              <label class="field field--full"><input type="text" name="entreprise" placeholder="Nom de l'entreprise" /></label>
-              <label class="field field--full">
-                <textarea name="message" rows="3" placeholder="Décrivez brièvement votre projet (optionnel)"></textarea>
-              </label>
-            </div>
-          </fieldset>
-
-          <div class="form-nav">
-            <button type="button" class="form-btn form-btn--ghost" id="btnPrev" hidden>Précédent</button>
-            <button type="button" class="form-btn form-btn--primary" id="btnNext">Suivant</button>
-            <button type="submit" class="form-btn form-btn--primary" id="btnSubmit" hidden>Envoyer ma demande</button>
+          <div class="cfields" data-type-panel="projet">
+            <label class="cfield"><span>Nom*</span><input type="text" name="nom" placeholder="ex: Dupont" required /></label>
+            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom" placeholder="ex: Jean" required /></label>
+            <label class="cfield"><span>Email*</span><input type="email" name="email" placeholder="@email.com" required /></label>
+            <label class="cfield"><span>Téléphone</span><input type="tel" name="telephone" placeholder="06 49 29..." /></label>
+            <label class="cfield"><span>Votre entreprise*</span><input type="text" name="entreprise" placeholder="Entreprise & Co" required /></label>
+            <label class="cfield">
+              <span>Un budget en tête ?</span>
+              <select name="budget">
+                <option value="">Sélectionner un budget</option>
+                {BUDGETS.map((b) => <option value={b}>{b}</option>)}
+              </select>
+            </label>
+            <label class="cfield cfield--full">
+              <span>Offre souhaitée</span>
+              <select name="offre" id="offreSelect">
+                <option value="">Sélectionner une offre</option>
+                {offres.map((o) => <option value={o}>{o}</option>)}
+                <option value="Autre">Autre / pas encore défini</option>
+              </select>
+            </label>
+            <label class="cfield cfield--full">
+              <span>Votre message*</span>
+              <textarea name="message" rows="8" placeholder="Dites-en nous en un peu plus..." required></textarea>
+            </label>
           </div>
 
-          <p class="form-legal">
-            En envoyant ce formulaire, vous acceptez d'être contacté(e). Vos données sont traitées conformément au RGPD et ne sont jamais partagées.
-          </p>
+          <div class="cfields" data-type-panel="postuler" hidden>
+            <label class="cfield"><span>Nom*</span><input type="text" name="nom_postuler" placeholder="ex: Dupont" /></label>
+            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_postuler" placeholder="ex: Jean" /></label>
+            <label class="cfield"><span>Email*</span><input type="email" name="email_postuler" placeholder="@email.com" /></label>
+            <label class="cfield"><span>Téléphone</span><input type="tel" name="telephone_postuler" placeholder="06 49 29..." /></label>
+            <label class="cfield">
+              <span>Poste visé*</span>
+              <select name="poste">
+                <option value="">Sélectionner un poste</option>
+                {postes.map((p) => <option value={p}>{p}</option>)}
+                <option value="Autre / candidature spontanée">Autre / candidature spontanée</option>
+              </select>
+            </label>
+            <label class="cfield">
+              <span>Votre profil LinkedIn</span>
+              <input type="url" name="linkedin" placeholder="https://linkedin.com/in/..." />
+            </label>
+          </div>
+
+          <div class="cfields" data-type-panel="autre" hidden>
+            <label class="cfield"><span>Nom*</span><input type="text" name="nom_autre" placeholder="ex: Dupont" /></label>
+            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_autre" placeholder="ex: Jean" /></label>
+            <label class="cfield"><span>Email*</span><input type="email" name="email_autre" placeholder="@email.com" /></label>
+            <label class="cfield"><span>Téléphone</span><input type="tel" name="telephone_autre" placeholder="06 49 29..." /></label>
+            <label class="cfield cfield--full"><span>Votre entreprise</span><input type="text" name="entreprise_autre" placeholder="Entreprise & Co" /></label>
+            <label class="cfield cfield--full">
+              <span>Votre message*</span>
+              <textarea name="message_autre" rows="4" placeholder="Dites-en nous en un peu plus..."></textarea>
+            </label>
+          </div>
+
+          <div class="ccard__submit">
+            <button type="submit" class="cbtn">Envoyer</button>
+          </div>
         </form>
 
-        <div class="contact__success" id="contactSuccess" hidden>
-          <span class="success__check" aria-hidden="true">✓</span>
-          <h2>Demande envoyée.</h2>
-          <p>Nous revenons vers vous rapidement, avec un premier retour sur votre projet.</p>
+        <div class="csuccess" id="contactSuccess" hidden>
+          <span class="csuccess__check" aria-hidden="true">✓</span>
+          <h3>Demande envoyée.</h3>
+          <p>Nous revenons vers vous rapidement, avec un premier retour sur votre demande.</p>
         </div>
       </div>
-    </div>
-
-    <div class="container">
-      <div class="contact__agences" data-reveal>
-        <p class="contact__agences-title">Nos agences</p>
-        <ul>
-          {agences.map((a) => (
-            <li>
-              <strong>{a.ville}</strong>
-              {a.adresse && <span>{a.adresse}</span>}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <p class="clegal">
+        En envoyant ce formulaire, vous acceptez d'être contacté(e). Vos données sont traitées conformément au RGPD et ne sont jamais partagées.
+      </p>
     </div>
   </section>
+
+  <div class="csep" aria-hidden="true"></div>
+
+  <section class="cvisit">
+    <div class="container cvisit__container">
+      <header class="cvisit__head" data-reveal>
+        <svg class="cdeco cdeco--4" viewBox="0 0 73 80" fill="none" aria-hidden="true">
+          <path
+            d="M10 32.7838L28 4M24.1429 52.6126C32.0714 46.003 49.6 32.7838 56.2857 32.7838M32.5 75C40 73.5075 56.8 71.418 64 75"
+            stroke="var(--color-sunshine-600)"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+        <TitreAccent titre="Venez nous rendre visite" accent="visite" as="h2" class="title-2 cvisit__title" pillVariant="sunshine" />
+        <p class="cvisit__sub">Discutons de vos projets ou buvons simplement un café !</p>
+      </header>
+
+      <ul class="cvisit__grid" data-reveal-group>
+        {agences.map((a: { ville: string; label?: string; adresse?: string }, i: number) => (
+          <li class="cagence" data-reveal>
+            {agenceIcons[i] && <span class="cagence__icon" aria-hidden="true" set:html={agenceIcons[i]} />}
+            <h3 class="cagence__ville">{a.ville}</h3>
+            {a.label && <p class="cagence__label">{a.label.toUpperCase()}</p>}
+            {a.adresse && <p class="cagence__adresse">{a.adresse}</p>}
+          </li>
+        ))}
+      </ul>
+
+      <img class="cvisit__cactus" src="/deco/contact-cool-cactus.svg" alt="" aria-hidden="true" loading="lazy" />
+    </div>
+  </section>
+  </div>
 </BaseLayout>
 
 <script>
   const form = document.getElementById("contactForm");
   if (form instanceof HTMLFormElement) {
-    const panels = [...form.querySelectorAll(".panel")];
-    const stepIndicators = [...document.querySelectorAll("[data-step-indicator]")];
-    const btnPrev = document.getElementById("btnPrev");
-    const btnNext = document.getElementById("btnNext");
-    const btnSubmit = document.getElementById("btnSubmit");
-    const stepsList = document.querySelector(".contact__steps");
+    const tabs = [...document.querySelectorAll(".ctab")];
+    const panels = [...form.querySelectorAll("[data-type-panel]")];
+    const typeInput = document.getElementById("typeDemande");
     const success = document.getElementById("contactSuccess");
-    let step = 1;
+    const title = document.getElementById("ccardTitle");
 
-    function validatePanel(panel) {
-      let valid = true;
-      panel.querySelectorAll("[data-required]").forEach((group) => {
-        const checked = group.querySelector("input:checked");
-        group.classList.toggle("is-invalid", !checked);
-        if (!checked) valid = false;
+    const setType = (type) => {
+      tabs.forEach((t) => {
+        const active = t.getAttribute("data-type") === type;
+        t.classList.toggle("is-active", active);
+        t.setAttribute("aria-selected", String(active));
+        if (active && title) title.textContent = t.getAttribute("data-title");
       });
-      const requiredInputs = [...panel.querySelectorAll("input[required]")];
-      for (const input of requiredInputs) {
-        if (!input.checkValidity()) {
-          valid = false;
-          input.reportValidity();
-          break;
-        }
+      panels.forEach((p) => {
+        p.hidden = p.getAttribute("data-type-panel") !== type;
+      });
+      if (typeInput instanceof HTMLInputElement) typeInput.value = type;
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => setType(tab.getAttribute("data-type")));
+    });
+
+    // Pré-remplissage depuis un lien "Choisir cette offre" / "Demander une démo"
+    // sur une page offre (ex. /contact?offre=Elastic).
+    const offreParam = new URLSearchParams(location.search).get("offre");
+    if (offreParam) {
+      const offreSelect = document.getElementById("offreSelect");
+      if (offreSelect instanceof HTMLSelectElement) {
+        const hasOption = [...offreSelect.options].some((o) => o.value === offreParam);
+        offreSelect.value = hasOption ? offreParam : "Autre";
       }
-      return valid;
+      setType("projet");
     }
 
-    function render() {
-      panels.forEach((p, i) => {
-        p.hidden = i + 1 !== step;
+    // Exemple de message adapté à l'offre (et, si connu via le lien d'origine,
+    // au palier précis de l'offre — ex. RUN / RUN+ / Audit pre-RUN) sélectionnée.
+    // Placeholder uniquement, jamais pré-rempli à la place de l'utilisateur.
+    const MESSAGE_PLACEHOLDERS: Record<string, string> = {
+      Keycloak:
+        "Bonjour, nous exploitons Keycloak en interne et cherchons un accompagnement RUN/RUN+ pour les mises à jour, la supervision et le support en cas d’incident...",
+      "IA Forge":
+        "Bonjour, nous voulons remplacer un progiciel coûteux par une application sur-mesure développée avec l’IA, sous contrôle d’experts...",
+      Brieff:
+        "Bonjour, nous avons un projet à cadrer avant développement — besoins encore flous, specs à clarifier avec vos experts...",
+      Elastic:
+        "Bonjour, nous cherchons à mettre en place ou optimiser notre stack Elastic (recherche, logs, observabilité)...",
+    };
+    const SOUS_OFFRE_PLACEHOLDERS: Record<string, string> = {
+      "Keycloak::RUN":
+        "Bonjour, nous souhaitons souscrire à l’offre Keycloak RUN pour déléguer l’exploitation de notre plateforme en heures ouvrées...",
+      "Keycloak::RUN+":
+        "Bonjour, nous souhaitons souscrire à l’offre Keycloak RUN+ pour bénéficier de la supervision temps réel et de l’astreinte...",
+      "Keycloak::Audit pre-RUN":
+        "Bonjour, nous aimerions réaliser un audit pre-RUN de notre plateforme Keycloak avant de démarrer un accompagnement RUN...",
+    };
+    const DEFAULT_MESSAGE_PLACEHOLDER = "Dites-en nous en un peu plus...";
+    const messageTextarea = form.querySelector('textarea[name="message"]');
+    const offreSelectEl = document.getElementById("offreSelect");
+    if (messageTextarea instanceof HTMLTextAreaElement && offreSelectEl instanceof HTMLSelectElement) {
+      // Le palier précis (sousOffre) ne vient que du lien d'origine : dès que
+      // l'utilisateur retouche lui-même le sélecteur, on l'oublie.
+      let sousOffre = new URLSearchParams(location.search).get("sousOffre");
+      const updateMessagePlaceholder = () => {
+        const key = sousOffre ? `${offreSelectEl.value}::${sousOffre}` : "";
+        messageTextarea.placeholder = SOUS_OFFRE_PLACEHOLDERS[key] ?? MESSAGE_PLACEHOLDERS[offreSelectEl.value] ?? DEFAULT_MESSAGE_PLACEHOLDER;
+      };
+      offreSelectEl.addEventListener("change", () => {
+        sousOffre = null;
+        updateMessagePlaceholder();
       });
-      stepIndicators.forEach((el, i) => el.classList.toggle("is-active", i + 1 <= step));
-      btnPrev.hidden = step === 1;
-      btnNext.hidden = step === panels.length;
-      btnSubmit.hidden = step !== panels.length;
+      updateMessagePlaceholder();
     }
-
-    btnNext.addEventListener("click", () => {
-      const current = panels[step - 1];
-      if (!validatePanel(current)) return;
-      step = Math.min(step + 1, panels.length);
-      render();
-    });
-
-    btnPrev.addEventListener("click", () => {
-      step = Math.max(step - 1, 1);
-      render();
-    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const lastPanel = panels[panels.length - 1];
-      if (!validatePanel(lastPanel)) return;
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
       const data = new FormData(form);
       const payload = Object.fromEntries(data.entries());
-      payload.besoins = data.getAll("besoins");
 
       // TODO: brancher l'envoi réel ici (Netlify Forms, Formspree, CRM, webhook…).
       console.log("Contact form submission", payload);
 
       form.hidden = true;
-      if (stepsList) stepsList.hidden = true;
       success.hidden = false;
     });
-
-    render();
   }
 </script>
 
 <style>
-  .contact {
+  /* Fond sombre commun (même pattern que les autres pages, cf. .dark-stack sur
+     /projets, /blog, /offres/[slug]…) : sans ça, les coins arrondis en bas de
+     .cvisit n'ont rien de sombre à révéler avant le footer. Un fond sur body
+     ferait aussi apparaître ce sombre à travers le header (translucide) tout
+     en haut de page, contrairement aux autres pages : on le scope donc à ce
+     wrapper plutôt qu'au body. */
+  .dark-stack {
+    background: #3b0800;
+  }
+
+  .chero {
     background: var(--color-canyon-50);
-    padding-block: clamp(3rem, 6vw, 5rem);
-    border-radius: var(--radius-section-lg);
+    padding-block: clamp(3rem, 6vw, 6rem) clamp(2.5rem, 5vw, 4rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .chero__inner { position: relative; z-index: 1; text-align: center; }
+
+  /* Décorations « griffonnées » (cf. maquette) : traits colorés autour du hero et de la carte. */
+  .cdeco { position: absolute; pointer-events: none; z-index: 0; }
+  .cdeco--1 { width: 70px; height: auto; left: calc(50% - 500px); top: 340px; transform: rotate(192deg) scaleY(-1); z-index: 1; }
+  .cdeco--2 { width: 44px; height: auto; right: calc(50% - 610px); top: 480px; }
+  .cdeco--3 { width: 44px; height: auto; left: calc(50% - 590px); bottom: 40px; transform: rotate(75deg); }
+  @media (max-width: 1200px) {
+    .cdeco { display: none; }
+  }
+  .chero__eyebrow {
+    margin: 0 0 1.5rem; font-family: var(--font-sans); font-weight: 400; font-size: 1.25rem;
+    text-transform: uppercase; letter-spacing: -0.01em; color: #3b0800;
+  }
+  .chero :global(.chero__title) {
+    margin: 0 auto; max-width: 26ch; text-align: center; color: #3b0800;
   }
 
-  .contact__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 400px) 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
+  .ccard-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .ccard {
+    width: min(1088px, 100%);
+    background: #fff;
+    border: 1px solid #42140d;
+    border-radius: 32px;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
-
-  .contact__eyebrow {
-    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin-bottom: 1rem;
+  .ccard__head { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .ccard__title { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.75rem; color: #3b0800; }
+  .ccard__tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .ctab {
+    border-radius: 999px; padding: 0.9rem 1.5rem; font-family: var(--font-sans); font-weight: 500;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: -0.01em; cursor: pointer;
+    background: transparent; border: 1px solid #42140d; color: #3b0800;
+    transition: background 0.15s ease, color 0.15s ease;
   }
-  .contact__title {
-    margin: 0; font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.1; letter-spacing: -0.02em; color: #3b0800;
+  .ctab.is-active { background: #3b0800; border-color: #3b0800; color: var(--color-red-rock-50); }
+
+  .cfields {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
   }
-  .contact__title em { font-family: var(--font-mono); font-style: italic; font-weight: 400; }
-  .contact__lead { margin: 1.25rem 0 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.5; color: #3b0800; max-width: 38ch; }
-
-  .contact__meta { list-style: none; margin: 2rem 0 0; padding: 1.75rem 0 0; border-top: 1px dashed #3b0800; display: flex; flex-direction: column; gap: 1rem; }
-  .contact__meta li { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800; }
-  .contact__meta-label { color: color-mix(in srgb, #3b0800 60%, transparent); }
-  .contact__meta a { color: #3b0800; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-
-  .contact__quote { margin: 2rem 0 0; padding: 1.5rem 1.75rem; background: #fff; border-radius: 20px; }
-  .contact__quote p { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1rem; line-height: 1.5; color: #3b0800; }
-  .contact__quote cite { display: block; margin-top: 0.75rem; font-style: normal; font-family: var(--font-body); font-size: 0.875rem; color: color-mix(in srgb, #3b0800 65%, transparent); }
-
-  .contact__card { background: #fff; border-radius: 28px; padding: clamp(1.75rem, 3vw, 2.75rem); }
-
-  .contact__steps { list-style: none; display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0 0 2rem; padding: 0; }
-  .step {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem;
-    color: color-mix(in srgb, #3b0800 40%, transparent);
+  .cfields[hidden] { display: none; }
+  .cfield { display: flex; flex-direction: column; gap: 0.5rem; }
+  .cfield--full { grid-column: 1 / -1; }
+  .cfield span { font-family: var(--font-body); font-weight: 500; font-size: 1rem; color: #3b0800; }
+  .cfield input,
+  .cfield select {
+    height: 56px; border-radius: 999px; border: 1px solid #3b0800; background: #fff;
+    padding: 0 1.5rem; font-family: var(--font-body); font-size: 1rem; color: #3b0800;
+    appearance: none;
   }
-  .step__n {
-    display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px;
-    border-radius: 999px; border: 1.5px solid currentColor; font-size: 0.75rem;
+  .cfield select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%233b0800' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.5rem center;
+    background-size: 12px 8px;
+    padding-right: 3rem;
   }
-  .step.is-active { color: #3b0800; }
-  .step.is-active .step__n { background: #3b0800; border-color: #3b0800; color: var(--color-red-rock-50); }
-
-  .panel__title { margin: 0 0 1.5rem; padding: 0; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem; color: #3b0800; }
-  .panel__sub { margin: 0 0 1rem; font-family: var(--font-body); font-weight: 500; font-size: 0.9375rem; color: color-mix(in srgb, #3b0800 70%, transparent); }
-  .panel__sub--spaced { margin-top: 2rem; }
-
-  .option-grid { list-style: none; margin: 0; padding: 0.35rem; border-radius: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; transition: box-shadow 0.15s ease; }
-  .option-grid--tight { grid-template-columns: repeat(2, 1fr); }
-  .option-grid.is-invalid { box-shadow: 0 0 0 2px var(--color-red-rock-600); }
-  .option-card {
-    position: relative; display: flex; align-items: center; gap: 0.6rem;
-    border: 1.5px solid color-mix(in srgb, #3b0800 25%, transparent); border-radius: 14px;
-    padding: 0.85rem 1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800;
-    cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+  .cfield textarea {
+    border-radius: 16px; border: 1px solid #3b0800; background: #fff;
+    padding: 0.9rem 1.5rem; font-family: var(--font-body); font-size: 1rem; color: #3b0800; resize: vertical;
   }
-  .option-card input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-  .option-card:has(input:checked) { border-color: #3b0800; background: var(--color-canyon-100); font-weight: 600; }
-  .option-card:has(input:focus-visible) { outline: 2px solid #3b0800; outline-offset: 2px; }
+  .cfield input::placeholder, .cfield textarea::placeholder { color: var(--color-text-tertiary); }
+  .cfield input:focus, .cfield select:focus, .cfield textarea:focus { outline: 2px solid #3b0800; outline-offset: 2px; }
 
-  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .field { display: block; }
-  .field--full { grid-column: 1 / -1; }
-  .field input, .field textarea {
-    width: 100%; border: 1.5px solid color-mix(in srgb, #3b0800 25%, transparent); border-radius: 14px;
-    padding: 0.9rem 1.1rem; font-family: var(--font-body); font-size: 0.9375rem; color: #3b0800;
-    background: #fff; resize: vertical;
+  .ccard__submit { display: flex; justify-content: center; padding-top: 32px; }
+  .cbtn {
+    border: none; cursor: pointer; border-radius: 999px; padding: 21px 32px;
+    background: #3b0800; color: var(--color-red-rock-50); font-family: var(--font-sans);
+    font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.01em;
+    transition: transform 0.2s ease;
   }
-  .field input:focus, .field textarea:focus { outline: none; border-color: #3b0800; }
-  .field input::placeholder, .field textarea::placeholder { color: color-mix(in srgb, #3b0800 45%, transparent); }
+  .cbtn:hover { transform: scale(0.97); }
 
-  .form-nav { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 2rem; }
-  .form-btn {
-    border-radius: 999px; padding: 0.9rem 1.75rem; font-family: var(--font-sans); font-weight: 500;
-    font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.01em; border: none; cursor: pointer;
-    transition: transform 0.2s ease, background 0.15s ease;
-  }
-  .form-btn:hover { transform: scale(0.97); }
-  .form-btn--primary { background: #3b0800; color: var(--color-red-rock-50); }
-  .form-btn--ghost { background: transparent; color: #3b0800; border: 1.5px solid color-mix(in srgb, #3b0800 30%, transparent); margin-right: auto; }
-
-  .form-legal { margin: 1.5rem 0 0; font-family: var(--font-body); font-size: 0.8125rem; color: color-mix(in srgb, #3b0800 55%, transparent); }
+  .clegal { margin: 0; max-width: 60ch; text-align: center; font-family: var(--font-sans); font-size: 0.75rem; color: color-mix(in srgb, #3b0800 65%, transparent); }
 
   .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
-  .contact__success { text-align: center; padding: 2rem 1rem; }
-  .success__check {
+  .csuccess { text-align: center; padding: 2rem 1rem; }
+  .csuccess__check {
     display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px;
     border-radius: 999px; background: var(--color-cactus-200); color: #3b0800; font-size: 1.5rem; margin-bottom: 1.25rem;
   }
-  .contact__success h2 { margin: 0 0 0.75rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; color: #3b0800; }
-  .contact__success p { margin: 0; font-family: var(--font-body); color: #3b0800; }
+  .csuccess h3 { margin: 0 0 0.75rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.75rem; color: #3b0800; }
+  .csuccess p { margin: 0; font-family: var(--font-body); color: #3b0800; }
 
-  .contact__agences { margin-top: clamp(3rem, 6vw, 5rem); padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px dashed #3b0800; }
-  .contact__agences-title {
-    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin: 0 0 1.25rem;
+  .cvisit {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 11rem);
+    border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
+    position: relative;
+    overflow: hidden;
   }
-  .contact__agences ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .contact__agences li { font-family: var(--font-body); color: #3b0800; display: flex; flex-direction: column; gap: 0.4rem; }
-  .contact__agences li strong { font-family: var(--font-sans); font-weight: 700; text-transform: uppercase; }
-  .contact__agences li span { white-space: pre-line; font-size: 0.9375rem; }
+  .cvisit__container { position: relative; }
+  .cvisit__cactus {
+    position: absolute; right: -64px; bottom: -20px; width: 170px; height: auto; pointer-events: none;
+  }
+  @media (max-width: 1200px) { .cvisit__cactus { display: none; } }
+
+  .csep {
+    height: 96px;
+    background: var(--color-canyon-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .csep::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: color-mix(in srgb, #3b0800 20%, transparent);
+  }
+
+  .cvisit__head { position: relative; text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+  .cdeco--4 { width: 60px; height: auto; left: calc(72% + 195px); top: -60px; transform: rotate(275deg) scaleY(-1); }
+  .cvisit :global(.cvisit__title) { margin: 0 auto; color: #3b0800; }
+  .cvisit__sub { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; color: #3b0800; }
+
+  .cvisit__grid {
+    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  }
+  .cagence {
+    background: #fff; border: 1px solid #42140d; border-radius: 32px; padding: clamp(2rem, 3vw, 3rem);
+    display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;
+  }
+  .cagence__icon { display: block; width: 56px; height: 56px; }
+  .cagence__icon :global(svg) { width: 100%; height: 100%; }
+  .cagence__ville { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 2rem; color: #42140d; }
+  .cagence__label { margin: 0; font-family: var(--font-sans); font-size: 1rem; color: #3b0800; }
+  .cagence__adresse { margin: 0; font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; white-space: pre-line; }
 
   @media (max-width: 900px) {
-    .contact__grid { grid-template-columns: 1fr; }
-    .option-grid { grid-template-columns: 1fr; }
-    .field-grid { grid-template-columns: 1fr; }
-    .contact__agences ul { grid-template-columns: 1fr; }
+    .cfields { grid-template-columns: 1fr; }
+    .cvisit__grid { grid-template-columns: 1fr; }
+    .ccard__head { flex-direction: column; align-items: flex-start; }
   }
 </style>

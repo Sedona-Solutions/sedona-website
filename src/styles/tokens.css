@@ -113,6 +113,7 @@
   --color-surface: var(--color-neutral-50);
   --color-text: var(--color-neutral-950);
   --color-text-muted: var(--color-neutral-500);
+  --color-text-tertiary: var(--color-neutral-600);
   --color-text-inverse: var(--color-red-rock-50);
   --color-border: var(--color-neutral-200);
 

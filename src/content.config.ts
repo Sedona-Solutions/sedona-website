@@ -78,6 +78,8 @@ const expertise = defineCollection({
         description: z.string().optional(),
         ctaLabel: z.string().optional(),
         ctaHref: z.string().optional(),
+        ctaLabel2: z.string().optional(),
+        ctaHref2: z.string().optional(),
       })
       .optional(),
   }),
@@ -216,8 +218,10 @@ const offre = defineCollection({
       .optional(),
     benefices: z
       .object({
+        eyebrow: z.string().optional(),
         titre: z.string().optional(),
         titreAccent: z.string().optional(),
+        intro: z.string().optional(),
         items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), icone: z.string().optional() })).optional(),
       })
       .optional(),
@@ -248,7 +252,41 @@ const offre = defineCollection({
         titreAccent: z.string().optional(),
         sousTitre: z.string().optional(),
         image: z.string().optional(),
-        items: z.array(z.object({ titre: z.string(), texte: z.any().optional() })).optional(),
+        items: z.array(z.object({ titre: z.string(), texte: z.any().optional(), resultat: z.string().optional() })).optional(),
+        // Variante à onglets (page Keycloak Run) : deux jeux de cartes ("avant"/"après"
+        // la production), au lieu de la liste plate `items` ci-dessus.
+        avant: z
+          .object({
+            label: z.string().optional(),
+            items: z
+              .array(
+                z.object({
+                  titre: z.string(),
+                  texte: z.any().optional(),
+                  icone: z.string().optional(),
+                  tag: z.string().optional(),
+                  highlight: z.boolean().optional(),
+                }),
+              )
+              .optional(),
+          })
+          .optional(),
+        apres: z
+          .object({
+            label: z.string().optional(),
+            items: z
+              .array(
+                z.object({
+                  titre: z.string(),
+                  texte: z.any().optional(),
+                  icone: z.string().optional(),
+                  tag: z.string().optional(),
+                  highlight: z.boolean().optional(),
+                }),
+              )
+              .optional(),
+          })
+          .optional(),
       })
       .optional(),
     constat: z
@@ -264,6 +302,15 @@ const offre = defineCollection({
       })
       .optional(),
     incoherence: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        texte: z.any().optional(),
+        illustration: z.string().optional(),
+      })
+      .optional(),
+    moteurSpecification: z
       .object({
         eyebrow: z.string().optional(),
         titre: z.string().optional(),
@@ -288,6 +335,84 @@ const offre = defineCollection({
         avatar: z.string().optional(),
       })
       .optional(),
+    pourquoi: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        items: z.array(z.object({ titre: z.string(), texte: z.string().optional(), icone: z.string().optional() })).optional(),
+      })
+      .optional(),
+    // Variante "chronologie d'incident" (page Keycloak Run) : plus de cartes
+    // icône+texte, juste 2 images (une par offre) illustrant le même scénario.
+    chronologie: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        run: z.object({ label: z.string().optional(), image: z.string().optional() }).optional(),
+        runPlus: z.object({ label: z.string().optional(), image: z.string().optional() }).optional(),
+      })
+      .optional(),
+    // Section à onglets "Périmètre par offre" (page Keycloak Run) : un onglet
+    // par étape (Audit pre-RUN / RUN / RUN+ & RUN PREMIUM), chacun avec son
+    // titre, son intro, 4 cartes (icône + titre + puces) et un bandeau de 3 engagements.
+    perimetre: z
+      .object({
+        tabs: z
+          .array(
+            z.object({
+              label: z.string().optional(),
+              eyebrow: z.string().optional(),
+              titre: z.string().optional(),
+              titreAccent: z.string().optional(),
+              intro: z.string().optional(),
+              items: z
+                .array(
+                  z.object({
+                    icone: z.string().optional(),
+                    titre: z.string().optional(),
+                    points: z.array(z.string()).optional(),
+                  })
+                )
+                .optional(),
+              banner: z.array(z.object({ texte: z.any().optional() })).optional(),
+            })
+          )
+          .optional(),
+      })
+      .optional(),
+    plans: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        titreAccent: z.string().optional(),
+        intro: z.string().optional(),
+        items: z
+          .array(
+            z.object({
+              categorie: z.string().optional(),
+              titre: z.string(),
+              texte: z.string().optional(),
+              icone: z.string().optional(),
+              points: z.array(z.string()).optional(),
+              ctaLabel: z.string().optional(),
+              note: z.string().optional(),
+              highlight: z.boolean().optional(),
+            }),
+          )
+          .optional(),
+      })
+      .optional(),
+    casConcret: z
+      .object({
+        eyebrow: z.string().optional(),
+        titre: z.string().optional(),
+        texte: z.string().optional(),
+        illustration: z.string().optional(),
+        stats: z.array(z.object({ valeur: z.string(), label: z.string().optional() })).optional(),
+      })
+      .optional(),
     ctaFinal: z
       .object({
         titre: z.string().optional(),
@@ -295,6 +420,9 @@ const offre = defineCollection({
         description: z.string().optional(),
         ctaLabel: z.string().optional(),
         ctaHref: z.string().optional(),
+        ctaLabel2: z.string().optional(),
+        ctaHref2: z.string().optional(),
+        illustration: z.string().optional(),
       })
       .optional(),
   }),

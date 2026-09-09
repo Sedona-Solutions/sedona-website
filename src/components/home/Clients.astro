@@ -1,8 +1,26 @@
 ---
-import Media from "../Media.astro";
 const { section } = Astro.props;
 const titre = section?.titre;
-const logos = section?.logos ?? [];
+const logos = (section?.logos ?? []).filter((c: { actif?: boolean }) => c.actif !== false);
+
+// Ces SVG n'ont pas d'attribut width/height sur la balise racine (seulement un
+// viewBox) : utilisés en <img>, le navigateur ne leur trouve aucune taille
+// intrinsèque et les affiche en largeur 0 (invisibles). On les affiche donc en
+// mask-image (couleur pilotée en CSS), dimensionnée depuis leur viewBox pour
+// tenir dans une case 220×74 max en conservant son ratio d'origine.
+const MAX_W = 220;
+const MAX_H = 74;
+const logoSvgs = import.meta.glob("../../../public/uploads/clients/**/*.svg", { query: "?raw", import: "default", eager: true });
+const logoBox = (publicPath) => {
+  const suffix = publicPath.replace(/^\//, "");
+  const key = Object.keys(logoSvgs).find((k) => k.endsWith(suffix));
+  const viewBox = key && logoSvgs[key].match(/viewBox="([^"]+)"/)?.[1];
+  if (!viewBox) return { width: MAX_H, height: MAX_H };
+  const [, , w, h] = viewBox.trim().split(/\s+/).map(Number);
+  if (!w || !h) return { width: MAX_H, height: MAX_H };
+  const scale = Math.min(MAX_H / h, MAX_W / w);
+  return { width: Math.round(w * scale), height: Math.round(h * scale) };
+};
 ---
 
 {
@@ -16,7 +34,16 @@ const logos = section?.logos ?? [];
             <>
               {i > 0 && <li class="clients__star" aria-hidden="true">✦</li>}
               <li class="clients__item" aria-hidden={i >= logos.length ? "true" : undefined}>
-                {c.logo ? <Media src={c.logo} alt={c.nom} width={240} /> : <span>{c.nom}</span>}
+                {c.logo ? (
+                  <span
+                    class="clients__logo"
+                    style={`--logo:url(${c.logo});width:${logoBox(c.logo).width}px;height:${logoBox(c.logo).height}px`}
+                    role="img"
+                    aria-label={c.nom}
+                  />
+                ) : (
+                  <span>{c.nom}</span>
+                )}
               </li>
             </>
           ))}
@@ -48,7 +75,7 @@ const logos = section?.logos ?? [];
   .clients__row { overflow: hidden; }
   .clients__track {
     list-style: none; margin: 0; padding: 0;
-    display: flex; flex-wrap: nowrap; align-items: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
+    display: flex; flex-wrap: nowrap; align-items: center; gap: 32px;
     width: max-content;
     animation: clients-scroll 40s linear infinite;
   }
@@ -61,10 +88,12 @@ const logos = section?.logos ?? [];
   }
 
   .clients__star {
-    /* Même taille/couleur que l'étoile du bandeau défilant plus haut (Ticker) —
-       0.75em de son texte, clamp(1.5rem, 3vw, 2.5rem). */
     color: var(--color-red-rock-50);
-    font-size: clamp(1.125rem, 2.25vw, 1.875rem);
+    font-size: 30px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: none;
   }
   .clients__item {
@@ -72,10 +101,11 @@ const logos = section?.logos ?? [];
     display: flex;
     justify-content: center;
   }
-  .clients__item img {
-    height: clamp(20px, 2.4vw, 34px);
-    width: auto;
-    max-width: none;
+  .clients__logo {
+    display: block;
+    background-color: var(--color-red-rock-50);
+    -webkit-mask: var(--logo) no-repeat center / contain;
+    mask: var(--logo) no-repeat center / contain;
     opacity: 0.92;
   }
   .clients__item span {

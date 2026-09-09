@@ -7,9 +7,8 @@ import Manifeste from "../components/histoire/Manifeste.astro";
 import Timeline from "../components/histoire/Timeline.astro";
 import Offices from "../components/histoire/Offices.astro";
 import Engagements from "../components/histoire/Engagements.astro";
-import Team from "../components/histoire/Team.astro";
+import Stats from "../components/home/Stats.astro";
 import p from "../../content/histoire/index.json";
-import carrieres from "../../content/carrieres/index.json";
 ---
 
 <BaseLayout title="Notre histoire — Sedona" description={p.hero?.intro}>
@@ -19,7 +18,8 @@ import carrieres from "../../content/carrieres/index.json";
     <Manifeste manifeste={p.manifeste} />
     <Engagements engagements={p.engagements} />
     <Timeline timeline={p.timeline} />
-    <Team team={p.team} membres={carrieres.hero?.membres} />
+    <Stats intro={p.stats?.intro} chips={p.stats?.chips} stats={p.stats?.stats} cta={p.stats?.cta} />
+    <div class="csep" aria-hidden="true"></div>
     <Offices offices={p.offices} />
   </div>
   <CtaFinal cta={p.ctaFinal} />
@@ -31,5 +31,22 @@ import carrieres from "../../content/carrieres/index.json";
      s'y fond sans avoir besoin de son propre radius. */
   .histoire-stack {
     background: #3b0800;
+  }
+
+  /* Séparateur entre Team et Offices (même pattern que .csep sur /contact,
+     entre le formulaire et "Venez nous rendre visite") : un bandeau de la
+     même teinte claire que les 2 blocs, avec un simple trait vertical centré. */
+  .csep {
+    height: 96px;
+    background: var(--color-canyon-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .csep::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: color-mix(in srgb, #3b0800 20%, transparent);
   }
 </style>
