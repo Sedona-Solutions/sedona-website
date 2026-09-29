@@ -34,6 +34,59 @@ const items = timeline?.items ?? [];
   </div>
 </section>
 
+<script>
+  // Drag-to-scroll à la souris : le scroll horizontal natif (trackpad/molette)
+  // n'est pas évident à découvrir. Le tactile défile déjà nativement au doigt,
+  // donc on ignore les pointeurs "touch"/"pen" (uniquement "mouse").
+  const initTimelineDrag = () => {
+    document.querySelectorAll(".htl__scroll").forEach((rail) => {
+      let dragging = false;
+      let moved = false;
+      let startX = 0;
+      let startScroll = 0;
+
+      rail.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse") return;
+        dragging = true;
+        moved = false;
+        startX = e.clientX;
+        startScroll = rail.scrollLeft;
+        rail.classList.add("is-dragging");
+        rail.setPointerCapture(e.pointerId);
+      });
+
+      rail.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        rail.scrollLeft = startScroll - dx;
+      });
+
+      const stop = (e) => {
+        dragging = false;
+        rail.classList.remove("is-dragging");
+        rail.releasePointerCapture(e.pointerId);
+      };
+      rail.addEventListener("pointerup", stop);
+      rail.addEventListener("pointercancel", stop);
+
+      // Empêche le clic (ex. lien dans une carte) de se déclencher juste après un drag.
+      rail.addEventListener(
+        "click",
+        (e) => {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        },
+        true
+      );
+    });
+  };
+  initTimelineDrag();
+  document.addEventListener("astro:page-load", initTimelineDrag);
+</script>
+
 <style>
   .htl {
     background: #3b0800;
@@ -68,6 +121,14 @@ const items = timeline?.items ?? [];
     -ms-overflow-style: none;
   }
   .htl__scroll::-webkit-scrollbar { display: none; }
+  /* Drag-to-scroll (voir <script> ci-dessus) : curseur grab/grabbing, snap et
+     sélection de texte coupés le temps du drag pour ne pas parasiter le geste. */
+  .htl__scroll { cursor: grab; }
+  .htl__scroll.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
   .htl__card {
     scroll-snap-align: start;
     flex: none;

@@ -11,7 +11,7 @@ const icons = items.map((it) => recolorIcon("flag-heart", ICON_COLOR[it.ville] ?
 ---
 
 <section class="hoff">
-  <img class="hoff__deco" src="/deco/squiggle-9-cactus-200.svg" alt="" aria-hidden="true" />
+  <img class="hoff__deco" src="/deco/squiggle-5.svg" alt="" aria-hidden="true" />
   <div class="container">
     <header class="hoff__head" data-reveal>
       <TitreAccent titre={offices?.titre} accent={offices?.titreAccent} as="h2" class="hoff__title" pillVariant={offices?.titreCouleur} />
@@ -40,9 +40,9 @@ const icons = items.map((it) => recolorIcon("flag-heart", ICON_COLOR[it.ville] ?
 
 <style>
   .hoff { position: relative; overflow: hidden; background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
-  .hoff__deco { position: absolute; right: 20%; top: 19%; width: 140px; height: auto; transform: rotate(140deg); pointer-events: none; }
+  .hoff__deco { position: absolute; right: 10%; top: 16%; width: 140px; height: auto; transform: rotate(240deg); pointer-events: none; }
   .hoff__head { margin: 0 auto clamp(2.5rem, 5vw, 4rem); text-align: center; }
-  .hoff :global(.hoff__title) { margin: 0 auto; max-width: 88ch; color: #3b0800; }
+  .hoff :global(.hoff__title) { margin: 0 auto; max-width: 720px; color: #3b0800; }
 
   .hoff__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
   .hoff__card {

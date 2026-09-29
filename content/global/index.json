@@ -42,17 +42,20 @@
   "agences": [
     {
       "ville": "Paris",
-      "adresse": "19 Rue de Mogador\n75009 PARIS\nTél. : 01 44 94 89 90",
-      "telephone": ""
+      "label": "Agence parisienne (siège social)",
+      "adresse": "19 rue Mogador\n75009 Paris",
+      "telephone": "01 44 94 89 90"
     },
     {
       "ville": "Lyon",
-      "adresse": "",
+      "label": "Agence Rhônes-Alpes",
+      "adresse": "45 avenue de la République\n69003 Lyon",
       "telephone": ""
     },
     {
       "ville": "Toulon",
-      "adresse": "",
+      "label": "Agence PACA",
+      "adresse": "8 boulevard du Littoral\n83000 Toulon",
       "telephone": ""
     }
   ],

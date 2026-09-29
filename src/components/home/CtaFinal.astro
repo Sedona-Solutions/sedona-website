@@ -1,7 +1,11 @@
 ---
 import TitreAccent from "../TitreAccent.astro";
+import { withOffre } from "../../utils/contactLink.js";
 const { cta } = Astro.props;
 const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
+const ctaHref = withOffre(cta?.ctaHref, cta?.offreTitre, cta?.sousOffre);
+const ctaHref2 = withOffre(cta?.ctaHref2, cta?.offreTitre, cta?.sousOffre2);
+const mascotte = cta?.illustration || "/deco/mascotte.svg";
 ---
 
 <section class="cta">
@@ -12,7 +16,7 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
       <span class="cta__corner cta__corner--bl" aria-hidden="true"></span>
       <span class="cta__corner cta__corner--br" aria-hidden="true"></span>
 
-      <img class="cta__mascotte" src="/deco/mascotte.svg" alt="" aria-hidden="true" />
+      <img class="cta__mascotte" src={mascotte} alt="" aria-hidden="true" />
 
       <div class="cta__content cta__content--centered">
         <div class="cta__titleWrap">
@@ -24,15 +28,22 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
           <span class="cta__actions-before">
             <img class="cta__circle" src="/deco/circle.svg" alt="" aria-hidden="true" />
           </span>
-          {
-            cta?.ctaLabel && (
-              <a class="cta__btn" href={cta.ctaHref}>
-                <span class="cta__btn-bg" aria-hidden="true" />
-                <span class="cta__btn-front" aria-hidden="true" />
-                <span class="cta__btn-label">{cta.ctaLabel}</span>
+          <span class="cta__btnGroup">
+            {
+              cta?.ctaLabel && (
+                <a class="cta__btn" href={ctaHref}>
+                  <span class="cta__btn-bg" aria-hidden="true" />
+                  <span class="cta__btn-front" aria-hidden="true" />
+                  <span class="cta__btn-label">{cta.ctaLabel}</span>
+                </a>
+              )
+            }
+            {cta?.ctaLabel2 && (
+              <a class="cta__btn2 link-cta" href={ctaHref2}>
+                {cta.ctaLabel2}
               </a>
-            )
-          }
+            )}
+          </span>
         </div>
       </div>
     </div>
@@ -127,7 +138,7 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
     max-width: 46ch;
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* 24px */
+    font-size: clamp(1.1rem, 1.6vw, 1.2rem);
     line-height: 1.3;
     color: var(--color-red-rock-50);
   }
@@ -140,10 +151,22 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
     flex-wrap: wrap;
     margin-top: 2.25rem;
   }
-  /* Variante non centrée : le groupe n'existe que pour la variante centrée
-     (grid) ; ici il est transparent pour la mise en page flex. */
-  .cta__actions-before {
+  /* Variante non centrée : les groupes n'existent que pour la variante centrée
+     (grid) ; ici ils sont transparents pour la mise en page flex. */
+  .cta__actions-before,
+  .cta__btnGroup {
     display: contents;
+  }
+  .cta__content--centered .cta__btnGroup {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cta__btn2 {
+    color: var(--color-text-inverse);
+    font-size: 1.25rem;
   }
   .cta__btn {
     position: relative;
@@ -203,6 +226,9 @@ const ctaPillVariant = cta?.pillVariant ?? cta?.titreCouleur;
     }
     .cta__content--centered .cta__actions-before {
       display: contents;
+    }
+    .cta__content--centered .cta__btnGroup {
+      flex-direction: column;
     }
   }
 </style>

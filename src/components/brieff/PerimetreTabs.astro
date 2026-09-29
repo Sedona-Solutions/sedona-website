@@ -1,0 +1,155 @@
+---
+// Section "Périmètre par offre" (page Keycloak Run uniquement) : 3 onglets
+// (Audit pre-RUN / RUN / RUN+ & RUN PREMIUM), chacun avec son propre titre,
+// intro, 4 cartes (icône + titre + 3 puces) et un bandeau de 3 engagements.
+import { recolorIcon } from "../../utils/iconRecolor.js";
+import { recolorDecoIllustration } from "../../utils/iconRecolor.js";
+import { richTextToHtml } from "../../utils/richText.js";
+import { ACCENT_LIGHT, ACCENT_DARK, ACCENT_200 } from "../../data/offreAccents.js";
+import TitreAccent from "../TitreAccent.astro";
+
+type Item = { icone?: string; titre?: string; points?: string[] };
+type BannerItem = { texte?: unknown };
+type Tab = { label?: string; eyebrow?: string; titre?: string; titreAccent?: string; intro?: string; items?: Item[]; banner?: BannerItem[] };
+
+const { tabs = [] as Tab[], pillVariant = "cactus", radius = "all" } = Astro.props;
+
+const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus;
+const accentDark = ACCENT_DARK[pillVariant] ?? ACCENT_DARK.cactus;
+const accent200 = ACCENT_200[pillVariant] ?? ACCENT_200.cactus;
+
+const radiusClass =
+  radius === "top" ? "bper--radius-top" : radius === "bottom" ? "bper--radius-bottom" : radius === "none" ? "bper--radius-none" : "";
+
+const decos = tabs.map(() => recolorDecoIllustration("squiggle-9", accentDark));
+const iconsByTab = tabs.map((t) => (t.items ?? []).map((it) => (it.icone ? recolorIcon(it.icone, accent200) : null)));
+---
+
+{
+  tabs.length > 0 && (
+    <section class={`bper ${radiusClass}`}>
+      <div class="container">
+        <div class="bper__switch" role="tablist" aria-label="Choisir un périmètre">
+          {tabs.map((t, i) => (
+            <button type="button" role="tab" data-tab={i} aria-selected={i === 0 ? "true" : "false"}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {tabs.map((tab, i) => (
+          <div class="bper__panel" data-panel={i} hidden={i !== 0}>
+            <header class="bper__head" data-reveal>
+              <div class="bper__decoWrap" set:html={decos[i]} />
+              {tab.eyebrow && <p class="bper__eyebrow">{tab.eyebrow}</p>}
+              <TitreAccent titre={tab.titre} accent={tab.titreAccent} as="h2" class="bper__title" pillVariant={pillVariant} />
+              {tab.intro && <p class="bper__intro">{tab.intro}</p>}
+            </header>
+
+            <ul class="bper__grid">
+              {(tab.items ?? []).map((it, ii) => (
+                <li class="bperc">
+                  {iconsByTab[i][ii] && <span class="bperc__icon" aria-hidden="true" set:html={iconsByTab[i][ii]} />}
+                  <h3 class="bperc__title">{it.titre}</h3>
+                  <ul class="bperc__points">
+                    {(it.points ?? []).map((p) => (
+                      <li>{p}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+
+            {(tab.banner ?? []).length > 0 && (
+              <ul class="bper__banner" style={`background:${accentLight}`}>
+                {(tab.banner ?? []).map((b) => (
+                  <li>
+                    <span class="check" aria-hidden="true" style={`color:${accentDark}`}>
+                      ✓
+                    </span>
+                    <span class="bper__bannerText" set:html={richTextToHtml(b.texte)} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>(".bper__switch").forEach((switchEl) => {
+    const section = switchEl.closest("section");
+    if (!section) return;
+    const tabs = Array.from(switchEl.querySelectorAll<HTMLButtonElement>("button[data-tab]"));
+    const panels = Array.from(section.querySelectorAll<HTMLElement>(".bper__panel"));
+    tabs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabs.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+        panels.forEach((p) => {
+          p.hidden = p.dataset.panel !== btn.dataset.tab;
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .bper { background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: var(--radius-section-lg); }
+  .bper--radius-top { border-radius: var(--radius-section-lg) var(--radius-section-lg) 0 0; }
+  .bper--radius-bottom { border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
+  .bper--radius-none { border-radius: 0; }
+
+  .bper__switch {
+    display: flex; width: fit-content; gap: 2px; margin: 0 auto clamp(2.5rem, 5vw, 4rem); padding: 4px;
+    border: 1px solid #3b0800; border-radius: 999px; background: #fff;
+  }
+  .bper__switch button {
+    font-family: var(--font-sans); font-weight: 500; font-size: 0.875rem; text-transform: uppercase; letter-spacing: -0.01em;
+    color: #3b0800; background: none; border: 0; cursor: pointer; padding: 0.85em 1.5em; border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease; white-space: nowrap;
+  }
+  .bper__switch button[aria-selected="true"] { background: #3b0800; color: var(--color-red-rock-50); }
+
+  .bper__head { position: relative; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .bper__decoWrap { position: absolute; right: 0; top: 210px; width: 160px; height: auto; pointer-events: none; }
+  .bper__decoWrap :global(svg) { width: 100%; height: auto; }
+  @media (max-width: 900px) {
+    .bper__decoWrap { display: none; }
+  }
+  .bper__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .bper :global(.bper__title) { margin: 0; max-width: 32ch; color: #3b0800; }
+  .bper__intro {
+    margin: 1.5rem 0 0; max-width: 72ch; font-family: var(--font-sans); font-weight: 500;
+    font-size: 1.5rem; line-height: 1.4; color: #3b0800;
+  }
+
+  .bper__grid { list-style: none; margin: 0 0 clamp(2rem, 4vw, 3rem); padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .bperc { background: #fff; border-radius: 20px; padding: 2rem; }
+  .bperc__icon { display: block; width: 40px; height: 40px; margin-bottom: 1.5rem; }
+  .bperc__icon :global(svg) { width: 100%; height: 100%; }
+  .bperc__title { margin: 0 0 0.75rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.125rem; color: #3b0800; }
+  .bperc__points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .bperc__points li {
+    position: relative; padding-left: 1.1rem; font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.5; color: #3b0800;
+  }
+  .bperc__points li::before { content: "•"; position: absolute; left: 0; color: #3b0800; }
+
+  .bper__banner {
+    list-style: none; margin: 0; padding: 1.75rem 2rem; border-radius: 20px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .bper__banner li { display: flex; align-items: flex-start; gap: 0.6rem; font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.45; color: #3b0800; }
+  .bper__banner .check { font-weight: 700; flex: none; }
+  .bper__bannerText :global(p) { margin: 0; }
+
+  @media (max-width: 900px) {
+    .bper__grid { grid-template-columns: 1fr; }
+    .bper__banner { grid-template-columns: 1fr; }
+  }
+</style>

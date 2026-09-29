@@ -34,6 +34,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       accrocheAccent={d.accrocheAccent}
       enBref={d.enBref}
       illustration={d.illustration}
+      decoration="/deco/squiggle-9.svg"
       proof={d.heroProof}
       pillVariant={pillVariant}
     />
@@ -94,6 +95,8 @@ const pillVariant = d.pillVariant ?? "ovni";
       ...d.ctaFinal,
       pillVariant,
       accentColor: ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni,
+      offreTitre: d.titre,
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
     }}
   />
 </BaseLayout>

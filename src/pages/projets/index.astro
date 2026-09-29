@@ -89,7 +89,19 @@ const clients = home.clientsSection?.logos ?? [];
   <section class="autres">
     <div class="container" data-reveal>
       <h2 class="autres__title">Ces <mark class="hl hl--sunshine">clients</mark> ont aussi tenté l'aventure avec nous</h2>
-      <Media class="autres__logos" src="/uploads/clients/clients-logos.png" alt="Logos de nos clients" width={1200} />
+      <ul class="autres__logos" aria-label="Nos clients">
+        {
+          clients.map((c) => (
+            <li class="autres__logo">
+              {c.logo ? (
+                <span class="autres__logoMask" style={`--logo:url(${c.logo})`} role="img" aria-label={c.nom} />
+              ) : (
+                <span>{c.nom}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -231,7 +243,28 @@ const clients = home.clientsSection?.logos ?? [];
   }
   .autres__title { margin: 0 auto; max-width: 20ch; font-family: var(--font-sans); font-weight: 600; font-size: clamp(2.25rem, 5vw, 5rem); line-height: 1.1; letter-spacing: -0.03em; color: #3b0800; }
   .autres__title .hl { line-height: 1.25; }
-  .autres__logos { display: block; width: 100%; max-width: 1180px; height: auto; margin: clamp(2.5rem, 6vw, 4.5rem) auto 0; }
+  /* Grille auto-adaptative (même liste que le bandeau défilant de la home, cf.
+     content/home/index.json → clientsSection) : chaque case fait 160×90 max,
+     et le nombre de logos par ligne s'ajuste tout seul à la largeur dispo —
+     pas de nombre de colonnes figé, pas de media query par palier. */
+  .autres__logos {
+    list-style: none; padding: 0; margin: clamp(2.5rem, 6vw, 4.5rem) 0 0;
+    display: grid; grid-template-columns: repeat(auto-fill, 160px); gap: 48px;
+    justify-content: center;
+  }
+  .autres__logo {
+    width: 160px; height: 90px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* Logos "blancs" (pensés pour le bandeau sombre de la home) recolorés en foncé
+     via mask-image plutôt qu'un ré-export : la couleur source du SVG n'a aucune
+     importance, seule sa silhouette (alpha) est utilisée. */
+  .autres__logoMask {
+    display: block; width: 100%; height: 100%;
+    background-color: #3b0800;
+    -webkit-mask: var(--logo) no-repeat center / contain;
+    mask: var(--logo) no-repeat center / contain;
+  }
 
   @media (max-width: 760px) {
     .pgrid__list { grid-template-columns: 1fr; }

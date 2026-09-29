@@ -1,5 +1,6 @@
 ---
 import { richTextToHtml } from "../../utils/richText.js";
+import { ACCENT_MID } from "../../data/offreAccents.js";
 import TitreAccent from "../TitreAccent.astro";
 
 const {
@@ -9,18 +10,19 @@ const {
   pillVariant,
   items = [],
 } = Astro.props;
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni;
 ---
 
 <section class="bpers">
   <div class="container bpers__inner">
     <header class="bpers__head" data-reveal>
       <p class="bpers__eyebrow">
-        <span class="dot" aria-hidden="true"></span> {eyebrow}
+        <span class="dot" aria-hidden="true" style={`background:${accentMid}`}></span> {eyebrow}
       </p>
       <TitreAccent titre={titre} accent={titreAccent} as="h2" class="bpers__title" pillVariant={pillVariant} />
     </header>
 
-    <ul class="bpers__grid" data-reveal-group>
+    <ul class="bpers__grid" style={`--bpc-accent:${accentMid}`} data-reveal-group>
       {items.map((it: { titre?: string; sousTitre?: string; texte?: string }) => (
         <li class="bpc" data-reveal>
           <div class="bpc__inner">
@@ -31,8 +33,6 @@ const {
         </li>
       ))}
     </ul>
-
-    <img class="bpers__illu" src="/deco/illus_brieff_mini.svg" alt="" aria-hidden="true" loading="lazy" />
   </div>
 </section>
 
@@ -56,7 +56,7 @@ const {
     width: 100%; position: relative;
   }
   .bpc {
-    border: 1px dashed #f5ede8;
+    background: var(--color-red-rock-950);
     border-radius: 24px; padding: 2.5rem; min-height: 278px;
     display: flex; align-items: flex-start;
   }
@@ -65,15 +65,10 @@ const {
     margin: 0 0 0.5rem; font-family: var(--font-sans); font-weight: 700; font-size: 1.5rem;
     letter-spacing: -0.02em; color: var(--color-red-rock-50);
   }
-  .bpc__titre { margin: 0 0 0.75rem; font-family: var(--font-body); font-weight: 400; font-size: 1rem; letter-spacing: -0.01em; color: var(--color-ovni-200); }
+  .bpc__titre { margin: 0 0 0.75rem; font-family: var(--font-body); font-weight: 400; font-size: 1rem; letter-spacing: -0.01em; color: var(--bpc-accent, var(--color-ovni-200)); }
   .bpc__text :global(p) { margin: 0; font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.375; color: var(--color-red-rock-50); }
   .bpc__text :global(p + p) { margin-top: 0.75em; }
 
-  /* Mord légèrement le bord droit du dernier bloc (dans sa zone de padding),
-     sans jamais recouvrir son texte ; peut être coupée par le bord de l'écran. */
-  .bpers__illu { position: absolute; z-index: 10; left: calc(100% - 36px); bottom: -1.5rem; width: 250px; height: auto; pointer-events: none; }
-
-  @media (max-width: 1100px) { .bpers__illu { display: none; } }
   @media (max-width: 900px) { .bpers__grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { .bpers__grid { grid-template-columns: 1fr; } .bpc { min-height: 0; } }
 </style>

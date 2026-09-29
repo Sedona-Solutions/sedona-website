@@ -1,5 +1,8 @@
 ---
 import Media from "../Media.astro";
+import { withOffre } from "../../utils/contactLink.js";
+import { recolorDecoIllustration } from "../../utils/iconRecolor.js";
+import { ACCENT_300 } from "../../data/offreAccents.js";
 // Hero spécifique à la page Brieff (design Figma dédié, pas le template générique des offres).
 // Contenu piloté par Tina (collection "offre" > entrée brieff.md).
 const {
@@ -9,9 +12,17 @@ const {
   accrocheAccent = "",
   enBref,
   illustration,
+  decoration,
   proof,
   pillVariant = "ovni",
 } = Astro.props;
+const accent300 = ACCENT_300[pillVariant] ?? ACCENT_300.ovni;
+
+// La déco (squiggle) passée via `decoration` (ex. "/deco/squiggle-9.svg") est
+// recolorée dynamiquement à l'accent de la page — même méthode que ReglesConformite.astro.
+const decoName = decoration?.replace("/deco/", "").replace(".svg", "");
+const decoSvg = decoName ? recolorDecoIllustration(decoName, accent300) : null;
+const squiggle2Svg = recolorDecoIllustration("squiggle-2", accent300);
 
 // Découpe l'accroche en [avant, pastille, après] autour du mot mis en avant
 // (champ éditorial `accrocheAccent`, sinon le nom de l'offre par défaut).
@@ -45,13 +56,17 @@ if (accroche.includes(motAMettreEnAvant)) {
       )}
 
       <div class="bhero__ctas">
-        <a class="bhero__btn" href="/contact">Demander une démo →</a>
-        <a class="bhero__btn2 link-cta" href="/contact">Prendre rendez-vous</a>
+        <a class="bhero__btn" href={withOffre("/contact", titre)}>Demander une démo →</a>
+        <a class="bhero__btn2 link-cta" href={withOffre("/contact", titre)}>Prendre rendez-vous</a>
       </div>
     </div>
 
-    <div class="bhero__illu-wrap">
-      {illustration && <Media class="bhero__illu" src={illustration} alt="Salle de réunion virtuelle Brieff" width={720} loading="eager" />}
+    <div class="bhero__illu-outer">
+      {decoSvg && <span class="bhero__deco" aria-hidden="true"><Fragment set:html={decoSvg} /></span>}
+      {squiggle2Svg && <span class="bhero__squiggle2" aria-hidden="true"><Fragment set:html={squiggle2Svg} /></span>}
+      <div class="bhero__illu-wrap">
+        {illustration && <Media class="bhero__illu" src={illustration} alt="Salle de réunion virtuelle Brieff" width={720} loading="eager" />}
+      </div>
     </div>
   </div>
 </section>
@@ -59,7 +74,7 @@ if (accroche.includes(motAMettreEnAvant)) {
 <style>
   .bhero {
     background: var(--color-canyon-50);
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    padding-block: clamp(2.5rem, 6vw, 6.5rem);
     border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg);
   }
   .bhero__row {
@@ -97,11 +112,25 @@ if (accroche.includes(motAMettreEnAvant)) {
   .bhero__btn:hover { transform: scale(0.97); }
   .bhero__btn2 { font-size: 20px; }
 
+  .bhero__illu-outer { position: relative; }
   .bhero__illu-wrap { border-radius: 24px; overflow: hidden; }
   .bhero__illu { width: 100%; height: auto; display: block; }
+  .bhero__deco {
+    position: absolute; top: 0px; right: -40px; width: 140px; height: auto;
+    transform: rotate(-205deg);
+    pointer-events: none; z-index: 1;
+  }
+  .bhero__deco :global(svg) { width: 100%; height: auto; display: block; }
+  .bhero__squiggle2 {
+    position: absolute; left: -18px; bottom: 55px; width: 86px; height: auto;
+    pointer-events: none; z-index: 1;
+  }
+  .bhero__squiggle2 :global(svg) { width: 100%; height: auto; display: block; }
 
   @media (max-width: 960px) {
     .bhero__row { grid-template-columns: 1fr; }
-    .bhero__illu-wrap { order: -1; }
+    .bhero__illu-outer { order: -1; }
+    .bhero__deco { display: none; }
+    .bhero__squiggle2 { display: none; }
   }
 </style>

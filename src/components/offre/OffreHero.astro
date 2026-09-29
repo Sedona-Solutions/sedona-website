@@ -1,6 +1,7 @@
 ---
 import Media from "../Media.astro";
 import { ACCENT_LIGHT } from "../../data/offreAccents.js";
+import { withOffre } from "../../utils/contactLink.js";
 
 const {
   titre = "",
@@ -10,7 +11,7 @@ const {
   pillVariant = "cactus",
   eyebrow = "Nos offres clé en main",
   ctaLabel = "Demander une démo",
-  ctaHref = "/contact",
+  ctaHref = withOffre("/contact", titre),
 } = Astro.props;
 
 const accentLight = ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus;

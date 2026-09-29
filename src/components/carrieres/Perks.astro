@@ -5,12 +5,15 @@ const items = perks?.items ?? [];
 ---
 
 <section class="cperks">
-  <img class="cperks__deco" src="/deco/squiggle-9.svg" alt="" aria-hidden="true" />
   <div class="container">
     <header class="cperks__head" data-reveal>
-      {perks?.eyebrow && <p class="cperks__eyebrow">{perks.eyebrow}</p>}
-      <TitreAccent titre={perks?.titre} accent={perks?.titreAccent} as="h2" class="cperks__title" pillVariant={perks?.titreCouleur} />
-      <img class="cperks__deco2" src="/deco/squiggle-5.svg" alt="" aria-hidden="true" />
+      <div class="cperks__head-text">
+        {perks?.eyebrow && <p class="cperks__eyebrow">{perks.eyebrow}</p>}
+        <TitreAccent titre={perks?.titre} accent={perks?.titreAccent} as="h2" class="cperks__title" pillVariant={perks?.titreCouleur} />
+      </div>
+      <span class="cperks__deco-wrap">
+        <img class="cperks__deco2" src="/deco/squiggle-5.svg" alt="" aria-hidden="true" />
+      </span>
     </header>
 
     <ul class="cperks__grid" data-reveal-group>
@@ -30,16 +33,20 @@ const items = perks?.items ?? [];
 
 <style>
   .cperks { position: relative; overflow: hidden; background: var(--color-canyon-50); padding-block: clamp(3rem, 15.5vw, 11rem); border-radius: 0 0 var(--radius-section-lg) var(--radius-section-lg); }
-  .cperks__deco { position: absolute; right: 6%; top: 10%; width: 60px; height: auto; pointer-events: none; transform: rotate(20deg); }
-  .cperks__head { position: relative; margin: 0 auto clamp(2.5rem, 5vw, 3rem); }
-  .cperks__deco2 {
-    position: absolute;
-    right: -47.124px;
-    top: -94.998px;
-    width: 188px;
-    height: 175px;
-    transform: rotate(-106.913deg);
-    pointer-events: none;
+  .cperks__head {
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 56px;
+    max-width: 1312px; margin: 0 auto clamp(2.5rem, 5vw, 3rem);
+  }
+  .cperks__head-text { flex: 1 0 0; min-width: 0; text-align: center; }
+  .cperks__deco-wrap {
+    position: absolute; right: 0%;
+    flex: none; width: 222px; height: 230px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cperks__deco2 { width: 188px; height: 175px; transform: rotate(-106.913deg); pointer-events: none; }
+  @media (max-width: 900px) {
+    .cperks__deco-wrap { display: none; }
   }
   .cperks__eyebrow {
     font-family: var(--font-sans); text-transform: uppercase; letter-spacing: -0.18px;
@@ -55,7 +62,6 @@ const items = perks?.items ?? [];
 
   @media (max-width: 900px) {
     .cperks__grid { grid-template-columns: 1fr 1fr; }
-    .cperks__deco, .cperks__deco2 { display: none; }
   }
   @media (max-width: 620px) {
     .cperks__grid { grid-template-columns: 1fr; }

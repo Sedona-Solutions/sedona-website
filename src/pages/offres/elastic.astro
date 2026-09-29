@@ -1,0 +1,107 @@
+---
+// Page sur-mesure pour l'offre Elastic, reprenant le gabarit de la page IA Forge
+// (voir ./ia-forge.astro), distincte du template générique utilisé par les
+// autres offres génériques (voir src/pages/offres/[slug].astro).
+// Contenu piloté par Tina (collection "offre", entrée content/offres/elastic.md) —
+// repris tel quel depuis IA Forge en attendant la relecture du wording.
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import Hero from "../../components/brieff/Hero.astro";
+import Personas from "../../components/brieff/Personas.astro";
+import ReglesConformite from "../../components/brieff/ReglesConformite.astro";
+import CommentCaMarche from "../../components/brieff/CommentCaMarche.astro";
+import Incoherence from "../../components/brieff/Incoherence.astro";
+import Pricing from "../../components/ia-forge/Pricing.astro";
+import Testimonial from "../../components/brieff/Testimonial.astro";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+
+const entry = await getEntry("offre", "elastic");
+const d = entry.data;
+const pillVariant = d.pillVariant ?? "red-rock";
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
+---
+
+<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.enBref}>
+  <div class="dark-stack">
+    <Hero
+      eyebrow={d.eyebrow}
+      titre={d.titre}
+      accroche={d.accroche}
+      accrocheAccent={d.accrocheAccent}
+      enBref={d.enBref}
+      illustration={d.illustration}
+      decoration="/deco/squiggle-9.svg"
+      proof={d.heroProof}
+      pillVariant={pillVariant}
+    />
+    <Personas
+      eyebrow={d.pourQui?.eyebrow}
+      titre={d.pourQui?.titre}
+      titreAccent={d.pourQui?.titreAccent}
+      pillVariant={pillVariant}
+      items={d.pourQui?.items ?? []}
+    />
+    <ReglesConformite
+      eyebrow={d.raisons?.eyebrow}
+      titre={d.raisons?.titre}
+      titreAccent={d.raisons?.titreAccent}
+      intro={d.raisons?.intro}
+      items={d.raisons?.items ?? []}
+      technosTitle={d.raisons?.technosTitle}
+      technos={d.raisons?.technos ?? []}
+      technosNote={d.raisons?.technosNote}
+      pillVariant={pillVariant}
+      accentMid={accentMid}
+      radius="top"
+    />
+    <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} radius="bottom" />
+    <Incoherence
+      eyebrow={d.incoherence?.eyebrow}
+      titre={d.incoherence?.titre}
+      titreAccent={d.incoherence?.titreAccent}
+      texte={d.incoherence?.texte}
+      illustration={d.incoherence?.illustration}
+      pillVariant={pillVariant}
+    />
+    <CommentCaMarche
+      eyebrow={d.etapes?.eyebrow}
+      titre={d.etapes?.titre}
+      titreAccent={d.etapes?.titreAccent}
+      intro={d.etapes?.sousTitre}
+      image={d.etapes?.image}
+      items={d.etapes?.items ?? []}
+      pillVariant={pillVariant}
+      radius="top"
+    />
+    <Pricing
+      eyebrow={d.plans?.eyebrow}
+      titre={d.plans?.titre}
+      titreAccent={d.plans?.titreAccent}
+      intro={d.plans?.intro}
+      items={d.plans?.items ?? []}
+      pillVariant={pillVariant}
+      radius="bottom"
+      offreTitre={d.titre}
+    />
+  </div>
+  <CtaFinal
+    cta={{
+      ...d.ctaFinal,
+      pillVariant,
+      accentColor: accentMid,
+      offreTitre: d.titre,
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
+    }}
+  />
+</BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires flottent dessus grâce à leurs
+     coins arrondis ; les sections déjà sombres (Personas, Incoherence) s'y
+     fondent sans avoir besoin de leur propre arrondi. */
+  .dark-stack {
+    background: #3b0800;
+  }
+</style>

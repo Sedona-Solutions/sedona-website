@@ -52,18 +52,30 @@ const tintFor = (m, i) => (m.couleur && m.couleur !== "none" ? COULEUR_HEX[m.cou
   @media (max-width: 720px) {
     .team-marquee { --tmq-card-w: 190px; }
   }
-  .team-marquee__row { overflow: hidden; }
+  /* padding-left ici (pas sur .team-marquee__track) : la frise démarre ferrée
+     sur le bord du container, sans décaler la largeur du track — condition pour
+     que la boucle ci-dessous soit exacte (voir commentaire sur l'animation). */
+  .team-marquee__row {
+    overflow: hidden;
+    padding-left: max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2));
+  }
   .team-marquee__track {
     list-style: none; margin: 0;
-    /* Marge de gauche plus généreuse qu'à droite : au chargement, la frise
-       démarre déjà "en mouvement" (carte précédente qui dépasse à gauche),
-       comme si on l'avait surprise au milieu de son défilement. */
-    padding: 0 max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2))
-      calc(0.5rem + 40px) calc(max(var(--space-sm, 1.5rem), calc((100vw - var(--content-max, 1312px)) / 2)) + 240px);
-    display: flex; align-items: flex-start; gap: 1.5rem; width: max-content;
+    /* Espace bas pour ne pas rogner les cartes décalées vers le bas (quinconce,
+       cf. :nth-child(even) plus bas) sur le overflow:hidden de .team-marquee__row. */
+    padding: 0 0 calc(0.5rem + 40px);
+    display: flex; align-items: flex-start; width: max-content;
     animation: team-marquee-left 75s linear infinite;
   }
   .team-marquee__track:hover { animation-play-state: paused; }
+  /* Boucle sans saut : le track n'a aucun padding horizontal propre (déplacé sur
+     .team-marquee__row), donc sa largeur (width: max-content) vaut exactement
+     2× la largeur d'un jeu de cartes (elles sont dupliquées, cf. [...membres,
+     ...membres] plus haut). L'espacement se fait via margin-right sur chaque
+     carte (pas gap: un gap flexbox n'espace qu'ENTRE les cartes — N-1 espaces
+     pour N cartes — ce qui aurait cassé la symétrie 50/50 exacte entre les deux
+     jeux dupliqués et créé un micro-saut à la couture). translateX(-50%)
+     parcourt donc pile un jeu complet, identique au premier au redémarrage. */
   @keyframes team-marquee-left {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -77,6 +89,7 @@ const tintFor = (m, i) => (m.couleur && m.couleur !== "none" ? COULEUR_HEX[m.cou
     width: var(--tmq-card-w); aspect-ratio: 304 / 480; border-radius: 999px; overflow: hidden;
     background: var(--tint, #f1d1b7);
     display: flex; flex-direction: column; align-items: center;
+    margin-right: 32px;
   }
   /* Une carte sur deux est décalée vers le bas, façon quinconce. */
   .team-marquee__card:nth-child(even) { transform: translateY(40px); }

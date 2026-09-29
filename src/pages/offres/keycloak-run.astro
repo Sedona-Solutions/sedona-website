@@ -1,0 +1,107 @@
+---
+// Page sur-mesure pour l'offre Keycloak Run, reprenant le gabarit de la page
+// IA Forge (voir ./ia-forge.astro), distincte du template générique utilisé par
+// les autres offres génériques (voir src/pages/offres/[slug].astro).
+// Contenu piloté par Tina (collection "offre", entrée content/offres/keycloak-run.md) —
+// repris tel quel depuis IA Forge en attendant la relecture du wording.
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import Hero from "../../components/brieff/Hero.astro";
+import CommentCaMarcheTabs from "../../components/brieff/CommentCaMarcheTabs.astro";
+import Incoherence from "../../components/brieff/Incoherence.astro";
+import PerimetreTabs from "../../components/brieff/PerimetreTabs.astro";
+import Pricing from "../../components/ia-forge/Pricing.astro";
+import ChronologieIncident from "../../components/brieff/ChronologieIncident.astro";
+import Testimonial from "../../components/brieff/Testimonial.astro";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+
+const entry = await getEntry("offre", "keycloak-run");
+const d = entry.data;
+const pillVariant = d.pillVariant ?? "cactus";
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus;
+---
+
+<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.enBref}>
+  <div class="dark-stack">
+    <Hero
+      eyebrow={d.eyebrow}
+      titre={d.titre}
+      accroche={d.accroche}
+      accrocheAccent={d.accrocheAccent}
+      enBref={d.enBref}
+      illustration={d.illustration}
+      decoration="/deco/squiggle-9.svg"
+      proof={d.heroProof}
+      pillVariant={pillVariant}
+    />
+    <Incoherence
+      eyebrow={d.moteurSpecification?.eyebrow}
+      titre={d.moteurSpecification?.titre}
+      titreAccent={d.moteurSpecification?.titreAccent}
+      texte={d.moteurSpecification?.texte}
+      pillVariant={pillVariant}
+      coverage
+    />
+    <CommentCaMarcheTabs
+      eyebrow={d.etapes?.eyebrow}
+      titre={d.etapes?.titre}
+      titreAccent={d.etapes?.titreAccent}
+      intro={d.etapes?.sousTitre}
+      image={d.etapes?.image}
+      avant={d.etapes?.avant}
+      apres={d.etapes?.apres}
+      pillVariant={pillVariant}
+      radius="all"
+    />
+    <Incoherence
+      eyebrow={d.incoherence?.eyebrow}
+      titre={d.incoherence?.titre}
+      titreAccent={d.incoherence?.titreAccent}
+      texte={d.incoherence?.texte}
+      illustration={d.incoherence?.illustration}
+      pillVariant={pillVariant}
+    />
+    <PerimetreTabs tabs={d.perimetre?.tabs ?? []} pillVariant={pillVariant} radius="all" />
+    <ChronologieIncident
+      eyebrow={d.chronologie?.eyebrow}
+      titre={d.chronologie?.titre}
+      titreAccent={d.chronologie?.titreAccent}
+      intro={d.chronologie?.intro}
+      run={d.chronologie?.run}
+      runPlus={d.chronologie?.runPlus}
+      pillVariant={pillVariant}
+    />
+    <Pricing
+      eyebrow={d.plans?.eyebrow}
+      titre={d.plans?.titre}
+      titreAccent={d.plans?.titreAccent}
+      intro={d.plans?.intro}
+      items={d.plans?.items ?? []}
+      pillVariant={pillVariant}
+      offreTitre={d.titre}
+      radius="top"
+    />
+    <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} radius="bottom" />
+  </div>
+  <CtaFinal
+    cta={{
+      ...d.ctaFinal,
+      pillVariant,
+      accentColor: accentMid,
+      offreTitre: d.titre,
+      sousOffre2: "Audit pre-RUN",
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
+    }}
+  />
+</BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires flottent dessus grâce à leurs
+     coins arrondis ; les sections déjà sombres (Impacts, Incoherence, le bloc
+     "Pourquoi nous choisir") s'y fondent sans avoir besoin de leur propre arrondi. */
+  .dark-stack {
+    background: #3b0800;
+  }
+</style>

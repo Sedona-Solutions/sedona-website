@@ -1,0 +1,143 @@
+---
+// Page sur-mesure pour l'offre IA Forge (design Figma dédié), distincte du
+// template générique utilisé par les autres offres (voir src/pages/offres/[slug].astro).
+// Contenu piloté par Tina (collection "offre", entrée content/offres/ia-forge.md).
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import Hero from "../../components/brieff/Hero.astro";
+import Impacts from "../../components/brieff/Impacts.astro";
+import Constat from "../../components/brieff/Constat.astro";
+import CommentCaMarche from "../../components/brieff/CommentCaMarche.astro";
+import Incoherence from "../../components/brieff/Incoherence.astro";
+import Pricing from "../../components/ia-forge/Pricing.astro";
+import CardsGrid from "../../components/ia-forge/CardsGrid.astro";
+import CasConcret from "../../components/ia-forge/CasConcret.astro";
+import Testimonial from "../../components/brieff/Testimonial.astro";
+import CtaFinal from "../../components/home/CtaFinal.astro";
+import { ACCENT_MID } from "../../data/offreAccents.js";
+
+const entry = await getEntry("offre", "ia-forge");
+const d = entry.data;
+const pillVariant = d.pillVariant ?? "red-rock";
+const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
+---
+
+<BaseLayout
+  title="IA Forge — Sedona"
+  description="Créez et déployez vos portails, CMS et applis métier sur-mesure aussi vite que des solutions standards, sous le contrôle d'experts humains."
+>
+  <div class="dark-stack">
+    <Hero
+      eyebrow={d.eyebrow}
+      titre={d.titre}
+      accroche={d.accroche}
+      accrocheAccent={d.accrocheAccent}
+      enBref={d.enBref}
+      illustration={d.illustration}
+      decoration="/deco/squiggle-9.svg"
+      proof={d.heroProof}
+      pillVariant={pillVariant}
+    />
+    <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} titreAccent={d.impacts?.titreAccent} pillVariant={pillVariant} items={d.impacts?.items ?? []} />
+    <Constat
+      eyebrow={d.constat?.eyebrow}
+      titre={d.constat?.titre}
+      titreAccent={d.constat?.titreAccent}
+      intro={d.constat?.intro}
+      colonneAvantTitre={d.constat?.colonneAvantTitre}
+      colonneApresTitre={d.constat?.colonneApresTitre}
+      avant={d.constat?.avant ?? []}
+      apres={d.constat?.apres ?? []}
+      pillVariant={pillVariant}
+    />
+    <CommentCaMarche
+      eyebrow={d.etapes?.eyebrow}
+      titre={d.etapes?.titre}
+      titreAccent={d.etapes?.titreAccent}
+      intro={d.etapes?.sousTitre}
+      image={d.etapes?.image}
+      items={d.etapes?.items ?? []}
+      pillVariant={pillVariant}
+    />
+    <Incoherence
+      eyebrow={d.incoherence?.eyebrow}
+      titre={d.incoherence?.titre}
+      titreAccent={d.incoherence?.titreAccent}
+      texte={d.incoherence?.texte}
+      illustration={d.incoherence?.illustration}
+      pillVariant={pillVariant}
+    />
+    <Pricing
+      eyebrow={d.plans?.eyebrow}
+      titre={d.plans?.titre}
+      titreAccent={d.plans?.titreAccent}
+      intro={d.plans?.intro}
+      items={d.plans?.items ?? []}
+      pillVariant={pillVariant}
+      offreTitre={d.titre}
+    />
+    <CardsGrid
+      eyebrow={d.pourquoi?.eyebrow}
+      titre={d.pourquoi?.titre}
+      pillVariant={pillVariant}
+      items={d.pourquoi?.items ?? []}
+      dark
+      accentColor={accentMid}
+    />
+    <CasConcret
+      eyebrow={d.casConcret?.eyebrow}
+      titre={d.casConcret?.titre}
+      texte={d.casConcret?.texte}
+      illustration={d.casConcret?.illustration}
+      stats={d.casConcret?.stats ?? []}
+    />
+    <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} radius="none" />
+    <CardsGrid
+      eyebrow={d.benefices?.eyebrow}
+      titre={d.benefices?.titre}
+      titreAccent={d.benefices?.titreAccent}
+      intro={d.benefices?.intro}
+      decoration="/deco/illus-liberte-creative.svg"
+      pillVariant={pillVariant}
+      items={d.benefices?.items ?? []}
+      accentColor={accentMid}
+      radiusBottom
+      withDot={false}
+    />
+  </div>
+  <CtaFinal
+    cta={{
+      ...d.ctaFinal,
+      pillVariant,
+      accentColor: accentMid,
+      offreTitre: d.titre,
+      illustration: d.ctaFinal?.illustration || "/deco/contact-cool-cactus.svg",
+    }}
+  />
+</BaseLayout>
+
+<style>
+  /* Fond sombre commun : les sections claires flottent dessus grâce à leurs
+     coins arrondis ; les sections déjà sombres (Impacts, Incoherence, le bloc
+     "Pourquoi nous choisir") s'y fondent sans avoir besoin de leur propre arrondi. */
+  .dark-stack {
+    background: #3b0800;
+  }
+
+  /* Overrides spécifiques à IA Forge pour les décos du Hero (squiggle-9 / squiggle-2,
+     cf. brieff/Hero.astro) : pas de squiggle-2, et le squiggle-9 repositionné + recoloré
+     en red-rock-400 plutôt que l'accent-300 par défaut du composant. */
+  :global(.bhero__squiggle2) {
+    display: none;
+  }
+  :global(.bhero__deco) {
+    bottom: 70px;
+    left: -40px;
+    width: 140px;
+    transform: rotate(-225deg);
+  }
+  :global(.bhero__deco svg path) {
+    stroke: #f18878;
+  }
+</style>

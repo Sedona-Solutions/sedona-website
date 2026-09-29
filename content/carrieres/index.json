@@ -45,9 +45,9 @@
         "couleur": "ovni"
       },
       {
-        "nom": "Antoine M.",
-        "role": "Lead dev mobile",
-        "photo": "/uploads/articles/collab/antoine-m.png",
+        "nom": "Vincent C.",
+        "role": "Développeur senior Java",
+        "photo": "/uploads/articles/collab/vincent-c.png",
         "couleur": "cactus"
       },
       {
@@ -58,7 +58,7 @@
       },
       {
         "nom": "Benoît D.",
-        "role": "Dévleoppeur PHP",
+        "role": "Développeur senior PHP",
         "photo": "/uploads/articles/collab/benoit-d.png",
         "couleur": "sky"
       },
@@ -69,16 +69,40 @@
         "couleur": "red-rock"
       },
       {
-        "nom": "Mathieu Broutin",
+        "nom": "Mathieu B.",
         "role": "Architecte",
         "photo": "/uploads/articles/collab/mathieu-b.png",
         "couleur": "sunshine"
       },
       {
         "nom": "Guillaume M.",
-        "role": "Développeur PHP",
+        "role": "Développeur PHP & Expert Keycloak",
         "photo": "/uploads/articles/collab/guillaume-m.png",
         "couleur": "ovni"
+      },
+      {
+        "nom": "Michaël G.",
+        "role": "Responsable Infrastructure",
+        "photo": "/uploads/articles/collab/michael-g.png",
+        "couleur": "cactus"
+      },
+      {
+        "nom": "Francis L.",
+        "role": "Architecte",
+        "photo": "/uploads/articles/collab/francis-l.png",
+        "couleur": "sky"
+      },
+      {
+        "nom": "Hugo P.",
+        "role": "Développeur Full-stack",
+        "photo": "/uploads/articles/collab/hugo-p.png",
+        "couleur": "ovni"
+      },
+      {
+        "nom": "Scherazade B.",
+        "role": "Responsable facturation",
+        "photo": "/uploads/articles/collab/scherazade-b.png",
+        "couleur": "sunshine"
       }
     ]
   },

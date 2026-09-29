@@ -98,7 +98,7 @@
     "titre": "Nos offres clé en main",
     "titreAccent": "offres",
     "titreCouleur": "cactus",
-    "intro": "Déjà prêtes à s'intégrer dans vos projets !",
+    "intro": "Elles sont déjà prêtes à s'intégrer dans vos projets. Et vous ?",
     "offres": [
       {
         "titre": "Brieff",
@@ -157,20 +157,29 @@
     "titre": "Ils nous ont fait confiance.",
     "logos": [
       {
-        "nom": "BNP Paribas",
-        "logo": "/uploads/clients/white/bnp-paribas.svg"
+        "actif": true,
+        "nom": "L'Oréal",
+        "logo": "/uploads/clients/white/loreal_logo.svg"
+      },
+      {
+        "nom": "M6",
+        "logo": "/uploads/clients/white/m6_logo.svg"
+      },
+      {
+        "nom": "Universal Music Group",
+        "logo": "/uploads/clients/white/universal-music.svg"
       },
       {
         "nom": "Nespresso",
         "logo": "/uploads/clients/white/nespresso_logo.svg"
       },
       {
-        "nom": "Cedig",
-        "logo": "/uploads/clients/white/cegid_logo.svg"
+        "nom": "Orange",
+        "logo": "/uploads/clients/white/orange_logo.svg"
       },
       {
-        "nom": "L'Oréal",
-        "logo": "/uploads/clients/white/loreal_logo.svg"
+        "nom": "Jeff de Bruges",
+        "logo": "/uploads/clients/dark/jeff_de_bruges_logo.svg"
       },
       {
         "nom": "Saint-Gobain",
@@ -181,16 +190,92 @@
         "logo": "/uploads/clients/white/sodexo.svg"
       },
       {
-        "nom": "M6",
-        "logo": "/uploads/clients/white/m6_logo.svg"
+        "actif": false,
+        "nom": "Lagardère",
+        "logo": "/uploads/clients/dark/lagardere_logo.svg"
       },
       {
-        "nom": "Orange",
-        "logo": "/uploads/clients/white/orange_logo.svg"
+        "actif": false,
+        "nom": "MGAS",
+        "logo": "/uploads/clients/dark/mgas_logo.svg"
       },
       {
-        "nom": "Universal Music Group",
-        "logo": "/uploads/clients/white/universal-music.svg"
+        "actif": false,
+        "nom": "Société générale",
+        "logo": "/uploads/clients/dark/societe_generale_logo.svg"
+      },
+      {
+        "nom": "BNP Paribas",
+        "logo": "/uploads/clients/white/bnp-paribas.svg"
+      },
+      {
+        "actif": false,
+        "nom": "Natixis",
+        "logo": "/uploads/clients/dark/natixis_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "MSH DiotSiaci Group",
+        "logo": "/uploads/clients/dark/msh_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "MGEN",
+        "logo": "/uploads/clients/dark/mgen_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "Groupama",
+        "logo": "/uploads/clients/dark/groupama_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "AG2R La Mondiale",
+        "logo": "/uploads/clients/dark/ag2r_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "AXA",
+        "logo": "/uploads/clients/dark/axa_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "Cedig",
+        "logo": "/uploads/clients/white/cegid_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "Mutuelle GSMC",
+        "logo": "/uploads/clients/dark/mutuelle_gsmc_logo.svg"
+      },
+      {
+        "nom": "SFR",
+        "logo": "/uploads/clients/dark/sfr_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "CNP Assurances",
+        "logo": "/uploads/clients/dark/cnp_assurances_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "Essilor",
+        "logo": "/uploads/clients/dark/essilor_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "SwissLife",
+        "logo": "/uploads/clients/dark/swiss_life_group_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "WWF",
+        "logo": "/uploads/clients/dark/wwf_logo.svg"
+      },
+      {
+        "actif": false,
+        "nom": "IPSOS",
+        "logo": "/uploads/clients/dark/ipsos_logo.svg"
       }
     ]
   },

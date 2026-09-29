@@ -1,0 +1,210 @@
+---
+// Sélecteur d'offre RUN / RUN+ / RUN PREMIUM avec grille de couverture
+// hebdomadaire (7 j × 24 h) animée au clic — remplace l'illustration statique
+// dans le slot droit d'Incoherence.astro (cf. page Keycloak Run).
+// Reprend le composant "Signature" de la maquette Figma (node 4163-72079) :
+// mêmes 3 plages, mêmes 4 indicateurs (couverture, plage, incident, rétablissement).
+import { ACCENT_200 } from "../../data/offreAccents.js";
+
+const { pillVariant = "cactus" } = Astro.props;
+const accent200 = ACCENT_200[pillVariant] ?? ACCENT_200.cactus;
+---
+
+<div class="kcov" style={`--kcov-accent:${accent200}`}>
+  <div class="kcov__switch" role="tablist" aria-label="Choisir une offre">
+    <button type="button" role="tab" data-mode="run" aria-selected="true">RUN</button>
+    <button type="button" role="tab" data-mode="ext" aria-selected="false">RUN+</button>
+    <button type="button" role="tab" data-mode="full" aria-selected="false">RUN PREMIUM</button>
+  </div>
+
+  <div class="kcov__grid-scroll">
+    <div class="kcov__grid" id="kcov-grid" role="tabpanel" aria-live="polite" aria-label="Grille de couverture hebdomadaire"></div>
+  </div>
+
+  <dl class="kcov__metrics">
+    <div class="kcov__metric">
+      <dt>Couverture</dt>
+      <dd data-out="hours">45 h<small>par semaine</small></dd>
+    </div>
+    <div class="kcov__metric">
+      <dt>Plage</dt>
+      <dd data-out="range">Jours ouvrés<small>9h – 18h</small></dd>
+    </div>
+    <div class="kcov__metric">
+      <dt>Incident critique</dt>
+      <dd data-out="sla">&lt; 2h<small>réaction sur incident critique</small></dd>
+    </div>
+    <div class="kcov__metric">
+      <dt>Rétablissement</dt>
+      <dd data-out="mttr">Jour ouvré<small>selon dépendances infra</small></dd>
+    </div>
+  </dl>
+</div>
+
+<script>
+  const DAYS = ["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"];
+  const MODES: Record<
+    string,
+    { on: (d: number, h: number) => boolean; hours: string; range: [string, string]; sla: [string, string]; mttr: [string, string] }
+  > = {
+    run: {
+      on: (d, h) => d < 5 && h >= 9 && h < 18,
+      hours: "45 h",
+      range: ["Jours ouvrés", "9h – 18h"],
+      sla: ["< 2h", "réaction sur incident critique"],
+      mttr: ["Jour ouvré", "selon dépendances infra"],
+    },
+    ext: {
+      on: (_d, h) => h >= 6 && h < 22,
+      hours: "112 h",
+      range: ["7j/7", "6h – 22h"],
+      sla: ["< 45 min", "réaction sur incident critique"],
+      mttr: ["2 à 4h", "objectif de rétablissement"],
+    },
+    full: {
+      on: () => true,
+      hours: "168 h",
+      range: ["Continue", "24h/24, 7j/7"],
+      sla: ["< 30 min", "réaction sur incident critique"],
+      mttr: ["2 à 4h", "objectif de rétablissement"],
+    },
+  };
+
+  document.querySelectorAll<HTMLElement>(".kcov").forEach((root) => {
+    const grid = root.querySelector<HTMLElement>("#kcov-grid") ?? root.querySelector<HTMLElement>(".kcov__grid");
+    if (!grid) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cells: { el: HTMLElement; d: number; h: number }[] = [];
+
+    const head = document.createElement("div");
+    head.className = "kcov__hours";
+    head.setAttribute("aria-hidden", "true");
+    head.appendChild(document.createElement("span"));
+    for (let h = 0; h < 24; h++) {
+      const s = document.createElement("span");
+      s.textContent = h % 3 === 0 ? `${h < 10 ? "0" + h : h}h` : "";
+      head.appendChild(s);
+    }
+    grid.appendChild(head);
+
+    DAYS.forEach((name, d) => {
+      const row = document.createElement("div");
+      row.className = "kcov__row" + (d > 4 ? " kcov__row--we" : "");
+      const lab = document.createElement("span");
+      lab.className = "kcov__day";
+      lab.textContent = name;
+      row.appendChild(lab);
+      for (let h = 0; h < 24; h++) {
+        const c = document.createElement("span");
+        c.className = "kcov__c" + (reduce ? "" : " is-boot");
+        row.appendChild(c);
+        cells.push({ el: c, d, h });
+      }
+      grid.appendChild(row);
+    });
+
+    const outs: Record<string, HTMLElement | null> = {
+      hours: root.querySelector('[data-out="hours"]'),
+      range: root.querySelector('[data-out="range"]'),
+      sla: root.querySelector('[data-out="sla"]'),
+      mttr: root.querySelector('[data-out="mttr"]'),
+    };
+
+    function set(dd: HTMLElement | null, value: string, note: string) {
+      if (!dd) return;
+      dd.innerHTML = `${value}<small>${note}</small>`;
+    }
+
+    function paint(mode: string) {
+      const m = MODES[mode];
+      cells.forEach((c) => {
+        c.el.className = "kcov__c" + (m.on(c.d, c.h) ? " is-on" : "");
+      });
+      set(outs.hours, m.hours, "par semaine");
+      set(outs.range, m.range[0], m.range[1]);
+      set(outs.sla, m.sla[0], m.sla[1]);
+      set(outs.mttr, m.mttr[0], m.mttr[1]);
+    }
+
+    paint("run");
+
+    if (!reduce) {
+      cells.forEach((c) => {
+        const delay = 180 + c.d * 32 + c.h * 9;
+        setTimeout(() => c.el.classList.remove("is-boot"), delay);
+      });
+    }
+
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>(".kcov__switch button"));
+    tabs.forEach((btn, i) => {
+      btn.addEventListener("click", () => {
+        tabs.forEach((b) => b.setAttribute("aria-selected", "false"));
+        btn.setAttribute("aria-selected", "true");
+        paint(btn.dataset.mode ?? "run");
+      });
+      btn.addEventListener("keydown", (e) => {
+        const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        const next = tabs[(i + dir + tabs.length) % tabs.length];
+        next.focus();
+        next.click();
+      });
+    });
+  });
+</script>
+
+<style>
+  .kcov__switch { display: flex; gap: 6px; background: rgba(0, 0, 0, 0.2); padding: 5px; border-radius: 999px; margin-bottom: 1.25rem; }
+  .kcov__switch button {
+    flex: 1; font-family: var(--font-sans); font-weight: 500; font-size: 0.8rem; color: var(--color-red-rock-50);
+    opacity: 0.7; background: none; border: 0; cursor: pointer; padding: 0.6em 0.5em; border-radius: 999px;
+    transition: opacity 0.2s ease, background 0.2s ease; white-space: nowrap;
+  }
+  .kcov__switch button:hover { opacity: 1; }
+  .kcov__switch button[aria-selected="true"] { background: #fcf6f0; color: #3b0800; opacity: 1; }
+
+  .kcov__grid-scroll { overflow-x: auto; padding-bottom: 2px; }
+
+  .kcov__metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.12); border-radius: 14px; overflow: hidden; margin-top: 1.25rem; }
+  .kcov__metric { background: #42140d; padding: 0.85rem 0.9rem; }
+  .kcov__metric dt { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-red-rock-50); opacity: 0.6; }
+  .kcov__metric dd { font-family: var(--font-sans); font-weight: 700; font-size: 1.1rem; margin: 0.3rem 0 0; color: var(--kcov-accent); }
+
+  /* 4 colonnes seulement quand la page est assez large pour que la colonne
+     droite (moitié de .bincoh__row) ait la place de les afficher confortablement. */
+  @media (min-width: 1150px) {
+    .kcov__metrics { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 460px) {
+    .kcov__switch button { font-size: 0.72rem; padding: 0.55em 0.3em; }
+  }
+</style>
+
+<style is:global>
+  /* La grille (jours × heures) est construite dynamiquement en JS (voir <script>
+     ci-dessus) : ces noeuds n'héritent pas de l'attribut de scoping d'Astro,
+     donc ces règles doivent rester globales pour s'appliquer. */
+  .kcov__grid { min-width: 360px; --daycol: 30px; --cell-gap: 2px; }
+  .kcov__hours {
+    display: grid; grid-template-columns: var(--daycol) repeat(24, 1fr); gap: var(--cell-gap);
+    font-family: var(--font-body); font-size: 0.55rem; color: var(--color-red-rock-50); opacity: 0.6; margin-bottom: 4px;
+  }
+  .kcov__hours span { text-align: left; white-space: nowrap; }
+  .kcov__row {
+    display: grid; grid-template-columns: var(--daycol) repeat(24, 1fr); gap: var(--cell-gap);
+    margin-bottom: var(--cell-gap); align-items: center;
+  }
+  .kcov__day { font-family: var(--font-body); font-size: 0.62rem; font-weight: 600; color: var(--color-red-rock-50); opacity: 0.75; letter-spacing: 0.03em; }
+  .kcov__row--we .kcov__day { opacity: 0.5; }
+  .kcov__c { height: clamp(10px, 1.6vw, 16px); border-radius: 3px; background: rgba(255, 255, 255, 0.08); transition: background 0.4s ease, opacity 0.4s ease, transform 0.4s ease; }
+  .kcov__row--we .kcov__c { background: rgba(255, 255, 255, 0.05); }
+  .kcov__c.is-on { background: var(--kcov-accent); }
+  .kcov__c.is-boot { transform: scaleY(0.2); opacity: 0; }
+
+  /* Idem : le <small> de chaque métrique est injecté via innerHTML (voir <script>). */
+  .kcov__metric dd small {
+    display: block; font-family: var(--font-body); font-weight: 400; font-size: 0.7rem;
+    color: var(--color-red-rock-50); opacity: 0.75; margin-top: 0.25rem; line-height: 1.3;
+  }
+</style>

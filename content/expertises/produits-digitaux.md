@@ -60,10 +60,6 @@ methode:
       logo: /technos/swiftui.svg
     - nom: Kotlin
       logo: /technos/kotlin.svg
-    - nom: Flutter
-      logo: /technos/flutter.svg
-    - nom: React Native
-      logo: /technos/react-native.svg
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pensées pour durer
@@ -160,3 +156,4 @@ articlesSection:
     - Symfony
     - Devoxx
 ---
+
