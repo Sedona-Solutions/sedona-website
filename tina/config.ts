@@ -150,6 +150,7 @@ export default defineConfig({
               { type: "string", name: "label", label: "Sous-titre (ex. Agence Rhônes-Alpes)" },
               { type: "string", name: "adresse", label: "Adresse", ui: { component: "textarea" } },
               { type: "string", name: "telephone", label: "Téléphone" },
+              { type: "string", name: "email", label: "E-mail de l'agence" },
             ],
           },
           { type: "string", name: "email", label: "E-mail de contact" },

@@ -44,19 +44,22 @@
       "ville": "Paris",
       "label": "Agence parisienne (siège social)",
       "adresse": "19 rue Mogador\n75009 Paris",
-      "telephone": "01 44 94 89 90"
+      "telephone": "01 44 94 89 90",
+      "email": "contact-paris@sedona.fr"
     },
     {
       "ville": "Lyon",
       "label": "Agence Rhônes-Alpes",
       "adresse": "45 avenue de la République\n69003 Lyon",
-      "telephone": ""
+      "telephone": "",
+      "email": "contact-lyon@sedona.fr"
     },
     {
       "ville": "Toulon",
       "label": "Agence PACA",
       "adresse": "8 boulevard du Littoral\n83000 Toulon",
-      "telephone": ""
+      "telephone": "",
+      "email": "contact-toulon@sedona.fr"
     }
   ],
   "email": "contact@sedona.fr",

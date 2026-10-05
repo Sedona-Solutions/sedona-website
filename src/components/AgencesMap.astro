@@ -1,0 +1,76 @@
+---
+// Bloc "planisphère" partagé par la page Contact (agences) et Notre histoire
+// (offices) : un globe illustré avec une carte-bulle par ville, repérée par un
+// point de couleur. Remplace l'ancienne grille de 3 cartes.
+type Agence = { ville?: string; label?: string; adresse?: string; email?: string };
+const { agences = [] as Agence[] } = Astro.props;
+
+const CITY = {
+  Lyon: { corner: "tr", pin: "#A98EDA", svg: "pin-lyon-purple" },
+  Paris: { corner: "tl", pin: "#75D3D0", svg: "pin-paris-teal" },
+  Toulon: { corner: "tr", pin: "#E9B189", svg: "pin-toulon-tan" },
+} as const;
+
+const items = agences.map((a) => ({
+  ...a,
+  heading: a.label?.toLowerCase().includes("siège") ? `${a.ville} (siège social)` : a.ville,
+  ...(CITY[a.ville as keyof typeof CITY] ?? { corner: "tr", pin: "#A98EDA", svg: "pin-lyon-purple" }),
+}));
+---
+
+{
+  items.length > 0 && (
+    <div class="amap">
+      <img class="amap__globe" src="/deco/globe-map.svg" alt="" aria-hidden="true" />
+
+      <ul class="amap__cards">
+        {items.map((it) => (
+          <li class={`amap__card amap__card--${it.ville?.toLowerCase()}`} data-reveal>
+            <img class={`amap__pin amap__pin--${it.corner}`} src={`/deco/${it.svg}.svg`} alt="" aria-hidden="true" />
+            <h3 class="amap__heading">{it.heading}</h3>
+            {it.adresse && <p class="amap__adresse">{it.adresse}</p>}
+            {it.email && (
+              <a class="amap__email" href={`mailto:${it.email}`}>
+                {it.email}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .amap { position: relative; margin: 0 auto; max-width: 1100px; min-height: 680px; }
+
+  .amap__globe { position: absolute; left: 27%; top: 0; width: 44%; aspect-ratio: 1 / 1; }
+
+  .amap__cards { list-style: none; margin: 0; padding: 0; }
+  .amap__card {
+    position: absolute; width: 320px; max-width: 82vw;
+    background: #fff; border: 2px solid #42140d; border-radius: 32px;
+    padding: 2rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
+    text-align: left;
+  }
+  .amap__card--lyon { left: 6%; top: 6%; }
+  .amap__card--paris { right: 6%; top: 10%; }
+  .amap__card--toulon { left: 16%; bottom: 18%; }
+
+  .amap__pin { position: absolute; width: 56px; height: 56px; }
+  .amap__pin--tl { left: -28px; top: -28px; }
+  .amap__pin--tr { right: -28px; top: -28px; }
+
+  .amap__heading { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.01em; color: #42140d; }
+  .amap__adresse { margin: 0; white-space: pre-line; font-family: var(--font-body); font-size: 1.125rem; line-height: 1.55; color: #3b0800; }
+  .amap__email { font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; text-decoration: underline; text-decoration-color: color-mix(in srgb, #3b0800 35%, transparent); }
+  .amap__email:hover { text-decoration-color: #3b0800; }
+
+  @media (max-width: 900px) {
+    .amap { min-height: 0; }
+    .amap__globe { display: none; }
+    .amap__cards { display: flex; flex-direction: column; gap: 1.5rem; }
+    .amap__card { position: static; width: 100%; max-width: none; align-items: center; text-align: center; }
+    .amap__pin { position: static; width: 48px; height: 48px; margin-bottom: -0.5rem; }
+  }
+</style>
