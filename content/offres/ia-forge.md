@@ -1,17 +1,4 @@
 ---
-pourquoi:
-  eyebrow: Pourquoi choisir Sedona Forge ?
-  titre: 'Travailler à l''aide de l''IA, le risque en moins.'
-  items:
-    - titre: Toujours un humain de responsable
-      texte: Chaque livrable passe par un expert qui valide et engage Sedona. L'IA n'est jamais une boîte noire laissée sans contrôle.
-      icone: facebook-like
-    - titre: 28 ans d'engagement de résultat
-      texte: 'Experts PHP / Java / Quarkus, front et back office, chefs de projet, UX/UI et QA. L''antériorité d''une ESN, augmentée par l''IA.'
-      icone: badge-favorite-heart-2
-    - titre: Liberté & propriété totales
-      texte: 'Votre technologie, votre code, votre roadmap. Zéro licence, zéro verrou. Vous restez maître de votre produit.'
-      icone: programming-script
 pillVariant: red-rock
 titre: IA Forge
 eyebrow: Offres clé en main
@@ -120,6 +107,19 @@ plans:
         - 'Même équipe, même qualité'
       ctaLabel: Choisir cette offre
       note: Abonnement mensuel
+pourquoi:
+  eyebrow: Pourquoi choisir Sedona Forge ?
+  titre: 'Travailler à l''aide de l''IA, le risque en moins.'
+  items:
+    - titre: Toujours un humain en responsabilité
+      texte: Chaque livrable passe par un expert qui valide et engage Sedona. L'IA n'est jamais une boîte noire laissée sans contrôle.
+      icone: facebook-like
+    - titre: 28 ans d'engagement de résultat
+      texte: 'Experts PHP / Java / Quarkus, front et back office, chefs de projet, UX/UI et QA. L''antériorité d''une ESN, augmentée par l''IA.'
+      icone: badge-favorite-heart-2
+    - titre: Liberté & propriété totales
+      texte: 'Votre technologie, votre code, votre roadmap. Zéro licence, zéro verrou. Vous restez maître de votre produit.'
+      icone: programming-script
 casConcret:
   eyebrow: Cas concret
   titre: Un portail client réécrit en quelques semaines.
@@ -137,7 +137,7 @@ benefices:
   eyebrow: Une liberté créative
   titre: 'Vous avez le droit de tester, le droit d''oser.'
   titreAccent: tester
-  intro: 'Quand le coût d''une idée s''effondre, tout devient possible. Sedona FORGE ouvre un champ de possibles que les progiciels vous interdisaient : essayez, mesurez, ajustez — et réinventez vos produits sans crainte de l''échec.'
+  intro: 'Sedona FORGE ouvre le champ des possibles que les progiciels vous interdisaient : essayez, mesurez, ajustez — et réinventez vos produits sans crainte de l''échec.'
   items:
     - titre: Tester sans risque
       texte: |
@@ -149,7 +149,7 @@ benefices:
       icone: account
     - titre: Aucune limite technique
       texte: |
-        Votre technologie, vos intégrations, vos ambitions. L'IA lève les barrières ; l'expert garantit la solidité.
+        Votre technologie, vos intégrations, vos ambitions. L'IA lève les barrières ; l'expert garantit la robustesse.
       icone: data-ia
 ctaFinal:
   titre: Et si vous testiez la FORGE ?

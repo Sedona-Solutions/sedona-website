@@ -4,7 +4,7 @@
     "titre": "Nous les Sedoniens, nous aimons explorer de nouveaux territoires.",
     "titreAccent": "Sedoniens",
     "titreCouleur": "red-rock",
-    "intro": "Depuis 1998, plus de 100 clients nous ont fait confiance. Toujours avec la même conviction : on n'arrive pas chez un client avec la solution. On la construit avec lui, dans les technologies qu'on maîtrise vraiment.",
+    "intro": "Depuis 1998, plus de 100 clients nous ont fait confiance. Toujours avec la même conviction : on n'arrive pas chez un client avec la solution. On la construit avec vous, dans les technologies qu'on maîtrise vraiment.",
     "ctaLabel": "Contactez-nous",
     "ctaHref": "/contact"
   },
@@ -12,11 +12,7 @@
   "manifeste": {
     "eyebrow": "Notre manifeste",
     "paragraphes": [
-      "Jean-Michel, issu du commerce, a vu comment la tech traite souvent clients et équipes comme des chiffres. Juliette, psychologue, observe ce monde en se concentrant d'abord sur les personnes.",
-      "Un voyage à Sedona, en Arizona, donnera son nom à l'aventure — et surtout un cap.",
-      "On s'est retrouvés sur un constat simple : Pourquoi les sociétés de conseils sont-elles si peu humaines ?",
-      "On a bâti SEDONA autour de cette question. Une entreprise de conseils et tech à visage humain, où l'on conçoit des produits et services dont on est fiers — pas pour livrer vite et passer au suivant, mais pour accompagner et faire durer.",
-      "25 ans plus tard, certains clients sont toujours là. Parce qu'on ne vend ni des jours-homme ni des promesses ! Avant chaque projet, on se pose deux questions : est-ce qu'on sait vraiment le faire ? est-ce qu'on est fiers de le faire ? — et on s'y tient."
+      "Jean-Michel, issu du commerce, a vu comment la tech traite souvent clients et équipes comme des chiffres. Juliette, psychologue, observe ce monde en se concentrant d'abord sur les personnes. \nUn voyage à Sedona, en Arizona, donnera son nom à l'aventure — et surtout un cap. On s'est retrouvé sur un constat simple : Pourquoi les sociétés de conseil sont-elles si peu humaines ? \nOn a bâti SEDONA autour de cette question. Une entreprise de conseil et tech à visage humain, où l'on conçoit des produits et services dont on est fiers — non pour livrer vite et passer au suivant, mais pour accompagner et faire durer. 25 ans plus tard, certains clients sont toujours là. Parce qu'on ne vend ni des jours-homme ni des promesses ! Avant chaque projet, on se pose deux questions : est-ce qu'on sait vraiment le faire ? est-ce qu'on est fier de le faire ? — et on s'y tient."
     ],
     "signatureRole": "Les co-fondateurs",
     "signatureNom": "Jean-Michel et Juliette",
@@ -36,37 +32,37 @@
         "annee": "2012 & 2013",
         "titre": "Cap sur Hong Kong & Genève",
         "texte": "Les premiers bureaux hors de France. L'international par choix, pas par opportunisme.",
-        "stat": "100-140 personnes / 10-14 M€ CA"
+        "stat": "100-140 personnes / 10 M€ CA"
       },
       {
         "annee": "2014",
         "titre": "Trois métiers prennent un nom",
         "texte": "West, Sedona Solutions et Zest innovation structurent nos savoir-faire.",
-        "stat": "160 personnes / 16 M€ CA"
+        "stat": ""
       },
       {
         "annee": "2015",
         "titre": "Direction le Sud",
         "texte": "Ouverture du bureau de Toulon, au plus près de nouveaux talents.",
-        "stat": "170 personnes / 17 M€ CA"
+        "stat": ""
       },
       {
         "annee": "2016",
         "titre": "Sedona rencontre RedShift",
         "texte": "On grandit par rencontres, pas par absorptions.",
-        "stat": "180 personnes / 18 M€ CA"
+        "stat": ""
       },
       {
         "annee": "2018",
         "titre": "Lyon entre dans la carte",
         "texte": "Un nouvel ancrage régional, collé aux équipes clientes.",
-        "stat": "190 personnes / 19 M€ CA"
+        "stat": ""
       },
       {
         "annee": "2020",
         "titre": "Un seul nom pour tous, le groupe SEDONA",
         "texte": "Les marques se rassemblent sous le groupe Sedona.",
-        "stat": "200 personnes / 20 M€ CA"
+        "stat": ""
       },
       {
         "annee": "2022",
@@ -75,10 +71,10 @@
         "stat": ""
       },
       {
-        "annee": "2024 - aujourd'hui",
+        "annee": "Aujourd'hui",
         "titre": "L'IA, pour de vrai",
         "texte": "Intégrée à nos projets clients comme au quotidien des équipes — utile, jamais gadget.",
-        "stat": ""
+        "stat": "120 collaborateurs / 14 M€ CA"
       }
     ]
   },
@@ -124,7 +120,7 @@
       },
       {
         "titre": "Challenger sur vos idées !",
-        "texte": "Avec bienveillance, promis. On vous dit quand une idée nous semble risquée — on ne vous dira pas oui à tout juste pour vous faire plaisir."
+        "texte": "Avec bienveillance, promis. On vous dit quand une idée nous semble risquée — on ne vous dira pas oui à tout, juste pour vous faire plaisir."
       },
       {
         "titre": "Travailler dans la durée",
@@ -161,13 +157,29 @@
   },
   "stats": {
     "intro": "Une même conviction depuis 1998 : conjuguer expertise technique et écoute humaine.",
-    "chips": ["Créativité", "Innovation", "Stratégie"],
-    "stats": [
-      { "valeur": "25+", "label": "années d'expérience dans le service" },
-      { "valeur": "200+", "label": "projets menés avec succès" },
-      { "valeur": "50+", "label": "collaborateurs sur tout le territoire" }
+    "chips": [
+      "Créativité",
+      "Innovation",
+      "Stratégie"
     ],
-    "cta": { "label": "Voir nos projets", "href": "/projets" }
+    "stats": [
+      {
+        "valeur": "25+",
+        "label": "années d'expérience dans le service"
+      },
+      {
+        "valeur": "200+",
+        "label": "projets menés avec succès"
+      },
+      {
+        "valeur": "120+",
+        "label": "collaborateurs sur tout le territoire"
+      }
+    ],
+    "cta": {
+      "label": "Voir nos projets",
+      "href": "/projets"
+    }
   },
   "ctaFinal": {
     "titre": "Envie d'écrire la suite avec nous ?",

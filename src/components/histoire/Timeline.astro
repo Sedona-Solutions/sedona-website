@@ -1,6 +1,7 @@
 ---
 const { timeline } = Astro.props;
-const items = timeline?.items ?? [];
+// Affichage de la plus récente à la plus ancienne ; l'ordre de saisie dans l'admin reste chronologique.
+const items = [...(timeline?.items ?? [])].reverse();
 ---
 
 <section class="htl">

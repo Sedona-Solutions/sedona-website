@@ -5,7 +5,7 @@ affichage:
   ordre: 2
   icone: data-ia
   resume: 'Faites parler vos données, de l''extraction à la prédiction avec l''IA.'
-accroche: 'Nous vous aidons à exploiter intelligemment vos données : pour décider plus vite et automatiser ce qui peut l''être !'
+accroche: 'Nous vous aidons à exploiter intelligemment vos données : pour décider efficacement et automatiser ce qui mérite de l''être !'
 illustration: /deco/domaine-data-hero.svg
 tags:
   - IA Générative
@@ -156,3 +156,4 @@ articlesSection:
     - IA
     - Data
 ---
+

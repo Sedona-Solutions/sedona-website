@@ -978,6 +978,22 @@ export default defineConfig({
             { type: "image" as const, name: "avatar", label: "Photo" },
           ],
         };
+        const offrePourquoi = {
+          type: "object" as const, name: "pourquoi", label: "Pourquoi nous choisir (bande sombre, cartes)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            {
+              type: "object" as const, name: "items", label: "Cartes", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "string" as const, name: "texte", label: "Texte", ui: { component: "textarea" } },
+                { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+              ],
+            },
+          ],
+        };
         const offreBenefices = {
           type: "object" as const, name: "benefices", label: "Bloc 3 colonnes",
           fields: [
@@ -1101,6 +1117,7 @@ export default defineConfig({
                 offreEtapes,
                 offreIncoherence,
                 offrePlans,
+                offrePourquoi,
                 offreCasConcret,
                 offreTemoignage,
                 offreBenefices,
