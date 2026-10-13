@@ -36,7 +36,7 @@ const items = jobs?.items ?? [];
             </summary>
             <div class="cjobs__body">
               {it.texte && <p class="cjobs__texte">{it.texte}</p>}
-              <a class="cjobs__apply" href="/contact">Postuler</a>
+              <a class="cjobs__apply" href={`/contact?${new URLSearchParams({ poste: it.titre ?? "" })}`}>Postuler</a>
             </div>
           </details>
         </li>

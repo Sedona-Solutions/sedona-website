@@ -734,6 +734,15 @@ export default defineConfig({
             { type: "string" as const, name: "texte", label: "Texte (ex. chiffre à confirmer)" },
           ],
         };
+        const offreHeroCtas = {
+          type: "object" as const, name: "heroCtas", label: "Hero — boutons (CTA)",
+          fields: [
+            { type: "string" as const, name: "ctaLabel", label: "Bouton principal — libellé" },
+            { type: "string" as const, name: "ctaHref", label: "Bouton principal — lien (ex. /contact)" },
+            { type: "string" as const, name: "ctaLabel2", label: "Bouton secondaire — libellé" },
+            { type: "string" as const, name: "ctaHref2", label: "Bouton secondaire — lien (ex. /contact)" },
+          ],
+        };
         const offrePourQui = {
           type: "object" as const, name: "pourQui", label: "Bloc 4 colonnes (bande sombre)",
           fields: [
@@ -1089,6 +1098,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offrePourQui,
                 offreConstat,
                 offreEtapes,
@@ -1112,6 +1122,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offreImpacts,
                 offreConstat,
                 offreEtapes,
@@ -1136,6 +1147,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offreMoteurSpecification,
                 offreEtapesKeycloak,
                 offreIncoherence,
@@ -1158,6 +1170,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offrePourQui,
                 offreRaisons,
                 offreEtapes,

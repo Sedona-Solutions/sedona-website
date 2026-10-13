@@ -12,6 +12,11 @@ heroProof:
     - /uploads/articles/collab/benoit-d.png
     - /uploads/articles/collab/elsa-m.png
   texte: Nos clients et les membres de notre tribu utilisent FORGE
+heroCtas:
+  ctaLabel: Demander une démo →
+  ctaHref: /contact
+  ctaLabel2: Parlons de votre projet
+  ctaHref2: /contact
 impacts:
   eyebrow: Impacts mesurables
   titre: Des chiffres qui parlent d’eux-même.
@@ -156,8 +161,8 @@ ctaFinal:
   titreAccent: FORGE ?
   description: 'Et si on regénérait l''une de vos fonctionnalités, pour voir ? Un échange de 30 minutes pour cadrer votre cas d''usage et estimer le gain.'
   ctaLabel: Demander une démo
-  ctaHref: /contact
-  ctaLabel2: Prendre rendez-vous
+  ctaHref: ''
+  ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_IA_Forge_mini.svg
 _template: iaForge

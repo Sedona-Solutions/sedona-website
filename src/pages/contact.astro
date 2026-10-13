@@ -213,6 +213,18 @@ const BUDGETS = [
       setType("projet");
     }
 
+    // Depuis le bouton "Postuler" d'un job (ex. /contact?poste=Développeur·se Full-Stack) :
+    // onglet "Postuler" actif et poste présélectionné dans le menu déroulant.
+    const posteParam = new URLSearchParams(location.search).get("poste");
+    if (posteParam) {
+      const posteSelect = form.querySelector('select[name="poste"]');
+      if (posteSelect instanceof HTMLSelectElement) {
+        const hasPoste = [...posteSelect.options].some((o) => o.value === posteParam);
+        if (hasPoste) posteSelect.value = posteParam;
+      }
+      setType("postuler");
+    }
+
     // Exemple de message adapté à l'offre (et, si connu via le lien d'origine,
     // au palier précis de l'offre — ex. RUN / RUN+ / Audit pre-RUN) sélectionnée.
     // Placeholder uniquement, jamais pré-rempli à la place de l'utilisateur.

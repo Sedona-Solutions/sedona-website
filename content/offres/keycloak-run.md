@@ -8,6 +8,11 @@ enBref: "Nos offres RUN\_et\_RUN+\_maintiennent votre plateforme d’authentific
 illustration: /uploads/offre/keycloak-hero.svg
 heroProof:
   texte: ''
+heroCtas:
+  ctaLabel: Prendre rendez-vous →
+  ctaHref: 'https://outlook.office.com/book/RDVOFFREKEYCLOAK@sedona.fr/'
+  ctaLabel2: Parlons de votre projet
+  ctaHref2: /contact
 moteurSpecification:
   eyebrow: Notre couverture de service
   titre: "Une semaine, 168 h. Combien voulez-vous en couvrir\_?"
@@ -225,10 +230,10 @@ temoignage:
 ctaFinal:
   titre: Prêt à tester KEYCLOAK ?
   titreAccent: KEYCLOAK ?
-  description: 'Décrivez-nous votre environnement Keycloak et vos contraintes de disponibilité : nous vous proposons le périmètre RUN ou RUN+ adapté, et les engagements de service correspondants.'
-  ctaLabel: Parlons de votre projet
-  ctaHref: /contact
-  ctaLabel2: DEMANDER UN AUDIT PRE-RUN
+  description: 'Décrivez-nous votre environnement Keycloak et vos contraintes : nous vous proposerons l''offre la plus adaptée.'
+  ctaLabel: Prendre rendez-vous
+  ctaHref: 'https://outlook.office.com/book/RDVOFFREKEYCLOAK@sedona.fr/'
+  ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_keycloak_mini.svg
 _template: keycloakRun
