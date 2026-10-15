@@ -11,6 +11,11 @@ heroProof:
     - /uploads/articles/collab/benoit-d.png
     - /uploads/articles/collab/elsa-m.png
   texte: Nos clients et les membres de notre tribu utilisent BRIEFF
+heroCtas:
+  ctaLabel: Demander une démo →
+  ctaHref: 'https://bookings.cloud.microsoft/owa/calendar/RDVOFFREBRIEFF@sedona.fr/bookings/'
+  ctaLabel2: Parlons de votre projet
+  ctaHref2: /contact
 pourQui:
   eyebrow: À qui s'adresse cette offre ?
   titre: Conçu par et pour ceux qui pilotent.
@@ -178,8 +183,9 @@ ctaFinal:
   titreAccent: BRIEFF ?
   description: 'Une session d''1h suffit pour comprendre comment l''outil s''adapterait à votre contexte, vos clients et vos projets récurrents.'
   ctaLabel: Demander une démo
-  ctaHref: /contact
-  ctaLabel2: Prendre rendez-vous
+  ctaHref: 'https://bookings.cloud.microsoft/owa/calendar/RDVOFFREBRIEFF@sedona.fr/bookings/'
+  ctaLabel2: Parlons de votre projet
+  ctaHref2: /contact
   illustration: /uploads/offre/illus_brieff_mini.svg
 _template: brieff
 ---

@@ -14,8 +14,17 @@ const {
   illustration,
   decoration,
   proof,
+  ctas,
   pillVariant = "ovni",
 } = Astro.props;
+// Boutons du hero (champ `heroCtas`) : libellé et lien éditables. Champ absent => valeur
+// historique ; libellé vidé => le bouton est masqué ; lien vidé => /contact.
+const mkCta = (label, href, defLabel) => {
+  const l = label ?? defLabel;
+  return l ? { label: l, href: withOffre(href || "/contact", titre) } : null;
+};
+const cta1 = mkCta(ctas?.ctaLabel, ctas?.ctaHref, "Demander une démo →");
+const cta2 = mkCta(ctas?.ctaLabel2, ctas?.ctaHref2, "Prendre rendez-vous");
 const accent300 = ACCENT_300[pillVariant] ?? ACCENT_300.ovni;
 
 // La déco (squiggle) passée via `decoration` (ex. "/deco/squiggle-9.svg") est
@@ -55,10 +64,12 @@ if (accroche.includes(motAMettreEnAvant)) {
         </div>
       )}
 
-      <div class="bhero__ctas">
-        <a class="bhero__btn" href={withOffre("/contact", titre)}>Demander une démo →</a>
-        <a class="bhero__btn2 link-cta" href={withOffre("/contact", titre)}>Prendre rendez-vous</a>
-      </div>
+      {(cta1 || cta2) && (
+        <div class="bhero__ctas">
+          {cta1 && <a class="bhero__btn" href={cta1.href}>{cta1.label}</a>}
+          {cta2 && <a class="bhero__btn2 link-cta" href={cta2.href}>{cta2.label}</a>}
+        </div>
+      )}
     </div>
 
     <div class="bhero__illu-outer">

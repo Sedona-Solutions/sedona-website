@@ -150,6 +150,7 @@ export default defineConfig({
               { type: "string", name: "label", label: "Sous-titre (ex. Agence Rhônes-Alpes)" },
               { type: "string", name: "adresse", label: "Adresse", ui: { component: "textarea" } },
               { type: "string", name: "telephone", label: "Téléphone" },
+              { type: "string", name: "email", label: "E-mail de l'agence" },
             ],
           },
           { type: "string", name: "email", label: "E-mail de contact" },
@@ -733,6 +734,15 @@ export default defineConfig({
             { type: "string" as const, name: "texte", label: "Texte (ex. chiffre à confirmer)" },
           ],
         };
+        const offreHeroCtas = {
+          type: "object" as const, name: "heroCtas", label: "Hero — boutons (CTA)",
+          fields: [
+            { type: "string" as const, name: "ctaLabel", label: "Bouton principal — libellé" },
+            { type: "string" as const, name: "ctaHref", label: "Bouton principal — lien (ex. /contact)" },
+            { type: "string" as const, name: "ctaLabel2", label: "Bouton secondaire — libellé" },
+            { type: "string" as const, name: "ctaHref2", label: "Bouton secondaire — lien (ex. /contact)" },
+          ],
+        };
         const offrePourQui = {
           type: "object" as const, name: "pourQui", label: "Bloc 4 colonnes (bande sombre)",
           fields: [
@@ -977,6 +987,22 @@ export default defineConfig({
             { type: "image" as const, name: "avatar", label: "Photo" },
           ],
         };
+        const offrePourquoi = {
+          type: "object" as const, name: "pourquoi", label: "Pourquoi nous choisir (bande sombre, cartes)",
+          fields: [
+            { type: "string" as const, name: "eyebrow", label: "Sur-titre" },
+            { ...titreTexte },
+            {
+              type: "object" as const, name: "items", label: "Cartes", list: true,
+              ui: { itemProps: (i: { titre?: string }) => ({ label: i?.titre }) },
+              fields: [
+                { type: "string" as const, name: "titre", label: "Titre" },
+                { type: "string" as const, name: "texte", label: "Texte", ui: { component: "textarea" } },
+                { type: "string" as const, name: "icone", label: "Icône (nom de fichier dans /icons, sans .svg)" },
+              ],
+            },
+          ],
+        };
         const offreBenefices = {
           type: "object" as const, name: "benefices", label: "Bloc 3 colonnes",
           fields: [
@@ -1072,6 +1098,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offrePourQui,
                 offreConstat,
                 offreEtapes,
@@ -1095,11 +1122,13 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offreImpacts,
                 offreConstat,
                 offreEtapes,
                 offreIncoherence,
                 offrePlans,
+                offrePourquoi,
                 offreCasConcret,
                 offreTemoignage,
                 offreBenefices,
@@ -1118,6 +1147,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offreMoteurSpecification,
                 offreEtapesKeycloak,
                 offreIncoherence,
@@ -1140,6 +1170,7 @@ export default defineConfig({
                 offreEnBref,
                 offreIllustration,
                 offreHeroProof,
+                offreHeroCtas,
                 offrePourQui,
                 offreRaisons,
                 offreEtapes,

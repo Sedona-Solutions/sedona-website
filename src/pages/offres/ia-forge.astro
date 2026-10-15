@@ -37,6 +37,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
       illustration={d.illustration}
       decoration="/deco/squiggle-9.svg"
       proof={d.heroProof}
+      ctas={d.heroCtas}
       pillVariant={pillVariant}
     />
     <Impacts eyebrow={d.impacts?.eyebrow} titre={d.impacts?.titre} titreAccent={d.impacts?.titreAccent} pillVariant={pillVariant} items={d.impacts?.items ?? []} />
@@ -132,8 +133,8 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
     display: none;
   }
   :global(.bhero__deco) {
-    bottom: 70px;
-    left: -40px;
+    bottom: 0px;
+    left: -60px;
     width: 140px;
     transform: rotate(-225deg);
   }

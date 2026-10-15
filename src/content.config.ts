@@ -197,6 +197,14 @@ const offre = defineCollection({
         texte: z.string().optional(),
       })
       .optional(),
+    heroCtas: z
+      .object({
+        ctaLabel: z.string().optional(),
+        ctaHref: z.string().optional(),
+        ctaLabel2: z.string().optional(),
+        ctaHref2: z.string().optional(),
+      })
+      .optional(),
     produits: z
       .object({
         eyebrow: z.string().optional(),

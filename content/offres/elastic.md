@@ -12,6 +12,11 @@ heroProof:
     - /uploads/articles/avatar-9.png
     - /uploads/articles/avatar-2.png
   texte: XXX de nos clients formés sur ELASTIC par nos équipes
+heroCtas:
+  ctaLabel: Demander une démo →
+  ctaHref: 'https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
+  ctaLabel2: Parlons de votre projet
+  ctaHref2: /contact
 pourQui:
   eyebrow: À QUI S’ADRESSE CETTE OFFRE ?
   titre: "Ce qu'Elastic produit pour\_vous."
@@ -139,8 +144,8 @@ ctaFinal:
   titreAccent: ELASTIC
   description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout.'
   ctaLabel: Demander une démo
-  ctaHref: /contact
-  ctaLabel2: Prendre rendez-vous
+  ctaHref: '/https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
+  ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_elastic_mini.svg
 _template: elastic

@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TitreAccent from "../components/TitreAccent.astro";
-import { recolorIcon } from "../utils/iconRecolor.js";
+import AgencesMap from "../components/AgencesMap.astro";
 import global from "../../content/global/index.json";
 import carrieres from "../../content/carrieres/index.json";
 
@@ -18,9 +18,6 @@ const BUDGETS = [
   "Pas encore défini",
 ];
 
-// Mêmes couleurs par agence que sur la page Notre histoire (accent-color-1/2/3).
-const ICON_COLOR: Record<string, string> = { Lyon: "#b3b5ee", Paris: "#f8b3a9", Toulon: "#a7e9d1" };
-const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("flag-heart", ICON_COLOR[a.ville] ?? "#a7e9d1"));
 ---
 
 <BaseLayout
@@ -57,7 +54,7 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
     <div class="container chero__inner" data-reveal>
       <p class="chero__eyebrow">Et si on parlait de vous ?</p>
       <TitreAccent
-        titre="Discutons de vos projets et trouvons ensemble la solution"
+        titre="Discutons de vos projets et élaborons ensemble la solution"
         accent="Discutons"
         as="h1"
         class="title-2 chero__title"
@@ -172,18 +169,7 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
         <p class="cvisit__sub">Discutons de vos projets ou buvons simplement un café !</p>
       </header>
 
-      <ul class="cvisit__grid" data-reveal-group>
-        {agences.map((a: { ville: string; label?: string; adresse?: string }, i: number) => (
-          <li class="cagence" data-reveal>
-            {agenceIcons[i] && <span class="cagence__icon" aria-hidden="true" set:html={agenceIcons[i]} />}
-            <h3 class="cagence__ville">{a.ville}</h3>
-            {a.label && <p class="cagence__label">{a.label.toUpperCase()}</p>}
-            {a.adresse && <p class="cagence__adresse">{a.adresse}</p>}
-          </li>
-        ))}
-      </ul>
-
-      <img class="cvisit__cactus" src="/deco/contact-cool-cactus.svg" alt="" aria-hidden="true" loading="lazy" />
+      <AgencesMap agences={agences} />
     </div>
   </section>
   </div>
@@ -225,6 +211,18 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
         offreSelect.value = hasOption ? offreParam : "Autre";
       }
       setType("projet");
+    }
+
+    // Depuis le bouton "Postuler" d'un job (ex. /contact?poste=Développeur·se Full-Stack) :
+    // onglet "Postuler" actif et poste présélectionné dans le menu déroulant.
+    const posteParam = new URLSearchParams(location.search).get("poste");
+    if (posteParam) {
+      const posteSelect = form.querySelector('select[name="poste"]');
+      if (posteSelect instanceof HTMLSelectElement) {
+        const hasPoste = [...posteSelect.options].some((o) => o.value === posteParam);
+        if (hasPoste) posteSelect.value = posteParam;
+      }
+      setType("postuler");
     }
 
     // Exemple de message adapté à l'offre (et, si connu via le lien d'origine,
@@ -398,10 +396,6 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
     overflow: hidden;
   }
   .cvisit__container { position: relative; }
-  .cvisit__cactus {
-    position: absolute; right: -64px; bottom: -20px; width: 170px; height: auto; pointer-events: none;
-  }
-  @media (max-width: 1200px) { .cvisit__cactus { display: none; } }
 
   .csep {
     height: 96px;
@@ -422,22 +416,8 @@ const agenceIcons = (agences as { ville: string }[]).map((a) => recolorIcon("fla
   .cvisit :global(.cvisit__title) { margin: 0 auto; color: #3b0800; }
   .cvisit__sub { margin: 1.5rem 0 0; font-family: var(--font-sans); font-weight: 500; font-size: 1.5rem; color: #3b0800; }
 
-  .cvisit__grid {
-    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
-  }
-  .cagence {
-    background: #fff; border: 1px solid #42140d; border-radius: 32px; padding: clamp(2rem, 3vw, 3rem);
-    display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;
-  }
-  .cagence__icon { display: block; width: 56px; height: 56px; }
-  .cagence__icon :global(svg) { width: 100%; height: 100%; }
-  .cagence__ville { margin: 0; font-family: var(--font-sans); font-weight: 500; font-size: 2rem; color: #42140d; }
-  .cagence__label { margin: 0; font-family: var(--font-sans); font-size: 1rem; color: #3b0800; }
-  .cagence__adresse { margin: 0; font-family: var(--font-body); font-size: 1.125rem; color: #3b0800; white-space: pre-line; }
-
   @media (max-width: 900px) {
     .cfields { grid-template-columns: 1fr; }
-    .cvisit__grid { grid-template-columns: 1fr; }
     .ccard__head { flex-direction: column; align-items: flex-start; }
   }
 </style>

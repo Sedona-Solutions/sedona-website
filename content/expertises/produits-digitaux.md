@@ -5,7 +5,7 @@ affichage:
   ordre: 1
   icone: uxui
   resume: Des sites et des apps beaux et puissants qui fonctionnent vraiment.
-accroche: Nous concevons et développons des expériences digitales qui résolvent de vrais problèmes utilisateurs.
+accroche: Nous concevons et développons des expériences digitales qui résolvent de réels irritants utilisateurs.
 illustration: /deco/domaine-produits-hero.svg
 tags:
   - App Mobile

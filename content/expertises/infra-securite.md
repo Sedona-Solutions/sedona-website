@@ -3,7 +3,7 @@ titre: Infra & Sécurité
 affichage:
   ordre: 3
   icone: cyber
-  resume: Des infrastructures cloud-native qui s'adaptent à la demande et sécurisées.
+  resume: Des infrastructures cloud-native sécurisées qui s'adaptent à la demande.
 accroche: 'Nous concevons et opérons des infrastructures modernes, scalables et sécurisées, prêtes à tenir la charge.'
 illustration: /deco/domaine-infra-hero.svg
 tags:
@@ -136,3 +136,4 @@ articlesSection:
     - Sécurité
     - Keycloak
 ---
+
