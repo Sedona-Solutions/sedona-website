@@ -3,6 +3,8 @@
 Site vitrine de Sedona — ESN technologique (Paris, Lyon, Toulon).
 Stack : **Astro** (sortie statique) + **TinaCMS** (administration de contenu) + import des maquettes **Figma** via l'API.
 
+> **Proposer un article de blog** : suivez le guide [CONTRIBUTION.md](CONTRIBUTION.md).
+
 ## Démarrage
 
 ```bash
