@@ -2,9 +2,9 @@
 pillVariant: cactus
 titre: Keycloak
 eyebrow: Offres clé en main
-accroche: Sécuriser vos applications avec Keycloak
+accroche: 'Sécuriser vos applications avec Keycloak, l''outil IAM adapté à votre environnement'
 accrocheAccent: Keycloak
-enBref: "Nos offres RUN\_et\_RUN+\_maintiennent votre plateforme d’authentification à jour, supervisée et sous engagement de service\_— pour que la connexion de vos collaborateurs, clients et partenaires reste un non-événement."
+enBref: "Nous intervenons sur l'audit, l'installation et la paramétrage de la solution au sein de votre système d'information. De plus, nos offres RUN\_et\_RUN+\_permettent de maintenir votre plateforme à jour de manière  supervisée et sous engagement de service. "
 illustration: /uploads/offre/keycloak-hero.svg
 heroProof:
   texte: ''
@@ -68,7 +68,7 @@ perimetre:
       eyebrow: Audit pre-RUN
       titre: On ne s’engage pas sur une plateforme qu’on ne connaît pas
       titreAccent: s’engage pas
-      intro: 'Avant de reprendre l’exploitation, nous réalisons un audit de reprise. Son objectif est simple : vérifier que votre environnement Keycloak permet d’appliquer en toute sécurité les mises à jour, la supervision et les interventions sous SLA que nous nous engageons à tenir.'
+      intro: 'Avant de reprendre l’exploitation, nous réalisons un audit de reprise & paramétrage. Son objectif est simple : vérifier que votre environnement Keycloak permet d’appliquer en toute sécurité les mises à jour, la supervision et les interventions sous SLA que nous nous engageons à tenir.'
       items:
         - icone: ia-generative
           titre: Plateforme Keycloak
@@ -79,7 +79,7 @@ perimetre:
         - icone: cloud-migration
           titre: Architecture & hébergement
           points:
-            - 'Mode de déploiement : VM, conteneurs, Kubernetes, cloud'
+            - 'Mode de déploiement : VM, conteneurs, Kubernetes, cloud (partenaires)'
             - 'BDD, performances, redondance, sauvegardes et restauration'
             - Prérequis aux mises à jour et redémarrages contrôlés
         - icone: cyber
@@ -206,26 +206,28 @@ plans:
       icone: illus_audit
       points:
         - 'Mises à jour Keycloak, versions mineures et majeures'
-        - Prototype fonctionnelPatchs de sécurité et veille vulnérabilités
+        - Prototype fonctionnel. Patchs de sécurité et veille sur les vulnérabilités
         - 'Support et diagnostic, intervention niveau 3'
         - Conseil IAM et onboarding d’applications
       ctaLabel: Choisir cette offre
       note: Abonnement mensuel
     - categorie: OFFRE KEYCLOAK
-      titre: RUN+/RUN PREMIUM
+      titre: RUN+/RUN PREMIUM (déploiement en cours)
       texte: 'Ajoutez une supervision temps réel, une astreinte et des SLA renforcés pour garantir la disponibilité de votre SSO.'
       icone: illus_maintenance
       points:
         - 'L’offre RUN, avec en plus : '
         - Supervision temps réel des instances Keycloak
-        - 'Alerting proactif sur les anomalies : perf, erreurs, dispo'
+        - 'Alerting proactif sur les anomalies : performances, erreurs, disponibilités'
         - Prise en charge des incidents critiques hors heures ouvrées
         - ' Gestion de crise, rapports d’incident (RCA) et actions préventives'
       ctaLabel: Choisir cette offre
       note: Abonnement mensuel
       highlight: true
 temoignage:
-  citation: 'Avec Sedona FORGE, nous avons complètement refondu notre portail client, en remplaçant l''ancienne technologie par les dernières innovations. Après un travail documentaire avec BRIEFF, les experts techniques ont rapidement livré un portail fonctionnel, que nous adaptons facilement selon les besoins métiers, sans contraintes ni coûts supplémentaires.'
+  citation: |-
+    Avec les équipes Sedona, nous avons pu installer et paramétrer notre Keycloak On Premise de manière rapide et en toute confiance. Le consultant Sedona a compris rapidement nos inquiétudes, a réalisé un audit sur les impacts et rédigé ses recommandations liées à notre contexte (population cible,, les applications concernées, les flux existants etc..)
+    Nous avons souscrit par la suite à l'offre RUN qui nous permet de suivre les évolutions de notre solution et de nous assurer que celle-ci est toujours à jour.  
   role: 'Directeur des Systèmes d''Information, d''un client grand compte'
 ctaFinal:
   titre: Prêt à tester KEYCLOAK ?

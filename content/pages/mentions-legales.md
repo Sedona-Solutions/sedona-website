@@ -14,7 +14,7 @@ de **123 382,12 €**.
 * **RCS** : PARIS 420531212
 * **SIREN / SIRET** : 420 531 212 / 42053121200066
 * **N° de TVA intracommunautaire** : FR08420531212
-* **Téléphone** : \[numéro]
+* **Téléphone** : 01 44 94 89 90
 * **Adresse e-mail** : [contact@sedona.fr](mailto:contact@sedona.fr)
 
 **Directeur de la publication** : Jean Michel DELZOPPO, en sa qualité de
@@ -24,11 +24,18 @@ Président Directeur Général.
 
 Le site est hébergé par :
 
-**\[Nom de l'hébergeur]**
-\[Adresse complète de l'hébergeur]
-\[Téléphone de l'hébergeur]
+GitHub, Inc., 
 
-## Propriété intellectuelle
+88 Colin P. Kelly Jr. Street, San Francisco, 
+
+CA 94107, USA
+
+
+Confidentialité
+
+GitHub collecte les adresses IP qui sont transférées hors de l’UE, en s’appuyant sur le Data Privacy Framework.
+
+Propriété intellectuelle
 
 L'ensemble des contenus présents sur le site sedona.fr (textes, images,
 illustrations, logos, icônes, vidéos, éléments graphiques, charte, code et

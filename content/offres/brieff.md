@@ -2,7 +2,7 @@
 pillVariant: ovni
 titre: Brieff
 eyebrow: Offres clé en main
-accroche: 'Lancez vos projets 10x plus vite, avec Brieff'
+accroche: 'Lancez vos projets 10x plus vite, avec Brieff, concevez vos documents projets avec des agents IA dédiés basés sur la méthode B-MAD.'
 enBref: 'BRIEFF rassemble des agents IA dans une salle virtuelle, utilise vos sources, crée vos livrables, détecte les incohérences et suit chaque décision.'
 illustration: /uploads/offre/illustration-brieff-meetingroom.png
 heroProof:
