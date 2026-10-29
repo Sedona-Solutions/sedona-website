@@ -153,14 +153,8 @@
     "titre": "On recrute 5 profils !",
     "titreAccent": "5 profils",
     "titreCouleur": "cactus",
-    "intro": "Tous nos postes sont ouverts en full remote ou hybride depuis nos bureaux.",
+    "intro": "Tous nos postes sont ouverts en full remote ou hybride depuis nos bureaux (Paris, Toulon, Lyon)",
     "items": [
-      {
-        "titre": "Product Designer (UX/UI) Senior",
-        "texte": "Vous concevez des parcours et des interfaces pour nos clients, du cadrage jusqu'au design system.",
-        "lieu": "Paris, Lyon ou remote",
-        "contrat": "CDI"
-      },
       {
         "titre": "Développeur·se Full-Stack",
         "texte": "Vous intervenez sur des projets clients variés, du back au front, avec une vraie autonomie technique.",
@@ -170,7 +164,7 @@
       {
         "titre": "Ingénieur·e DevOps / Cloud",
         "texte": "Vous industrialisez et sécurisez les infrastructures de nos clients sur des environnements cloud exigeants.",
-        "lieu": "Remote",
+        "lieu": "Remote (Paris)",
         "contrat": "CDI"
       },
       {
@@ -178,12 +172,6 @@
         "texte": "Vous accompagnez nos clients sur leurs projets data et IA, du cadrage à la mise en production.",
         "lieu": "Paris ou remote",
         "contrat": "CDI"
-      },
-      {
-        "titre": "Stage — UX Research",
-        "texte": "Vous participez aux études utilisateurs et à la restitution des insights auprès des équipes produit.",
-        "lieu": "Paris",
-        "contrat": "Stage"
       }
     ]
   },
@@ -194,13 +182,13 @@
     "titreCouleur": "red-rock",
     "items": [
       {
-        "texte": "MacBook Pro + budget matériel"
+        "texte": "Budget matériel"
       },
       {
-        "texte": "Pack full remote (hébergement, transport, coworking)"
+        "texte": "Pack full remote (possibilité de Remote)"
       },
       {
-        "texte": "Carte restaurant Swile"
+        "texte": "Ticket restaurant"
       },
       {
         "texte": "Afterworks, apéros, team buildings réguliers"
@@ -212,13 +200,10 @@
         "texte": "13 jours de RTT (en moyenne)"
       },
       {
-        "texte": "Mutuelle Alan Green"
-      },
-      {
         "texte": "Conférences, formations, meetups"
       },
       {
-        "texte": "Prime de vacances Syntec"
+        "texte": "Une belle équipe accueillante"
       }
     ]
   },
@@ -252,10 +237,10 @@
   },
   "gallery": {
     "eyebrow": "La vie chez Sedona",
-    "titre": "Plus qu'une équipe, une même tribu",
+    "titre": "Plus qu'une équipe, une même tribu, une même passion !",
     "titreAccent": "tribu",
     "titreCouleur": "sunshine",
-    "intro": "Séminaires, afterworks improvisés, pair programming, meetups internes... On bosse dur et on s'amuse !",
+    "intro": "Séminaires, afterworks improvisés, Jeu de stimulation (programme), meetups internes... On bosse dur et on s'amuse !",
     "photos": [
       "/uploads/histoire/photo-1.png",
       "/uploads/histoire/photo-2.png",

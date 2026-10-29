@@ -5,5 +5,5 @@ intro: 'Une ESN à taille humaine, née de la conviction que la technologie n''a
 ---
 
 Depuis plus de 28 ans, Sedona accompagne ses clients dans leurs projets
-technologiques les plus exigeants. De Paris à Lyon et Toulon, notre tribu
-réunit des passionnés de la techno, de la donnée et de l'infrastructure.
+technologiques les plus exigeants. De Paris à Lyon en passant par Toulon, notre tribu
+réunit des passionnés de la technologie, de l'IA et de l'infrastructure.

@@ -73,7 +73,7 @@
   "stats": [
     {
       "valeur": "28+",
-      "label": "années d'expérience dans le service"
+      "label": "années d'expérience dans le service et dans de belles réalisations"
     },
     {
       "valeur": "200+",
@@ -81,7 +81,7 @@
     },
     {
       "valeur": "120+",
-      "label": "collaborateurs sur tout le territoire"
+      "label": "collaborateurs en France"
     }
   ],
   "statsCta": {
@@ -92,35 +92,35 @@
     "titre": "Nos expertises au service de vos métiers",
     "titreAccent": "service",
     "titreCouleur": "red-rock",
-    "intro": "De la conception produit à l'infrastructure critique — nous maîtrisons toute la chaîne de valeur."
+    "intro": "De la conception produit à l'infrastructure critique nous maîtrisons toute la chaîne de valeur."
   },
   "offresSection": {
     "titre": "Nos offres clé en main",
     "titreAccent": "offres",
     "titreCouleur": "cactus",
-    "intro": "Elles sont déjà prêtes à s'intégrer dans vos projets. Et vous ?",
+    "intro": "Elles sont déjà prêtes à s'intégrer dans vos projets. Et vous ? Vous souhaitez renforcer la sécurité de vos applications, produire de la documentation fonctionnelle assistée ou bénéficier de l'expérience d'une équipe dédiée avec l'aide de l'IA. Nos offres sont faites pour vous !",
     "offres": [
       {
         "titre": "Brieff",
-        "accroche": "Lancez vos projets 10x plus vite",
+        "accroche": "Un produit IA complet qui vous permet de créer votre document projet avant de vous lancer sur le développement proprement dit !",
         "ctaHref": "/offres/brieff",
         "illustration": "/deco/illus_brieff.svg"
       },
       {
         "titre": "Keycloak",
-        "accroche": "Sécuriser vos applications sans réinventer la roue",
+        "accroche": "Sécuriser vos applications et vos accès sans réinventer la roue. Fédérer vos identité dans un socle unique... qui est en plus OpenSource !",
         "ctaHref": "/offres/keycloak-run",
         "illustration": "/deco/illus_keycloak.svg"
       },
       {
         "titre": "IA Forge",
-        "accroche": "Notre accélérateur pour passer du prototype IA à la production",
+        "accroche": "Une équipe d'experts, un brin d'IA et un projet disponible plus rapidement. Confier la réalisation de vos projets (web ou mobile) à une équipe d'experts qui à l'aide de l'IA vous délivrera votre application dans un temps record  !",
         "ctaHref": "/offres/ia-forge",
         "illustration": "/deco/illus_IA_Forge.svg"
       },
       {
         "titre": "Elastic",
-        "accroche": "Vos données exploitables en temps réel avec une stack taillée sur-mesure",
+        "accroche": "Une offre complète autour de la suite ELK pour gérer vos besoins en termes de recherche et d'analyse de vos clients. Du vrai \"sur mesure\" Open source !",
         "ctaHref": "/offres/elastic",
         "illustration": "/deco/illus_Elastic.svg"
       }
@@ -134,13 +134,13 @@
     "projetsMisEnAvant": []
   },
   "temoignagesSection": {
-    "titre": "Nos clients parlent de nous",
+    "titre": "Nos clients parlent de nous (et en bien!)",
     "titreAccent": "clients",
     "titreCouleur": "sunshine",
     "intro": "Un client satisfait est notre seul vrai indicateur de réussite.",
     "temoignages": [
       {
-        "citation": "J'ai choisi Sedona en raison d'une expérience antérieure positive. Bien que les équipes aient changé depuis 15 ans, j'ai retrouvé l'ADN de Sedona dans les nouveaux collaborateurs.",
+        "citation": "J'ai choisi Sedona en raison d'une expérience antérieure positive. Bien que les équipes aient changé depuis 15 ans, j'ai retrouvé l'ADN de Sedona dans leur gestion du projet et dans leur écoute permanente.",
         "auteur": "France Allègre",
         "role": "Directrice Générale de La Cigale",
         "avatar": "/uploads/articles/avatar-france-a.png"
@@ -166,6 +166,7 @@
         "logo": "/uploads/clients/white/m6_logo.svg"
       },
       {
+        "actif": false,
         "nom": "Universal Music Group",
         "logo": "/uploads/clients/white/universal-music.svg"
       },
@@ -174,6 +175,7 @@
         "logo": "/uploads/clients/white/nespresso_logo.svg"
       },
       {
+        "actif": false,
         "nom": "Orange",
         "logo": "/uploads/clients/white/orange_logo.svg"
       },
@@ -205,6 +207,7 @@
         "logo": "/uploads/clients/dark/societe_generale_logo.svg"
       },
       {
+        "actif": false,
         "nom": "BNP Paribas",
         "logo": "/uploads/clients/white/bnp-paribas.svg"
       },
@@ -249,6 +252,7 @@
         "logo": "/uploads/clients/dark/mutuelle_gsmc_logo.svg"
       },
       {
+        "actif": false,
         "nom": "SFR",
         "logo": "/uploads/clients/dark/sfr_logo.svg"
       },

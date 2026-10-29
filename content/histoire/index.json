@@ -12,7 +12,7 @@
   "manifeste": {
     "eyebrow": "Notre manifeste",
     "paragraphes": [
-      "Jean-Michel, issu du commerce, a vu comment la tech traite souvent clients et équipes comme des chiffres. Juliette, psychologue, observe ce monde en se concentrant d'abord sur les personnes. \nUn voyage à Sedona, en Arizona, donnera son nom à l'aventure — et surtout un cap. On s'est retrouvé sur un constat simple : Pourquoi les sociétés de conseil sont-elles si peu humaines ? \nOn a bâti SEDONA autour de cette question. Une entreprise de conseil et tech à visage humain, où l'on conçoit des produits et services dont on est fiers — non pour livrer vite et passer au suivant, mais pour accompagner et faire durer. 25 ans plus tard, certains clients sont toujours là. Parce qu'on ne vend ni des jours-homme ni des promesses ! Avant chaque projet, on se pose deux questions : est-ce qu'on sait vraiment le faire ? est-ce qu'on est fier de le faire ? — et on s'y tient."
+      "Jean-Michel, issu du commerce, a vu comment la tech traite souvent clients et équipes comme de simples chiffres. Juliette, psychologue, observe ce monde en se concentrant d'abord sur les personnes. \nUn voyage à Sedona, en Arizona, donnera son nom à l'aventure - et surtout un cap avec un constat simple : Pourquoi les sociétés de conseil sont-elles si peu humaines ? \nOn a bâti SEDONA autour de cette question. Une entreprise de conseil et tech à visage humain, où l'on conçoit des produits et services dont on est fiers non pour livrer vite et passer au suivant, mais pour accompagner et faire durer. 28 ans plus tard, certains clients sont toujours là. Parce qu'on ne vend ni des jours-hommes ni des promesses ! Avant chaque projet, on se pose deux questions : est-ce qu'on sait vraiment le faire ? est-ce qu'on est fier de le faire ? — et on s'y tient."
     ],
     "signatureRole": "Les co-fondateurs",
     "signatureNom": "Jean-Michel et Juliette",
@@ -37,19 +37,19 @@
       {
         "annee": "2014",
         "titre": "Trois métiers prennent un nom",
-        "texte": "West, Sedona Solutions et Zest innovation structurent nos savoir-faire.",
+        "texte": "West (notre agence Communication), Sedona Solutions (ESN) et Zest innovation (Evènement Innovation) structurent nos savoir-faire.",
         "stat": ""
       },
       {
         "annee": "2015",
         "titre": "Direction le Sud",
-        "texte": "Ouverture du bureau de Toulon, au plus près de nouveaux talents.",
+        "texte": "Ouverture du bureau de Toulon, au plus près de nouveaux talents avec une équipe constituée d'experts et .. de notre CTO.",
         "stat": ""
       },
       {
         "annee": "2016",
         "titre": "Sedona rencontre RedShift",
-        "texte": "On grandit par rencontres, pas par absorptions.",
+        "texte": "Une belle rencontre entre deux spécialiste mobiles, une volonté commune de faire grandir notre expertise auprès de nos clients.",
         "stat": ""
       },
       {
@@ -73,7 +73,7 @@
       {
         "annee": "Aujourd'hui",
         "titre": "L'IA, pour de vrai",
-        "texte": "Intégrée à nos projets clients comme au quotidien des équipes — utile, jamais gadget.",
+        "texte": "Intégrée à nos projets clients comme au quotidien des équipes, utile et jamais gadget.",
         "stat": "120 collaborateurs / 14 M€ CA"
       }
     ]
@@ -112,46 +112,42 @@
     "ceQuOnFait": [
       {
         "titre": "Du 100% sur-mesure.",
-        "texte": "Votre projet ne ressemblera à aucun autre — c'est tout l'intérêt de travailler avec nous.\""
+        "texte": "Votre projet ne ressemblera à aucun autre, c'est tout l'intérêt de travailler avec nous."
       },
       {
         "titre": "Concevoir pour les utilisateurs",
-        "texte": "On conçoit d'abord pour les gens qui utilisent le produit, pas pour le comité qui le valide ;)"
+        "texte": "On conçoit d'abord pour les gens qui utilisent le produit, pas pour le comité qui le valide ;). Notre approche UX/UI est aussi là pour vous comprendre"
       },
       {
         "titre": "Challenger sur vos idées !",
-        "texte": "Avec bienveillance, promis. On vous dit quand une idée nous semble risquée — on ne vous dira pas oui à tout, juste pour vous faire plaisir."
+        "texte": "Avec bienveillance, promis. On vous dit quand une idée nous semble risquée. On ne vous dira pas oui à tout, juste pour vous faire plaisir."
       },
       {
         "titre": "Travailler dans la durée",
-        "texte": "On construit des relations qui durent des années, pas des missions qu'on finit au plus vite. Certains de nos clients sont là depuis plus de 10 ans et on connaît leurs contraintes métier par cœur."
+        "texte": "On construit des relations qui durent des années, pas des missions qu'on finit au plus vite. Certains de nos clients sont à nos côtés  depuis plus de 10 ans et on connaît leurs contraintes métier par cœur, on connait leurs organisations."
       },
       {
         "titre": "Refuser certains projets",
-        "texte": "Pas par caprice — parce qu'on préfère vous dire non maintenant que vous décevoir plus tard."
+        "texte": "Pas par caprice mais parce qu'on préfère vous dire \"non\" maintenant plutôt que vous décevoir plus tard."
       }
     ],
     "ceQuOnNeFaitPasTitre": "Ce qu'on ne fait pas",
     "ceQuOnNeFaitPas": [
       {
         "titre": "Travailler gratuitement",
-        "texte": "Comme vous, on ne vit pas d’amour et d’eau fraiche :)"
+        "texte": "Comme vous, on ne vit pas d’amour et d’eau fraiche :) (enfin pas encore !)"
       },
       {
         "titre": "Promettre la lune pour signer",
-        "texte": "... puis livrer un caillou. On ne vous dira jamais oui à tout juste pour décrocher le contrat."
+        "texte": "... puis livrer un caillou. On ne vous dira jamais oui à tout simplement pour décrocher un contrat."
       },
       {
         "titre": "Sortir un projet pour hier !",
-        "texte": "Nous sommes rapides mais nous ne sommes pas des magiciens ;)"
+        "texte": "Nous sommes rapides mais nous ne sommes pas des magiciens ;) L'IA nous aide... un peu mais nous restons lucides en ses capacités."
       },
       {
         "titre": "Brader la qualité pour tenir un délai",
         "texte": "Un délai intenable produit toujours une dette qu'on paie plus tard. On ajuste le périmètre avant de sacrifier la qualité du projet."
-      },
-      {
-        "titre": "Sous-traiter en silence",
-        "texte": "Si on ne maîtrise pas, on vous le dit — et on vous recommande quelqu'un qui maîtrise."
       }
     ]
   },

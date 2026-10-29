@@ -4,7 +4,7 @@ titre: Keycloak
 eyebrow: Offres clé en main
 accroche: 'Sécuriser vos applications avec Keycloak, l''outil IAM adapté à votre environnement'
 accrocheAccent: Keycloak
-enBref: "Nous intervenons sur l'audit, l'installation et la paramétrage de la solution au sein de votre système d'information. De plus, nos offres RUN\_et\_RUN+\_permettent de maintenir votre plateforme à jour de manière  supervisée et sous engagement de service. "
+enBref: "Nous intervenons sur l'audit, l'installation et la paramétrage de la solution au sein de votre système d'information. De plus, nos offres RUN\_et\_RUN+\_permettent de maintenir votre plateforme à jour de manière supervisée et avec un engagement de service fort. "
 illustration: /uploads/offre/keycloak-hero.svg
 heroProof:
   texte: ''
@@ -30,37 +30,39 @@ etapes:
     items:
       - titre: Audit & cadrage
         texte: |
-          Analyse de l’existant et cadrage de vos besoins IAM.
+          Analyse de l’existant. Cartographie de vos applications, recueil de vos besoins IAM. Etude des parcours et protocoles envisagés (MFA, OpenId, SAML ..). Recommandations sur les trajectoires à appliquer suivant vos contraintes et priorités. 
         icone: ''
       - titre: Installation
         texte: |
-          Déploiement de la plateforme, on-premise ou cloud.
+          Mise en place d'un environnement “Sand Box” afin de valider la pertinence de la solution installée par nos soins.  Déploiement de la plateforme, “on-premise” ou cloud (partenaires CleverCloud et CloudIAM).
       - titre: Paramétrage & intégration
         texte: |
-          Realms, clients, flows d’authentification, annuaires et applications.
+          Mise en place des royaumes (Realms), implémentation des flows d’authentification, interconnexion avec les annuaires et applications existantes.
   apres:
     label: Après la production
     items:
       - titre: Audit pre-RUN
         texte: |
-          Vérification que la plateforme est saine, supportable et maintenable dans la durée.
+          Nous nous assurons que votre environnement est compatible avec notre environnement RUN pour assurer la maintenabilité du système dans la durée.
         icone: audit-data
         tag: Prérequis
       - titre: Keycloak RUN
         texte: |
-          Maintien en conditions opérationnelles : mises à jour, patchs, support et incidents en heures ouvrées.
+          Maintien en conditions opérationnelles de la solution Keycloak que nous avons installé ou qui a été pré-audité par nos soins : mises à jour, patchs, support et incidents en heures ouvrées. Mise en place d'un système d'interventions au forfait ou sous la forme de tickets. 
         icone: rocket
         tag: Socle
       - titre: Keycloak RUN+/RUN PREMIUM
         texte: |
-          Tout RUN, plus la supervision temps réel, l’alerting proactif et l’astreinte sous SLA renforcés.
+          Tout RUN, mais en rajoutant la supervision en “temps réel”, l’alerting proactif et l’astreinte avec des SLA renforcés.
+
+          **Cette offre sera disponible au premier trimestre 2027**
         icone: bookmark-favorite
         tag: Premium
         highlight: true
 incoherence:
   eyebrow: Un partage des responsabilités
   titre: Nous opérons Keycloak. Vous gardez la main sur l’infra.
-  texte: "Le périmètre est clair : Keycloak est notre responsabilité (versions, configuration, sécurité, incidents). Serveurs, réseau et base restent chez vous ou votre hébergeur, y compris CleverCloud.\n\n**Les deux modèles de déploiement sont couverts :**\_Keycloak on-premise\_(VM, Kubernetes, bare-metal) et\_Keycloak managé ou SaaS.\n"
+  texte: "Le périmètre est clair : Keycloak est notre responsabilité (versions, configuration, sécurité, incidents). Serveurs, réseau et base restent chez vous ou votre hébergeur, y compris CleverCloud ou CloudIAM.\n\n**Les deux modèles de déploiement sont couverts :**\_Keycloak on-premise\_(VM, Kubernetes, bare-metal) et\_Keycloak managé ou SaaS.\n"
   illustration: /uploads/offre/keycloak-responsability.svg
 perimetre:
   tabs:
@@ -202,7 +204,10 @@ plans:
   items:
     - categorie: OFFRE KEYCLOAK
       titre: RUN
-      texte: Déléguez l’exploitation de Keycloak à des experts et gardez un SSO fiable au quotidien
+      texte: |-
+        Déléguez l’exploitation de Keycloak à des experts et gardez un SSO fiable au quotidien. Une maintenance en conditions opérationnelles qui se décline sous deux modes : 
+        - Une gestion par ticket
+        - Un mode forfaitaire
       icone: illus_audit
       points:
         - 'Mises à jour Keycloak, versions mineures et majeures'
@@ -213,7 +218,9 @@ plans:
       note: Abonnement mensuel
     - categorie: OFFRE KEYCLOAK
       titre: RUN+/RUN PREMIUM (déploiement en cours)
-      texte: 'Ajoutez une supervision temps réel, une astreinte et des SLA renforcés pour garantir la disponibilité de votre SSO.'
+      texte: |-
+        Ajoutez une supervision temps réel, une astreinte et des SLA renforcés pour garantir la disponibilité de votre SSO.
+        Cette offre sera disponible au premier trimestre 2027
       icone: illus_maintenance
       points:
         - 'L’offre RUN, avec en plus : '
@@ -226,13 +233,16 @@ plans:
       highlight: true
 temoignage:
   citation: |-
-    Avec les équipes Sedona, nous avons pu installer et paramétrer notre Keycloak On Premise de manière rapide et en toute confiance. Le consultant Sedona a compris rapidement nos inquiétudes, a réalisé un audit sur les impacts et rédigé ses recommandations liées à notre contexte (population cible,, les applications concernées, les flux existants etc..)
+    Avec les équipes Sedona, nous avons pu installer et paramétrer notre Keycloak "On Premise" de manière rapide et en toute confiance. Le consultant Sedona a compris rapidement nos inquiétudes, a réalisé un audit sur les impacts et rédigé ses recommandations liées à notre contexte (population cible, applications concernées, flux existants etc..)
     Nous avons souscrit par la suite à l'offre RUN qui nous permet de suivre les évolutions de notre solution et de nous assurer que celle-ci est toujours à jour.  
   role: 'Directeur des Systèmes d''Information, d''un client grand compte'
 ctaFinal:
   titre: Prêt à tester KEYCLOAK ?
   titreAccent: KEYCLOAK ?
-  description: 'Décrivez-nous votre environnement Keycloak et vos contraintes : nous vous proposerons l''offre la plus adaptée.'
+  description: |-
+    Décrivez nous votre environnement Keycloak et vos contraintes : nous vous proposerons l'offre la plus adaptée.
+    Vous cherchez à optimiser votre gestion d'identités, vous cherchez à changer votre outil actuel ? Nos spécialistes peuvent répondre à vos questions.
+    N'hésitez pas à prendre rendrez vous par le bouton ci-dessous. 
   ctaLabel: Prendre rendez-vous
   ctaHref: 'https://outlook.office.com/book/RDVOFFREKEYCLOAK@sedona.fr/'
   ctaLabel2: Parlons de votre projet

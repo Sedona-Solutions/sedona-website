@@ -2,8 +2,8 @@
 pillVariant: ovni
 titre: Brieff
 eyebrow: Offres clé en main
-accroche: 'Lancez vos projets 10x plus vite, avec Brieff, concevez vos documents projets avec des agents IA dédiés basés sur la méthode B-MAD.'
-enBref: 'BRIEFF rassemble des agents IA dans une salle virtuelle, utilise vos sources, crée vos livrables, détecte les incohérences et suit chaque décision.'
+accroche: 'Lancez vos projets 10x plus vite, avec Brieff, concevez vos documents projets avec des agents IA dédiés basés sur la méthode B-MAD. Moins d''incohérence dans la documentation, c''est du temps gagné pour le développement.'
+enBref: 'BRIEFF rassemble des agents IA dans une salle virtuelle, qui utilisent vos sources existantes, créent vos livrables, détectent les incohérences et suivent chaque décision. Vous êtes l''acteur et le coordinateur des échanges avec les agents pour avoir toujours votre mot à dire.'
 illustration: /uploads/offre/illustration-brieff-meetingroom.png
 heroProof:
   avatars:
@@ -64,16 +64,17 @@ etapes:
   items:
     - titre: Analyse
       texte: |
-        Brainstorm, recherche, brief produit et fil rouge narratif à partir de vos sources.
+        Brainstorm, recherche, brief produit et fil rouge narratif à partir de vos sources, les agents IA vous proposent une étude détaillée de votre idée ou des fonctionnalités que vous souhaitez approfondir.
     - titre: Planning
       texte: |
-        PRD, spec UX/UI, maquettes HTML cliquables et storyboard interactif.
+        Rédaction automatique des PRD, spécifications techniques, création de maquettes réalisées à partir de vos User Stories & Epics (maquettes HTML cliquables et storyboard interactif).
     - titre: Conception
       texte: |
-        Architecture, epics, stories, plan de test et cahier de recette.
+        Architecture, epics, stories, plan de test et cahier de recette. Possibilité de faire de la retro-documentation à partir de projets existants.
     - titre: Implémentation
       texte: |
-        Sprints, handoff dev et intégration du code, prêts pour Claude Code ou Cursor.
+        Gestion des Sprints, handoff dev et intégration du code, prêts pour Claude Code.
+      resultat: Une documentation claire et précise.
 incoherence:
   eyebrow: Détection d'incohérences
   titre: L'erreur qui explose en recette. Détectée en 90 secondes par Iris.

@@ -1,7 +1,9 @@
 ---
 titre: L'audioguide mobile réinventé
+accent: sunshine
 client: Château de Versailles
 couverture: /uploads/projets/versailles/chateau-de-versailles-cover.png
+accroche: 'Transformer la visite du monument le plus emblématique de France grâce à des applications mobiles iOS et Android riches, élégantes et accessibles à 10 millions de visiteurs annuels.'
 bannerDetail: /uploads/projets/versailles/banner-versailles.png
 tags:
   - Média
@@ -10,18 +12,7 @@ tags:
   - Backend
   - Kotlin
   - SwiftUI
-accroche: 'Transformer la visite du monument le plus emblématique de France grâce à des applications mobiles iOS et Android riches, élégantes et accessibles à 10 millions de visiteurs annuels.'
 annee: 2016 - Aujourd'hui
-accent: sunshine
-technos:
-  - nom: SwiftUI
-    logo: /technos/swiftui.svg
-  - nom: Kotlin
-    logo: /technos/kotlin.svg
-  - nom: Symfony
-    logo: /technos/symfony.svg
-  - nom: Elastic Stack
-    logo: /technos/elastic.svg
 contexte:
   eyebrow: Le contexte
   titre: Digitaliser 400 ans d'histoire
@@ -29,15 +20,15 @@ contexte:
   media: /uploads/projets/versailles/contexte.png
   colonnes:
     - titre: Le défi
-      texte: 'Offrir à chacun un compagnon de visite personnalisé, capable de raconter l''histoire des lieux tout en s''adaptant aux besoins de publics très variés — familles, scolaires, passionnés d''histoire, touristes pressés.'
+      texte: 'Offrir à chacun un compagnon de visite personnalisé, capable de raconter l''histoire des lieux tout en s''adaptant aux besoins de publics très variés : familles, scolaires, passionnés d''histoire, touristes pressés.'
     - titre: L'enjeu
-      texte: 'Remplacer les audioguides traditionnels (lourds, peu personnalisables, coûteux à maintenir) par une solution mobile native. Enrichir la visite avec des cartes interactives, des parcours thématiques, des notifications contextuelles et des contenus multimédias premium.'
+      texte: 'Remplacer les audioguides traditionnels (lourds, peu personnalisables, coûteux à maintenir) par une solution mobile native. Enrichir la visite avec des cartes interactives, des parcours thématiques, des notifications contextuelles et des contenus multimédias premium et pourquoi pas utiliser l''IA pour agrémenter encore plus la visite. '
     - titre: Notre rôle
-      texte: 'Sedona a été choisi pour concevoir et développer les applications iOS et Android, ainsi que le back-office de gestion de contenu. Une collaboration continue depuis 2016, avec des évolutions régulières pour enrichir l''expérience et intégrer de nouveaux services.'
+      texte: 'Sedona a été choisi pour concevoir et développer les applications natives iOS et Android, ainsi que le back-office de gestion de contenu. Une collaboration continue depuis 2016, avec des évolutions régulières pour enrichir l''expérience et intégrer de nouveaux services (Wallet, Cartographie, IA)'
 defis:
   eyebrow: Défis UX & techniques
   titre: Concevoir pour des millions de visiteurs aux profils variés
-  intro: 'Créer une application d''audioguide mobile, c''est résoudre des problèmes UX complexes : navigation indoor sans GPS, multilinguisme, accessibilité, offline-first pour pallier la couverture réseau aléatoire, et personnalisation des parcours selon l''âge et les centres d''intérêt.'
+  intro: 'Créer une application d''audioguide mobile, c''est résoudre des problèmes UX complexes : navigation indoor sans GPS, multilinguisme, accessibilité, offline-first pour pallier la couverture réseau aléatoire, et personnalisation des parcours selon l''âge et les centres d''intérêt. Présenter de manière didactique et ergonomique des œuvres dans un contexte historique et adapté aux différents usagers.'
   media: /uploads/projets/versailles/defis.png
   points:
     - titre: Cartographie indoor et géolocalisation sans GPS
@@ -64,10 +55,11 @@ stats:
 approche:
   eyebrow: Notre solution
   titre: Applications natives et back-office sur mesure
+  intro: 'Nous sommes spécialistes dans le développement natif sur iOS et Android. C''est la possibilité de proposer des services adaptés, performants et extrêmement véloces.'
   note: L'équipe design d'Apple a salué le design de l'app ;)
   points:
     - titre: Design élégant et épuré
-      texte: 'Interface minimaliste inspirée du château, contenus historiques mis en valeur sans surcharge.'
+      texte: 'Interface minimaliste inspirée du château, contenus historiques mis en valeur sans surcharge. une compréhension immédiate pour les usagers quelque soit leurs âges ou nationalités. '
       icone: highlighter
     - titre: Accessibilité universelle
       texte: 'Support total des lecteurs d''écran (VoiceOver, TalkBack), contraste élevé, sous-titres, pictogrammes universels et parcours PMR indiqués.'
@@ -76,14 +68,24 @@ approche:
       texte: 'Mise en place d''un back-office PHP Symfony pour gérer les points d''intérêt, les parcours et les traductions, pour un contenu 100% disponible hors-ligne.'
       icone: computeur-pc-4
     - titre: Parcours et contenus géolocalisés
-      texte: 'Cartes interactives du domaine, points d''intérêt et itinéraires thématiques pour explorer le château, les jardins et les Trianon.'
+      texte: 'Cartes interactives du domaine, points d''intérêt et itinéraires thématiques pour explorer le château, les jardins et les Trianon. '
       icone: location-pin-direction
 temoignage:
   citation: Sedona a su transformer une visite déjà exceptionnelle en une expérience numérique à la hauteur du lieu. Leur maîtrise technique et leur sens du détail ont fait toute la différence pour nos visiteurs.
   auteur: Direction du Numérique
   role: Château de Versailles
   avatar: /uploads/articles/avatar-christophe-l.png
+technos:
+  - nom: SwiftUI
+    logo: /technos/swiftui.svg
+  - nom: Kotlin
+    logo: /technos/kotlin.svg
+  - nom: Symfony
+    logo: /technos/symfony.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 galerie:
   - /uploads/projets/versailles/gallery.png
 date: 2025-09-01T00:00:00.000Z
 ---
+

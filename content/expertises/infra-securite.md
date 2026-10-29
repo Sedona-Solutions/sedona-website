@@ -15,8 +15,10 @@ ticker:
 projets:
   eyebrow: Cas concrets client
   titre: Quelques exemples d'applications
-  titreAccent: exemples
+  titreAccent: exemple
   layout: image
+  projetsMisEnAvant:
+    - projet: content/projets/Intgration-de-la-solution-Keycloak-pour-une-associtaion.md
   cartesTexte:
     - {}
 methode:

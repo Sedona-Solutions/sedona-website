@@ -5,15 +5,16 @@ affichage:
   ordre: 1
   icone: uxui
   resume: Des sites et des apps beaux et puissants qui fonctionnent vraiment.
-accroche: Nous concevons et développons des expériences digitales qui résolvent de réels irritants utilisateurs.
+accroche: 'Nous concevons et développons des expériences digitales qui résolvent de réels irritants utilisateurs. Du site Web, à l''application mobile nos experts conçoivent et réalisent des applications "sur mesure". '
 illustration: /deco/domaine-produits-hero.svg
 tags:
-  - App Mobile
+  - Application Mobile
   - UX/UI Design
   - Logiciel métier
   - Product management
-  - Design system
-  - App Web
+  - Design System
+  - Application Web
+  - Portails d'entreprise/CMS
 ticker:
   - Des sites et des apps beaux et puissants qui fonctionnent vraiment
 projets:
@@ -21,11 +22,15 @@ projets:
   titre: Quelques exemples d'applications
   titreAccent: exemples
   layout: image
+  projetsMisEnAvant:
+    - projet: content/projets/chateau-de-versailles.md
 methode:
   eyebrow: Notre méthode
   titre: Une approche éprouvée en 5 phases
   titreAccent: 5 phases
-  sousTitre: 'Nous travaillons en cycles courts et itératifs pour livrer de la valeur rapidement, tout en gardant le cap sur vos objectifs business.'
+  sousTitre: |-
+    Nous travaillons en cycles courts et itératifs pour livrer de la valeur rapidement, tout en gardant le cap sur vos objectifs business. Nous avons une approche Forfaitaire basée sur une démarche Agile ou "cycle en V" selon vos besoins. 
+    De plus en plus, l'outil Brieff est notre "compagnon" pour accélérer les phases de spécifications avec vous et fournir une documentation complète et validée par tous. 
   phases:
     - titre: Découverte & Cadrage
       texte: 'Ateliers de co-conception, interviews utilisateurs, analyse de la concurrence, découverte des problématiques métier : nous posons les fondations d''un projet réussi.'
@@ -60,11 +65,12 @@ methode:
       logo: /technos/swiftui.svg
     - nom: Kotlin
       logo: /technos/kotlin.svg
+    - nom: JAVA
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pensées pour durer
   titreAccent: solutions
-  intro: 'Nous créons des expériences digitales de qualité, centrées sur l''UX, le code propre et la durabilité.'
+  intro: 'Nous créons des expériences digitales de qualité, centrées sur l''UX, le code propre et la durabilité. Nous nous apuyons sur des partenaires de renom suivant la typologie d''expériences : Sylius pour la gestion E-commerce, Liferay pour la réalisation de portail et sites Intranet performants et sécurisés.'
   items:
     - label: Applications mobiles natives & cross-platform
       icone: mobile-phone

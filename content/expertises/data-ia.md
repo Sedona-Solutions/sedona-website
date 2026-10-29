@@ -4,15 +4,16 @@ pillWord: Data
 affichage:
   ordre: 2
   icone: data-ia
-  resume: 'Faites parler vos données, de l''extraction à la prédiction avec l''IA.'
-accroche: 'Nous vous aidons à exploiter intelligemment vos données : pour décider efficacement et automatiser ce qui mérite de l''être !'
+  resume: 'Faites parler vos données, de l''extraction à son usage par l''IA. L''IA chez Sedona c''est également 2 offres : Brieff pour gérer efficacement votre documentation projet et IA Forge qui vous met à disposition une équipe d''experts biberonnée à l''IA pour développer vos projets plus rapidement.'
+accroche: 'Nous vous aidons à exploiter intelligemment vos données : pour décider efficacement et automatiser ce qui mérite de l''être ! Nous vous accompagnons dans la définition de vos projets IA, sans obligation de technologies mais plutôt une écoute attentive de vos besoins !'
 illustration: /deco/domaine-data-hero.svg
 tags:
   - IA Générative
   - LLM Integration
   - Data Engineering
+  - Brieff
 ticker:
-  - 'Faites parler vos données, elles en ont des choses à raconter  !'
+  - 'Faites parler vos données, elles en ont des choses à raconter  ! Faites travailler vos informations, elles améliorent votre quotidien'
 projets:
   eyebrow: Exemples concrets
   titre: Comment l'IA peut transformer votre quotidien ?
@@ -23,7 +24,9 @@ projets:
     - {}
   cartesTexte:
     - titre: Assistant RH intelligent
-      texte: 'Chatbot qui répond aux questions des collaborateurs sur les congés, RTT, notes de frais, en se basant sur la base documentaire interne via RAG.'
+      texte: |-
+        Chatbot qui répond aux questions des collaborateurs sur les congés, RTT, notes de frais, en se basant sur la base documentaire interne via RAG. Utilisation de l'IA pour exploiter et classifier les CVs des candidats.
+        Gestion des parcours professionnels
       client: Acteur majeur dans la construction
     - titre: Génération de contenus marketing
       texte: 'Phase d''expérimentation rapide (2-4 semaines) pour valider l''approche technique, tester différents modèles et évaluer les performances sur un jeu de données réel.'
@@ -40,11 +43,13 @@ projets:
     - titre: Analyse de sentiments
       texte: 'Traitement automatique des avis clients, reviews produits ou mentions sociales pour mesurer la satisfaction et identifier les axes d''amélioration.'
       client: Leader mondial d'études de marché et de sondages
+    - titre: Automatisation des plannings
+      texte: L'IA permet d'automatiser l'affectation des collaborateurs sur des plannings contraints
 methode:
   eyebrow: Notre méthode
   titre: De l'idée au modèle en production
   titreAccent: modèle
-  sousTitre: 'Pas de bullshit IA : on vous dit franchement si c''est pertinent, puis on industrialise ce qui crée vraiment de la valeur.'
+  sousTitre: 'Pas de bullshit IA : on vous dit franchement si c''est pertinent, puis on industrialise ce qui créer vraiment de la valeur.'
   phases:
     - titre: Cadrage métier & faisabilité
       texte: 'Comprendre votre problématique, identifier les données disponibles, valider la faisabilité technique et définir les métriques de succès.'
@@ -76,11 +81,12 @@ methode:
       logo: /technos/superset.svg
     - nom: Power BI
       logo: /technos/powerbi.svg
+    - nom: LangChain/LangSmith
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pragmatiques et opérationnelles
   titreAccent: solutions
-  intro: Nous valorisons vos données et industrialisons des cas d'usage d'IA réellement utiles.
+  intro: 'Nous valorisons vos données et industrialisons des cas d''usage d''IA réellement utiles. Nous privilégions la mise en place de POC afin de valider mutuellement la pertinence des données et leur utilisation par l''IA. Nous sommes complètement agnostiques, nous cherchons à adapter l''outil à vos besoins et non l''inverse.'
   layout: accordion
   items:
     - label: IA Générative & Assistants Intelligents

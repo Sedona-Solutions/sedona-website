@@ -10,13 +10,14 @@ tags:
   - App web
   - UX/UI Design
   - Wordpress
-annee: 2023 - 2024
+annee: 2023 - 2026
 contexte:
   eyebrow: Le contexte
   titre: Moderniser l'expérience client d'une salle de concert emblématique
   intro: |-
     La Cigale, est l'une des salles de concert les plus emblématiques de France et elle accueille les plus grands noms de la scène musicale internationale.
     En 2024, la direction de La Cigale, menée par France Allègre, souhaitait moderniser son site web pour améliorer l'expérience client. Sedona a été choisi pour cette refonte, notamment grâce à une collaboration antérieure réussie sur le site de l'Olympia. La confiance était déjà là.
+    En 2025-2026 nous avons élargi notre prestation à la salle La boule Noire confirmant ainsi la confiance accordée depuis plusieurs année par la Directrice générale.
   media: /uploads/projets/lacigale/cigale_1.png
 defis:
   eyebrow: Défis UX & techniques
@@ -25,14 +26,14 @@ defis:
   media: /uploads/projets/lacigale/lacigale-2.png
   points:
     - titre: Parcours d'achat de billets optimisé
-      texte: 'Les visiteurs viennent avant tout pour acheter leurs places. Le parcours devait être ultra-fluide : recherche d''événement, sélection de date, choix de places, paiement sécurisé. Toute friction = abandon de panier. Intégration avec les systèmes de billetterie existants tout en offrant une UX moderne.'
+      texte: 'Les visiteurs viennent avant tout pour acheter leurs places. Le parcours devait être ultra-fluide : recherche d''événements, sélection de date, choix de places, paiement sécurisé. Toute friction = abandon de panier. Intégration avec les systèmes de billetterie existants tout en offrant une UX moderne.'
     - titre: Mise en valeur de la programmation
       texte: 'La Cigale programme des dizaines d''événements par mois : concerts, spectacles, festivals. Le site devait permettre de découvrir facilement la programmation à venir, filtrer par genre musical, partager les événements sur les réseaux sociaux, et s''inscrire aux alertes pour ses artistes préférés.'
     - titre: Experience mobile-first
       texte: |
-        La majorité des visiteurs consultent le site depuis leur smartphone, le design devait être évidemment être pensé mobile-first !
+        La majorité des visiteurs consultent le site depuis leur smartphone, le design devait être évidemment être pensé mobile-first ! En plus, le site est spécifiquement adapté aux écrans présents à l'accueil de la salle, sans modifications supplémentaires.
     - titre: Gestion des pics de trafic massifs
-      texte: Mise en place d'une infrastructure capable de supporter des pics sans ralentissement ni crash.
+      texte: Mise en place d'une infrastructure capable de supporter des pics sans ralentissement ni crash. C'est important lorsque la salle accueille des grands noms de la musique.
 stats:
   eyebrow: Impacts mesurables
   titre: 'Au-delà des chiffres, un site qui cartonne !'
