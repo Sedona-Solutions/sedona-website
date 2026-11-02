@@ -1,4 +1,6 @@
 ---
+import { matomoActif } from "../utils/analytics";
+
 const colonne1 = [
   { label: "Produits digitaux", href: "/domaines/produits-digitaux" },
   { label: "Data & intelligence artificielle", href: "/domaines/data-ia" },
@@ -15,6 +17,8 @@ const legal = [
   { label: "Mentions légales", href: "/mentions-legales" },
 ];
 const annee = 2026;
+// Lien de gestion du consentement (CNIL), affiché seulement quand Matomo est actif.
+const gererCookies = matomoActif(Astro.site);
 
 const icones = {
   facebook: `<path d="M13.06 13.3018V20H10.023V13.3018H7.5V10.5858H10.023V9.59763C10.023 5.92899 11.5357 4 14.7362 4C15.7174 4 15.9627 4.15976 16.5 4.28994V6.97633C15.8984 6.86982 15.7291 6.81065 15.1042 6.81065C14.3624 6.81065 13.9653 7.02367 13.6032 7.44379C13.2411 7.8639 13.06 8.59172 13.06 9.63314V10.5917H16.5L15.5772 13.3077H13.06V13.3018Z"/>`,
@@ -65,6 +69,12 @@ const reseaux = [
             <a href={l.href}>{l.label}</a>
           </>
         ))}
+        {gererCookies && (
+          <>
+            <span class="ftr__bar" aria-hidden="true">|</span>
+            <button type="button" class="ftr__cookies" data-gerer-cookies>Gérer les cookies</button>
+          </>
+        )}
       </nav>
     </div>
   </div>
@@ -147,15 +157,24 @@ const reseaux = [
   }
   .ftr__legal {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.85rem;
   }
-  .ftr__legal a {
+  .ftr__legal a,
+  .ftr__cookies {
     font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--color-red-rock-50);
   }
-  .ftr__legal a:hover { color: var(--color-canyon-300); }
+  .ftr__cookies {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .ftr__legal a:hover,
+  .ftr__cookies:hover { color: var(--color-canyon-300); }
   .ftr__bar { color: color-mix(in srgb, var(--color-red-rock-50) 40%, transparent); }
 
   @media (max-width: 820px) {
