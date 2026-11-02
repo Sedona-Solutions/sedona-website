@@ -4,14 +4,12 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "../components/Analytics.astro";
 import Cursor from "../components/Cursor.astro";
+import Seo from "../components/Seo.astro";
+import type { ComponentProps } from "astro/types";
 
-interface Props {
-  title: string;
-  description?: string;
-  headerBg?: string;
-}
+type Props = ComponentProps<typeof Seo> & { headerBg?: string };
 
-const { title, description = "Sedona — ESN technologique à Paris, Lyon et Toulon.", headerBg } = Astro.props;
+const { headerBg, ...seo } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,8 +25,7 @@ const { title, description = "Sedona — ESN technologique à Paris, Lyon et Tou
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Style+Script&display=swap"
     />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <Seo {...seo} />
   </head>
   <body>
     <Cursor />

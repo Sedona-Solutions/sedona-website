@@ -1,4 +1,5 @@
 import { defineConfig } from "tinacms";
+import type { Collection, TinaField } from "tinacms";
 import { ColorSwatchDropdown } from "./fields/ColorSwatchDropdown";
 import { ProjectsLayoutToggle } from "./fields/ProjectsLayoutToggle";
 import { LogoActiveToggle } from "./fields/LogoActiveToggle";
@@ -90,6 +91,57 @@ const couleurTitre = {
   options: COULEURS.filter((c) => c.value !== "none"),
 };
 
+// ---------------------------------------------------------------------------
+// SEO : groupe de champs ajouté en fin de formulaire à chaque collection qui
+// produit une page (lu par src/components/Seo.astro). Tout est facultatif :
+// vide, la page reprend son titre, son extrait/accroche et sa couverture.
+// ---------------------------------------------------------------------------
+const seoField: TinaField = {
+  type: "object",
+  name: "seo",
+  label: "SEO (référencement)",
+  description: "Facultatif. Laisser vide pour reprendre automatiquement le titre, le résumé et l'image de la page.",
+  fields: [
+    {
+      type: "string",
+      name: "titre",
+      label: "Titre pour Google (balise title)",
+      description: "50 à 60 caractères, mot-clé principal en tête. Ex. « Expert Keycloak : intégration et support — Sedona ».",
+    },
+    {
+      type: "string",
+      name: "description",
+      label: "Description pour Google (meta description)",
+      description: "140 à 160 caractères : ce que le visiteur trouvera sur la page, avec une incitation à cliquer.",
+      ui: { component: "textarea" },
+    },
+    {
+      type: "image",
+      name: "image",
+      label: "Image de partage (LinkedIn, X…)",
+      description: "Idéalement 1200 × 630 px. Si vide : image de couverture, sinon image Sedona par défaut.",
+    },
+    {
+      type: "boolean",
+      name: "noindex",
+      label: "Masquer cette page des moteurs de recherche",
+      description: "Ajoute noindex et retire la page du sitemap.",
+    },
+  ],
+};
+
+const COLLECTIONS_AVEC_SEO = new Set(["home", "expertise", "projet", "offre", "article", "page", "histoire", "carrieres"]);
+
+function avecSeo(collections: Collection[]): Collection[] {
+  return collections.map((c) => {
+    if (!COLLECTIONS_AVEC_SEO.has(c.name)) return c;
+    if ("templates" in c && c.templates) {
+      return { ...c, templates: c.templates.map((t) => ({ ...t, fields: [...t.fields, seoField] })) } as Collection;
+    }
+    return { ...c, fields: [...(c.fields ?? []), seoField] } as Collection;
+  });
+}
+
 export default defineConfig({
   branch,
   // Renseigner pour Tina Cloud ; vides = mode local (édition sur les fichiers).
@@ -106,7 +158,7 @@ export default defineConfig({
     },
   },
   schema: {
-    collections: [
+    collections: avecSeo([
       // ---------------------------------------------------------------
       // Réglages globaux (navigation, pied de page, agences, contact)
       // ---------------------------------------------------------------
@@ -1611,6 +1663,6 @@ export default defineConfig({
           },
         ],
       },
-    ],
+    ]),
   },
 });

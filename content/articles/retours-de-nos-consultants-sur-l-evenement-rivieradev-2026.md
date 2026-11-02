@@ -1,4 +1,5 @@
 ---
+categorie: BTP
 titre: 'RivieraDEV 2026 : ce qu’il faut retenir'
 date: 2026-07-16T17:22:50.429Z
 couverture: /uploads/articles/wp/riviera-dev-2026.png
@@ -9,11 +10,13 @@ extrait: |-
 auteur: Édouard L.
 avatar: /uploads/articles/collab/edouard-l.png
 vedette: true
-categorie: BTP
 tags:
   - Évènement
   - RivieraDev
 statut: Publié
+seo:
+  titre: riviera dev 2028
+  description: 'Un article très complet sur l''évènement Riviera Dev avec des interviews de nos consultants, beaucoup de choses à apprendre.'
 ---
 
 #

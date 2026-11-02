@@ -19,6 +19,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      # SITE_URL pilote canonical, sitemap ET indexation (src/utils/seo.ts) :
+      # preview.sedona.fr => robots.txt « Disallow: / » + noindex sur toutes les pages.
+      # Mise en production : passer à https://sedona.fr (et public/CNAME à sedona.fr).
       SITE_URL: https://preview.sedona.fr
     steps:
       - uses: actions/checkout@v7

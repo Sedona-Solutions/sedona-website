@@ -11,7 +11,7 @@ import Stats from "../components/home/Stats.astro";
 import p from "../../content/histoire/index.json";
 ---
 
-<BaseLayout title="Notre histoire — Sedona" description={p.hero?.intro}>
+<BaseLayout title="Notre histoire — Sedona" description={p.hero?.intro} ariane={[{ nom: "Notre histoire" }]} seo={p.seo}>
   <div class="histoire-stack">
     <Hero hero={p.hero} />
     <PhotoBand src={p.photoBand1} />

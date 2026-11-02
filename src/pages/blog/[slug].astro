@@ -6,6 +6,7 @@ import CtaFinal from "../../components/home/CtaFinal.astro";
 import ArticleCard from "../../components/blog/ArticleCard.astro";
 import Media from "../../components/Media.astro";
 import { estArticlePublie } from "../../utils/articleVisibility";
+import { introDepuisMarkdown } from "../../utils/seo";
 
 export async function getStaticPaths() {
   const items = await getCollection("article", ({ data }) => estArticlePublie(data.statut));
@@ -30,7 +31,16 @@ const tagsCommuns = reste.filter((e) => e.tags?.some((t) => a.tags?.includes(t))
 const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))].slice(0, 3);
 ---
 
-<BaseLayout title={`${a.titre} — Sedona`} description={a.extrait} headerBg="#e9b189">
+<BaseLayout
+  title={`${a.titre} — Sedona`}
+  description={a.extrait || introDepuisMarkdown(entry.body)}
+  image={a.couverture}
+  type="article"
+  article={{ publie: a.date, auteur: a.auteur, tags: a.tags }}
+  ariane={[{ nom: "Blog", chemin: "/blog/" }, { nom: a.titre }]}
+  seo={a.seo}
+  headerBg="#e9b189"
+>
   <article>
     <header class="ahead">
       <div class="container ahead__inner">

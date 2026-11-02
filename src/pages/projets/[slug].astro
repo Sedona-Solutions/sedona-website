@@ -41,7 +41,14 @@ const accentDark = ACCENT_MID[p.accent ?? "red-rock"] ?? ACCENT_MID["red-rock"];
 const approcheIcons = (p.approche?.points ?? []).map((pt) => (pt.icone ? recolorIcon(pt.icone, ac.heroBg) : null));
 ---
 
-<BaseLayout title={`${p.client ?? p.titre} — Sedona`} description={p.accroche} headerBg={ac.heroBg}>
+<BaseLayout
+  title={`${p.client ?? p.titre} — Sedona`}
+  description={p.accroche}
+  image={p.couverture ?? p.bannerDetail}
+  ariane={[{ nom: "Projets", chemin: "/projets/" }, { nom: p.client ?? p.titre }]}
+  seo={p.seo}
+  headerBg={ac.heroBg}
+>
   <div class="dark-stack">
   <!-- HERO -->
   <section class="phero">

@@ -48,7 +48,7 @@ const evenement = (await getCollection("evenement"))
   .sort((a, b) => +new Date(b.dateDebut) - +new Date(a.dateDebut))[0];
 ---
 
-<BaseLayout title="Sedona — ESN technologique à Paris, Lyon et Toulon">
+<BaseLayout title="Sedona — ESN technologique à Paris, Lyon et Toulon" organisation seo={home.seo}>
   <div class="home-stack">
     <Hero hero={home.hero} />
     <Ticker items={home.ticker} />

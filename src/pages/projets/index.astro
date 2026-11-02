@@ -31,7 +31,7 @@ const filtresVisibles = filtres.filter((fl) => fl.cat === "all" || compte(fl.cat
 const clients = home.clientsSection?.logos ?? [];
 ---
 
-<BaseLayout title="Projets — Sedona" description="Nos réalisations et études de cas client.">
+<BaseLayout title="Projets — Sedona" description="Nos réalisations et études de cas client." ariane={[{ nom: "Projets" }]}>
   <section class="phead">
     <div class="container">
       <h1 class="phead__title">

@@ -44,7 +44,13 @@ const articles =
     : tousArticles.slice(0, 3);
 ---
 
-<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.affichage?.resume}>
+<BaseLayout
+  title={`${d.titre} — Sedona`}
+  description={d.accroche ?? d.affichage?.resume}
+  image={d.illustration}
+  ariane={[{ nom: "Domaines" }, { nom: d.titre }]}
+  seo={d.seo}
+>
   <div class="dark-stack">
     <DomaineHero
       titre={d.titre}

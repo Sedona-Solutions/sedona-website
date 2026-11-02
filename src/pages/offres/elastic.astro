@@ -23,7 +23,13 @@ const pillVariant = d.pillVariant ?? "red-rock";
 const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
 ---
 
-<BaseLayout title={`${d.titre} — Sedona`} description={d.accroche ?? d.enBref}>
+<BaseLayout
+  title={`${d.titre} — Sedona`}
+  description={d.accroche ?? d.enBref}
+  image={d.illustration}
+  ariane={[{ nom: "Offres" }, { nom: d.titre }]}
+  seo={d.seo}
+>
   <div class="dark-stack">
     <Hero
       eyebrow={d.eyebrow}

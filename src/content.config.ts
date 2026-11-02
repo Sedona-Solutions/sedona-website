@@ -1,12 +1,24 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+// Groupe « SEO » saisi dans Tina (cf. avecSeo dans tina/config.ts). Tina peut écrire null
+// pour un champ vidé : nullish plutôt que optional.
+const seo = z
+  .object({
+    titre: z.string().nullish(),
+    description: z.string().nullish(),
+    image: z.string().nullish(),
+    noindex: z.boolean().nullish(),
+  })
+  .nullish();
+
 // Les collections Astro lisent les MÊMES fichiers que TinaCMS édite (dossier content/).
 // Astro = rendu statique (source de vérité), Tina = interface d'édition.
 
 const expertise = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/expertises" }),
   schema: z.object({
+    seo,
     titre: z.string(),
     accroche: z.string().optional(),
     illustration: z.string().optional(),
@@ -88,6 +100,7 @@ const expertise = defineCollection({
 const projet = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/projets" }),
   schema: z.object({
+    seo,
     titre: z.string(),
     client: z.string().optional(),
     couverture: z.string().optional(),
@@ -155,6 +168,7 @@ const projet = defineCollection({
 const article = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/articles" }),
   schema: z.object({
+    seo,
     titre: z.string(),
     date: z.coerce.date(),
     couverture: z.string().optional(),
@@ -184,6 +198,7 @@ const evenement = defineCollection({
 const offre = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/offres" }),
   schema: z.object({
+    seo,
     titre: z.string(),
     eyebrow: z.string().optional(),
     accroche: z.string().optional(),
@@ -440,6 +455,7 @@ const offre = defineCollection({
 const page = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/pages" }),
   schema: z.object({
+    seo,
     titre: z.string(),
     eyebrow: z.string().optional(),
     intro: z.string().optional(),

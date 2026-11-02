@@ -1,0 +1,107 @@
+---
+// Balises SEO du <head> : title, description, canonical, robots, Open Graph,
+// Twitter Card et données structurées JSON-LD.
+//
+// Les champs « SEO » saisis dans Tina (prop `seo`) priment sur les valeurs
+// calculées par la page (titre, extrait, couverture…).
+import { getImage } from "astro:assets";
+import { resolveUpload } from "../utils/resolveUpload.js";
+import {
+  NOM_SITE,
+  DESCRIPTION_DEFAUT,
+  IMAGE_DEFAUT,
+  TWITTER,
+  estIndexable,
+  urlCanonique,
+  resumer,
+  organisation,
+  siteWeb,
+  filAriane,
+  article as articleLd,
+  type ChampsSeo,
+  type EtapeAriane,
+  type InfosArticle,
+} from "../utils/seo";
+
+interface Props {
+  title: string;
+  description?: string | null;
+  /** Image de partage : chemin Tina (/uploads/...) ou URL absolue. */
+  image?: string | null;
+  imageAlt?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  seo?: ChampsSeo | null;
+  /** Infos de publication (type="article"). */
+  article?: InfosArticle;
+  /** Fil d'Ariane hors accueil ; la dernière étape (sans chemin) est la page courante. */
+  ariane?: EtapeAriane[];
+  /** Ajoute Organization + WebSite (page d'accueil). */
+  organisation?: boolean;
+}
+
+const props = Astro.props;
+const seo = props.seo ?? {};
+const site = Astro.site!;
+
+const titre = seo.titre?.trim() || props.title;
+const description = resumer(seo.description || props.description) ?? DESCRIPTION_DEFAUT;
+const canonique = urlCanonique(Astro.url.pathname, site);
+const type = props.type ?? "website";
+const pageNoindex = !!(seo.noindex ?? props.noindex);
+const indexable = estIndexable(site) && !pageNoindex;
+
+// Image de partage : variante JPEG 1200 px optimisée pour les fichiers de public/uploads/
+// (les originaux pèsent parfois plusieurs Mo, au-delà des limites LinkedIn/Facebook).
+let image = { url: new URL(IMAGE_DEFAUT.src, site).href, width: IMAGE_DEFAUT.width, height: IMAGE_DEFAUT.height };
+const source = seo.image || props.image;
+const meta = resolveUpload(source);
+if (meta) {
+  const img = await getImage({ src: meta, width: Math.min(1200, meta.width), format: "jpg", quality: 80 });
+  image = { url: new URL(img.src, site).href, width: Number(img.attributes.width), height: Number(img.attributes.height) };
+} else if (source && /^https?:\/\//.test(source)) {
+  image = { url: source, width: 0, height: 0 };
+}
+
+const jsonLd: object[] = [];
+if (props.organisation) jsonLd.push(organisation(site), siteWeb(site));
+if (type === "article" && props.article) {
+  jsonLd.push(articleLd(props.article, { titre: props.title.replace(/ — Sedona$/, ""), description, image: image.url, canonique, site }));
+}
+if (props.ariane?.length) jsonLd.push(filAriane(props.ariane, site, canonique));
+
+// Échappe « </ » pour qu'un contenu ne puisse pas fermer la balise <script>.
+const ld = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
+---
+
+<title>{titre}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonique} />
+<meta
+  name="robots"
+  content={indexable ? "index, follow, max-image-preview:large" : estIndexable(site) ? "noindex, follow" : "noindex, nofollow"}
+  data-sitemap={pageNoindex ? "exclure" : undefined}
+/>
+<link rel="sitemap" href="/sitemap.xml" />
+
+<meta property="og:site_name" content={NOM_SITE} />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={titre} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonique} />
+<meta property="og:image" content={image.url} />
+{image.width > 0 && <meta property="og:image:width" content={String(image.width)} />}
+{image.height > 0 && <meta property="og:image:height" content={String(image.height)} />}
+<meta property="og:image:alt" content={props.imageAlt ?? titre} />
+{type === "article" && props.article?.publie && <meta property="article:published_time" content={props.article.publie.toISOString()} />}
+{type === "article" && props.article?.modifie && <meta property="article:modified_time" content={props.article.modifie.toISOString()} />}
+{type === "article" && props.article?.tags?.map((t) => <meta property="article:tag" content={t} />)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={TWITTER} />
+<meta name="twitter:title" content={titre} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image.url} />
+
+{jsonLd.map((data) => <script type="application/ld+json" set:html={ld(data)} />)}

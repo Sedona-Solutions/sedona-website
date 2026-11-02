@@ -10,7 +10,7 @@ import Gallery from "../components/carrieres/Gallery.astro";
 import p from "../../content/carrieres/index.json";
 ---
 
-<BaseLayout title="Carrières — Sedona" description={p.hero?.intro}>
+<BaseLayout title="Carrières — Sedona" description={p.hero?.intro} ariane={[{ nom: "Carrières" }]} seo={p.seo}>
   <div class="carrieres-stack">
     <Hero hero={p.hero} />
     <Valeurs valeurs={p.valeurs} />
