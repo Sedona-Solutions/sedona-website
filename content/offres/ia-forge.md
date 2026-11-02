@@ -2,11 +2,11 @@
 pillVariant: red-rock
 titre: IA Forge
 eyebrow: Offres clé en main
-accroche: 'Du prototype à la production avec FORGE. C''est Une équipe allégée s''appuyant sur des composants IA éprouvés (AI Harness) qui conçoit et réalise et teste votre future application. '
+accroche: Du prototype à la production avec FORGE. C'est Une équipe allégée s'appuyant sur des composants IA éprouvés (AI Harness) qui conçoit et réalise et teste votre future application.
 accrocheAccent: FORGE
 enBref: |-
-  Moins de gestion de projet, moins de temps passé lors de la conception( utilisation de notre offre Brieff) et plus d'efficacité via l'IA et le dispositif que nous avons mis en place depuis plusieurs années. Nos experts interviennent pour valider, et assurer la qualité des livrables produits.
-  Avec IA Forge vous avez plus qu'un développement IA, vous avez une équipe d'experts qui supervise l'IA.       
+  Moins de gestion de projet, moins de temps passé lors de la conception (utilisation de notre offre Brieff) et plus d'efficacité via l'IA et le dispositif que nous avons mis en place depuis plusieurs années. Nos experts interviennent pour valider, et assurer la qualité des livrables produits.
+  Avec IA Forge vous avez plus qu'un développement IA, vous avez une équipe d'experts qui supervise l'IA.        
 
   Créez et déployez vos portails, CMS et applis métier sur-mesure aussi vite que des solutions standards, sans licence, sans dépendance à un éditeur en utilisant l'IA mais sous le contrôle d'experts humains. Utilisez l'expérience de plus de 18 années des équipes Sedona dans la conduite de projets au forfait pour concrétiser vos projets.
 illustration: /uploads/offre/ia-forge-code.png
