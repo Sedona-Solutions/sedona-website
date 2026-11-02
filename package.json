@@ -12,6 +12,7 @@
     "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
     "audit:images": "node scripts/audit-images.mjs",
+    "seo:redirections": "node scripts/redirections.mjs",
     "astro": "astro",
     "figma:list": "node --env-file=.env scripts/figma-export.mjs list",
     "figma:tokens": "node --env-file=.env scripts/figma-export.mjs tokens",
