@@ -83,6 +83,7 @@ methode:
     - nom: Power BI
       logo: /technos/powerbi.svg
     - nom: LangChain/LangSmith
+      logo: /technos/langchain.svg
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pragmatiques et opérationnelles
