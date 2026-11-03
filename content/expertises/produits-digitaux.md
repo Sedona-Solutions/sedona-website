@@ -66,6 +66,7 @@ methode:
     - nom: Kotlin
       logo: /technos/kotlin.svg
     - nom: JAVA
+      logo: /technos/java.svg
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pensées pour durer
