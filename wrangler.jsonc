@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sedona-website",
+  // Site Astro entièrement pré-rendu : aucun script Worker, les fichiers de ./dist sont servis tels quels.
+  "compatibility_date": "2026-11-03",
+  "assets": {
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true
+    },
+    "traces": {
+      "enabled": true
+    }
+  }
+}

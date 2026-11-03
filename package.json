@@ -11,6 +11,8 @@
     "build": "astro build",
     "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "cf:dev": "wrangler dev",
     "audit:images": "node scripts/audit-images.mjs",
     "seo:redirections": "node scripts/redirections.mjs",
     "astro": "astro",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "patch-package": "^8.0.1",
     "sharp": "^0.34.5",
-    "turndown": "^7.2.4"
+    "turndown": "^7.2.4",
+    "wrangler": "^4.157.0"
   }
 }
