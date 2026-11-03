@@ -2,7 +2,7 @@
 pillVariant: sunshine
 titre: Elastic
 eyebrow: Offres clé en main
-accroche: "Vos données, exploitables en temps réel avec\LELASTIC"
+accroche: "Vos données, exploitables en temps réel avec\LElastic Search, la connaissance de vos clients et de vos logs avec la suite ELK."
 accrocheAccent: ELASTIC
 enBref: 'Nous mettons en œuvre, optimisons et formons vos équipes sur la suite Elastic (moteur de recherche, centralisation de logs, monitoring applicatif...)'
 illustration: /uploads/offre/elastic-brick-presentation.png
@@ -11,7 +11,7 @@ heroProof:
     - /uploads/articles/avatar-7.png
     - /uploads/articles/avatar-9.png
     - /uploads/articles/avatar-2.png
-  texte: XXX de nos clients formés sur ELASTIC par nos équipes
+  texte: Plus de 10 de nos clients formés sur ELASTIC par nos équipes
 heroCtas:
   ctaLabel: Demander une démo →
   ctaHref: 'https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
@@ -94,7 +94,7 @@ incoherence:
   eyebrow: Formation
   titre: 'Apprenez auprès de nos formateurs, devenez un expert.'
   texte: |
-    Une formation adaptée, animée par un expert reconnu et rompu aux projets Elastic. Des sessions régulières et des séminaires dédiés avec notre partenaire Elastic.
+    Une formation adaptée, animée par un expert reconnu et rompu aux projets Elastic. Des sessions régulières et des séminaires dédiés avec notre partenaire Elastic. Donnez nous votre besoin, nous créons pour vous la formation adaptée !
 
     [VOIR LES PROCHAINES SESSIONS →](####)
   illustration: /uploads/offre/elastic-formation.svg
@@ -102,21 +102,21 @@ plans:
   eyebrow: Comment nous travaillons ensemble ?
   titre: 'Elastic, une solution modulaire'
   titreAccent: modulaire
-  intro: 'Trois briques, activables ensemble ou séparément, selon votre maturité sur Elastic.'
+  intro: 'Trois briques techniques, activables ensemble ou séparément, selon votre maturité sur Elastic.'
   items:
     - categorie: '01'
       titre: 'Installation, formation & réalisation'
-      texte: ''
+      texte: Nous vous accompagnons dans l'installation et le paramétrage des différentes outils de la suite. Notre expert vous propose des formations adaptées.
       icone: illlus_customize-product
       points:
         - Installation et mise en œuvre d'Elasticsearch
         - Formation complète sur 3 jours
         - 'Analyse de volumétrie, typologie de solutions, migration Cloud'
       ctaLabel: Choisir cette offre
-      note: Forfait avec engagement de résultat
+      note: Forfait avec engagement de résultat fort
     - categorie: '02'
       titre: Expertise & conseil
-      texte: ''
+      texte: 'Elastic Search peut être accessible rapidement dans un premier temps puis devenir plus compliqué à gérer lors d''un usage intensif. Notre expert audit et rédige des recommandations pragmatiques adaptées à vos contraintes et besoins. '
       icone: illlus_gathering-data-2
       points:
         - 'Analyse, mapping et optimisation des requêtes'
@@ -135,14 +135,14 @@ plans:
       ctaLabel: Choisir cette offre
       note: Forfait court (quelques jours seulement)
 temoignage:
-  citation: 'Nous peinions à optimiser les requêtes de recherche sur notre environnement de documents légaux. Sedona a remis notre infrastructure « à plat » très rapidement : elle répond désormais aux sollicitations de nos clients sans aucun ralentissement — et la formation dispensée par leur expert nous a rendus autonomes.'
+  citation: 'Nous rencontrions des difficultés à optimiser les requêtes de recherche sur notre environnement de documents légaux. Sedona a remis notre infrastructure « à plat » très rapidement : elle répond désormais aux sollicitations de nos clients sans aucun ralentissement et la formation dispensée par leur expert nous a rendus autonomes.'
   auteur: A. Drouet
   role: Responsable Informatique d'un client grand compte
   avatar: /uploads/articles/client-gg.png
 ctaFinal:
-  titre: Un projet ELASTIC ou une infra ELK à optimiser ?
+  titre: Un projet qui utilise les capacités de recheche d'Elastic Search ou l'intégration des solutons Logstash ou Kibana ?
   titreAccent: ELASTIC
-  description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout.'
+  description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout sur la suite ELK'
   ctaLabel: Demander une démo
   ctaHref: '/https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
   ctaLabel2: Parlons de votre projet

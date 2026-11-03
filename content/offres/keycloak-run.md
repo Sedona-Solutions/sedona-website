@@ -30,7 +30,7 @@ etapes:
     items:
       - titre: Audit & cadrage
         texte: |
-          Analyse de l’existant. Cartographie de vos applications, recueil de vos besoins IAM. Etude des parcours et protocoles envisagés (MFA, OpenId, SAML ..). Recommandations sur les trajectoires à appliquer suivant vos contraintes et priorités. 
+          Analyse de l’existant. Cartographie de vos applications, recueil de vos besoins IAM. Etude des parcours et protocoles envisagés (MFA, OpenId, SAML ..). Recommandations sur les trajectoires à appliquer suivant vos contraintes et priorités.
         icone: ''
       - titre: Installation
         texte: |
@@ -48,7 +48,7 @@ etapes:
         tag: Prérequis
       - titre: Keycloak RUN
         texte: |
-          Maintien en conditions opérationnelles de la solution Keycloak que nous avons installé ou qui a été pré-audité par nos soins : mises à jour, patchs, support et incidents en heures ouvrées. Mise en place d'un système d'interventions au forfait ou sous la forme de tickets. 
+          Maintien en conditions opérationnelles de la solution Keycloak que nous avons installé ou qui a été pré-audité par nos soins : mises à jour, patchs, support et incidents en heures ouvrées. Mise en place d'un système d'interventions au forfait ou sous la forme de tickets.
         icone: rocket
         tag: Socle
       - titre: Keycloak RUN+/RUN PREMIUM
@@ -76,8 +76,8 @@ perimetre:
           titre: Plateforme Keycloak
           points:
             - 'Versions, plugins, customisations (thèmes, extensions)'
-            - 'Realms, clients, flows d’authentification, rôles, MFA'
-            - Organisation des environnements DEV / INT / PREPROD / PROD
+            - 'Realms, clients, flows d’authentification, rôles, MFA (Multi Factor Authentication)'
+            - 'Organisation des environnements : DEV / INT / PREPROD / PROD'
         - icone: cloud-migration
           titre: Architecture & hébergement
           points:
@@ -87,14 +87,14 @@ perimetre:
         - icone: cyber
           titre: Sécurité & exploitation
           points:
-            - 'Politiques de mots de passe, MFA, durcissement'
+            - 'Politiques de mots de passe, MFA, durcissement politique de sécurité'
             - Comptes d’administration et gestion des droits
             - 'Journaux, traces et outils de monitoring déjà en place'
         - icone: network
           titre: Organisation & processus
           points:
             - Rôles et responsabilités actuels
-            - 'Gestion des incidents, changements, mises en production'
+            - 'Gestion des incidents, changements, mise en production'
             - Points de contact opérationnels et chaîne d’escalade
       banner:
         - texte: |

@@ -45,6 +45,7 @@ projets:
       client: Leader mondial d'études de marché et de sondages
     - titre: Automatisation des plannings
       texte: L'IA permet d'automatiser l'affectation des collaborateurs sur des plannings contraints
+      client: Une grande entreprise du CAC40
 methode:
   eyebrow: Notre méthode
   titre: De l'idée au modèle en production
@@ -99,6 +100,7 @@ cqnf:
         * Analyse sémantique et classification automatique
         * Recherche vectorielle (RAG, embeddings)
         * Fine-tuning de modèles sur vos données
+        * Développement d'agents
       client: ''
       tags:
         - GPT-4
@@ -120,13 +122,14 @@ cqnf:
         * Recommandation personnalisée
         * Computer vision (OCR, détection objets)
         * MLOps et déploiement en production
+        * Mise en place de solutions JEV
       client: ''
     - label: Data Engineering & Pipelines
       icone: data-ia
       texte: |
         Collecte, transformation, stockage : nous **construisons les fondations solides nécessaires à vos projets data**. Sans données propres et structurées, pas d'IA efficace.
 
-        * Architecture data lakehouse (Databricks, Snowflake)
+        * Architecture data Lakehouse (Databricks, Snowflake)
         * Pipelines ETL/ELT (Airflow, dbt, Fivetran)
         * Data quality et gouvernance
         * APIs de collecte et connecteurs custom
@@ -137,11 +140,12 @@ cqnf:
       texte: |
         Nous créons des dashboards et reportings qui rendent vos données accessibles à tous. Fini les exports Excel : **pilotez votre activité en temps réel avec des KPIs actionnables**.
 
-        * Dashboards interactifs (Tableau, Power BI, Metabase)
+        * Dashboards interactifs (Tableau, Power BI, Metabase) et générés par IA
         * Reportings automatisés et alertes
         * Data storytelling et visualisations sur mesure
         * Analyses ad-hoc et exploration de données
         * Formation utilisateurs à la culture data
+        * Etude et cadrage sur les Dashboard réalisés en mode “Vibe coding”
       client: ''
       tags:
         - PowerBI
@@ -149,11 +153,11 @@ cqnf:
     - label: Audit & Stratégie Data
       icone: audit-data
       texte: |
-        Nous auditons votre existant data/IA, identifions les quick wins et définissons une roadmap pragmatique adaptée à votre maturité.
+        Nous auditons votre existant data/IA, identifions les *quick* *wins *et définissons une roadmap pragmatique adaptée à votre maturité.
 
         * Audit architecture data et qualité des données
         * Identification des use cases IA prioritaires
-        * Benchmark concurrentiel et veille techno
+        * Benchmark concurrentiel et veille technologique
         * Roadmap data/IA et priorisation ROI
         * Formation équipes et montée en compétences
       client: ''

@@ -5,7 +5,7 @@ affichage:
   ordre: 1
   icone: uxui
   resume: Des sites et des apps beaux et puissants qui fonctionnent vraiment.
-accroche: 'Nous concevons et développons des expériences digitales qui résolvent de réels irritants utilisateurs. Du site Web, à l''application mobile nos experts conçoivent et réalisent des applications "sur mesure". '
+accroche: 'Nous concevons et développons des expériences digitales qui résolvent de réels irritants utilisateurs. Du site Web, à l''application mobile nos experts conçoivent et réalisent des applications "sur mesure" tirant parti des nouvelles technologies. '
 illustration: /deco/domaine-produits-hero.svg
 tags:
   - Application Mobile

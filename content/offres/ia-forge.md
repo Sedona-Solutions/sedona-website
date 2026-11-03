@@ -2,7 +2,7 @@
 pillVariant: red-rock
 titre: IA Forge
 eyebrow: Offres clé en main
-accroche: Du prototype à la production avec FORGE. C'est Une équipe allégée s'appuyant sur des composants IA éprouvés (AI Harness) qui conçoit et réalise et teste votre future application.
+accroche: 'Du prototype à la production avec FORGE. C''est une équipe allégée, dédiée s''appuyant sur des composants IA éprouvés (AI Harness) qui conçoit et réalise et teste votre future application.'
 accrocheAccent: FORGE
 enBref: |-
   Moins de gestion de projet, moins de temps passé lors de la conception (utilisation de notre offre Brieff) et plus d'efficacité via l'IA et le dispositif que nous avons mis en place depuis plusieurs années. Nos experts interviennent pour valider, et assurer la qualité des livrables produits.
@@ -15,7 +15,7 @@ heroProof:
     - /uploads/articles/collab/jerome-c.png
     - /uploads/articles/collab/benoit-d.png
     - /uploads/articles/collab/elsa-m.png
-  texte: Nos clients et les membres de notre tribu utilisent FORGE
+  texte: Nos clients et les membres de notre tribu utilisent FORGE quotidiennement
 heroCtas:
   ctaLabel: Demander une démo →
   ctaHref: /contact
@@ -118,7 +118,7 @@ plans:
       note: Abonnement mensuel
 pourquoi:
   eyebrow: Pourquoi choisir Sedona Forge ?
-  titre: 'Travailler à l''aide de l''IA, le risque en moins.'
+  titre: 'Travailler à l''aide de l''IA, le risque en moins, les experts en plus.'
   items:
     - titre: Toujours un humain en responsabilité
       texte: Chaque livrable passe par un expert qui valide et engage Sedona. L'IA n'est jamais une boîte noire laissée sans contrôle.
