@@ -29,6 +29,9 @@ spec:
             - name: BREVO_API_KEY
               valueFrom:
                 secretKeyRef: { name: contact-relay-brevo, key: BREVO_API_KEY }
+            - name: TURNSTILE_SECRET
+              valueFrom:
+                secretKeyRef: { name: contact-relay-brevo, key: TURNSTILE_SECRET }
           readinessProbe:
             httpGet: { path: /healthz, port: http }
             periodSeconds: 10

@@ -8,6 +8,8 @@ metadata:
 data:
   # Origines autorisées à appeler le relais (CORS), séparées par des virgules.
   ALLOWED_ORIGINS: "https://sedona.fr,https://www.sedona.fr,https://preview.sedona.fr"
+  # Hôtes du formulaire acceptés par siteverify. Pas de localhost ici : réservé au .env local.
+  TURNSTILE_HOSTNAMES: "sedona.fr,www.sedona.fr,preview.sedona.fr"
   # Expéditeur : doit être un expéditeur VALIDÉ dans Brevo (domaine authentifié).
   CONTACT_FROM_EMAIL: "noreply@sedona.fr" # À ADAPTER
   CONTACT_FROM_NAME: "Site sedona.fr"

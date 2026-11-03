@@ -12,7 +12,7 @@ export const TWITTER = "@SedonaFR";
 /**
  * Le site n'est indexable que sur le domaine de production : la preview
  * (preview.sedona.fr), localhost et toute URL de test restent en noindex.
- * Le domaine est piloté par SITE_URL (astro.config.mjs / deploy.yml).
+ * Le domaine est piloté par SITE_URL (astro.config.mjs / .env.production).
  */
 export const estIndexable = (site?: URL) =>
   !!site && /^(www\.)?sedona\.fr$/.test(site.hostname);

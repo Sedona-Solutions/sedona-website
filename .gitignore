@@ -19,8 +19,8 @@ pnpm-debug.log*
 
 # environment variables (secrets — ne jamais committer)
 .env
-.env.production
 .env.*.local
+temp-*
 
 # macOS / Windows
 .DS_Store

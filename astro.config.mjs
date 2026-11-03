@@ -13,7 +13,7 @@ import redirections from './src/data/redirections.json' with { type: 'json' };
 
 // https://astro.build/config
 // Both deploy targets are served at the domain root (custom domains), so no `base`.
-// Only the canonical/sitemap host differs -> overridable via SITE_URL in CI.
+// Only the canonical/sitemap host differs -> overridable via SITE_URL.
 export default defineConfig({
   site: process.env.SITE_URL || 'https://preview.sedona.fr',
   // SITE_URL pilote aussi l'indexation (src/utils/seo.ts) : seul https://sedona.fr

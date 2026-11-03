@@ -12,6 +12,7 @@ const offres = (await getCollection("offre")).map((o) => o.data.titre).filter(Bo
 
 // URL du relais formulaire -> Brevo (services/contact-relay, déployé sur Kubernetes).
 const contactEndpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+const turnstileSitekey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? "";
 
 const BUDGETS = [
   "Moins de 10 000 €",
@@ -138,6 +139,7 @@ const BUDGETS = [
             </label>
           </div>
 
+          <div class="cturnstile" id="contact-turnstile" data-sitekey={turnstileSitekey}></div>
           <div class="ccard__submit">
             <button type="submit" class="cbtn">Envoyer</button>
           </div>
@@ -276,8 +278,31 @@ const BUDGETS = [
     }
 
     // Envoi : relais Kubernetes (services/contact-relay) qui transmet à Brevo.
-    // L'URL vient de PUBLIC_CONTACT_ENDPOINT (deploy.yml / .env).
+    // L'URL vient de PUBLIC_CONTACT_ENDPOINT (.env.production / .env).
     const endpoint = form.dataset.endpoint ?? "";
+    const turnstileContainer = document.getElementById("contact-turnstile");
+    const turnstileWindow = window as Window & {
+      turnstile?: {
+        render: (container: HTMLElement, options: { sitekey: string; action: string }) => string;
+        getResponse: (widgetId: string) => string | undefined;
+        reset: (widgetId: string) => void;
+      };
+    };
+    let contactWidgetId: string | undefined;
+    const renderTurnstile = () => {
+      const sitekey = turnstileContainer?.dataset.sitekey ?? "";
+      if (!turnstileWindow.turnstile || !(turnstileContainer instanceof HTMLElement) || !sitekey) return;
+      contactWidgetId = turnstileWindow.turnstile.render(turnstileContainer, { sitekey, action: "contact" });
+    };
+    if (turnstileWindow.turnstile) {
+      renderTurnstile();
+    } else if (turnstileContainer?.dataset.sitekey) {
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.addEventListener("load", renderTurnstile, { once: true });
+      document.head.appendChild(script);
+    }
     const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const erreurEl = document.getElementById("contactError");
     const afficherErreur = (msg: string) => {
@@ -292,6 +317,13 @@ const BUDGETS = [
       afficherErreur("");
       if (!form.checkValidity()) {
         form.reportValidity();
+        return;
+      }
+
+      const token =
+        contactWidgetId !== undefined ? (turnstileWindow.turnstile?.getResponse(contactWidgetId) ?? "") : "";
+      if (!token) {
+        afficherErreur("Confirmez que vous n'êtes pas un robot, puis réessayez.");
         return;
       }
 
@@ -316,10 +348,12 @@ const BUDGETS = [
         linkedin: str(payload.linkedin),
         page: location.pathname + location.search,
         website_url: str(payload.website_url), // champ piège anti-robot
+        "cf-turnstile-response": token,
       };
 
       if (!endpoint) {
-        console.error("PUBLIC_CONTACT_ENDPOINT non configuré : formulaire non envoyé.", demande);
+        const { "cf-turnstile-response": _jeton, ...sansJeton } = demande;
+        console.error("PUBLIC_CONTACT_ENDPOINT non configuré : formulaire non envoyé.", sansJeton);
         afficherErreur(ERREUR_GENERIQUE);
         return;
       }
@@ -328,7 +362,9 @@ const BUDGETS = [
         submitBtn.disabled = true;
         submitBtn.textContent = "Envoi…";
       }
+      let envoye = false;
       try {
+        envoye = true;
         const reponse = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -345,6 +381,9 @@ const BUDGETS = [
           submitBtn.textContent = "Envoyer";
         }
         return;
+      } finally {
+        // Le jeton est à usage unique : on le renouvelle tant que la page reste affichée.
+        if (envoye && contactWidgetId !== undefined) turnstileWindow.turnstile?.reset(contactWidgetId);
       }
 
       // Suivi Matomo (cf. Analytics.astro), uniquement après envoi confirmé.
@@ -454,6 +493,7 @@ const BUDGETS = [
   .cfield input:focus, .cfield select:focus, .cfield textarea:focus { outline: 2px solid #3b0800; outline-offset: 2px; }
 
   .ccard__submit { display: flex; justify-content: center; padding-top: 32px; }
+  .cturnstile { display: flex; justify-content: center; min-height: 65px; padding-top: 24px; }
   .cbtn {
     border: none; cursor: pointer; border-radius: 999px; padding: 21px 32px;
     background: #3b0800; color: var(--color-red-rock-50); font-family: var(--font-sans);

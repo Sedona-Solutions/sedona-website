@@ -10,7 +10,7 @@ Formulaire (sedona.fr) ──POST JSON──▶ contact-api.sedona.fr/contact �
 ```
 
 - Node 22, **aucune dépendance npm** (`fetch` natif).
-- Protections : CORS limité à sedona.fr, champ piège anti-robot, limite par IP,
+- Protections : CORS limité à sedona.fr, Turnstile (siteverify), champ piège anti-robot, limite par IP,
   validation et taille max des champs, HTML échappé dans l'e-mail.
 - « Répondre » dans la messagerie écrit directement au visiteur (`replyTo`).
 - Optionnel : ajout des prospects (demandes « projet ») dans une liste Brevo.
@@ -31,7 +31,8 @@ docker push registry.example.com/sedona/contact-relay:1.0.0
 
 # 2. Secret : la clé est saisie dans le terminal, jamais écrite dans un fichier du dépôt
 kubectl -n sedona-site create secret generic contact-relay-brevo \
-  --from-literal=BREVO_API_KEY='xkeysib-...'
+  --from-literal=BREVO_API_KEY='xkeysib-...' \
+  --from-literal=TURNSTILE_SECRET='...'
 
 # 3. Configuration + déploiement (adapter les valeurs « À ADAPTER » avant)
 kubectl apply -f k8s/configmap.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml
@@ -49,6 +50,8 @@ Puis, côté site : renseigner l'URL publique dans `PUBLIC_CONTACT_ENDPOINT`
 | Variable | Rôle |
 |---|---|
 | `BREVO_API_KEY` | **Secret** `contact-relay-brevo` — clé API Brevo |
+| `TURNSTILE_SECRET` | **Secret** `contact-relay-brevo` — secret du widget Turnstile |
+| `TURNSTILE_HOSTNAMES` | Hôtes du formulaire acceptés par siteverify, séparés par des virgules (sans localhost en production) |
 | `ALLOWED_ORIGINS` | Origines autorisées (CORS), séparées par des virgules |
 | `CONTACT_FROM_EMAIL` / `CONTACT_FROM_NAME` | Expéditeur (validé dans Brevo) |
 | `CONTACT_TO` | Destinataire(s) par défaut |
@@ -62,9 +65,9 @@ Puis, côté site : renseigner l'URL publique dans `PUBLIC_CONTACT_ENDPOINT`
 ```bash
 npm test                      # tests (Brevo simulé, aucun envoi réel)
 
-# Lancer en local contre le vrai Brevo :
+# Lancer en local contre le vrai Brevo (le secret Turnstile est dans .env, ignoré par git) :
 BREVO_API_KEY=... CONTACT_FROM_EMAIL=noreply@sedona.fr CONTACT_TO=moi@sedona.fr \
-ALLOWED_ORIGINS=http://localhost:4321 node server.mjs
+ALLOWED_ORIGINS=http://localhost:4321 node --env-file=.env server.mjs
 # puis dans sedona-website/.env : PUBLIC_CONTACT_ENDPOINT=http://localhost:8080/contact
 ```
 

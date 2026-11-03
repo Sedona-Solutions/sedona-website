@@ -45,6 +45,8 @@ export function lireConfig(env = process.env) {
       autre: liste(env.CONTACT_TO_AUTRE),
     },
     originesAutorisees: liste(env.ALLOWED_ORIGINS),
+    turnstileSecret: env.TURNSTILE_SECRET ?? "",
+    turnstileHostnames: new Set(liste(env.TURNSTILE_HOSTNAMES)),
     listeBrevo: env.BREVO_LIST_ID ? Number(env.BREVO_LIST_ID) : null,
     attributNom: env.BREVO_ATTR_NOM ?? "NOM",
     attributPrenom: env.BREVO_ATTR_PRENOM ?? "PRENOM",
@@ -56,6 +58,8 @@ export function lireConfig(env = process.env) {
     !config.expediteur.email && "CONTACT_FROM_EMAIL",
     !config.destinataires.defaut.length && "CONTACT_TO",
     !config.originesAutorisees.length && "ALLOWED_ORIGINS",
+    !config.turnstileSecret && "TURNSTILE_SECRET",
+    !config.turnstileHostnames.size && "TURNSTILE_HOSTNAMES",
   ].filter(Boolean);
   if (manquants.length) throw new Error(`Configuration incomplète : ${manquants.join(", ")}`);
   return config;
@@ -132,6 +136,41 @@ ${demande.message ? `<h3 style="margin:24px 0 8px">Message</h3><p style="white-s
     textContent: texte,
     tags: ["site-contact", demande.type],
   };
+}
+
+const ACTION_TURNSTILE = "contact";
+
+/** Jeton Turnstile à usage unique. Échoue fermé : réseau, secret, action ou hôte. */
+export async function verifierTurnstile(config, fetchImpl, token, remoteip) {
+  if (
+    typeof token !== "string" ||
+    token.length === 0 ||
+    token.length > 2048 ||
+    !config.turnstileSecret ||
+    config.turnstileHostnames.size === 0
+  ) {
+    return false;
+  }
+  let result;
+  try {
+    const body = new URLSearchParams({ secret: config.turnstileSecret, response: token });
+    if (remoteip && remoteip !== "?") body.set("remoteip", remoteip);
+    const r = await fetchImpl("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      signal: AbortSignal.timeout(10_000),
+      body,
+    });
+    if (!r.ok) return false;
+    result = await r.json();
+  } catch {
+    return false;
+  }
+  return (
+    result?.success === true &&
+    result.action === ACTION_TURNSTILE &&
+    config.turnstileHostnames.has(result.hostname)
+  );
 }
 
 async function appelBrevo(config, fetchImpl, chemin, corps) {
@@ -217,6 +256,11 @@ export function creerServeur(config, { fetchImpl = fetch, log = console } = {}) 
     } catch (e) {
       return repondre(e.statut ?? 400, { erreur: e.statut ? e.message : "JSON invalide." });
     }
+
+    // Turnstile avant le reste du traitement : jeton à usage unique, action « contact »,
+    // hôte du site qui a affiché le formulaire (TURNSTILE_HOSTNAMES).
+    const jetonOk = await verifierTurnstile(config, fetchImpl, corps?.["cf-turnstile-response"], ip);
+    if (!jetonOk) return repondre(403, { erreur: "Vérification anti-robot échouée. Réessayez." });
 
     // Champ piège : un robot le remplit, un humain ne le voit pas. On répond
     // « succès » sans rien envoyer pour ne pas l'aider à s'adapter.

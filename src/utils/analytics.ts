@@ -1,5 +1,5 @@
 // Configuration Matomo (Matomo Cloud : https://sedona.matomo.cloud/).
-// Valeurs fournies au build par .env ou deploy.yml (PUBLIC_MATOMO_URL, PUBLIC_MATOMO_SITE_ID).
+// Valeurs fournies au build par .env ou .env.production (PUBLIC_MATOMO_URL, PUBLIC_MATOMO_SITE_ID).
 import { estIndexable } from "./seo";
 
 export const MATOMO_URL: string | undefined = import.meta.env.PUBLIC_MATOMO_URL;
