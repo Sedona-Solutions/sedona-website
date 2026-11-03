@@ -157,14 +157,29 @@ export async function verifierTurnstile(config, fetchImpl, token, remoteip) {
   return result?.success === true && result.action === ACTION_TURNSTILE && config.turnstileHostnames.has(result.hostname);
 }
 
-async function appelBrevo(config, fetchImpl, chemin, corps) {
+async function appelBrevo(config, fetchImpl, chemin, corps, log) {
+  const debut = Date.now();
+  journal(log, "debug", {
+    msg: "brevo request",
+    path: chemin,
+    sender: corps.sender?.email,
+    to: Array.isArray(corps.to) ? corps.to.map((destinataire) => destinataire.email) : undefined,
+    email: corps.email,
+    listIds: corps.listIds,
+  });
   const r = await fetchImpl(`${config.brevoApiUrl}${chemin}`, {
     method: "POST",
     headers: { "api-key": config.brevoApiKey, "content-type": "application/json", accept: "application/json" },
     body: JSON.stringify(corps),
     signal: AbortSignal.timeout(10_000),
   });
-  if (!r.ok) throw new Error(`Brevo ${chemin} : HTTP ${r.status} ${(await r.text()).slice(0, 300)}`);
+  const duree = Date.now() - debut;
+  if (!r.ok) {
+    const detail = (await r.text()).slice(0, 300);
+    journal(log, "debug", { msg: "brevo response", path: chemin, status: r.status, ms: duree, body: detail });
+    throw new Error(`Brevo ${chemin} : HTTP ${r.status} ${detail}`);
+  }
+  journal(log, "debug", { msg: "brevo response", path: chemin, status: r.status, ms: duree });
 }
 
 function json(statut, corps) {
@@ -176,7 +191,7 @@ function json(statut, corps) {
 
 function journal(log, niveau, evenement) {
   const ligne = JSON.stringify(evenement);
-  const methode = niveau === "error" ? "error" : niveau === "warn" ? "warn" : "info";
+  const methode = niveau === "error" ? "error" : niveau === "warn" ? "warn" : niveau === "debug" ? "debug" : "info";
   (log[methode] ?? console[methode])(ligne);
 }
 
@@ -230,7 +245,7 @@ export async function gererContact(request, env, { fetchImpl = fetch, log = cons
   if (erreur) return json(400, { erreur });
 
   try {
-    await appelBrevo(config, fetchImpl, "/smtp/email", construireEmail(demande, config));
+    await appelBrevo(config, fetchImpl, "/smtp/email", construireEmail(demande, config), log);
   } catch (e) {
     journal(log, "error", { msg: "contact send failed", error: e.message });
     return json(502, { erreur: "L'envoi a échoué. Réessayez ou écrivez-nous à contact@sedona.fr." });
@@ -242,7 +257,7 @@ export async function gererContact(request, env, { fetchImpl = fetch, log = cons
       attributes: { [config.attributNom]: demande.nom, [config.attributPrenom]: demande.prenom },
       listIds: [config.listeBrevo],
       updateEnabled: true,
-    }).catch((e) => journal(log, "warn", { msg: "contact list failed", error: e.message }));
+    }, log).catch((e) => journal(log, "warn", { msg: "contact list failed", error: e.message }));
     if (ctx) ctx.waitUntil(ajout);
   }
 

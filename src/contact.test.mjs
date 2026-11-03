@@ -30,7 +30,7 @@ function harnais(fetchImpl) {
       appels.push({ url, corps: JSON.parse(init.body), init });
       return new Response("{}", { status: 201 });
     });
-  const log = { info() {}, warn() {}, error() {} };
+  const log = { info() {}, warn() {}, error() {}, debug() {} };
   const post = (corps, { origin = "https://sedona.fr", ip = "1.1.1.1" } = {}) =>
     gererContact(
       new Request("https://sedona.fr/contact", {
