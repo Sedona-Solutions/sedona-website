@@ -1,5 +1,6 @@
 ---
 import { matomoActif } from "../utils/analytics";
+import global from "../../content/global/index.json";
 
 const colonne1 = [
   { label: "Produits digitaux", href: "/domaines/produits-digitaux" },
@@ -26,12 +27,23 @@ const icones = {
   linkedin: `<path fill-rule="evenodd" clip-rule="evenodd" d="M15.2051 9.75C15.303 9.75576 15.401 9.76096 15.4932 9.77246C17.0936 9.94579 18.001 10.9979 18.001 12.7832V18H15.4932V13.3379C15.4932 13.2223 15.4647 11.9678 14.0781 11.9678C13.6102 11.9678 13.194 12.176 12.9629 12.5918C12.6913 13.0887 12.7324 13.6669 12.7324 14.21V17.9648H10.2246V9.96875H12.6221V11.0381C12.6221 11.0381 12.6573 10.9801 12.7324 10.8818C13.01 10.5234 13.8016 9.69224 15.2051 9.75ZM8.70996 17.9424H6.20215V9.94629H8.70996V17.9424ZM7.45605 6C8.2601 6.00006 8.91211 6.65199 8.91211 7.45605C8.91205 8.26007 8.26007 8.91205 7.45605 8.91211C6.65199 8.91211 6.00006 8.2601 6 7.45605C6 6.65196 6.65196 6 7.45605 6Z"/>`,
   youtube: `<path fill-rule="evenodd" clip-rule="evenodd" d="M18.7426 5.5C20.5469 5.5 22 7.0386 22 8.93091V15.0691C22.0073 16.9691 20.5469 18.5 18.7426 18.5H5.25734C3.45333 18.4996 2 16.9612 2 15.0691V8.93091C2 7.03113 3.46063 5.50036 5.25734 5.5H18.7426ZM9.8693 15.058L15.5413 11.9032L9.8693 8.75V15.058Z"/>`,
 };
-const reseaux = [
-  { nom: "Facebook", url: "#", icone: "facebook" },
-  { nom: "X", url: "#", icone: "x" },
-  { nom: "LinkedIn", url: "https://www.linkedin.com/company/sedona", icone: "linkedin" },
-  { nom: "YouTube", url: "#", icone: "youtube" },
-];
+// Réseaux sociaux : source unique = Paramètres globaux dans TinaCMS
+// (content/global/index.json → "reseaux"). La plateforme est un texte libre :
+// on déduit l'icône de son nom, ou à défaut du domaine de l'URL.
+type Icone = keyof typeof icones;
+const detecterIcone = (plateforme = "", url = ""): Icone | undefined => {
+  const p = plateforme.toLowerCase();
+  const u = url.toLowerCase();
+  if (p.includes("linkedin") || u.includes("linkedin.com")) return "linkedin";
+  if (p.includes("facebook") || u.includes("facebook.com")) return "facebook";
+  if (p.includes("youtube") || u.includes("youtube.com") || u.includes("youtu.be")) return "youtube";
+  if (/\bx\b|twitter/.test(p) || /\/\/(www\.)?(x|twitter)\.com/.test(u)) return "x";
+  return undefined;
+};
+const reseaux = ((global.reseaux ?? []) as { plateforme?: string; url?: string }[])
+  .filter((r) => r.url)
+  .map((r) => ({ nom: r.plateforme ?? "", url: r.url!, icone: detecterIcone(r.plateforme, r.url) }))
+  .filter((r): r is { nom: string; url: string; icone: Icone } => r.icone !== undefined);
 ---
 
 <footer class="ftr">
@@ -50,7 +62,7 @@ const reseaux = [
           {
             reseaux.map((r) => (
               <li>
-                <a href={r.url} aria-label={r.nom}>
+                <a href={r.url} aria-label={r.nom} target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="#3b0800" set:html={icones[r.icone]} />
                 </a>
               </li>
