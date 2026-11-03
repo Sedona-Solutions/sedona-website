@@ -48,7 +48,7 @@ etapes:
         tag: Prérequis
       - titre: Keycloak RUN
         texte: |
-          Maintien en conditions opérationnelles de la solution Keycloak que nous avons installé ou qui a été pré-audité par nos soins : mises à jour, patchs, support et incidents en heures ouvrées. Mise en place d'un système d'interventions au forfait ou sous la forme de tickets.
+          Maintien en conditions opérationnelles de la solution Keycloak que nous avons installée ou qui a été pré-auditée par nos soins : mises à jour, patchs, support et incidents en heures ouvrées. Mise en place d'un système d'interventions au forfait ou sous la forme de tickets.
         icone: rocket
         tag: Socle
       - titre: Keycloak RUN+/RUN PREMIUM

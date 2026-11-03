@@ -153,7 +153,7 @@ cqnf:
     - label: Audit & Stratégie Data
       icone: audit-data
       texte: |
-        Nous auditons votre existant data/IA, identifions les *quick* *wins *et définissons une roadmap pragmatique adaptée à votre maturité.
+        Nous auditons votre existant data/IA, identifions les *quick wins* et définissons une roadmap pragmatique adaptée à votre maturité.
 
         * Audit architecture data et qualité des données
         * Identification des use cases IA prioritaires

@@ -106,7 +106,7 @@ plans:
   items:
     - categorie: '01'
       titre: 'Installation, formation & réalisation'
-      texte: Nous vous accompagnons dans l'installation et le paramétrage des différentes outils de la suite. Notre expert vous propose des formations adaptées.
+      texte: Nous vous accompagnons dans l'installation et le paramétrage des différents outils de la suite. Notre expert vous propose des formations adaptées.
       icone: illlus_customize-product
       points:
         - Installation et mise en œuvre d'Elasticsearch
@@ -116,7 +116,7 @@ plans:
       note: Forfait avec engagement de résultat fort
     - categorie: '02'
       titre: Expertise & conseil
-      texte: 'Elastic Search peut être accessible rapidement dans un premier temps puis devenir plus compliqué à gérer lors d''un usage intensif. Notre expert audit et rédige des recommandations pragmatiques adaptées à vos contraintes et besoins. '
+      texte: 'Elastic Search peut être accessible rapidement dans un premier temps puis devenir plus compliqué à gérer lors d''un usage intensif. Notre expert audite et rédige des recommandations pragmatiques adaptées à vos contraintes et besoins. '
       icone: illlus_gathering-data-2
       points:
         - 'Analyse, mapping et optimisation des requêtes'
@@ -140,7 +140,7 @@ temoignage:
   role: Responsable Informatique d'un client grand compte
   avatar: /uploads/articles/client-gg.png
 ctaFinal:
-  titre: Un projet qui utilise les capacités de recheche d'Elastic Search ou l'intégration des solutons Logstash ou Kibana ?
+  titre: Un projet qui utilise les capacités de recherche d'Elastic Search ou l'intégration des solutions Logstash ou Kibana ?
   titreAccent: ELASTIC
   description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout sur la suite ELK'
   ctaLabel: Demander une démo
