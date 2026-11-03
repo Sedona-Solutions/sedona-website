@@ -10,8 +10,6 @@ const { agences } = global;
 const postes = (carrieres.jobs?.items ?? []).map((j: { titre: string }) => j.titre);
 const offres = (await getCollection("offre")).map((o) => o.data.titre).filter(Boolean);
 
-// URL du relais formulaire -> Brevo (services/contact-relay, déployé sur Kubernetes).
-const contactEndpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
 const turnstileSitekey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? "";
 
 const BUDGETS = [
@@ -77,7 +75,7 @@ const BUDGETS = [
           </div>
         </div>
 
-        <form id="contactForm" novalidate data-endpoint={contactEndpoint}>
+        <form id="contactForm" novalidate>
           <input type="text" name="website_url" id="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <input type="hidden" name="type_demande" id="typeDemande" value="projet" />
 
@@ -277,9 +275,7 @@ const BUDGETS = [
       updateMessagePlaceholder();
     }
 
-    // Envoi : relais Kubernetes (services/contact-relay) qui transmet à Brevo.
-    // L'URL vient de PUBLIC_CONTACT_ENDPOINT (.env.production / .env).
-    const endpoint = form.dataset.endpoint ?? "";
+    // Envoi vers le Worker du site (POST /contact), qui transmet à Brevo.
     const turnstileContainer = document.getElementById("contact-turnstile");
     const turnstileWindow = window as Window & {
       turnstile?: {
@@ -351,13 +347,6 @@ const BUDGETS = [
         "cf-turnstile-response": token,
       };
 
-      if (!endpoint) {
-        const { "cf-turnstile-response": _jeton, ...sansJeton } = demande;
-        console.error("PUBLIC_CONTACT_ENDPOINT non configuré : formulaire non envoyé.", sansJeton);
-        afficherErreur(ERREUR_GENERIQUE);
-        return;
-      }
-
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = "Envoi…";
@@ -365,7 +354,7 @@ const BUDGETS = [
       let envoye = false;
       try {
         envoye = true;
-        const reponse = await fetch(endpoint, {
+        const reponse = await fetch("/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(demande),

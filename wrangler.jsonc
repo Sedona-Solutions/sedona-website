@@ -1,10 +1,14 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "sedona-website",
-  // Site Astro entièrement pré-rendu : aucun script Worker, les fichiers de ./dist sont servis tels quels.
+  "main": "./src/worker.ts",
+  // Pages pré-rendues dans ./dist. POST /contact est traité par le Worker avant les assets.
   "compatibility_date": "2026-11-03",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/contact", "/contact/"]
   },
   "observability": {
     "enabled": true,
@@ -14,5 +18,15 @@
     "traces": {
       "enabled": true
     }
+  },
+  "vars": {
+    "BREVO_API_URL": "https://api.brevo.com/v3",
+    "CONTACT_FROM_EMAIL": "noreply@sedona.fr",
+    "CONTACT_FROM_NAME": "Site sedona.fr",
+    "CONTACT_TO": "contact@sedona.fr",
+    "TURNSTILE_HOSTNAMES": "sedona.fr,www.sedona.fr,preview.sedona.fr"
+  },
+  "secrets": {
+    "required": ["BREVO_API_KEY", "TURNSTILE_SECRET"]
   }
 }
