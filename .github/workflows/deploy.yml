@@ -27,6 +27,9 @@ jobs:
       # Le suivi ne s'active qu'en production (SITE_URL = https://sedona.fr).
       PUBLIC_MATOMO_URL: https://sedona.matomo.cloud/
       PUBLIC_MATOMO_SITE_ID: "1"
+      # Relais formulaire de contact -> Brevo (services/contact-relay, Kubernetes Sedona).
+      # À ADAPTER : URL publique de l'Ingress une fois le relais déployé.
+      PUBLIC_CONTACT_ENDPOINT: https://contact-api.sedona.fr/contact
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact-relay
+  namespace: sedona-site # À ADAPTER
+  labels: { app: contact-relay }
+spec:
+  # Une seule réplique : la limitation anti-spam par IP est en mémoire du pod.
+  replicas: 1
+  selector:
+    matchLabels: { app: contact-relay }
+  template:
+    metadata:
+      labels: { app: contact-relay }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: contact-relay
+          image: registry.example.com/sedona/contact-relay:1.0.0 # À ADAPTER (registre Sedona)
+          ports:
+            - { name: http, containerPort: 8080 }
+          envFrom:
+            - configMapRef: { name: contact-relay }
+          env:
+            - name: BREVO_API_KEY
+              valueFrom:
+                secretKeyRef: { name: contact-relay-brevo, key: BREVO_API_KEY }
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 30
+          resources:
+            requests: { cpu: 10m, memory: 48Mi }
+            limits: { memory: 128Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-relay
+  namespace: sedona-site # À ADAPTER
+spec:
+  selector: { app: contact-relay }
+  ports:
+    - { name: http, port: 80, targetPort: http }

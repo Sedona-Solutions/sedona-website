@@ -103,6 +103,43 @@ const matomoJs = actif ? matomoScriptUrl(MATOMO_URL!) : "";
           });
         }
 
+        // ---------------------------------------------------------------
+        // Événements Matomo. N'envoie rien sans consentement (Matomo non chargé)
+        // et jamais de donnée personnelle (nom, e-mail…) : seulement des libellés.
+        // Dans Matomo : Comportement > Événements.
+        // ---------------------------------------------------------------
+        window.sedonaTrack = function (categorie, action, nom) {
+          if (!window.__matomoCharge) return;
+          window._paq.push(["trackEvent", categorie, action, nom]);
+        };
+
+        // Boutons menant au formulaire de contact (« Demander une démo »,
+        // « Prendre rendez-vous », tarifs, bandeau final, header…), quelle que soit
+        // la page : catégorie « CTA contact », action = offre ciblée, nom = libellé + page.
+        var sansSlash = function (p) {
+          return p.length > 1 ? p.replace(/\/+$/, "") : p;
+        };
+        document.addEventListener("click", function (e) {
+          var lien = e.target instanceof Element ? e.target.closest("a[href]") : null;
+          if (!lien) return;
+          var url;
+          try {
+            url = new URL(lien.href, location.href);
+          } catch (err) {
+            return;
+          }
+          if (url.origin !== location.origin || sansSlash(url.pathname) !== "/contact") return;
+          if (sansSlash(location.pathname) === "/contact") return;
+          var offre = url.searchParams.get("offre");
+          var sousOffre = url.searchParams.get("sousOffre");
+          var libelle = (lien.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80) || "(sans libellé)";
+          window.sedonaTrack(
+            "CTA contact",
+            offre ? offre + (sousOffre ? " — " + sousOffre : "") : "Sans offre",
+            libelle + " (" + sansSlash(location.pathname) + ")"
+          );
+        });
+
         // Permet de rouvrir le bandeau depuis un lien (ex. footer) :
         // <a href="#" onclick="sedonaGererCookies();return false">Gérer les cookies</a>
         window.sedonaGererCookies = function () {

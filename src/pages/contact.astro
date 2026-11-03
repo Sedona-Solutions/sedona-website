@@ -10,6 +10,9 @@ const { agences } = global;
 const postes = (carrieres.jobs?.items ?? []).map((j: { titre: string }) => j.titre);
 const offres = (await getCollection("offre")).map((o) => o.data.titre).filter(Boolean);
 
+// URL du relais formulaire -> Brevo (services/contact-relay, déployé sur Kubernetes).
+const contactEndpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+
 const BUDGETS = [
   "Moins de 10 000 €",
   "10 000 – 30 000 €",
@@ -73,7 +76,7 @@ const BUDGETS = [
           </div>
         </div>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" novalidate data-endpoint={contactEndpoint}>
           <input type="text" name="website_url" id="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <input type="hidden" name="type_demande" id="typeDemande" value="projet" />
 
@@ -105,13 +108,13 @@ const BUDGETS = [
           </div>
 
           <div class="cfields" data-type-panel="postuler" hidden>
-            <label class="cfield"><span>Nom*</span><input type="text" name="nom_postuler" placeholder="ex: Dupont" /></label>
-            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_postuler" placeholder="ex: Jean" /></label>
-            <label class="cfield"><span>Email*</span><input type="email" name="email_postuler" placeholder="@email.com" /></label>
+            <label class="cfield"><span>Nom*</span><input type="text" name="nom_postuler" placeholder="ex: Dupont" required /></label>
+            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_postuler" placeholder="ex: Jean" required /></label>
+            <label class="cfield"><span>Email*</span><input type="email" name="email_postuler" placeholder="@email.com" required /></label>
             <label class="cfield"><span>Téléphone</span><input type="tel" name="telephone_postuler" placeholder="06 49 29..." /></label>
             <label class="cfield">
               <span>Poste visé*</span>
-              <select name="poste">
+              <select name="poste" required>
                 <option value="">Sélectionner un poste</option>
                 {postes.map((p) => <option value={p}>{p}</option>)}
                 <option value="Autre / candidature spontanée">Autre / candidature spontanée</option>
@@ -124,30 +127,32 @@ const BUDGETS = [
           </div>
 
           <div class="cfields" data-type-panel="autre" hidden>
-            <label class="cfield"><span>Nom*</span><input type="text" name="nom_autre" placeholder="ex: Dupont" /></label>
-            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_autre" placeholder="ex: Jean" /></label>
-            <label class="cfield"><span>Email*</span><input type="email" name="email_autre" placeholder="@email.com" /></label>
+            <label class="cfield"><span>Nom*</span><input type="text" name="nom_autre" placeholder="ex: Dupont" required /></label>
+            <label class="cfield"><span>Prénom*</span><input type="text" name="prenom_autre" placeholder="ex: Jean" required /></label>
+            <label class="cfield"><span>Email*</span><input type="email" name="email_autre" placeholder="@email.com" required /></label>
             <label class="cfield"><span>Téléphone</span><input type="tel" name="telephone_autre" placeholder="06 49 29..." /></label>
             <label class="cfield cfield--full"><span>Votre entreprise</span><input type="text" name="entreprise_autre" placeholder="Entreprise & Co" /></label>
             <label class="cfield cfield--full">
               <span>Votre message*</span>
-              <textarea name="message_autre" rows="4" placeholder="Dites-en nous en un peu plus..."></textarea>
+              <textarea name="message_autre" rows="4" placeholder="Dites-en nous en un peu plus..." required></textarea>
             </label>
           </div>
 
           <div class="ccard__submit">
             <button type="submit" class="cbtn">Envoyer</button>
           </div>
+          <p class="cerror" id="contactError" role="alert" hidden></p>
         </form>
 
-        <div class="csuccess" id="contactSuccess" hidden>
+        <div class="csuccess" id="contactSuccess" tabindex="-1" hidden>
           <span class="csuccess__check" aria-hidden="true">✓</span>
           <h3>Demande envoyée.</h3>
           <p>Nous revenons vers vous rapidement, avec un premier retour sur votre demande.</p>
         </div>
       </div>
       <p class="clegal">
-        En envoyant ce formulaire, vous acceptez d'être contacté(e). Vos données sont traitées conformément au RGPD et ne sont jamais partagées.
+        En envoyant ce formulaire, vous acceptez d'être contacté(e). Vos données sont traitées conformément au RGPD, uniquement pour répondre à votre demande, et ne sont jamais revendues ni cédées.
+        En savoir plus : <a href="/confidentialite/">politique de confidentialité</a>.
       </p>
     </div>
   </section>
@@ -193,6 +198,11 @@ const BUDGETS = [
       });
       panels.forEach((p) => {
         p.hidden = p.getAttribute("data-type-panel") !== type;
+        // Champs des onglets masqués désactivés : ni validés (sinon les « requis »
+        // de l'onglet Projet bloquent Postuler/Autre), ni envoyés.
+        p.querySelectorAll("input, select, textarea").forEach((el) => {
+          (el as HTMLInputElement).disabled = p.hidden;
+        });
       });
       if (typeInput instanceof HTMLInputElement) typeInput.value = type;
     };
@@ -200,6 +210,7 @@ const BUDGETS = [
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => setType(tab.getAttribute("data-type")));
     });
+    setType("projet"); // état initial : désactive les champs des onglets masqués
 
     // Pré-remplissage depuis un lien "Choisir cette offre" / "Demander une démo"
     // sur une page offre (ex. /contact?offre=Elastic).
@@ -264,21 +275,96 @@ const BUDGETS = [
       updateMessagePlaceholder();
     }
 
-    form.addEventListener("submit", (e) => {
+    // Envoi : relais Kubernetes (services/contact-relay) qui transmet à Brevo.
+    // L'URL vient de PUBLIC_CONTACT_ENDPOINT (deploy.yml / .env).
+    const endpoint = form.dataset.endpoint ?? "";
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const erreurEl = document.getElementById("contactError");
+    const afficherErreur = (msg: string) => {
+      if (!erreurEl) return;
+      erreurEl.textContent = msg;
+      erreurEl.hidden = !msg;
+    };
+    const ERREUR_GENERIQUE = "L'envoi a échoué. Réessayez dans un instant ou écrivez-nous à contact@sedona.fr.";
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      afficherErreur("");
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      const data = new FormData(form);
-      const payload = Object.fromEntries(data.entries());
+      // Seuls les champs de l'onglet actif sont envoyés (les autres sont désactivés).
+      const payload = Object.fromEntries(new FormData(form).entries());
+      const str = (v: FormDataEntryValue | undefined) => (typeof v === "string" && v.trim() ? v.trim() : "");
+      const type = str(payload.type_demande) || "projet";
+      // Les onglets « Postuler » / « Autre » suffixent leurs noms de champ : on normalise.
+      const suffixe = type === "projet" ? "" : `_${type}`;
+      const champ = (nom: string) => str(payload[`${nom}${suffixe}`]) || str(payload[nom]);
+      const demande = {
+        type,
+        nom: champ("nom"),
+        prenom: champ("prenom"),
+        email: champ("email"),
+        telephone: champ("telephone"),
+        entreprise: champ("entreprise"),
+        message: champ("message"),
+        budget: str(payload.budget),
+        offre: str(payload.offre),
+        poste: str(payload.poste),
+        linkedin: str(payload.linkedin),
+        page: location.pathname + location.search,
+        website_url: str(payload.website_url), // champ piège anti-robot
+      };
 
-      // TODO: brancher l'envoi réel ici (Netlify Forms, Formspree, CRM, webhook…).
-      console.log("Contact form submission", payload);
+      if (!endpoint) {
+        console.error("PUBLIC_CONTACT_ENDPOINT non configuré : formulaire non envoyé.", demande);
+        afficherErreur(ERREUR_GENERIQUE);
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Envoi…";
+      }
+      try {
+        const reponse = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(demande),
+        });
+        if (!reponse.ok) {
+          const corps = await reponse.json().catch(() => ({}));
+          throw new Error(corps.erreur || ERREUR_GENERIQUE);
+        }
+      } catch (err) {
+        afficherErreur(err instanceof Error && err.message !== "Failed to fetch" ? err.message : ERREUR_GENERIQUE);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Envoyer";
+        }
+        return;
+      }
+
+      // Suivi Matomo (cf. Analytics.astro), uniquement après envoi confirmé.
+      // Aucune donnée personnelle : type de demande + offre/poste/budget.
+      const detail =
+        type === "projet"
+          ? [str(payload.offre) || "Sans offre", str(payload.budget)].filter(Boolean).join(" — ")
+          : type === "postuler"
+            ? str(payload.poste) || "Candidature spontanée"
+            : "Autre demande";
+      const libelles: Record<string, string> = { projet: "Projet", postuler: "Candidature", autre: "Autre demande" };
+      (window as unknown as { sedonaTrack?: (c: string, a: string, n: string) => void }).sedonaTrack?.(
+        "Formulaire contact",
+        `Envoi — ${libelles[type] ?? type}`,
+        detail
+      );
 
       form.hidden = true;
       success.hidden = false;
+      success.focus?.();
     });
   }
 </script>
@@ -375,8 +461,12 @@ const BUDGETS = [
     transition: transform 0.2s ease;
   }
   .cbtn:hover { transform: scale(0.97); }
+  .cbtn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+  .cerror { margin: 16px 0 0; text-align: center; font-family: var(--font-body); color: #b42318; }
+  .csuccess:focus { outline: none; }
 
   .clegal { margin: 0; max-width: 60ch; text-align: center; font-family: var(--font-sans); font-size: 0.75rem; color: color-mix(in srgb, #3b0800 65%, transparent); }
+  .clegal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
   .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
