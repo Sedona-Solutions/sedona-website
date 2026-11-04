@@ -15,9 +15,9 @@ contexte:
   eyebrow: Le contexte
   titre: Un fonds encyclopédique à ouvrir à tous les publics
   intro: 'La BPI voulait rendre accessible au plus grand nombre sa bibliothèque encyclopédique, d''actualités et d''information générale, à travers la refonte de son catalogue en ligne.'
-  media: /uploads/projets/bpi/bpi-image 1557.png
+  media: /uploads/projets/bpi/bpi-image-1557.png
   images:
-    - /uploads/projets/bpi/bpi-image 1558.png
+    - /uploads/projets/bpi/bpi-image-1558.png
   colonnes:
     - titre: Le client
       texte: 'La Bibliothèque publique d''information, établissement culturel de référence, avec un catalogue riche et une exigence forte d''ouverture à tous.'

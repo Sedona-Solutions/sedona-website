@@ -33,13 +33,13 @@ Avec l’introduction de [SwiftUI 5.0](https://developer.apple.com/documentation
 
 ## Evolution de *@State* et *@Environment*
 
-L’apport des macros décrites plus haut a permis de simplifier drastiquement l’écriture des classes ‘ObservableObject’ qui n’implémentent plus le protocole mais sont simplement annotées  [@Observable](https://developer.apple.com/documentation/observation/observable-swift.macro/). Cette macro va transformer le code et rendre l’ensemble des propriétés `@Published`. Lors de la déclaration d’une variable Observable, il n’est plus nécessaire de l’annoter `@StateObject`, elle sera écoutée par défaut par la vue et son état sera conservé entre chaque mise à jour.
+L’apport des macros décrites plus haut a permis de simplifier drastiquement l’écriture des classes ‘ObservableObject’ qui n’implémentent plus le protocole mais sont simplement annotées  [@Observable](https://developer.apple.com/documentation/observation/observable()). Cette macro va transformer le code et rendre l’ensemble des propriétés `@Published`. Lors de la déclaration d’une variable Observable, il n’est plus nécessaire de l’annoter `@StateObject`, elle sera écoutée par défaut par la vue et son état sera conservé entre chaque mise à jour.
 
 D’un point de vue de l’optimisation, la vue est uniquement redessinée par la mutation des propriétés qu’elle utilise, tout autre changement ne sera pas pris en compte par la vue dans le cycle de mise à jour. Les écrans sont donc automatiquement optimisés.
 
 ## SwiftData
 
-[SwiftData](https://developer.apple.com/xcode/swiftdata/) est la nouvelle API de persistance. Fondée sur [CoreData](https://developer.apple.com/documentation/coredata/adopting_swiftdata_for_a_core_data_app), elle simplifie grandement son usage en plus d’être prévue pour une intégration dans des vues SwiftUI. Elle s’appuie également sur la nouvelle écriture en macro, avec l’annotation `@Model.`
+[SwiftData](https://developer.apple.com/xcode/swiftdata/) est la nouvelle API de persistance. Fondée sur [CoreData](https://developer.apple.com/documentation/coredata/adopting-swiftdata-for-a-core-data-app), elle simplifie grandement son usage en plus d’être prévue pour une intégration dans des vues SwiftUI. Elle s’appuie également sur la nouvelle écriture en macro, avec l’annotation `@Model.`
 
 Cette *macro* ajoute la persistance, la synchronisation iCloud et une nouvelle fonctionnalité ‘annuler/rétablir’.
 
