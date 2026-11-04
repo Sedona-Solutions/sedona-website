@@ -1,4 +1,5 @@
 ---
+import { estPublie } from "../../utils/articleVisibility";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
@@ -8,7 +9,7 @@ import { recolorIcon } from "../../utils/iconRecolor.js";
 import { ACCENT_MID } from "../../data/offreAccents.js";
 
 export async function getStaticPaths() {
-  const items = await getCollection("projet");
+  const items = await getCollection("projet", ({ data }) => estPublie(data.statut));
   return items.map((entry, i, arr) => ({ params: { slug: entry.id }, props: { entry, arr } }));
 }
 

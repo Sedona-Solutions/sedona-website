@@ -1,11 +1,12 @@
 ---
+import { estPublie } from "../../utils/articleVisibility";
 import Media from "../../components/Media.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
 
-const projets = (await getCollection("projet"))
+const projets = (await getCollection("projet", ({ data }) => estPublie(data.statut)))
   .map((p) => ({ ...p.data, slug: p.id }))
   .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0));
 

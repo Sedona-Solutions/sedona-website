@@ -102,6 +102,8 @@ const projet = defineCollection({
   schema: z.object({
     seo,
     titre: z.string(),
+    // « Brouillon » / « Archivé » : référence masquée sur le site (cf. estPublie).
+    statut: z.enum(["Brouillon", "Publié", "Archivé"]).optional(),
     client: z.string().optional(),
     couverture: z.string().optional(),
     bannerDetail: z.string().optional(),

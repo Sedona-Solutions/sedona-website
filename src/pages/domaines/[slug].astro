@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import home from "../../../content/home/index.json";
 import { ACCENTS } from "../../data/domaines.js";
-import { estArticlePublie } from "../../utils/articleVisibility";
+import { estArticlePublie, estPublie } from "../../utils/articleVisibility";
 
 import DomaineHero from "../../components/domaine/DomaineHero.astro";
 import Ticker from "../../components/home/Ticker.astro";
@@ -24,7 +24,7 @@ const d = entry.data;
 const accent = ACCENTS[entry.id] ?? ACCENTS["produits-digitaux"];
 
 // Projets : ceux mis en avant si renseignés, sinon les 4 plus récents.
-const tousProjets = (await getCollection("projet"))
+const tousProjets = (await getCollection("projet", ({ data }) => estPublie(data.statut)))
   .map((p) => ({ ...p.data, slug: p.id }))
   .sort((a, b) => +new Date(b.date ?? 0) - +new Date(a.date ?? 0));
 const projetsMisEnAvant = (d.projets?.projetsMisEnAvant ?? []).map((r) => r.projet).filter(Boolean);

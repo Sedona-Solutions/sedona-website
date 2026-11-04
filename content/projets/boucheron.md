@@ -1,4 +1,5 @@
 ---
+statut: Brouillon
 titre: Refonte du site institutionnel
 client: Boucheron
 couverture: /uploads/projets/boucheron-cover.png

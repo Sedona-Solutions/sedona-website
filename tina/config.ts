@@ -634,6 +634,14 @@ export default defineConfig({
           { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
           {
             type: "string",
+            name: "statut",
+            label: "Statut",
+            description:
+              "« Brouillon » ou « Archivé » : la référence est masquée partout sur le site (liste, page, accueil, domaines). Vide = publiée.",
+            options: ["Publié", "Brouillon", "Archivé"],
+          },
+          {
+            type: "string",
             name: "accent",
             label: "Couleur d'accent de la page",
             ui: { component: ColorSwatchDropdown },
