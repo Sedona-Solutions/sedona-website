@@ -157,13 +157,32 @@ async function obtenirLocal(chemin) {
   return { statut: 404 };
 }
 
-async function requete(url, methode) {
-  return fetch(url, {
-    method: methode,
-    redirect: "follow",
-    headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml,*/*;q=0.8" },
-    signal: AbortSignal.timeout(20_000),
-  });
+const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Requête HTTP avec nouvelles tentatives sur les erreurs passagères (5xx, 429,
+ * coupure réseau) : GitHub Pages renvoie parfois un 503 isolé quand on enchaîne
+ * beaucoup de requêtes, ce qui ne doit pas être signalé comme un lien cassé.
+ */
+async function requete(url, methode, tentatives = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      const r = await fetch(url, {
+        method: methode,
+        redirect: "follow",
+        headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml,*/*;q=0.8" },
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (i < tentatives && (r.status >= 500 || r.status === 429)) {
+        await pause(1000 * i);
+        continue;
+      }
+      return r;
+    } catch (e) {
+      if (i >= tentatives) throw e;
+      await pause(1000 * i);
+    }
+  }
 }
 
 /** Mode en ligne : vraie requête sur le site déployé. */
@@ -315,7 +334,10 @@ if (AVEC_EXTERNES) {
   console.log(`Vérification de ${externes.size} liens externes…`);
   const urls = [...externes.keys()];
   // Ressources techniques sans page à vérifier (polices Google, etc.).
-  const ignorer = (u) => /^https:\/\/fonts\.(googleapis|gstatic)\.com\/?$/.test(u);
+  // + liens vers localhost : seule l'interface Tina générée en local (dist/admin/,
+  // non déployée) en contient.
+  const ignorer = (u) =>
+    /^https:\/\/fonts\.(googleapis|gstatic)\.com\/?$/.test(u) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(u);
   let i = 0;
   const ouvrier = async () => {
     while (i < urls.length) {
