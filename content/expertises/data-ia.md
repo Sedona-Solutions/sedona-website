@@ -4,7 +4,7 @@ pillWord: Data
 affichage:
   ordre: 2
   icone: data-ia
-  resume: 'Faites parler vos données, de l''extraction à son usage par l''IA. L''IA chez Sedona c''est également 2 offres : Brieff pour gérer efficacement votre documentation projet et IA Forge qui vous met à disposition une équipe d''experts biberonnée à l''IA pour développer vos projets plus rapidement.'
+  resume: 'Faites parler vos données, de l''extraction à son usage par l''IA. '
 accroche: 'Nous vous aidons à exploiter intelligemment vos données : pour décider efficacement et automatiser ce qui mérite de l''être ! Nous vous accompagnons dans la définition de vos projets IA, sans obligation de technologies mais plutôt une écoute attentive de vos besoins !'
 illustration: /deco/domaine-data-hero.svg
 tags:
