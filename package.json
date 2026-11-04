@@ -16,7 +16,7 @@
     "test": "node --test src/contact.test.mjs",
     "test:liens": "node scripts/verifier-liens.mjs",
     "test:liens:externes": "node scripts/verifier-liens.mjs --externes",
-    "test:liens:preview": "node scripts/verifier-liens.mjs --url https://preview.sedona.fr --externes",
+    "test:liens:prod": "node scripts/verifier-liens.mjs --url https://sedona.fr --externes",
     "audit:images": "node scripts/audit-images.mjs",
     "seo:redirections": "node scripts/redirections.mjs",
     "astro": "astro",
