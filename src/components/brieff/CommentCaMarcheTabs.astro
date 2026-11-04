@@ -2,6 +2,7 @@
 // Variante à onglets de CommentCaMarche.astro (page Keycloak Run uniquement) :
 // deux jeux de cartes ("avant"/"après" la production) commutés par un sélecteur,
 // au lieu d'une unique liste d'étapes numérotées.
+import Media from "../Media.astro";
 import { richTextToHtml } from "../../utils/richText.js";
 import { recolorIcon } from "../../utils/iconRecolor.js";
 import { ACCENT_LIGHT, ACCENT_MID } from "../../data/offreAccents.js";
@@ -52,7 +53,7 @@ const radiusClass =
 
     {image && (
       <div class="bccm__image" data-reveal>
-        <img src={image} alt="" width={880} loading="lazy" />
+        <Media src={image} width={880} />
       </div>
     )}
 
