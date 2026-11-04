@@ -84,6 +84,8 @@ methode:
       logo: /technos/powerbi.svg
     - nom: LangChain/LangSmith
       logo: /technos/langchain.svg
+    - nom: Ollama
+      logo: /technos/ollama.svg
 cqnf:
   eyebrow: Ce que nous faisons
   titre: Des solutions pragmatiques et opérationnelles
