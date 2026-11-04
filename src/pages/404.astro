@@ -1,0 +1,167 @@
+---
+// Page d'erreur 404. GitHub Pages sert automatiquement dist/404.html pour toute
+// URL inexistante, quel que soit le chemin : tous les liens et ressources de la
+// page doivent donc être absolus (« /… »).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TitreAccent from "../components/TitreAccent.astro";
+
+const raccourcis = [
+  { label: "Nos domaines", href: "/domaines/produits-digitaux" },
+  { label: "Nos projets", href: "/projets" },
+  { label: "Le blog", href: "/blog" },
+  { label: "Rejoindre la tribu", href: "/carrieres" },
+];
+---
+
+<BaseLayout title="Page introuvable — Sedona" description="Cette page n'existe pas ou n'existe plus." noindex>
+  <section class="e404">
+    <svg class="e404__deco e404__deco--1" viewBox="0 0 94.0314 137.766" fill="none" aria-hidden="true">
+      <path
+        d="M29.9266 120.978C41.6674 118.183 65.8201 105.212 68.5037 75.6923C71.8583 38.7924 32.6305 39.3696 27.1322 57.2423C22.6604 71.7786 48.3413 94.8368 72.9611 75.1396C92.5278 59.4851 97.5361 14.3591 87.4725 1.50007M23.8464 99.6987C19.3728 111.253 3.48863 135.218 3.48863 135.218C3.48863 135.218 17.0718 131.366 27.1354 134.721"
+        stroke="#F8D98B"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+    <svg class="e404__deco e404__deco--2" viewBox="0 0 52.0937 75.5005" fill="none" aria-hidden="true">
+      <path
+        d="M50.0211 1.50029C51.0211 6.50029 51.4211 16.7003 45.0211 17.5003C37.0211 18.5003 31.0208 18.0003 29.5208 23.5003C28.0208 29.0003 33.0208 42.5003 23.0208 44.0003C13.0208 45.5003 8.52054 44.0003 4.02072 51.5003C-0.291423 58.6875 2.02078 67.0003 3.0211 74.0003"
+        stroke="#E9B189"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+    <svg class="e404__deco e404__deco--3" viewBox="0 0 73 80" fill="none" aria-hidden="true">
+      <path
+        d="M10 32.7838L28 4M24.1429 52.6126C32.0714 46.003 49.6 32.7838 56.2857 32.7838M32.5 75C40 73.5075 56.8 71.418 64 75"
+        stroke="var(--color-sunshine-600)"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+
+    <div class="container e404__inner">
+      <p class="e404__eyebrow">Erreur 404</p>
+      <p class="e404__code" aria-hidden="true">404</p>
+      <TitreAccent
+        titre="Cela ne devrait pas arriver…"
+        accent="pas arriver"
+        as="h1"
+        class="title-2 e404__title"
+        pillVariant="ovni"
+      />
+      <p class="e404__texte">
+        Même perdus en plein désert de l'Arizona, nos fondateurs ont fini par retrouver leur chemin.
+        Cette page, elle, a visiblement pris la tangente : elle n'existe pas, ou plus.
+        Notre tribu mène l'enquête, café à la main.
+      </p>
+
+      <div class="e404__actions">
+        <a class="btn-flat-lg" href="/">
+          <span class="btn-bg" aria-hidden="true"></span>
+          <span class="btn-front" aria-hidden="true"></span>
+          <span class="btn-label">Retour à l'accueil</span>
+        </a>
+        <a class="btn-outline-lg" href="/contact">Nous contacter</a>
+      </div>
+
+      <nav class="e404__raccourcis" aria-label="Raccourcis">
+        <span>Ou reprenez la route par ici :</span>
+        <ul>
+          {raccourcis.map((r) => <li><a class="link-cta" href={r.href}>{r.label}</a></li>)}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .e404 {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 7vw, 7rem) clamp(4rem, 8vw, 8rem);
+  }
+  .e404__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Traits « griffonnés » comme sur les autres pages (cf. /contact). */
+  .e404__deco { position: absolute; pointer-events: none; z-index: 0; height: auto; }
+  .e404__deco--1 { width: 70px; left: calc(50% - 520px); top: 300px; transform: rotate(192deg) scaleY(-1); }
+  .e404__deco--2 { width: 44px; right: calc(50% - 560px); top: 120px; }
+  .e404__deco--3 { width: 60px; right: calc(50% - 480px); bottom: 90px; transform: rotate(275deg) scaleY(-1); }
+  @media (max-width: 1200px) {
+    .e404__deco { display: none; }
+  }
+
+  .e404__eyebrow {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #3b0800;
+  }
+  .e404__code {
+    margin: 0.25rem 0 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(6rem, 22vw, 14rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-red-rock-400);
+  }
+  .e404 :global(.e404__title) {
+    margin: 0 auto;
+    max-width: 22ch;
+    color: #3b0800;
+  }
+  .e404__texte {
+    margin: 1.5rem auto 0;
+    max-width: 56ch;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: color-mix(in srgb, #3b0800 85%, transparent);
+  }
+
+  .e404__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .e404__raccourcis {
+    margin-top: 3rem;
+    font-family: var(--font-body);
+    color: #3b0800;
+  }
+  .e404__raccourcis ul {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.75rem;
+  }
+  .e404__raccourcis a {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    color: #3b0800;
+  }
+
+  @media (max-width: 560px) {
+    .e404__actions { flex-direction: column; align-items: stretch; width: 100%; }
+    .e404__actions a { width: 100%; }
+  }
+</style>

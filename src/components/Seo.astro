@@ -47,6 +47,8 @@ const site = Astro.site!;
 const titre = seo.titre?.trim() || props.title;
 const description = resumer(seo.description || props.description) ?? DESCRIPTION_DEFAUT;
 const canonique = urlCanonique(Astro.url.pathname, site);
+// Page 404 : servie à n'importe quelle adresse inexistante, elle n'a pas d'URL propre.
+const pageErreur = /^\/404(\.html)?\/?$/.test(Astro.url.pathname);
 const type = props.type ?? "website";
 const pageNoindex = !!(seo.noindex ?? props.noindex);
 const indexable = estIndexable(site) && !pageNoindex;
@@ -76,7 +78,7 @@ const ld = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
 
 <title>{titre}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonique} />
+{!pageErreur && <link rel="canonical" href={canonique} />}
 <meta
   name="robots"
   content={indexable ? "index, follow, max-image-preview:large" : estIndexable(site) ? "noindex, follow" : "noindex, nofollow"}
@@ -89,7 +91,7 @@ const ld = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
 <meta property="og:type" content={type} />
 <meta property="og:title" content={titre} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={canonique} />
+{!pageErreur && <meta property="og:url" content={canonique} />}
 <meta property="og:image" content={image.url} />
 {image.width > 0 && <meta property="og:image:width" content={String(image.width)} />}
 {image.height > 0 && <meta property="og:image:height" content={String(image.height)} />}
