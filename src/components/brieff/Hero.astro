@@ -139,7 +139,7 @@ if (accroche.includes(motAMettreEnAvant)) {
   .bhero__squiggle2 :global(svg) { width: 100%; height: auto; display: block; }
 
   @media (max-width: 960px) {
-    .bhero__row { grid-template-columns: 1fr; }
+    .bhero__row { grid-template-columns: minmax(0, 1fr); }
     .bhero__illu-outer { order: -1; }
     .bhero__deco { display: none; }
     .bhero__squiggle2 { display: none; }

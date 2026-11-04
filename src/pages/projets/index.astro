@@ -183,7 +183,7 @@ const clients = home.clientsSection?.logos ?? [];
   .filtres { background: var(--color-canyon-50); }
   .filtres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; text-align: center; gap: 0.25rem 0.5rem; padding-block: 1rem 2.5rem; margin-block: 0; }
   .filtres__list li:not(:last-child) .filtre::after { content: "/"; margin: 0 0.5rem 0 0.65rem; font-weight: 400; color: var(--color-text-muted); }
-  .filtre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
+  .filtre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0.2rem 0; cursor: pointer; } /* 0.2rem : zone tactile ≥ 24 px */
   .filtre sup { font-size: 0.5em; font-weight: 500; margin-left: 0.15em; vertical-align: super; }
   .filtre__label { display: inline-block; }
   /* Le trait souligne uniquement le libellé (pas le compteur en exposant) ;

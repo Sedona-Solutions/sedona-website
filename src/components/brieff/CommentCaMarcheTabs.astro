@@ -135,6 +135,11 @@ const radiusClass =
     transition: background 0.2s ease, color 0.2s ease; white-space: nowrap;
   }
   .bccmt__switch button[aria-selected="true"] { background: #3b0800; color: var(--color-red-rock-50); }
+  @media (max-width: 560px) {
+    /* Les onglets se partagent la largeur de l'écran au lieu de déborder. */
+    .bccmt__switch { width: auto; max-width: 100%; }
+    .bccmt__switch button { flex: 1 1 0; min-width: 0; padding: 0.8em 0.6em; font-size: 0.8125rem; line-height: 1.15; white-space: normal; }
+  }
 
   .bccm__steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .bccm__steps[hidden] { display: none; }

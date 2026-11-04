@@ -112,6 +112,11 @@ const iconsByTab = tabs.map((t) => (t.items ?? []).map((it) => (it.icone ? recol
     transition: background 0.2s ease, color 0.2s ease; white-space: nowrap;
   }
   .bper__switch button[aria-selected="true"] { background: #3b0800; color: var(--color-red-rock-50); }
+  @media (max-width: 560px) {
+    /* Les onglets se partagent la largeur de l'écran au lieu de déborder. */
+    .bper__switch { width: auto; max-width: 100%; }
+    .bper__switch button { flex: 1 1 0; min-width: 0; padding: 0.8em 0.6em; font-size: 0.8125rem; line-height: 1.15; white-space: normal; }
+  }
 
   .bper__head { position: relative; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
   .bper__decoWrap { position: absolute; right: 0; top: 210px; width: 160px; height: auto; pointer-events: none; }

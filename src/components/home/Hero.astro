@@ -88,8 +88,10 @@ const BADGES = [
   <div class="hero__mobile">
     <h1 class="hero__mtitle">
       {
+        // Les deux premiers segments (« Trans » + « formons ») ne forment qu'un mot :
+        // sur ordinateur la maquette les sépare par la bulle « IA », pas sur mobile.
         mots.map((m, i) => (
-          <span class={`hw--${WORDS[i]?.font ?? "grotesk"}`}>{m.texte} </span>
+          <span class={`hw--${WORDS[i]?.font ?? "grotesk"}`}>{m.texte}{i === 0 ? "" : " "}</span>
         ))
       }
     </h1>
@@ -323,6 +325,12 @@ const BADGES = [
     position: relative;
   }
 
+  /* Tablettes (720–1199 px) : à 24 px la tagline passe sur 2 lignes et sa 2e ligne
+     glisse sous le CTA (positionné à l'échelle du cadre). À 18 px elle tient. */
+  @media (min-width: 720px) and (max-width: 1199px) {
+    .hero__lead { font-size: 18px; line-height: 1.35; }
+  }
+
   /* --- Version mobile --- */
   .hero__mobile {
     display: none;
@@ -335,12 +343,19 @@ const BADGES = [
       padding: clamp(2.5rem, 9vw, 4rem) 1.25rem clamp(3rem, 10vw, 4.5rem);
       background-size: 44px 44px;
     }
-    .hero__frame {
+    /* Version « ordinateur » masquée en entier : le cadre, mais aussi la tagline et
+       le CTA posés hors du cadre (sinon ils se superposent au titre mobile). */
+    .hero__frame,
+    .hero > .hero__lead,
+    .hero > .hero__cta {
       display: none;
     }
     .hero__mobile {
       display: block;
       text-align: center;
+      /* Au-dessus du voile radial décoratif (.hero::before), qui délavait le texte. */
+      position: relative;
+      z-index: 1;
     }
     .hero__mtitle {
       margin: 0;
@@ -348,7 +363,8 @@ const BADGES = [
       text-transform: uppercase;
       font-weight: 600;
       line-height: 1.02;
-      font-size: clamp(2.5rem, 13vw, 4rem);
+      /* 10vw : « TRANSFORMONS » (12 lettres) doit tenir sur une ligne dès 320 px. */
+      font-size: clamp(1.9rem, 10vw, 4rem);
     }
     .hero__mtitle .hw--grotesk { font-family: "Space Grotesk", sans-serif; font-weight: 600; }
     .hero__mtitle .hw--mono { font-family: "Space Mono", monospace; font-weight: 400; }
@@ -365,6 +381,8 @@ const BADGES = [
       transform: none;
       margin-top: 2rem;
       font-size: 1rem;
+      /* Sans les calques .hero__cta-bg/-front du bouton « ordinateur » : fond direct. */
+      background: #3b0800;
     }
     .hero__cta--static:hover {
       transform: scale(0.97);

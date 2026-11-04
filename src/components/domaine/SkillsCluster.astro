@@ -73,7 +73,10 @@ const lignes = enLignes(colored);
     white-space: nowrap;
   }
   @media (max-width: 720px) {
-    .skills__row { flex-wrap: wrap; }
-    .skill { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+    /* max-width : sans lui, la ligne (enfant d'un flex colonne centré) prend sa
+       largeur naturelle et déborde de l'écran au lieu de passer à la ligne. */
+    .skills__row { flex-wrap: wrap; max-width: 100%; }
+    /* Une compétence longue (« Portails d'entreprise/CMS ») peut passer sur 2 lignes. */
+    .skill { font-size: clamp(1.5rem, 8vw, 2.5rem); white-space: normal; max-width: 100%; text-align: center; }
   }
 </style>

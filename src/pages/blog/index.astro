@@ -196,7 +196,7 @@ const filtres = [
   .bfiltres__row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem 1.5rem; padding-block: 1rem 2.5rem; }
   .bfiltres__list { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; text-align: center; gap: 0.1rem 0; padding: 0; margin: 0; max-width: 70%; }
   .bfiltres__list li:not(:last-child) .bfiltre::after { content: "/"; margin: 0 0.4rem 0 0.6rem; color: var(--color-text-muted); font-weight: 400; }
-  .bfiltre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0; cursor: pointer; }
+  .bfiltre { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.125rem, 1.6vw, 1.5rem); color: #3b0800; background: none; border: none; padding: 0.2rem 0; cursor: pointer; } /* 0.2rem : zone tactile ≥ 24 px */
   .bfiltre sup { font-size: 0.5em; font-weight: 500; margin-left: 0.15em; vertical-align: super; }
   .bfiltre__label { display: inline-block; }
   /* Le trait souligne uniquement le libellé (pas le compteur en exposant) ; cf. /projets. */

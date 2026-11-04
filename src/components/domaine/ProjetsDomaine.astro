@@ -129,5 +129,13 @@ const isTexte = layout === "texte";
 
   .pd__all { text-align: center; margin-top: clamp(2.5rem, 5vw, 4rem); }
 
-  @media (max-width: 760px) { .pd__grid { grid-template-columns: 1fr; } .pd__squiggle { display: none; } }
+  @media (max-width: 760px) {
+    /* minmax(0, 1fr) : une colonne qui ne s'élargit pas au-delà de l'écran pour un mot long. */
+    .pd__grid { grid-template-columns: minmax(0, 1fr); }
+    .pd__squiggle { display: none; }
+  }
+  @media (max-width: 480px) {
+    .pdc--texte .pdc__card { gap: 1rem; padding: 1.5rem 1.25rem; }
+    .pdc--texte .pdc__title { font-size: 1.3rem; overflow-wrap: anywhere; }
+  }
 </style>
