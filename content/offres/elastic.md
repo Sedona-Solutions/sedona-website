@@ -23,7 +23,7 @@ pourQui:
   titreAccent: ''
   items:
     - titre: DSI
-      sousTitre: 'Connaitre vos clients, dôter vos équipes d''outils de supervision et d''analyse'
+      sousTitre: 'Connaitre vos clients, doter vos équipes d''outils de supervision et d''analyse'
       texte: |
         Utiliser un outil permettant de connaitre vos clients, vous doter d'une capacité d'indexation et de recherche pour l'ensemble de vos projets. Avoir des possibilités de traçabilité et d'observabilité de vos logs.
     - titre: ÉQUIPE DEVOPS
