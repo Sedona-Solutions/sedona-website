@@ -6,6 +6,7 @@ extrait: 'Développement agentique, harness, Swift Concurrency et réflexions su
 auteur: Antoine
 avatar: /uploads/articles/collab/antoine-m.png
 tempsLecture: 5 min de lecture
+vedette: true
 tags:
   - Évènement
   - App Mobile

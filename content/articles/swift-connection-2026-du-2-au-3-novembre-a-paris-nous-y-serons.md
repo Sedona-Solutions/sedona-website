@@ -4,6 +4,7 @@ date: 2026-10-29T10:16:36.947Z
 couverture: /uploads/events/Swift Connection 2026.jpg
 extrait: '10 ème édition d''un évènement dédié aux afficionados de la marque à la pomme. '
 auteur: Rémy Poulachon
+avatar: /uploads/articles/collab/remy-p.png
 tempsLecture: '1'
 statut: Publié
 ---
