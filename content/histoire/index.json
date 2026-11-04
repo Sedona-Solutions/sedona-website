@@ -87,19 +87,19 @@
         "ville": "Lyon",
         "label": "Agence Rhônes-Alpes",
         "adresse": "45 avenue de la République\n69003 Lyon",
-        "email": "contact-lyon@sedona.fr"
+        "email": "contact@sedona.fr"
       },
       {
         "ville": "Paris",
         "label": "Agence parisienne (siège social)",
         "adresse": "19 rue Mogador\n75009 Paris",
-        "email": "contact-paris@sedona.fr"
+        "email": "contact@sedona.fr"
       },
       {
         "ville": "Toulon",
         "label": "Agence PACA",
         "adresse": "8 boulevard du Littoral\n83000 Toulon",
-        "email": "contact-toulon@sedona.fr"
+        "email": "contact@sedona.fr"
       }
     ]
   },

@@ -2,6 +2,7 @@
 titre: Modernisation et refonte du site internet
 client: BPI
 couverture: /uploads/projets/bpi-cover.png
+accroche: Refondre le catalogue en ligne de la Bibliothèque publique d'information pour rendre son fonds encyclopédique accessible au plus grand nombre — y compris aux personnes en situation de handicap.
 bannerDetail: /uploads/projets/bpi/pexels-photo-258163.png
 tags:
   - Service publique
@@ -9,13 +10,7 @@ tags:
   - UX/UI design
   - Symfony
   - Interface Design
-accroche: Refondre le catalogue en ligne de la Bibliothèque publique d'information pour rendre son fonds encyclopédique accessible au plus grand nombre — y compris aux personnes en situation de handicap.
 annee: '2019'
-technos:
-  - nom: Symfony
-    logo: /technos/symfony.svg
-  - nom: PHP
-    logo: /uploads/Logo/php.svg
 contexte:
   eyebrow: Le contexte
   titre: Un fonds encyclopédique à ouvrir à tous les publics
@@ -51,9 +46,9 @@ stats:
   items:
     - valeur: RGAA v4
       label: Norme d'accessibilité visée
-    - valeur: XX
+    - valeur: + 1M
       label: Ressources cataloguées
-    - valeur: XX
+    - valeur: '+80'
       suffixe: '%'
       label: Score d'accessibilité
 approche:
@@ -79,5 +74,11 @@ approche:
     - titre: 'Accessible par tous, pour tous'
       texte: Un catalogue de recueils numériques ouvert au plus grand nombre.
       icone: computeur-pc-4
+technos:
+  - nom: Symfony
+    logo: /technos/symfony.svg
+  - nom: PHP
+    logo: /uploads/Logo/php.svg
 date: 2019-07-10T00:00:00.000Z
 ---
+
