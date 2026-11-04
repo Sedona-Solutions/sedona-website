@@ -18,7 +18,7 @@ statut: Publié
 
 **Cette 10e édition de la Swift Connection (anciennement FrenchKit) se termine et il est l'heure de dresser un bilan. À l'heure où l'IA redessine les contours de toute l'industrie tech, les organisateurs ont constaté une forte baisse de la participation. Selon eux, les développeurs deviennent plus agnostiques vis-à-vis des technologies et descendent moins dans le détail d'implémentation, qui fait justement la matière de nombreux talks. Une page est-elle en train de se tourner ?**
 
-Durant les deux jours de conférence, une quinzaine de conférenciers étaient présents avec des visages connus et reconnus de la scène iOS/Swift depuis de nombreuses années, tels que [Chris Eidhof](http://www.eidhof.nl/), [Daniel Steinberg](https://www.dimsumthinking.com/), [Laura Savino](https://www.linkedin.com/in/laurasavino), Zach Brass, [Matt Massicotte](https://www.massicotte.org/), [Soroush Khanlou](https://khanlou.com/) ou encore [Antoine Van der Lee](https://www.avanderlee.com/).
+Durant les deux jours de conférence, une quinzaine de conférenciers étaient présents avec des visages connus et reconnus de la scène iOS/Swift depuis de nombreuses années, tels que [Chris Eidhof](http://www.eidhof.nl/), [Daniel Steinberg](https://www.dimsumthinking.com/), [Laura Savino](https://www.linkedin.com/in/laurasavino), [Zach Brass](https://sessionize.com/zach-brass/), [Matt Massicotte](https://www.massicotte.org/), [Soroush Khanlou](https://khanlou.com/) ou encore [Antoine Van der Lee](https://www.avanderlee.com/).
 
 Les talks couvraient une grande variété de sujets, alternant technique et réflexion de fond sur l'évolution des métiers du développement iOS. Et il y avait un éléphant dans la pièce : le développement agentique.
 
@@ -30,17 +30,16 @@ Petit point de vocabulaire pour commencer, le *harness* désigne l'ensemble des 
 
 [Alaina Kafkes](https://github.com/alainakafkes) a donné un talk sur l'utilisation des commentaires et a fourni des recommandations simples et efficaces pour s'assurer que ceux-ci restent pertinents : se concentrer sur le « quoi » et le « pourquoi » plutôt que sur le « comment ». Les agents ont la fâcheuse tendance à s'étendre un peu trop dans les commentaires ou à documenter les changements de direction, ce qui alourdit la lecture du code et augmente la consommation de tokens. Avec son équipe, Alaina centralise les choix techniques grâce à des ADR (*Architecture Decision Records*) et conserve uniquement la référence localement dans le code.
 
-[Stelios Frantzekakis](https://www.steliosf.com/) a présenté [Harmonize](https://github.com/perrystreetsoftware/Harmonize), une bibliothèque inspirée d'[ArchUnit](https://www.archunit.org/) qui a pour objectif de tester unitairement l'architecture de votre application. Elle s'intègre parfaitement dans l'outillage iOS et contribue à configurer le *harness* de votre agent en apportant un ensemble de contraintes d'architecture définies en amont. La prochaine version, actuellement en bêta, ajoute des options de configuration des messages d'erreur et permet de générer des skills avec des références à partir de vos règles pour guider vos agents. Stelios a conclu sa présentation comme ceci : « *Because it the AI era... Agents generate the code. Human define the architecture. And lint rules enforce it.* »
+[Stelios Frantzekakis](https://www.steliosf.com/) a présenté [Harmonize](https://github.com/perrystreetsoftware/Harmonize), une bibliothèque inspirée d'[ArchUnit](https://www.archunit.org/) qui a pour objectif de tester unitairement l'architecture de votre application. Elle s'intègre parfaitement dans l'outillage iOS et contribue à configurer le *harness* de votre agent en apportant un ensemble de contraintes d'architecture définies en amont. La prochaine version, actuellement en bêta, ajoute des options de configurations des messages d'erreur et permet de générer des skills avec des références à partir de vos règles pour guider vos agents. Stelios a conclu sa présentation comme ceci : « *Because it the AI era... Agents generate the code. Human define the architecture. And lint rules enforce it.* »
 
 Enfin, Matt Massicotte et Lucy Galik ont partagé leurs retours d'expérience et bonnes pratiques sur Swift Concurrency et sur le choix entre `enum` et `struct`, de quoi alimenter les skills de vos agents.
 
 ## Catalyseur de créativité
 
 Plusieurs talks ont aussi montré que le développement agentique permet de se lancer dans des projets qu'on n'aurait pas entrepris seul.
-
-* Hervé Bérenger a exploré avec l'aide d'un LLM les [500 000 lignes de code du dépôt officiel](https://github.com/apple/security-pcc) du *Private Cloud Compute* d'Apple pour en présenter les mécanismes de sécurité.
-* Antoine Van der Lee a développé [RocketTrace](https://rockettrace.app/), un outil qui améliore la productivité de ses agents et audite les problèmes de performance relevés avec *Instruments*.
-* Soroush Khanlou a fait développer une app macOS par un agent pour remplacer ses slides par de nombreuses démos interactives.
+- [Hervé Bérenger](https://fr.linkedin.com/in/herve-berenger) a exploré avec l'aide d'un LLM les [500 000 lignes de code du dépôt officiel](https://github.com/apple/security-pcc) du *Private Cloud Compute* d'Apple pour en présenter les mécanismes de sécurité.
+- Antoine Van der Lee a développé [RocketTrace](https://rockettrace.app/), un outil qui améliore la productivité de ses agents et audite les problèmes de performance relevés avec *Instruments*.
+- Soroush Khanlou a fait développer une app macOS par un agent pour remplacer ses slides par de nombreuses démos interactives.
 
 ## *Learn, Breathe and Reflect*
 
@@ -56,4 +55,4 @@ Cette dixième édition se referme sans certitude sur la suivante : les organisa
 
 Une bonne partie des talks portaient sur la construction du *harness* de nos agents, et les outils évoluent si vite que ces pratiques auront peut-être perdu leur sens dans un an. Une conférence annuelle peut-elle encore suivre ce rythme ?
 
-Les projets présentés cette année montrent au moins que les agents permettent d'explorer plus facilement une multitude de sujets ou de prototyper des outils. Tant que les développeurs s'en serviront pour expérimenter de nouvelles choses, les conférences resteront une occasion de partager, d'apprendre et de faire des rencontres.
+Les projets présentés cette année montrent au moins que les agents permettent d'explorer plus facilement une multitude de sujets ou prototyper des outils. Tant que les développeurs s'en serviront pour expérimenter de nouvelles choses, les conférences resteront une occasion de partager, d'apprendre et de faire des rencontres.

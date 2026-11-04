@@ -1,12 +1,12 @@
 ---
+categorie: Autres
 titre: 'MiXiT 2026 : Célébrer l''IA, ou la questionner ?'
 date: 2026-05-21T15:35:52.000Z
-couverture: ''
+couverture: /uploads/articles/mixit2026.png
 extrait: 'Pour ses 15 ans, le MiXiT est resté fidèle à lui-même : entre tech et éthique, une IA omniprésente qu''on questionne plutôt que de la célébrer. Curiosité et recul critique — tout l''esprit de la conférence lyonnaise.'
 auteur: Clément G.
 avatar: /uploads/articles/collab/clement-g.png
 tempsLecture: 3 min de lecture
-categorie: Autres
 tags:
   - Évènement
   - MiXiT
