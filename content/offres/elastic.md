@@ -23,37 +23,38 @@ pourQui:
   titreAccent: ''
   items:
     - titre: DSI
-      sousTitre: '######'
+      sousTitre: 'Connaitre vos clients, dôter vos équipes d''outils de supervision et d''analyse'
       texte: |
-        Créez des docs produit rapidement et partagez un dashboard client, avec une vigilance automatique pour assurer la cohérence.
+        Utiliser un outil permettant de connaitre vos clients, vous doter d'une capacité d'indexation et de recherche pour l'ensemble de vos projets. Avoir des possibilités de traçabilité et d'observabilité de vos logs.
     - titre: ÉQUIPE DEVOPS
-      sousTitre: '####'
+      sousTitre: Des outils pour vous aider au quotidien
       texte: |
         Réduisez le temps de détection et de diagnostic des incidents.
     - titre: PRODUCT OWNER
-      sousTitre: '####'
+      sousTitre: 'Indexer vos documents, faites des recherches perfectionnées'
       texte: |
         Offrez une recherche rapide et pertinente à vos utilisateurs.
     - titre: RESPONSABLE DATA/BI
-      sousTitre: '####'
+      sousTitre: Avoir une vision consolidée de vos Datas simplement et en Open Source
       texte: |
-        Construisez des dashboards opérationnels partagés avec le métier.
+        Avec Kibana construisez des dashboards opérationnels partagés avec le métier.
 raisons:
   eyebrow: DE QUOI PARLE-T-ON ?
   titre: "Une suite open source\Lde haute performance"
   titreAccent: open source
-  intro: 'Reconnue pour collecter, traiter, interroger et visualiser de gros volumes de données, la suite Elastic est nativement pensée pour fonctionner en cluster — performances et haute disponibilité au rendez-vous.'
+  intro: 'Reconnue pour collecter, traiter, interroger et visualiser de gros volumes de données, la suite Elastic est nativement pensée pour fonctionner en cluster : performances et haute disponibilité au rendez-vous.'
   items:
     - titre: Moteur de recherche
-      texte: "Recherche pertinente et instantanée sur de gros corpus.\L\L\n"
+      texte: |
+        Recherche pertinente et instantanée sur de gros corpus, des performances maitrisées
       icone: audit-data
     - titre: Centralisation de logs
       texte: |
-        Rassemblez et exploitez tous vos logs au même endroit.
+        Avec Logstash, rassemblez et exploitez tous vos logs au même endroit.
       icone: programming-script
     - titre: Monitoring applicatif
       texte: |
-        Suivez les performances de vos applications en temps réel.
+        Utilisez les capacités APM de la suite ELK pour suivre les performances de vos applications en temps réel.
       icone: windows-speedtest
     - titre: Tableaux de bord
       texte: |
@@ -61,7 +62,7 @@ raisons:
       icone: money-graph-bar
     - titre: Extraction & transformation
       texte: |
-        Faites circuler la donnée entre vos sources.
+        Récuperer les données sources pour les transformer suivant vos besoins dans vos applications ou bus logiciel.
       icone: cloud-migration
     - titre: Cluster & haute dispo
       texte: |
@@ -69,18 +70,18 @@ raisons:
       icone: network
 etapes:
   eyebrow: NOTRE méthodologie
-  titre: '###########'
-  titreAccent: '######'
+  titre: 'Vous accompagner, pas vous imposer'
+  titreAccent: accompagner
   sousTitre: Nous cadrons vos sources de données et déployons progressivement votre stack Elastic.
   image: /uploads/offre/elastic-focus.png
   items:
     - titre: Audit de votre besoin
       texte: |
-        Cartographie de vos sources de données, logs et cas d’usage de recherche.
+        Cartographie de vos sources de données, logs et cas d’usage de recherche, étude des données brutes
       resultat: ''
     - titre: Déploiement pilote
       texte: |
-        Mise en place d’un premier cluster sur un périmètre restreint.
+        Mise en place d’un premier cluster sur un périmètre restreint. Déploiement des solutions Logstash et Kibana suivant les besoins.
       resultat: ''
     - titre: Montée en charge
       texte: |
@@ -88,7 +89,7 @@ etapes:
       resultat: ''
     - titre: Supervisions & évolutions
       texte: |
-        Nous restons disponible pour faire évoluer vos dashboards et alerting.
+        Les outils ELK tels que Kibana vous permettent de faire évoluer vos dashboards et alerting.
       resultat: ''
 incoherence:
   eyebrow: Formation
@@ -96,7 +97,7 @@ incoherence:
   texte: |
     Une formation adaptée, animée par un expert reconnu et rompu aux projets Elastic. Des sessions régulières et des séminaires dédiés avec notre partenaire Elastic. Donnez nous votre besoin, nous créons pour vous la formation adaptée !
 
-    [VOIR LES PROCHAINES SESSIONS →](####)
+    **PLANNING DES SESSIONS BIENTOT DISPONIBLES**
   illustration: /uploads/offre/elastic-formation.svg
 plans:
   eyebrow: Comment nous travaillons ensemble ?
@@ -131,7 +132,7 @@ plans:
       icone: illlus_online-learning-2
       points:
         - 'Installation et configuration optimale de Kibana, Beats et Logstash'
-        - Conseil sur Elasticsearch sous Liferay
+        - Conseil dans l'utilisation d'Elasticsearch au sein de Liferay
       ctaLabel: Choisir cette offre
       note: Forfait court (quelques jours seulement)
 temoignage:
@@ -144,7 +145,7 @@ ctaFinal:
   titreAccent: ELASTIC
   description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout sur la suite ELK'
   ctaLabel: Demander une démo
-  ctaHref: '/https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
+  ctaHref: 'https://bookings.cloud.microsoft/book/RDVOFFREELASTIC@sedona.fr/'
   ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_elastic_mini.svg

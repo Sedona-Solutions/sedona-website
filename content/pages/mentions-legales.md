@@ -24,18 +24,17 @@ Président Directeur Général.
 
 Le site est hébergé par :
 
-GitHub, Inc., 
+**GitHub, Inc.,**
 
-88 Colin P. Kelly Jr. Street, San Francisco, 
+88 Colin P. Kelly Jr. Street, San Francisco,
 
 CA 94107, USA
 
+### Confidentialité
 
-Confidentialité
+GitHub collecte les adresses IP qui sont transférées hors de l’UE, en s’appuyant sur le *Data Privacy Framework*.
 
-GitHub collecte les adresses IP qui sont transférées hors de l’UE, en s’appuyant sur le Data Privacy Framework.
-
-Propriété intellectuelle
+### Propriété intellectuelle
 
 L'ensemble des contenus présents sur le site sedona.fr (textes, images,
 illustrations, logos, icônes, vidéos, éléments graphiques, charte, code et
