@@ -128,7 +128,25 @@ const matomoJs = actif ? matomoScriptUrl(MATOMO_URL!) : "";
           } catch (err) {
             return;
           }
+          var page = sansSlash(location.pathname);
+
+          // Contact direct (téléphone / e-mail), seul moyen de contact tant que le
+          // formulaire est masqué : catégorie « Contact direct », action = canal,
+          // nom = page d'origine. Jamais l'adresse ni le numéro eux-mêmes.
+          if (url.protocol === "tel:" || url.protocol === "mailto:") {
+            window.sedonaTrack("Contact direct", url.protocol === "tel:" ? "Téléphone" : "E-mail", page);
+            return;
+          }
+
           if (url.origin !== location.origin || sansSlash(url.pathname) !== "/contact") return;
+
+          // Bouton « Postuler » d'une offre d'emploi (/contact?poste=…) :
+          // catégorie « Candidature », action = poste visé, nom = page d'origine.
+          var poste = url.searchParams.get("poste");
+          if (poste) {
+            window.sedonaTrack("Candidature", poste.slice(0, 120), page);
+            return;
+          }
           if (sansSlash(location.pathname) === "/contact") return;
           var offre = url.searchParams.get("offre");
           var sousOffre = url.searchParams.get("sousOffre");
@@ -140,6 +158,33 @@ const matomoJs = actif ? matomoScriptUrl(MATOMO_URL!) : "";
           );
         });
 
+        // Article lu (pages /blog/<article>) : une seule fois par page, dès que le
+        // visiteur a parcouru 75 % du texte OU est resté 1 minute sur l'article.
+        // Catégorie « Lecture article », action = titre, nom = critère atteint.
+        function suivreLecture() {
+          var corps = document.querySelector(".abody .prose");
+          var titre = document.querySelector(".ahead__title");
+          if (!corps || !titre) return;
+          var envoye = false;
+          var minuteur;
+          var envoyer = function (critere) {
+            if (envoye) return;
+            envoye = true;
+            clearTimeout(minuteur);
+            window.removeEventListener("scroll", surDefilement);
+            window.sedonaTrack("Lecture article", (titre.textContent || "").trim().slice(0, 150), critere);
+          };
+          var surDefilement = function () {
+            var r = corps.getBoundingClientRect();
+            var lu = window.innerHeight - r.top; // hauteur du texte déjà passée sous le bas de l'écran
+            if (r.height > 0 && lu / r.height >= 0.75) envoyer("Défilement 75 %");
+          };
+          minuteur = setTimeout(function () {
+            envoyer("1 minute sur la page");
+          }, 60000);
+          window.addEventListener("scroll", surDefilement, { passive: true });
+        }
+
         // Permet de rouvrir le bandeau depuis un lien (ex. footer) :
         // <a href="#" onclick="sedonaGererCookies();return false">Gérer les cookies</a>
         window.sedonaGererCookies = function () {
@@ -150,10 +195,14 @@ const matomoJs = actif ? matomoScriptUrl(MATOMO_URL!) : "";
           if (b) b.hidden = false;
         };
 
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", init);
-        } else {
+        var demarrer = function () {
           init();
+          suivreLecture();
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", demarrer);
+        } else {
+          demarrer();
         }
       })();
     </script>
