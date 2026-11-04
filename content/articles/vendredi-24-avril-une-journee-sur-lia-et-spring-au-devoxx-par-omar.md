@@ -1,11 +1,12 @@
 ---
+categorie: Évènement
 titre: 'Devoxx 2026 : une journée sur l''IA et Spring au Devoxx'
 date: 2026-05-11T08:17:20.000Z
+couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: 'Nous continuons le suivi de l’évènement Devoxx avec une présentation d’Omar qui nous parle de logiciel libre et les IAs, de Spring Security et de Backend Spring.'
 auteur: Omar B.
 avatar: /uploads/articles/collab/omar-b.png
 tempsLecture: 3 min de lecture
-categorie: Évènement
 tags:
   - Évènement
   - Devoxx
@@ -41,7 +42,7 @@ Une session dense et pratique, idéale pour les équipes qui souhaitent industri
 
 ### ![Back end Spring](/uploads/articles/wp/devoxx2026-shared-image-2-300x225.jpg)Performance de backend Spring : les techniques que tout dev devrait connaître
 
-\==Florian Beaufumé==c, architecte logiciel freelance et expert Java/Spring depuis plus de 15 ans, présente un tour d'horizon des optimisations de performance backend. La session s'articule en trois axes : **identifier** les problèmes, **optimiser**, puis **mesurer**. Le speaker commence par les erreurs JPA les plus courantes : des relations chargées systématiquement alors qu'elles ne sont pas nécessaires, générant des requêtes SQL en cascade invisibles mais coûteuses. La règle d'or — *configurer en lazy, mais charger en eager au cas par cas* — est simple mais rarement appliquée correctement. 
+\==Florian Beaufumé==c, architecte logiciel freelance et expert Java/Spring depuis plus de 15 ans, présente un tour d'horizon des optimisations de performance backend. La session s'articule en trois axes : **identifier** les problèmes, **optimiser**, puis **mesurer**. Le speaker commence par les erreurs JPA les plus courantes : des relations chargées systématiquement alors qu'elles ne sont pas nécessaires, générant des requêtes SQL en cascade invisibles mais coûteuses. La règle d'or — *configurer en lazy, mais charger en eager au cas par cas* — est simple mais rarement appliquée correctement.
 
 **Quelques optimisations concrètes présentées :**
 

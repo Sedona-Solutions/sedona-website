@@ -1,11 +1,12 @@
 ---
+categorie: Évènement
 titre: 'Retours sur le Devoxx 2026 : de l''IA et de la sécurité'
 date: 2026-05-12T16:43:29.000Z
+couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: Continuons notre périple sur les conférences avec l'intervention de Kaiqiang qui nous parle de ces deux journées où il a assisté à des conférences sur la sécurité mais également sur l'IA avec de belles rencontres. Il y a quelques semaines j'ai assisté à Devoxx France 2026. J'ai surtout été attiré par des talks autour de retours d'expérience sur des outils ou des pratiques que j'avais à l'œil depuis un moment voici ce que j'en retiens.
 auteur: Kaiqiang X.
 avatar: /uploads/articles/avatar-9.png
 tempsLecture: 3 min de lecture
-categorie: Évènement
 tags:
   - Évènement
   - Devoxx
@@ -42,13 +43,13 @@ Les **"5 balles perdues d'OAuth"** résument bien les erreurs encore trop fréqu
 
 Le tout emballé dans un format Far West qui rendait la matière digeste. OAuth 2.1, DPoP, mTLS, Zero Trust ,le panorama était complet. Un bon rappel que les bonnes pratiques ne s'appliquent pas d'elles-mêmes.
 
-## La session qui change du rythme 
+## La session qui change du rythme
 
 Le quiz Java de ==José== et ==Jean-Michel==r était la session **la plus interactive de ces deux jours** — et de loin. Smartphones comme buzzers, pièges classiques du langage (nulls, immutabilité, égalité, collections, compilation), salle entièrement impliquée. Un format qui rappelle qu'on peut apprendre des choses sérieuses sans rester passif. Et que même avec des années de Java derrière soi, il reste des surprises, des nuances.
 
 ![](/uploads/articles/wp/devoxx2026-Image-3-169x300.jpg)
 
-Pour le fun ils ont posé les questions du quiz à Chatgpt et Claude **et ils ont eu respectivement la note de 12/20 et 17/20** comme quoi il reste toujours des subtilités dans le langage Java que même l’IA n’a pu déceler !     
+Pour le fun ils ont posé les questions du quiz à Chatgpt et Claude **et ils ont eu respectivement la note de 12/20 et 17/20** comme quoi il reste toujours des subtilités dans le langage Java que même l’IA n’a pu déceler !    
 
 ![Quiz](/uploads/articles/wp/devoxx2026-Image-4-300x169.jpg)
 

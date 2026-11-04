@@ -1,11 +1,12 @@
 ---
+categorie: Autres
 titre: L'équipe Sedona sera présente au Devoxx 2026 du 22 au 24 avril
 date: 2026-02-25T17:21:16.000Z
+couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: 'Comme chaque année les équipes techniques de Sedona seront présentes à l''évènement incontournable des développeurs, des experts et des architectes, le DEVOXX…'
 auteur: Rémy Poulachon
 avatar: /uploads/articles/collab/remy-p.png
 tempsLecture: 1 min de lecture
-categorie: Autres
 statut: Archivé
 ---
 
