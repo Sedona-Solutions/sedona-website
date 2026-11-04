@@ -288,17 +288,18 @@ if (!URL_EN_LIGNE) {
     enfiler(rel.endsWith("/index.html") ? rel.slice(0, -"index.html".length) : rel);
   }
 }
-// Redirections SEO des anciennes URL WordPress : chaque ancienne URL doit répondre
-// (page de redirection) et sa cible doit exister.
+// Redirections SEO des anciennes URL WordPress : chaque ancienne URL doit répondre.
+// Sa cible est vérifiée via la page de redirection générée (meta refresh), et non
+// via redirections.json : astro.config.mjs peut la réécrire (ex. référence masquée
+// → /projets/).
 try {
   const redirections = JSON.parse(await readFile(path.join(RACINE, "src/data/redirections.json"), "utf8"));
-  for (const [source, cible] of Object.entries(redirections)) {
+  for (const source of Object.keys(redirections)) {
     let src = source;
     try {
       src = encodeURI(decodeURI(source));
     } catch {}
     noter("(redirections.json)", src, ORIGINE + "/");
-    noter(`(redirections.json) ${source}`, typeof cible === "string" ? cible : cible?.destination, ORIGINE + "/");
   }
 } catch {}
 
