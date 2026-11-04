@@ -1,7 +1,9 @@
 ---
 titre: Vendre le café là où on ne l'attend pas
+accent: sunshine
 client: Nespresso
 couverture: /uploads/projets/nespresso-cover.png
+accroche: 'Concevoir un dispositif de vente tactile autonome pour proposer les grands crus Nespresso des boutiques — en galeries commerciales, gares et aéroports, partout dans le monde.'
 bannerDetail: /uploads/projets/nespresso/nespresso-photo-by-Deniz-Gezer.png
 tags:
   - Industrie
@@ -9,14 +11,7 @@ tags:
   - Backend
   - Cloud
   - Micro-services
-accroche: 'Concevoir un dispositif de vente tactile autonome pour proposer les grands crus Nespresso des boutiques — en galeries commerciales, gares et aéroports, partout dans le monde.'
 annee: 2019 - 2020
-accent: sunshine
-technos:
-  - nom: Quarkus
-    logo: /uploads/Logo/quarkus.svg
-  - nom: AWS
-    logo: /uploads/Logo/aws.svg
 contexte:
   eyebrow: Le contexte
   titre: Étendre l'expérience Nespresso au-delà de la boutique
@@ -47,13 +42,13 @@ stats:
   eyebrow: Impacts mesurables
   titre: Un nouveau canal de vente à la hauteur de la marque
   items:
-    - valeur: XX
+    - valeur: '10'
       suffixe: ''
       label: Bornes déployées
     - valeur: '122'
       suffixe: ''
       label: Pays couverts
-    - valeur: X
+    - valeur: '1'
       suffixe: min
       label: temps moyen d'un achat
 approche:
@@ -81,11 +76,17 @@ approche:
       texte: 'Un back-end bâti sur Quarkus pour des services performants et légers, adaptés au cloud et à des temps de réponse maîtrisés.'
       icone: data-ia
 temoignage:
-  citation: '[Verbatim client à recueillir — Direction Retail / Innovation. À défaut d''accord, remplacer par une phrase de synthèse Sedona.]'
+  citation: ''
   auteur: ''
-  role: Nespresso — Nestlé
+  role: ''
   avatar: ''
+technos:
+  - nom: Quarkus
+    logo: /uploads/Logo/quarkus.svg
+  - nom: AWS
+    logo: /uploads/Logo/aws.svg
 galerie:
   - /uploads/projets/nespresso/pexels-headphones-connected-with-laptop-placed-near-cappuccino-7421874.png
 date: 2025-09-01T00:00:00.000Z
 ---
+

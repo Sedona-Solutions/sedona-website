@@ -1,5 +1,6 @@
 ---
 titre: Intégration de la solution Keycloak pour une association
+statut: Brouillon
 accent: red-rock
 client: Association
 accroche: 'Une démarche complète : de l''audit à l''installation de la solution Keycloak et la mise en place de l''offre RUN qui assure la maintenance en conditions opérationnelles du produit.'

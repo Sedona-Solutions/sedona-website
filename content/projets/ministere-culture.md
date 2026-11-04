@@ -1,20 +1,16 @@
 ---
 titre: Refonte du site institutionnel
+statut: Brouillon
 client: Ministère de la Culture
 couverture: /uploads/projets/ministere-culture-cover.png
+accroche: 'Donner à la culture une vitrine numérique claire, ouverte et accessible à tous.'
 tags:
   - Service publique
   - App mobile
   - UX/UI design
   - Flutter
   - Elastic Search
-accroche: 'Donner à la culture une vitrine numérique claire, ouverte et accessible à tous.'
 annee: 2021 - 2022
-technos:
-  - nom: Flutter
-    logo: /technos/flutter.svg
-  - nom: Elastic Stack
-    logo: /technos/elastic.svg
 defis:
   titre: Une institution au service du plus grand nombre
   intro: 'Concilier exigence institutionnelle, accessibilité et richesse éditoriale.'
@@ -36,5 +32,11 @@ approche:
       texte: Trouver vite la bonne information.
     - titre: Socle pérenne
       texte: Une base maintenable dans la durée.
+technos:
+  - nom: Flutter
+    logo: /technos/flutter.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 date: 2025-03-01T00:00:00.000Z
 ---
+

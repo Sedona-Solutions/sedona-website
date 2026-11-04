@@ -1,28 +1,26 @@
 ---
 titre: Modernisation et refonte du site internet
+statut: Brouillon
 client: Klésia
 couverture: /uploads/projets/klesia-cover.png
 accroche: Simplifier l'accès aux services pour les assurés d'un grand groupe de protection sociale.
-annee: 2022 - 2023
 tags:
   - Santé
   - App Web
   - eZ Platform
   - Symfony
   - Interface Design
-technos:
-  - { nom: Symfony, logo: /technos/symfony.svg }
-  - { nom: Elastic Stack, logo: /technos/elastic.svg }
+annee: 2022 - 2023
 defis:
   titre: Clarté et confiance pour des sujets sensibles
-  intro: Rendre lisibles des informations de protection sociale complexes, dans le respect de la conformité.
+  intro: 'Rendre lisibles des informations de protection sociale complexes, dans le respect de la conformité.'
   points:
     - titre: Information claire et rassurante
       texte: Vulgariser des contenus techniques pour les assurés.
     - titre: Conformité & sécurité
       texte: Protéger les données personnelles de santé.
     - titre: Multiplicité des profils
-      texte: Particuliers, entreprises et partenaires.
+      texte: 'Particuliers, entreprises et partenaires.'
 approche:
   titre: Une expérience claire et de confiance
   points:
@@ -34,5 +32,11 @@ approche:
       texte: Une gestion de contenu souple et durable.
     - titre: Sécurité by design
       texte: Conformité intégrée dès la conception.
+technos:
+  - nom: Symfony
+    logo: /technos/symfony.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 date: 2025-04-01T00:00:00.000Z
 ---
+

@@ -1,17 +1,15 @@
 ---
 titre: Refonte du site institutionnel
+statut: Brouillon
 client: Citeo
 couverture: /uploads/projets/citeo-cover.png
+accroche: Accompagner la transition vers l'économie circulaire avec une vitrine claire et engageante.
 tags:
   - Santé
   - App web
   - eZ Platform
   - Interface Design
-accroche: Accompagner la transition vers l'économie circulaire avec une vitrine claire et engageante.
 annee: 2022 - 2024
-technos:
-  - nom: Elastic Stack
-    logo: /technos/elastic.svg
 defis:
   titre: Rendre l'engagement concret et clair
   intro: Expliquer une mission complexe et mobiliser des publics variés autour de l'économie circulaire.
@@ -33,5 +31,9 @@ approche:
       texte: Une gestion de contenu autonome et durable.
     - titre: Performance & accessibilité
       texte: Un site rapide et inclusif.
+technos:
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 date: 2024-09-01T00:00:00.000Z
 ---
+

@@ -1,21 +1,17 @@
 ---
 titre: Modernisation et refonte du site internet
+statut: Brouillon
+accent: sky
 client: Insee
 couverture: /uploads/projets/insee-cover.png
+accroche: Rendre la donnée statistique lisible et accessible au plus grand nombre.
 tags:
   - Service publique
   - App Web
   - UX/UI design
   - Symfony
   - Interface Design
-accroche: Rendre la donnée statistique lisible et accessible au plus grand nombre.
 annee: 2021 - 2023
-accent: sky
-technos:
-  - nom: Symfony
-    logo: /technos/symfony.svg
-  - nom: Elastic Stack
-    logo: /technos/elastic.svg
 defis:
   titre: Donner du sens à la donnée
   intro: 'Diffuser une masse considérable de données statistiques de façon claire, fiable et accessible.'
@@ -37,5 +33,11 @@ approche:
       texte: Trouver rapidement la bonne statistique.
     - titre: Socle Symfony robuste
       texte: Une base fiable et maintenable.
+technos:
+  - nom: Symfony
+    logo: /technos/symfony.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 date: 2024-12-01T00:00:00.000Z
 ---
+

@@ -1,20 +1,16 @@
 ---
 titre: Modernisation et refonte du site internet
+statut: Brouillon
 client: Pôle Emploi
 couverture: /uploads/projets/pole-emploi-cover.png
+accroche: Accompagner demandeurs d'emploi et recruteurs avec une plateforme claire et robuste.
 tags:
   - Service publique
   - Logiciel métier
   - UX/UI design
   - Liferay
   - Interface Design
-accroche: Accompagner demandeurs d'emploi et recruteurs avec une plateforme claire et robuste.
 annee: 2020 - 2022
-technos:
-  - nom: Liferay
-    logo: /technos/liferay.svg
-  - nom: Elastic Stack
-    logo: /technos/elastic.svg
 defis:
   titre: Un service public à très grande échelle
   intro: 'Servir des millions d''utilisateurs aux profils variés, avec une exigence forte d''accessibilité et de fiabilité.'
@@ -36,5 +32,11 @@ approche:
       texte: Des résultats rapides et pertinents.
     - titre: Industrialisation & monitoring
       texte: Fiabilité et supervision en continu.
+technos:
+  - nom: Liferay
+    logo: /technos/liferay.svg
+  - nom: Elastic Stack
+    logo: /technos/elastic.svg
 date: 2025-01-01T00:00:00.000Z
 ---
+

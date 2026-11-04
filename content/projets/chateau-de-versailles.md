@@ -74,7 +74,7 @@ temoignage:
   citation: Sedona a su transformer une visite déjà exceptionnelle en une expérience numérique à la hauteur du lieu. Leur maîtrise technique et leur sens du détail ont fait toute la différence pour nos visiteurs.
   auteur: Direction du Numérique
   role: Château de Versailles
-  avatar: /uploads/articles/avatar-christophe-l.png
+  avatar: ''
 technos:
   - nom: SwiftUI
     logo: /technos/swiftui.svg
