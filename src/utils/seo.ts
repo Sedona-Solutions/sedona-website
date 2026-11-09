@@ -1,5 +1,6 @@
 // Utilitaires SEO partagés par <Seo /> (src/components/Seo.astro), robots.txt et le sitemap.
 import global from "../../content/global/index.json";
+import type { Auteur } from "./auteurs";
 
 export const NOM_SITE = "Sedona";
 export const DESCRIPTION_DEFAUT =
@@ -186,8 +187,23 @@ export function pageFaq(items: QuestionFaq[]) {
 export interface InfosArticle {
   publie?: Date;
   modifie?: Date;
-  auteur?: string;
+  auteur?: Auteur;
   tags?: string[];
+}
+
+/** Auteur d'un article (schema.org/Person) : rôle, expertises et LinkedIn attestent sa légitimité. */
+function personne(auteur: Auteur, site: URL) {
+  return {
+    "@type": "Person",
+    name: auteur.nom,
+    jobTitle: auteur.role || undefined,
+    description: auteur.bio || undefined,
+    // Les avatars génériques (/uploads/articles/avatar-N.png) ne représentent personne.
+    image: auteur.photo && !/\/avatar-\d+\.png$/.test(auteur.photo) ? new URL(auteur.photo, site).href : undefined,
+    sameAs: auteur.linkedin ? [auteur.linkedin] : undefined,
+    knowsAbout: auteur.expertises?.length ? auteur.expertises : undefined,
+    worksFor: { "@type": "Organization", "@id": new URL("/#organisation", site).href, name: NOM_SITE },
+  };
 }
 
 export function article(
@@ -202,7 +218,7 @@ export function article(
     image: [image],
     datePublished: infos.publie?.toISOString(),
     dateModified: (infos.modifie ?? infos.publie)?.toISOString(),
-    author: infos.auteur ? { "@type": "Person", name: infos.auteur } : editeur(site),
+    author: infos.auteur ? personne(infos.auteur, site) : editeur(site),
     // Déclaré en entier : l'Organization complète n'est présente que sur l'accueil.
     publisher: editeur(site),
     mainEntityOfPage: canonique,

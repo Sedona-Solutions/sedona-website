@@ -4,8 +4,7 @@ date: 2025-02-17T01:00:00.000Z
 extrait: |-
   Tout ce qu'il faut savoir Faisons le point sur les nouveautés de Keycloak après avoir pris le temps de digérer les diverses galettes et autres crêpes de ce début d’année 2025. Nous ne dresserons pas une liste exhaustive de tous les changements, le blog officiel s’en charge très bien, mais voici les points que nous avons trouvé intéressants de mettre en avant.
    naviguer la montée de version en toute sérénité.
-auteur: Sébastien C.
-avatar: /uploads/articles/collab/sebastien-c.png
+auteur: content/auteurs/sebastien-c.json
 tempsLecture: 7 min de lecture
 categorie: ''
 tags:

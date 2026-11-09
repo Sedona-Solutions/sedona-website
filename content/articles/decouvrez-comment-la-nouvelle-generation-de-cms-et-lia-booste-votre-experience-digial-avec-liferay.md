@@ -2,8 +2,7 @@
 titre: 'Evènement SEDONA : Découvrez comment la nouvelle génération de CMS et L''IA booste votre expérience digitale avec Liferay'
 date: 2026-06-01T12:35:14.000Z
 extrait: 'Le 12 Juin à Marseille, Sedona et Liferay organisent un évènement pour découvrir les possibilités de l''IA au service de vos projets digitaux : sites Web,…'
-auteur: Rémy Poulachon
-avatar: /uploads/articles/avatar-9.png
+auteur: content/auteurs/remy-p.json
 tempsLecture: 1 min de lecture
 categorie: Évènement
 statut: Archivé

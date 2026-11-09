@@ -2,8 +2,7 @@
 titre: Notre équipe "mobilité" se rendra à l'évènement Android Makers du 9 au 10 Avril 2026
 date: 2026-02-25T17:32:07.000Z
 extrait: Sedona développe des applications mobiles depuis plus de dix années. Nos équipes dédiées ont réalisé notamment l'application "audioGuide" du Château de…
-auteur: Rémy Poulachon
-avatar: /uploads/articles/avatar-9.png
+auteur: content/auteurs/remy-p.json
 tempsLecture: 1 min de lecture
 categorie: Évènement
 statut: Archivé

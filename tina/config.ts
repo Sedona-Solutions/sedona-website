@@ -1308,8 +1308,13 @@ export default defineConfig({
           },
           { type: "image", name: "couverture", label: "Image de couverture" },
           { type: "string", name: "extrait", label: "Extrait", ui: { component: "textarea" } },
-          { type: "string", name: "auteur", label: "Auteur" },
-          { type: "image", name: "avatar", label: "Avatar auteur" },
+          {
+            type: "reference",
+            name: "auteur",
+            label: "Auteur",
+            collections: ["auteur"],
+            description: "Choisir dans la liste. Nouvel auteur : le créer d'abord dans « Auteurs » (photo, rôle, LinkedIn).",
+          },
           { type: "string", name: "tempsLecture", label: "Temps de lecture (ex. 5 min de lecture)" },
           { type: "boolean", name: "vedette", label: "Article à la une" },
           {
@@ -1333,6 +1338,39 @@ export default defineConfig({
             label: "Statut",
             options: ["Brouillon", "Publié", "Archivé"],
           },
+        ],
+      },
+      // ---------------------------------------------------------------
+      // Auteurs des articles : une fiche par personne, choisie dans chaque
+      // article (champ référence). Rôle, expertises et LinkedIn sont déclarés
+      // aux moteurs (schema.org/Person) : ils attestent qui écrit et à quel titre.
+      // ---------------------------------------------------------------
+      {
+        name: "auteur",
+        label: "Auteurs",
+        path: "content/auteurs",
+        format: "json",
+        ui: {
+          filename: {
+            slugify: (values: { nom?: string }) => {
+              // « Rémy Poulachon » ou « Rémy P. » → remy-p (prénom + initiale du nom)
+              const [prenom = "auteur", nom = ""] = (values?.nom || "").trim().split(/\s+/);
+              return `${prenom}-${nom.charAt(0)}`
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[̀-ͯ]/g, "")
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, "");
+            },
+          },
+        },
+        fields: [
+          { type: "string", name: "nom", label: "Nom affiché", isTitle: true, required: true, description: "Tel qu'il apparaît sous les articles, ex. « Rémy Poulachon » ou « Hugo P. »." },
+          { type: "string", name: "role", label: "Rôle chez Sedona", description: "Ex. « Expert Keycloak », « Lead UX/UI designer ». Affiché sous le nom." },
+          { type: "image", name: "photo", label: "Photo" },
+          { type: "string", name: "linkedin", label: "Profil LinkedIn (URL)", description: "Recommandé : relie l'auteur à son parcours public aux yeux des moteurs." },
+          { type: "string", name: "expertises", label: "Domaines d'expertise", list: true, description: "Ex. Keycloak, iOS, Symfony, IA générative." },
+          { type: "string", name: "bio", label: "Courte biographie", ui: { component: "textarea" }, description: "2 ou 3 phrases (facultatif)." },
         ],
       },
       // ---------------------------------------------------------------

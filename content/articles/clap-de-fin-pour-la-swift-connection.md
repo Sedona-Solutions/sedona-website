@@ -3,8 +3,7 @@ titre: Clap de fin pour la Swift Connection ?
 date: 2026-11-04T09:00:00.000Z
 couverture: /uploads/articles/swift-connection-2026.jpg
 extrait: 'Développement agentique, harness, Swift Concurrency et réflexions sur le métier : retour sur les deux jours de la 10e Swift Connection à Paris… et sur une question qui reste ouverte pour la suite.'
-auteur: Antoine
-avatar: /uploads/articles/collab/antoine-m.png
+auteur: content/auteurs/antoine-m.json
 tempsLecture: 5 min de lecture
 vedette: true
 tags:

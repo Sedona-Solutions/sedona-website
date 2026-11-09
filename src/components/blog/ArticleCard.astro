@@ -3,8 +3,10 @@
 // même composant partout, avec deux variantes selon la présence d'une image de
 // couverture (l'image ne dépend plus du flag "vedette", juste de `couverture`).
 import Media from "../Media.astro";
+import { ficheAuteur } from "../../utils/auteurs";
 
 const { article: a } = Astro.props;
+const auteur = await ficheAuteur(a.auteur, a.avatar);
 
 const moisCap = (d: string) => {
   const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
@@ -17,10 +19,10 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
   <a href={`/blog/${a.slug}`} class="acard acard--img">
     <Media class="acard__img" src={a.couverture} alt="" width={560} />
     <div class="acard__top">
-      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
+      {auteur?.photo ? <Media class="acard__avatar" src={auteur.photo} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
-        <span class="acard__author">{a.auteur}</span>
+        <span class="acard__author">{auteur?.nom}</span>
       </span>
     </div>
     <div class="acard__bottom">
@@ -32,10 +34,10 @@ const meta = [a.date && moisCap(a.date), a.tempsLecture].filter(Boolean).join(" 
 ) : (
   <a href={`/blog/${a.slug}`} class="acard acard--plain">
     <div class="acard__top">
-      {a.avatar ? <Media class="acard__avatar" src={a.avatar} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
+      {auteur?.photo ? <Media class="acard__avatar" src={auteur.photo} alt="" width={40} /> : <span class="acard__avatar" aria-hidden="true" />}
       <span>
         <span class="acard__byLabel">Publié par</span>
-        <span class="acard__author">{a.auteur}</span>
+        <span class="acard__author">{auteur?.nom}</span>
       </span>
     </div>
     {meta && <p class="acard__meta">{meta}</p>}

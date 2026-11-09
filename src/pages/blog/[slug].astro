@@ -8,6 +8,7 @@ import Media from "../../components/Media.astro";
 import Faq from "../../components/Faq.astro";
 import { estArticlePublie } from "../../utils/articleVisibility";
 import { introDepuisMarkdown } from "../../utils/seo";
+import { ficheAuteur } from "../../utils/auteurs";
 
 export async function getStaticPaths() {
   const items = await getCollection("article", ({ data }) => estArticlePublie(data.statut));
@@ -17,6 +18,7 @@ export async function getStaticPaths() {
 const { entry, arr } = Astro.props;
 const { Content } = await render(entry);
 const a = entry.data;
+const auteur = await ficheAuteur(a.auteur, a.avatar);
 
 const moisCap = (d) => {
   const s = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(d));
@@ -41,7 +43,7 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
   description={a.extrait || introDepuisMarkdown(entry.body)}
   image={a.couverture}
   type="article"
-  article={{ publie: a.date, modifie: misAJour, auteur: a.auteur, tags: a.tags }}
+  article={{ publie: a.date, modifie: misAJour, auteur, tags: a.tags }}
   faq={a.faq}
   ariane={[{ nom: "Blog", chemin: "/blog/" }, { nom: a.titre }]}
   seo={a.seo}
@@ -58,9 +60,9 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
         {a.extrait && <p class="ahead__chapo">{a.extrait}</p>}
 
         <div class="ahead__byline">
-          {a.avatar ? <Media class="ahead__avatar" src={a.avatar} alt="" width={56} /> : <span class="ahead__avatar" aria-hidden="true" />}
+          {auteur?.photo ? <Media class="ahead__avatar" src={auteur.photo} alt="" width={56} /> : <span class="ahead__avatar" aria-hidden="true" />}
           <div class="ahead__byline-text">
-            {a.auteur && <span class="ahead__author">{a.auteur}</span>}
+            {auteur && <span class="ahead__author">{auteur.nom}{auteur.role && <span class="ahead__role">, {auteur.role}</span>}</span>}
             {meta && <span class="ahead__meta">{meta}</span>}
           </div>
         </div>
@@ -177,6 +179,7 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
   .ahead__avatar { left: 0; top: -4px; width: 56px; height: 56px; border-radius: 999px; object-fit: cover; flex: none; background: linear-gradient(135deg, var(--color-canyon-50), var(--color-red-rock-300)); border: 2px solid var(--color-canyon-300); }
   .ahead__byline-text { padding-left: 16px; }
   .ahead__author { display: block; font-family: var(--font-sans); font-weight: 600; font-size: 1.25rem; line-height: 1.2; color: #3b0800; }
+  .ahead__role { font-weight: 400; }
   .ahead__meta { display: block; font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.375; letter-spacing: -0.18px; color: #3b0800; opacity: 0.8; }
 
   .ahead__tags { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }

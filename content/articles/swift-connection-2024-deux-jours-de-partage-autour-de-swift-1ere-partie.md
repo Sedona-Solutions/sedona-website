@@ -1,8 +1,7 @@
 ---
 titre: 'Swift Connection 2024 : Deux jours de partage autour de Swift [1ère partie]'
 date: 2024-10-11T10:18:50.613Z
-auteur: Jonathan D.
-avatar: /uploads/articles/avatar-11.png
+auteur: content/auteurs/jonathan-d.json
 tags:
   - Évènement
   - App Mobile

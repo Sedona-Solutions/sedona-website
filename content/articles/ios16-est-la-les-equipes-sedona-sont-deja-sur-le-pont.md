@@ -1,8 +1,7 @@
 ---
 titre: 'iOS16 est là : les équipes Sedona sont déjà sur le pont !'
 date: 2022-09-13T09:14:12.420Z
-auteur: Rémy P.
-avatar: /uploads/articles/collab/remy-p.png
+auteur: content/auteurs/remy-p.json
 tempsLecture: 3 min de lecture
 tags:
   - App Mobile

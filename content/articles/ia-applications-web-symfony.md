@@ -2,8 +2,7 @@
 titre: Parlons FinOps
 date: 2025-12-18T01:00:00.000Z
 extrait: ''
-auteur: Michaël G.
-avatar: /uploads/articles/collab/michael-g.png
+auteur: content/auteurs/michael-g.json
 tempsLecture: 6 min de lecture
 categorie: ''
 tags:

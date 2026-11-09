@@ -2,8 +2,7 @@
 titre: Simplifier la gestion de vos traductions avec Weblate
 date: 2025-12-08T01:00:00.000Z
 extrait: 'La gestion des traductions peut vite devenir un casse-tête : fichiers Excel perdus, problèmes d’encodage, ou manque de suivi. Heureusement, Weblate est là pour transformer ce processus en un jeu d’enfant !'
-auteur: Guillaume Meot
-avatar: /uploads/articles/collab/guillaume-m.png
+auteur: content/auteurs/guillaume-m.json
 tempsLecture: 6 min de lecture
 categorie: Luxe
 tags:

@@ -4,8 +4,7 @@ titre: 'Retours sur l''évènement elastic{on} 2026'
 date: 2026-03-16T09:19:12.000Z
 couverture: /uploads/articles/elasticOn2026.jpg
 extrait: 'Le 27 janvier 2026, Sedona était à Elastic{On} Paris, la grand-messe annuelle d''Elasticsearch. Multi-tracks (Search, Observabilité, Sécurité) et un constat sans appel : l''IA est partout. Notre retour, centré sur cette omniprésence et sur les avancées d''ES|QL.'
-auteur: Thomas C.
-avatar: /uploads/articles/collab/thomas-c.png
+auteur: content/auteurs/thomas-c.json
 tempsLecture: 5 min de lecture
 tags:
   - Évènement

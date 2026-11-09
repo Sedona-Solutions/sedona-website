@@ -3,8 +3,7 @@ titre: 'Retours sur Devoxx 2026 : Et si on parlait de sécurité et d''IA ?'
 date: 2026-05-13T11:14:30.000Z
 couverture: /uploads/articles/wp/amphi-bleu-devoxx-fr-2026.jpg
 extrait: 'Continuons le retour de nos experts à la conférence Devoxx 2026, aujourd''hui c''est Vincent qui nous présente sa journée.'
-auteur: Vincent C.
-avatar: /uploads/articles/collab/vincent-c.png
+auteur: content/auteurs/vincent-c.json
 tempsLecture: 4 min de lecture
 categorie: Évènement
 tags:

@@ -2,8 +2,7 @@
 titre: 'SvelteKit : et si c''était votre prochain framework web ?'
 date: 2023-04-28T10:26:52.325Z
 couverture: /uploads/articles/wp/sveltekit-plugin.jpg
-auteur: Mathieu B.
-avatar: /uploads/articles/avatar-9.png
+auteur: content/auteurs/mathieu-b.json
 tempsLecture: 2 min de lecture
 tags:
   - Évènement

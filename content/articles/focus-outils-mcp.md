@@ -2,8 +2,7 @@
 titre: Focus sur les outils MCP
 date: 2025-12-17T01:00:00.000Z
 extrait: Le Model Context Protocol ouvre de nouvelles possibilités pour connecter nos assistants à nos outils internes. Retour sur nos premiers serveurs MCP.
-auteur: Véran R.
-avatar: /uploads/articles/collab/veran-r.png
+auteur: content/auteurs/veran-r.json
 tempsLecture: 5 min de lecture
 categorie: Services publiques
 tags:

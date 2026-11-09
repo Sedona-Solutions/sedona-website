@@ -2,8 +2,7 @@
 titre: Comment mesurer et suivre les performances serveur avec Elastic APM ?
 date: 2023-01-31T11:26:52.325Z
 couverture: /uploads/articles/wp/blog-thumb-release-apm.png
-auteur: Thomas C.
-avatar: /uploads/articles/collab/thomas-c.png
+auteur: content/auteurs/thomas-c.json
 tempsLecture: 2 min de lecture
 tags:
   - Évènement

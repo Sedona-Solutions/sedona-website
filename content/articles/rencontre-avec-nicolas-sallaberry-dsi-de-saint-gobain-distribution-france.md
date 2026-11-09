@@ -2,8 +2,7 @@
 titre: 'Rencontre avec Nicolas Sallaberry, DSI de Saint-Gobain Distribution France'
 date: 2025-01-31T10:52:53.434Z
 extrait: 'Dans cette interview, Nicolas Sallaberry, Directeur de domaine et d’activités chez Saint Gobain Distribution France, revient sur le projet « Mon espace RH », également connu sous le nom de projet « Jarvis ». L’objectif ? Développer une application web et mobile permettant aux collaborateurs du groupe d’accéder facilement à leurs informations RH.'
-auteur: Delphine K.
-avatar: /uploads/articles/avatar-3.png
+auteur: content/auteurs/delphine-k.json
 tempsLecture: 5 min de lecture
 tags:
   - Interview

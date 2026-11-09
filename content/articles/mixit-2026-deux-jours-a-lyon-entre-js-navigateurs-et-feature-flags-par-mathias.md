@@ -3,8 +3,7 @@ titre: 'Mixit 2026 : Entre JS, navigateurs et feature flags'
 date: 2026-05-20T10:05:04.000Z
 couverture: /uploads/articles/mixit2026.png
 extrait: 'Continuons les pérégrinations de nos collaborateurs sur les différents évènements de cette année, avec aujourd''hui Mathias qui nous parle du Mixit 2026. Retour sur les deux jours avec des conférences qui m''ont marqué...'
-auteur: Mathias Branger
-avatar: /uploads/articles/collab/mathias-b.png
+auteur: content/auteurs/mathias-b.json
 tempsLecture: 4 min de lecture
 categorie: Autres
 tags:

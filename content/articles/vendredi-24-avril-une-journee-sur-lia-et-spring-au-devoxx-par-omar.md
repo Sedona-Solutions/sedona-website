@@ -4,8 +4,7 @@ titre: 'Devoxx 2026 : une journée sur l''IA et Spring au Devoxx'
 date: 2026-05-11T08:17:20.000Z
 couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: 'Nous continuons le suivi de l’évènement Devoxx avec une présentation d’Omar qui nous parle de logiciel libre et les IAs, de Spring Security et de Backend Spring.'
-auteur: Omar B.
-avatar: /uploads/articles/collab/omar-b.png
+auteur: content/auteurs/omar-b.json
 tempsLecture: 3 min de lecture
 tags:
   - Évènement

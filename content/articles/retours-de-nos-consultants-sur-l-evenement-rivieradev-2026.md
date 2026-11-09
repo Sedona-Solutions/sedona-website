@@ -7,8 +7,7 @@ extrait: |-
   Quelques jours à RivieraDEV, et une conviction qui se confirme : notre écosystème avance sur deux jambes en ce moment. D’un côté, une ingénierie qui pousse toujours plus loin l’efficience (Quarkus en tête).
   De l’autre, une IA générative qui s’invite partout, jusqu’à nous forcer à repenser ce que veut dire « faire du logiciel ».
   Voici notre retour sur les sessions qui nous ont marqués.
-auteur: Édouard L.
-avatar: /uploads/articles/collab/edouard-l.png
+auteur: content/auteurs/edouard-l.json
 vedette: true
 tags:
   - Évènement

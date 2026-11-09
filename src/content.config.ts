@@ -173,6 +173,19 @@ const projet = defineCollection({
   }),
 });
 
+// Fiches auteurs (content/auteurs/*.json), référencées par les articles.
+const auteur = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./content/auteurs" }),
+  schema: z.object({
+    nom: z.string(),
+    role: z.string().nullish(),
+    photo: z.string().nullish(),
+    linkedin: z.string().nullish(),
+    expertises: z.array(z.string()).nullish(),
+    bio: z.string().nullish(),
+  }),
+});
+
 const article = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/articles" }),
   schema: z.object({
@@ -183,7 +196,9 @@ const article = defineCollection({
     misAJour: z.coerce.date().nullish(),
     couverture: z.string().optional(),
     extrait: z.string().optional(),
-    auteur: z.string().optional(),
+    // Référence Tina vers une fiche auteur (« content/auteurs/remy-p.json »), cf. src/utils/auteurs.ts.
+    // Ancien format accepté : nom en texte libre + avatar.
+    auteur: z.string().nullish(),
     avatar: z.string().optional(),
     tempsLecture: z.string().optional(),
     vedette: z.boolean().optional(),
@@ -476,4 +491,4 @@ const page = defineCollection({
   }),
 });
 
-export const collections = { expertise, projet, article, page, offre, evenement };
+export const collections = { expertise, projet, auteur, article, page, offre, evenement };
