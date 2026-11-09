@@ -2,7 +2,7 @@
 pillVariant: sunshine
 titre: Elastic
 eyebrow: Offres clé en main
-accroche: "Vos données, exploitables en temps réel avec\LElastic Search, la connaissance de vos clients et de vos logs avec la suite ELK."
+accroche: "Vos données, exploitables en temps réel avec\LElasticsearch, la connaissance de vos clients et de vos logs avec la suite ELK."
 accrocheAccent: ELASTIC
 enBref: 'Nous mettons en œuvre, optimisons et formons vos équipes sur la suite Elastic (moteur de recherche, centralisation de logs, monitoring applicatif...)'
 illustration: /uploads/offre/elastic-brick-presentation.png
@@ -117,7 +117,7 @@ plans:
       note: Forfait avec engagement de résultat fort
     - categorie: '02'
       titre: Expertise & conseil
-      texte: 'Elastic Search peut être accessible rapidement dans un premier temps puis devenir plus compliqué à gérer lors d''un usage intensif. Notre expert audite et rédige des recommandations pragmatiques adaptées à vos contraintes et besoins. '
+      texte: 'Elasticsearch peut être accessible rapidement dans un premier temps puis devenir plus compliqué à gérer lors d''un usage intensif. Notre expert audite et rédige des recommandations pragmatiques adaptées à vos contraintes et besoins. '
       icone: illlus_gathering-data-2
       points:
         - 'Analyse, mapping et optimisation des requêtes'
@@ -141,7 +141,7 @@ temoignage:
   role: Responsable Informatique d'un client grand compte
   avatar: /uploads/articles/client-gg.png
 ctaFinal:
-  titre: Un projet qui utilise les capacités de recherche d'Elastic Search ou l'intégration des solutions Logstash ou Kibana ?
+  titre: Un projet qui utilise les capacités de recherche d'Elasticsearch ou l'intégration des solutions Logstash ou Kibana ?
   titreAccent: ELASTIC
   description: 'Installation, audit, optimisation ou formation : nos experts certifiés vous accompagnent de bout en bout sur la suite ELK'
   ctaLabel: Demander une démo
@@ -151,7 +151,7 @@ ctaFinal:
   illustration: /uploads/offre/illus_elastic_mini.svg
 faq:
   - question: Combien de temps dure un audit Elastic ?
-    reponse: 'Cela dépend de votre infrastructure Elastic actuel : des différentes applications qui utilisent Elastic Search au sein de votre organisation, des indexations en cours etc.. Une durée minimale de 5 jours d''audit est conseillée.'
+    reponse: 'Cela dépend de votre infrastructure Elastic actuelle : des différentes applications qui utilisent Elasticsearch au sein de votre organisation, des indexations en cours etc. Une durée minimale de 5 jours d''audit est conseillée.'
 _template: elastic
 ---
 

@@ -189,12 +189,12 @@ ctaFinal:
   ctaHref2: /contact
   illustration: /uploads/offre/illus_brieff_mini.svg
 faq:
-  - question: Est ce que brieff peut être utilisé sur un projet existant ?
-    reponse: 'oui Brieff permet de récupérer un projet (code source) et de faire de la retro documentation en produisant des documents standards (PRD, Spécifications techniques, maquettes écrans..)'
+  - question: Est-ce que Brieff peut être utilisé sur un projet existant ?
+    reponse: 'Oui, Brieff permet de récupérer un projet (code source) et de faire de la retro documentation en produisant des documents standards (PRD, Spécifications techniques, maquettes d''écrans…)'
   - question: Quels sont les documents projets que Brieff peut générer ?
-    reponse: 'Brieff génère toute la documentation "vivante" attendue lors des spécifications. A savoir : le PRD, les User Stories, Les Epics, la documentation technique (incluant les diagrammes de séquence et de flux), les règles de gestion. Chaque prise de décision engendre une modification de cette doucmentation.'
-  - question: Est ce que Brieff s'appuye sur une méthode ?
-    reponse: 'Oui Brieff s''appuie sur la méthode BMAD qui permet de mettre en action des agents IA spécialisés (Business Analyst, developer). Brieff repose sur le comportement des agents BMAD, il n''y aucune modification réalisée.'
+    reponse: 'Brieff génère toute la documentation "vivante" attendue lors des spécifications. A savoir : le PRD, les User Stories, les epics, la documentation technique (incluant les diagrammes de séquence et de flux), les règles de gestion. Chaque prise de décision engendre une modification de cette documentation.'
+  - question: Est-ce que Brieff s'appuie sur une méthode ?
+    reponse: 'Oui Brieff s''appuie sur la méthode BMAD qui permet de mettre en action des agents IA spécialisés (Business Analyst, developer). Brieff repose sur le comportement des agents BMAD, il n''y a aucune modification.'
 _template: brieff
 ---
 
