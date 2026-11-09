@@ -169,6 +169,9 @@ ctaFinal:
   ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_IA_Forge_mini.svg
+faq:
+  - question: Qu'est ce qui IA Forge
+    reponse: IA Forge de Sedona est à la fois la mise à disposition d'une équipe mais également une organisation dédiée et une l'intégration forte de l'IA pour réaliser vos projets rapidement et à moindre coût.
 _template: iaForge
 ---
 

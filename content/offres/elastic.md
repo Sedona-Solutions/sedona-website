@@ -149,6 +149,9 @@ ctaFinal:
   ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_elastic_mini.svg
+faq:
+  - question: Combien de temps dure un audit Elastic ?
+    reponse: 'Cela dépend de votre infrastructure Elastic actuel : des différentes applications qui utilisent Elastic Search au sein de votre organisation, des indexations en cours etc.. Une durée minimale de 5 jours d''audit est conseillée.'
 _template: elastic
 ---
 

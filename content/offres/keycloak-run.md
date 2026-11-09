@@ -248,6 +248,11 @@ ctaFinal:
   ctaLabel2: Parlons de votre projet
   ctaHref2: /contact
   illustration: /uploads/offre/illus_keycloak_mini.svg
+faq:
+  - question: Combien de temps dure un audit Keycloak ?
+    reponse: 'Cela dépend de l''infrastructure existante, du nombre d''applications connectées et des différents types de protocoles utilisés. Une durée minimale de 5 jours est souhaitable'
+  - question: Est ce que cela fonctionne sur toutes les version de Keycloak ?
+    reponse: Oui L'offre prend en charge les versions de Keycloak à partir des version 20 et plus.
 _template: keycloakRun
 ---
 
