@@ -12,6 +12,11 @@ const seo = z
   })
   .nullish();
 
+// Questions fréquentes (cf. faqField dans tina/config.ts et src/components/Faq.astro).
+const faq = z
+  .array(z.object({ question: z.string().nullish(), reponse: z.string().nullish() }))
+  .nullish();
+
 // Les collections Astro lisent les MÊMES fichiers que TinaCMS édite (dossier content/).
 // Astro = rendu statique (source de vérité), Tina = interface d'édition.
 
@@ -19,6 +24,7 @@ const expertise = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/expertises" }),
   schema: z.object({
     seo,
+    faq,
     titre: z.string(),
     accroche: z.string().optional(),
     illustration: z.string().optional(),
@@ -171,8 +177,10 @@ const article = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/articles" }),
   schema: z.object({
     seo,
+    faq,
     titre: z.string(),
     date: z.coerce.date(),
+    misAJour: z.coerce.date().nullish(),
     couverture: z.string().optional(),
     extrait: z.string().optional(),
     auteur: z.string().optional(),
@@ -201,6 +209,7 @@ const offre = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/offres" }),
   schema: z.object({
     seo,
+    faq,
     titre: z.string(),
     eyebrow: z.string().optional(),
     accroche: z.string().optional(),

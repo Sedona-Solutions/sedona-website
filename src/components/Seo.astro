@@ -19,10 +19,13 @@ import {
   filAriane,
   article as articleLd,
   service as serviceLd,
+  pageFaq,
+  faqValide,
   type ChampsSeo,
   type EtapeAriane,
   type InfosArticle,
   type InfosService,
+  type QuestionFaq,
 } from "../utils/seo";
 
 interface Props {
@@ -38,6 +41,8 @@ interface Props {
   article?: InfosArticle;
   /** Prestation décrite par la page (offres, domaines d'expertise). */
   service?: InfosService;
+  /** Questions fréquentes affichées sur la page (champ « FAQ » de Tina). */
+  faq?: QuestionFaq[] | null;
   /** Fil d'Ariane hors accueil ; la dernière étape (sans chemin) est la page courante. */
   ariane?: EtapeAriane[];
   /** Ajoute Organization + WebSite (page d'accueil). */
@@ -75,6 +80,7 @@ if (type === "article" && props.article) {
   jsonLd.push(articleLd(props.article, { titre: props.title.replace(/ — Sedona$/, ""), description, image: image.url, canonique, site }));
 }
 if (props.service) jsonLd.push(serviceLd(props.service, { description, image: image.url, canonique, site }));
+if (faqValide(props.faq).length) jsonLd.push(pageFaq(props.faq!));
 if (props.ariane?.length) jsonLd.push(filAriane(props.ariane, site, canonique));
 
 // Échappe « </ » pour qu'un contenu ne puisse pas fermer la balise <script>.

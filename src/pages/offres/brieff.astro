@@ -4,6 +4,7 @@
 // Contenu piloté par Tina (collection "offre", entrée content/offres/brieff.md).
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Faq from "../../components/Faq.astro";
 
 import Hero from "../../components/brieff/Hero.astro";
 import Personas from "../../components/brieff/Personas.astro";
@@ -28,6 +29,7 @@ const pillVariant = d.pillVariant ?? "ovni";
   image={d.illustration}
   ariane={[{ nom: "Offres" }, { nom: "Brieff" }]}
   service={{ nom: "Brieff" }}
+  faq={d.faq}
   seo={d.seo}
 >
   <div class="dark-stack">
@@ -94,6 +96,7 @@ const pillVariant = d.pillVariant ?? "ovni";
       pillVariant={pillVariant}
       accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.ovni}
     />
+    <Faq items={d.faq} pillVariant={pillVariant} />
   </div>
   <CtaFinal
     cta={{

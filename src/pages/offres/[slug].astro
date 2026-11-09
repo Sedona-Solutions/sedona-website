@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Faq from "../../components/Faq.astro";
 import home from "../../../content/home/index.json";
 
 import OffreHero from "../../components/offre/OffreHero.astro";
@@ -35,6 +36,7 @@ const pillVariant = d.pillVariant ?? "cactus";
   image={d.illustration}
   ariane={[{ nom: "Offres" }, { nom: d.titre }]}
   service={{ nom: d.titre }}
+  faq={d.faq}
   seo={d.seo}
 >
   <div class="dark-stack">
@@ -57,6 +59,7 @@ const pillVariant = d.pillVariant ?? "cactus";
       accentLight={ACCENT_LIGHT[pillVariant] ?? ACCENT_LIGHT.cactus}
       accentMid={ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus}
     />
+    <Faq items={d.faq} pillVariant={pillVariant} />
   </div>
   <CtaFinal
     cta={{

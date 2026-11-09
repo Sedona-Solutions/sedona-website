@@ -6,6 +6,7 @@
 // repris tel quel depuis IA Forge en attendant la relecture du wording.
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Faq from "../../components/Faq.astro";
 
 import Hero from "../../components/brieff/Hero.astro";
 import CommentCaMarcheTabs from "../../components/brieff/CommentCaMarcheTabs.astro";
@@ -29,6 +30,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus;
   image={d.illustration}
   ariane={[{ nom: "Offres" }, { nom: d.titre }]}
   service={{ nom: d.titre }}
+  faq={d.faq}
   seo={d.seo}
 >
   <div class="dark-stack">
@@ -92,6 +94,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID.cactus;
       radius="top"
     />
     <Testimonial citation={d.temoignage?.citation} auteur={d.temoignage?.auteur} role={d.temoignage?.role} avatar={d.temoignage?.avatar} radius="bottom" />
+    <Faq items={d.faq} pillVariant={pillVariant} />
   </div>
   <CtaFinal
     cta={{

@@ -5,6 +5,7 @@ import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
 import ArticleCard from "../../components/blog/ArticleCard.astro";
 import Media from "../../components/Media.astro";
+import Faq from "../../components/Faq.astro";
 import { estArticlePublie } from "../../utils/articleVisibility";
 import { introDepuisMarkdown } from "../../utils/seo";
 
@@ -23,7 +24,11 @@ const moisCap = (d) => {
 };
 const tempsMatch = a.tempsLecture?.match(/\d+\s*min/i);
 const tempsLabel = a.tempsLecture && `Temps de lecture : ${tempsMatch ? tempsMatch[0] : a.tempsLecture}`;
-const meta = [a.date && `Publié le ${moisCap(a.date)}`, tempsLabel].filter(Boolean).join(" · ");
+// « Mis à jour le » seulement si la mise à jour est postérieure à la publication (jour différent).
+const misAJour = a.misAJour && moisCap(a.misAJour) !== moisCap(a.date) && +a.misAJour > +a.date ? a.misAJour : undefined;
+const meta = [a.date && `Publié le ${moisCap(a.date)}`, misAJour && `Mis à jour le ${moisCap(misAJour)}`, tempsLabel]
+  .filter(Boolean)
+  .join(" · ");
 
 // « À lire aussi » : on privilégie les articles qui partagent au moins un tag, puis on complète, max 3.
 const reste = arr.filter((e) => e.id !== entry.id).map((e) => ({ ...e.data, slug: e.id }));
@@ -36,7 +41,8 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
   description={a.extrait || introDepuisMarkdown(entry.body)}
   image={a.couverture}
   type="article"
-  article={{ publie: a.date, auteur: a.auteur, tags: a.tags }}
+  article={{ publie: a.date, modifie: misAJour, auteur: a.auteur, tags: a.tags }}
+  faq={a.faq}
   ariane={[{ nom: "Blog", chemin: "/blog/" }, { nom: a.titre }]}
   seo={a.seo}
   headerBg="#e9b189"
@@ -76,6 +82,7 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
     <div class="abody">
       <div class="container abody__inner">
         <div class="prose"><Content /></div>
+        <Faq items={a.faq} variante="article" />
 
         <div class="apager" id="apager-share" data-title={a.titre}>
           <img class="apager__deco" src="/deco/squiggle-6.svg" alt="" aria-hidden="true" />

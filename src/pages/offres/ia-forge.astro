@@ -4,6 +4,7 @@
 // Contenu piloté par Tina (collection "offre", entrée content/offres/ia-forge.md).
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Faq from "../../components/Faq.astro";
 
 import Hero from "../../components/brieff/Hero.astro";
 import Impacts from "../../components/brieff/Impacts.astro";
@@ -29,6 +30,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
   image={d.illustration}
   ariane={[{ nom: "Offres" }, { nom: "IA Forge" }]}
   service={{ nom: "IA Forge" }}
+  faq={d.faq}
   seo={d.seo}
 >
   <div class="dark-stack">
@@ -110,6 +112,7 @@ const accentMid = ACCENT_MID[pillVariant] ?? ACCENT_MID["red-rock"];
       radiusBottom
       withDot={false}
     />
+    <Faq items={d.faq} pillVariant={pillVariant} />
   </div>
   <CtaFinal
     cta={{

@@ -132,13 +132,46 @@ const seoField: TinaField = {
 
 const COLLECTIONS_AVEC_SEO = new Set(["home", "expertise", "projet", "offre", "article", "page", "histoire", "carrieres"]);
 
+// ---------------------------------------------------------------------------
+// FAQ : questions/réponses affichées en accordéon en bas de page et déclarées
+// aux moteurs (données structurées FAQPage, cf. src/components/Faq.astro).
+// C'est le format que les moteurs IA citent le plus volontiers.
+// ---------------------------------------------------------------------------
+const faqField: TinaField = {
+  type: "object",
+  name: "faq",
+  label: "Questions fréquentes (FAQ)",
+  description:
+    "Facultatif. Des questions que vos clients posent vraiment, avec une réponse directe dès la première phrase (2 à 5 phrases). Affichées en bas de page.",
+  list: true,
+  ui: { itemProps: (i: { question?: string }) => ({ label: i?.question || "Nouvelle question" }) },
+  fields: [
+    { type: "string", name: "question", label: "Question", required: true, description: "Formulée comme le client la poserait, ex. « Combien de temps dure un audit Keycloak ? »" },
+    {
+      type: "string",
+      name: "reponse",
+      label: "Réponse",
+      required: true,
+      ui: { component: "textarea" },
+      description: "Texte simple. Une ligne vide sépare deux paragraphes.",
+    },
+  ],
+};
+
+const COLLECTIONS_AVEC_FAQ = new Set(["expertise", "offre", "article"]);
+
+/** Ajoute en fin de formulaire la FAQ puis le groupe SEO aux collections concernées. */
 function avecSeo(collections: Collection[]): Collection[] {
   return collections.map((c) => {
-    if (!COLLECTIONS_AVEC_SEO.has(c.name)) return c;
+    const ajouts = [
+      ...(COLLECTIONS_AVEC_FAQ.has(c.name) ? [faqField] : []),
+      ...(COLLECTIONS_AVEC_SEO.has(c.name) ? [seoField] : []),
+    ];
+    if (!ajouts.length) return c;
     if ("templates" in c && c.templates) {
-      return { ...c, templates: c.templates.map((t) => ({ ...t, fields: [...t.fields, seoField] })) } as Collection;
+      return { ...c, templates: c.templates.map((t) => ({ ...t, fields: [...t.fields, ...ajouts] })) } as Collection;
     }
-    return { ...c, fields: [...(c.fields ?? []), seoField] } as Collection;
+    return { ...c, fields: [...(c.fields ?? []), ...ajouts] } as Collection;
   });
 }
 
@@ -1266,6 +1299,13 @@ export default defineConfig({
         fields: [
           { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
           { type: "datetime", name: "date", label: "Date", required: true },
+          {
+            type: "datetime",
+            name: "misAJour",
+            label: "Mis à jour le (facultatif)",
+            description:
+              "À renseigner après une mise à jour réelle du contenu (pas une coquille) : affiché sous le titre et signalé aux moteurs, qui privilégient les contenus récents.",
+          },
           { type: "image", name: "couverture", label: "Image de couverture" },
           { type: "string", name: "extrait", label: "Extrait", ui: { component: "textarea" } },
           { type: "string", name: "auteur", label: "Auteur" },

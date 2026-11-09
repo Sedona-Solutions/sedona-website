@@ -1,0 +1,70 @@
+---
+// Questions fréquentes (champ « FAQ » de Tina) en accordéon, 0 JS (<details>).
+// Les mêmes questions sont déclarées aux moteurs en FAQPage par <Seo faq={…} />
+// (src/components/Seo.astro) : passer la même liste aux deux.
+//
+// variante="section" : bloc pleine largeur des pages offres / domaines, posé sur
+//   le fond sombre commun (.dark-stack), comme les autres sections.
+// variante="article" : bloc intégré sous le texte d'un article de blog.
+import AccentAccordion from "./AccentAccordion.astro";
+import TitreAccent from "./TitreAccent.astro";
+import { ACCENT_LIGHT, ACCENT_MID } from "../data/offreAccents.js";
+import { faqValide, type QuestionFaq } from "../utils/seo";
+
+interface Props {
+  items?: QuestionFaq[] | null;
+  pillVariant?: string;
+  variante?: "section" | "article";
+}
+
+const { items, pillVariant = "canyon", variante = "section" } = Astro.props;
+const questions = faqValide(items).map((q) => ({ titre: q.question.trim(), texte: q.reponse.trim() }));
+const accentLight = ACCENT_LIGHT[pillVariant as keyof typeof ACCENT_LIGHT] ?? ACCENT_LIGHT.canyon;
+const accentMid = ACCENT_MID[pillVariant as keyof typeof ACCENT_MID] ?? ACCENT_MID.canyon;
+---
+
+{
+  questions.length > 0 && (
+    <section class:list={["faq", `faq--${variante}`]} aria-label="Questions fréquentes">
+      <div class:list={[variante === "section" && "container"]}>
+        <header class="faq__head" data-reveal>
+          {variante === "section" && <p class="faq__eyebrow">FAQ</p>}
+          {variante === "section" ? (
+            <TitreAccent titre="Questions fréquentes" accent="fréquentes" as="h2" class="faq__title" pillVariant={pillVariant} />
+          ) : (
+            <h2 class="faq__title">Questions fréquentes</h2>
+          )}
+        </header>
+        <AccentAccordion items={questions} accentMid={accentMid} accentLight={accentLight} groupName="faq" />
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .faq--section {
+    background: var(--color-canyon-50);
+    padding-block: clamp(3rem, 6vw, 7rem);
+    border-radius: var(--radius-section-lg);
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+  }
+  /* Même colonne que le texte de l'article (.abody .prose, 980px), sous ses 3rem de marge basse. */
+  .faq--article { max-width: 980px; margin: 0 auto clamp(2.5rem, 5vw, 4rem); }
+
+  .faq__head { max-width: 1088px; margin: 0 auto clamp(2rem, 4vw, 3rem); }
+  .faq__eyebrow {
+    font-family: var(--font-sans); font-weight: 400; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #3b0800; margin: 0 0 1rem;
+  }
+  .faq :global(.faq__title) { margin: 0; color: #3b0800; }
+  .faq--article .faq__head { margin-bottom: 1.5rem; }
+  /* Même style que les intertitres (h2) du corps de l'article. */
+  .faq--article .faq__title {
+    font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1; letter-spacing: -0.01em;
+  }
+
+  /* L'accordéon décale par défaut le texte de 280px (mise en page « texte + visuel »
+     des fonctionnalités Brieff) : ici la réponse s'aligne sous la question. */
+  .faq :global(.acca__body > .acca__legacy) { padding-left: 0; }
+</style>

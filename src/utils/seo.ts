@@ -161,6 +161,28 @@ export function service(
   };
 }
 
+export interface QuestionFaq {
+  question?: string | null;
+  reponse?: string | null;
+}
+
+/** Questions complètes (question ET réponse renseignées), dans l'ordre saisi. */
+export const faqValide = (items?: QuestionFaq[] | null) =>
+  (items ?? []).filter((i): i is { question: string; reponse: string } => !!i.question?.trim() && !!i.reponse?.trim());
+
+/** Questions fréquentes affichées sur la page (schema.org/FAQPage). */
+export function pageFaq(items: QuestionFaq[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqValide(items).map((i) => ({
+      "@type": "Question",
+      name: i.question.trim(),
+      acceptedAnswer: { "@type": "Answer", text: i.reponse.trim().replace(/\s*\n\s*/g, " ") },
+    })),
+  };
+}
+
 export interface InfosArticle {
   publie?: Date;
   modifie?: Date;
