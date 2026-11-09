@@ -60,10 +60,44 @@ const matomoJs = actif ? matomoScriptUrl(MATOMO_URL!) : "";
           _paq.push(["disableCookies"]); // mode sans cookie
           _paq.push(["enableLinkTracking"]);
           _paq.push(["trackPageView"]);
+          signalerMoteurIA(_paq);
           var g = document.createElement("script");
           g.async = true;
           g.src = matomoJs;
           document.head.appendChild(g);
+        }
+
+        // Visite arrivée depuis un moteur IA (lien cité dans une réponse) : événement
+        // « Moteur IA » > nom du moteur > page d'arrivée. Matomo, Comportement > Événements.
+        // On regarde le référent, et à défaut ?utm_source= : ChatGPT l'ajoute à ses liens
+        // et les applis mobiles des assistants n'envoient souvent aucun référent.
+        var MOTEURS_IA = [
+          [/(^|\.)(chatgpt\.com|openai\.com)$/, "ChatGPT"],
+          [/(^|\.)perplexity\.ai$/, "Perplexity"],
+          [/(^|\.)claude\.ai$/, "Claude"],
+          [/(^|\.)gemini\.google\.com$/, "Gemini"],
+          [/(^|\.)copilot\.microsoft\.com$/, "Copilot"],
+          [/(^|\.)chat\.mistral\.ai$/, "Le Chat (Mistral)"],
+          [/(^|\.)chat\.deepseek\.com$/, "DeepSeek"],
+          [/(^|\.)(meta\.ai)$/, "Meta AI"],
+        ];
+        function signalerMoteurIA(_paq) {
+          var sources = [];
+          try {
+            if (document.referrer) sources.push(new URL(document.referrer).hostname);
+          } catch (e) {}
+          try {
+            var utm = new URLSearchParams(location.search).get("utm_source");
+            if (utm) sources.push(utm.toLowerCase().replace(/^https?:\/\//, "").split("/")[0]);
+          } catch (e) {}
+          for (var i = 0; i < sources.length; i++) {
+            for (var j = 0; j < MOTEURS_IA.length; j++) {
+              if (MOTEURS_IA[j][0].test(sources[i])) {
+                _paq.push(["trackEvent", "Moteur IA", MOTEURS_IA[j][1], location.pathname]);
+                return;
+              }
+            }
+          }
         }
 
         function enregistrer(choix) {

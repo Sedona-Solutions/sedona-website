@@ -134,6 +134,33 @@ const editeur = (site: URL) => ({
   logo: { "@type": "ImageObject", url: new URL(LOGO, site).href, width: 512, height: 512 },
 });
 
+export interface InfosService {
+  nom: string;
+  /** Type de prestation, ex. « Support Keycloak » ou « Conseil data et IA ». */
+  categorie?: string;
+}
+
+/** Offre ou domaine d'expertise : prestation fournie par Sedona (schema.org/Service). */
+export function service(
+  infos: InfosService,
+  { description, image, canonique, site }: { description?: string; image: string; canonique: string; site: URL }
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${canonique}#service`,
+    name: infos.nom,
+    serviceType: infos.categorie ?? infos.nom,
+    description,
+    image,
+    url: canonique,
+    // Déclaré en entier : l'Organization complète n'est présente que sur l'accueil.
+    provider: editeur(site),
+    areaServed: { "@type": "Country", name: "France" },
+    availableLanguage: "fr-FR",
+  };
+}
+
 export interface InfosArticle {
   publie?: Date;
   modifie?: Date;

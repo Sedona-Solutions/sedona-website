@@ -18,9 +18,11 @@ import {
   siteWeb,
   filAriane,
   article as articleLd,
+  service as serviceLd,
   type ChampsSeo,
   type EtapeAriane,
   type InfosArticle,
+  type InfosService,
 } from "../utils/seo";
 
 interface Props {
@@ -34,6 +36,8 @@ interface Props {
   seo?: ChampsSeo | null;
   /** Infos de publication (type="article"). */
   article?: InfosArticle;
+  /** Prestation décrite par la page (offres, domaines d'expertise). */
+  service?: InfosService;
   /** Fil d'Ariane hors accueil ; la dernière étape (sans chemin) est la page courante. */
   ariane?: EtapeAriane[];
   /** Ajoute Organization + WebSite (page d'accueil). */
@@ -70,6 +74,7 @@ if (props.organisation) jsonLd.push(organisation(site), siteWeb(site));
 if (type === "article" && props.article) {
   jsonLd.push(articleLd(props.article, { titre: props.title.replace(/ — Sedona$/, ""), description, image: image.url, canonique, site }));
 }
+if (props.service) jsonLd.push(serviceLd(props.service, { description, image: image.url, canonique, site }));
 if (props.ariane?.length) jsonLd.push(filAriane(props.ariane, site, canonique));
 
 // Échappe « </ » pour qu'un contenu ne puisse pas fermer la balise <script>.

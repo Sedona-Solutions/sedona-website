@@ -49,6 +49,7 @@ const articles =
   description={d.accroche ?? d.affichage?.resume}
   image={d.illustration}
   ariane={[{ nom: "Domaines" }, { nom: d.titre }]}
+  service={{ nom: d.titre }}
   seo={d.seo}
 >
   <div class="dark-stack">
