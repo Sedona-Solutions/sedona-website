@@ -172,6 +172,10 @@ ctaFinal:
 faq:
   - question: Qu'est-ce qu'IA Forge ?
     reponse: IA Forge de Sedona est à la fois la mise à disposition d'une équipe mais également une organisation dédiée et une intégration forte de l'IA pour réaliser vos projets rapidement et à moindre coût.
+  - question: Est-ce qu'IA Forge utilise l'IA ?
+    reponse: 'Oui, les équipes seniors qui sont dans ce dispositif IA Forge utilisent l''IA, de la conception avec le produit Brieff jusqu''à la partie développement et déploiement en utilisant un agent code s''appuyant sur des skills et tools.'
+  - question: Quels sont les objectifs d'IA Forge ?
+    reponse: 'IA Forge permet de : réduire les temps de développement et les coûts, produire des spécifications détaillées et toujours à jour, permettre de faire évoluer les fonctionnalités sans contraintes, réduire voire supprimer les coûts de licence, redonner "la main" aux métiers.'
 _template: iaForge
 ---
 

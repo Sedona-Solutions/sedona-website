@@ -152,6 +152,8 @@ ctaFinal:
 faq:
   - question: Combien de temps dure un audit Elastic ?
     reponse: 'Cela dépend de votre infrastructure Elastic actuelle : des différentes applications qui utilisent Elasticsearch au sein de votre organisation, des indexations en cours etc. Une durée minimale de 5 jours d''audit est conseillée.'
+  - question: Avez-vous aussi de l'expérience sur la suite ELK ?
+    reponse: 'Sedona intervient également sur les produits de la suite ELK : Logstash : nous installons la solution permettant de tracer les opérations effectuées et auditons son contenu, Kibana : nous installons et paramétrons la solution au sein de votre système d''information.'
 _template: elastic
 ---
 
