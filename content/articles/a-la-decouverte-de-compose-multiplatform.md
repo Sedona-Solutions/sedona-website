@@ -1,6 +1,7 @@
 ---
 titre: À la découverte de Compose Multiplatform
 date: 2023-08-23T09:23:52.769Z
+dateCreation: 2023-08-23T09:23:52.769Z
 extrait: 'Ces dernières années, le développement mobile hybride a beaucoup mûri : on peut désormais créer des applications iOS et Android à partir d''un code source partagé, là où le natif impose un code spécifique à chaque plateforme. Flutter, Ionic, React Native… les options sont nombreuses. Aujourd''hui, on s''intéresse à Compose Multiplatform, qui marie la puissance de Kotlin et du framework graphique Jetpack Compose.'
 auteur: content/auteurs/clement-g.json
 tags:

@@ -1,6 +1,7 @@
 ---
 titre: Spécificité des sélecteurs CSS
 date: 2025-12-15T01:00:00.000Z
+dateCreation: 2025-12-15T01:00:00.000Z
 extrait: La spécificité reste l'une des notions CSS les plus mal comprises. On démêle le calcul des poids et les bonnes pratiques pour garder une feuille de styles maintenable.
 auteur: content/auteurs/nicolas-t.json
 tempsLecture: 2 min de lecture

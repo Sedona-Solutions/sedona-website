@@ -1,6 +1,7 @@
 ---
 titre: 'Un nouveau site Web pour Sedona, une nouvelle identité'
 date: 2026-11-10T14:20:00.174Z
+dateCreation: 2026-11-09T17:16:26.000Z
 couverture: /uploads/articles/HomeScreen_website.png
 extrait: |
   Le nouveau site Web est arrivé !

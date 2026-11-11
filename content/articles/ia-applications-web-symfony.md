@@ -1,6 +1,7 @@
 ---
 titre: Parlons FinOps
 date: 2025-12-18T01:00:00.000Z
+dateCreation: 2025-12-18T01:00:00.000Z
 extrait: ''
 auteur: content/auteurs/michael-g.json
 tempsLecture: 6 min de lecture

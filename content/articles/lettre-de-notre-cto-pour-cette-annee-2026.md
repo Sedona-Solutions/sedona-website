@@ -1,6 +1,7 @@
 ---
 titre: Lettre de notre CTO pour cette année 2026
 date: 2026-01-06T10:26:09.000Z
+dateCreation: 2026-01-06T10:26:09.000Z
 extrait: ''
 auteur: content/auteurs/edouard-l.json
 tempsLecture: 2 min de lecture

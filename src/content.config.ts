@@ -193,6 +193,8 @@ const article = defineCollection({
     faq,
     titre: z.string(),
     date: z.coerce.date(),
+    // Date de création (back-office Tina uniquement, non affichée sur le site).
+    dateCreation: z.coerce.date().nullish(),
     misAJour: z.coerce.date().nullish(),
     couverture: z.string().optional(),
     extrait: z.string().optional(),

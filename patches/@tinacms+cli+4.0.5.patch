@@ -1,0 +1,16 @@
+diff --git a/node_modules/@tinacms/cli/dist/index.js b/node_modules/@tinacms/cli/dist/index.js
+index d096a0c..d015b37 100644
+--- a/node_modules/@tinacms/cli/dist/index.js
++++ b/node_modules/@tinacms/cli/dist/index.js
+@@ -416,6 +416,11 @@ var generateTypes = async (schema, queryPathGlob = process.cwd(), fragDocPath =
+   return reexportExact(importRichTextType(res));
+ };
+ var loadGraphQLDocuments = async (globPath) => {
++  // Patch Sedona : @graphql-tools/utils 12 prend un chemin contenant une espace (ex. « Site Web sedona »)
++  // pour un document GraphQL invalide et lève une erreur. On passe donc un motif relatif au projet, en slashs.
++  if (typeof globPath === "string" && path6.isAbsolute(globPath)) {
++    globPath = path6.relative(process.cwd(), globPath).split(path6.sep).join("/");
++  }
+   let result = [];
+   try {
+     result = await loadDocuments(globPath, {

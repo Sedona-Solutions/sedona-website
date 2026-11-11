@@ -2,6 +2,7 @@
 categorie: BTP
 titre: 'RivieraDEV 2026 : ce qu’il faut retenir'
 date: 2026-07-16T17:22:50.429Z
+dateCreation: 2026-07-16T17:22:50.429Z
 couverture: /uploads/articles/wp/riviera-dev-2026.png
 extrait: |-
   Quelques jours à RivieraDEV, et une conviction qui se confirme : notre écosystème avance sur deux jambes en ce moment. D’un côté, une ingénierie qui pousse toujours plus loin l’efficience (Quarkus en tête).

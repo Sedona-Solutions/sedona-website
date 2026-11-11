@@ -2,6 +2,7 @@
 categorie: Évènement
 titre: 'Retours sur Devoxx 2026 : Et si on parlait de CSS ?'
 date: 2026-05-07T11:15:24.000Z
+dateCreation: 2026-05-07T11:15:24.000Z
 couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: 'Nos équipes ont assisté à de nombreuses conférences et Talk au cours de ce dernier Devoxx. Aujourd''hui c''est Hugo qui nous présente sa journée. '
 auteur: content/auteurs/hugo-p.json

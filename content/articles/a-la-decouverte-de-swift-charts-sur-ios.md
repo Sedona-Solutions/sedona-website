@@ -1,6 +1,7 @@
 ---
 titre: À la découverte de Swift Charts sur iOS
 date: 2024-01-15T10:29:23.172Z
+dateCreation: 2024-01-15T10:29:23.172Z
 couverture: /uploads/articles/swift-charts.jpg
 auteur: content/auteurs/nathalie-l.json
 tags:

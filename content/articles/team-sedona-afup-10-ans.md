@@ -1,6 +1,7 @@
 ---
 titre: La team Sedona à l'AFUP… depuis 10 ans déjà
 date: 2026-06-24T00:00:00.000Z
+dateCreation: 2026-06-24T00:00:00.000Z
 extrait: 'Dix ans de présence à l''AFUP Day : retour sur une belle aventure communautaire.'
 auteur: content/auteurs/denis-c.json
 tempsLecture: 3 min de lecture

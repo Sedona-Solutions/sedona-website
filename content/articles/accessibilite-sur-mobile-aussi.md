@@ -1,6 +1,7 @@
 ---
 titre: Mobile Accessibility
 date: 2025-12-12T01:00:00.000Z
+dateCreation: 2025-12-12T01:00:00.000Z
 extrait: 'L''accessibilité ne s''arrête pas au web : panorama des bonnes pratiques sur mobile.'
 auteur: content/auteurs/virginie-m.json
 tempsLecture: 7 min de lecture

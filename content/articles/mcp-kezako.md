@@ -1,6 +1,7 @@
 ---
 titre: MCP Kezako ?
 date: 2025-12-05T01:00:00.000Z
+dateCreation: 2025-12-05T01:00:00.000Z
 extrait: |-
   Une introduction simple au Model Context Protocol et à ce qu'il change concrètement.MCP est sur toutes les lèvres, mais de quoi parle-t-on vraiment ? On reprend
   les bases du protocole et ses cas d'usage les plus parlants.

@@ -1,6 +1,7 @@
 ---
 titre: Nos experts Mobile sont présents à l'événement Android Makers du 10/04
 date: 2026-04-10T11:47:23.000Z
+dateCreation: 2026-04-10T11:47:23.000Z
 extrait: 'Notre équipe mobile animée par notre expert Antoine est présente aujourd''hui (10/04) à l''évènement Android Makers, qui rassemble les acteurs incontournables de…'
 auteur: content/auteurs/remy-p.json
 tempsLecture: 1 min de lecture

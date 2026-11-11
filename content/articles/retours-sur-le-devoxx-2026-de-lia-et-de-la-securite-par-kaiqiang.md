@@ -2,6 +2,7 @@
 categorie: Évènement
 titre: 'Retours sur le Devoxx 2026 : de l''IA et de la sécurité'
 date: 2026-05-12T16:43:29.000Z
+dateCreation: 2026-05-12T16:43:29.000Z
 couverture: /uploads/articles/amphi-bleu-devoxx-fr-2026.jpg
 extrait: Continuons notre périple sur les conférences avec l'intervention de Kaiqiang qui nous parle de ces deux journées où il a assisté à des conférences sur la sécurité mais également sur l'IA avec de belles rencontres. Il y a quelques semaines j'ai assisté à Devoxx France 2026. J'ai surtout été attiré par des talks autour de retours d'expérience sur des outils ou des pratiques que j'avais à l'œil depuis un moment voici ce que j'en retiens.
 auteur: content/auteurs/kaiqiang-x.json

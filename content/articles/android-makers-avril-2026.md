@@ -1,6 +1,7 @@
 ---
 titre: 'Android Makers 2024 : ce que nos consultants en ont retenu'
 date: 2024-06-18T00:00:00.000Z
+dateCreation: 2024-06-18T00:00:00.000Z
 couverture: /uploads/articles/wp/IMG_0173-768x576.jpeg
 extrait: 'Les 25 et 26 avril dernier a eu lieu la 6ème édition de la conférence Android Makers. Cette conférence organisée par le PAUG (Paris Android User Group) et Droidcon rassemble chaque année près de 700 développeurs. Cette année encore la conférence avait lieu au Beffroi de Montrouge, notre équipe de développeurs Android était sur place et vous propose un retour sur ces 2 jours riches de près de 60 présentations.'
 auteur: content/auteurs/virginie-m.json

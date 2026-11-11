@@ -1,6 +1,7 @@
 ---
 titre: Gestion des identités avec Keycloak
 date: 2025-12-10T01:00:00.000Z
+dateCreation: 2025-12-10T01:00:00.000Z
 extrait: 'C’est Sébastien C., expert Keycloak qui nous parle de Gestion d’identité avec Keycloak.'
 auteur: content/auteurs/sebastien-c.json
 tempsLecture: 7 min de lecture

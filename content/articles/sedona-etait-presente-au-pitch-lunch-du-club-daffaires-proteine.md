@@ -1,6 +1,7 @@
 ---
 titre: Sedona au Pitch & Lunch du club d'affaires Protéine
 date: 2026-04-20T16:31:08.000Z
+dateCreation: 2026-04-20T16:31:08.000Z
 extrait: ''
 auteur: content/auteurs/remy-p.json
 tempsLecture: 1 min de lecture

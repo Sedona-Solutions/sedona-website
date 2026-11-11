@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useField } from "react-final-form";
+import { useFormField } from "./useFormField";
 import { wrapFieldWithNoHeader } from "tinacms";
 
 type LogoItem = { nom?: string; logo?: string; actif?: boolean };
@@ -14,9 +14,9 @@ type LogoItem = { nom?: string; logo?: string; actif?: boolean };
  * comme ProjectsLayoutToggle — à revoir si une mise à jour de Tina casse le
  * markup des listes.
  */
-export const LogoActiveToggle = wrapFieldWithNoHeader(({ field }: any) => {
+export const LogoActiveToggle = wrapFieldWithNoHeader(({ field, form }: any) => {
   const listFieldName = field.name.replace(/[^.]+$/, "logos");
-  const { input } = useField(listFieldName, { subscription: { value: true } });
+  const input = useFormField(form, listFieldName);
   const markerRef = useRef<HTMLDivElement>(null);
   // Le bouton n'est créé qu'une fois (voir `if (!btn)` plus bas) ; son handler
   // de clic doit donc lire `input` via cette ref à chaque clic plutôt que par

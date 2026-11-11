@@ -1,6 +1,7 @@
 ---
 titre: 'Sedona aux rencontres de l''ADRA : l''IA au cœur des échanges'
 date: 2026-04-15T07:55:17.000Z
+dateCreation: 2026-04-15T07:55:17.000Z
 extrait: ''
 auteur: content/auteurs/remy-p.json
 tempsLecture: 1 min de lecture

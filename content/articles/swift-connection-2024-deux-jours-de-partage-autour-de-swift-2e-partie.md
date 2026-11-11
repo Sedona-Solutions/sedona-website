@@ -1,6 +1,7 @@
 ---
 titre: 'Swift Connection 2024 : Deux jours de partage autour de Swift [2e partie]'
 date: 2024-10-11T10:18:50.613Z
+dateCreation: 2024-10-11T10:18:50.613Z
 auteur: content/auteurs/jonathan-d.json
 tags:
   - Évènement

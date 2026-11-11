@@ -1,6 +1,7 @@
 ---
 titre: Mettre de l'IA dans les applications Web avec Symfony AI Bundle
 date: 2026-01-08T22:30:30.000Z
+dateCreation: 2026-01-08T22:30:30.000Z
 extrait: ''
 auteur: content/auteurs/guillaume-m.json
 tempsLecture: 2 min de lecture

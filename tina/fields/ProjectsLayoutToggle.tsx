@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useField } from "react-final-form";
+import { useFormField } from "./useFormField";
 import { wrapFieldWithNoHeader } from "tinacms";
 
 // Ligne de démarcation en début de libellé (voir tina/config.ts) — sert à
@@ -15,9 +15,9 @@ const SHOW_WHEN_TEXTE = "Cartes";
  * un ui.component qui les re-rendait directement faisait planter le
  * drag-and-drop de Tina).
  */
-export const ProjectsLayoutToggle = wrapFieldWithNoHeader(({ field }: any) => {
+export const ProjectsLayoutToggle = wrapFieldWithNoHeader(({ field, form }: any) => {
   const layoutFieldName = field.name.replace(/[^.]+$/, "layout");
-  const { input } = useField(layoutFieldName, { subscription: { value: true } });
+  const input = useFormField(form, layoutFieldName);
   const layout = input.value ?? "image";
   const markerRef = useRef<HTMLDivElement>(null);
 

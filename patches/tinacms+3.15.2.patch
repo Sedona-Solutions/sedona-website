@@ -1,8 +1,8 @@
 diff --git a/node_modules/tinacms/dist/index.js b/node_modules/tinacms/dist/index.js
-index 69093c7..eb25248 100644
+index 5732f6c..7e26ad2 100644
 --- a/node_modules/tinacms/dist/index.js
 +++ b/node_modules/tinacms/dist/index.js
-@@ -16082,6 +16082,7 @@ class TinaAdminApi {
+@@ -17238,6 +17238,7 @@ class TinaAdminApi {
                      extension
                      hasReferences
                    }
@@ -10,7 +10,7 @@ index 69093c7..eb25248 100644
                  }
                }
              }
-@@ -16133,6 +16134,7 @@ class TinaAdminApi {
+@@ -17289,6 +17290,7 @@ class TinaAdminApi {
                      filename
                      extension
                    }
@@ -18,7 +18,7 @@ index 69093c7..eb25248 100644
                  }
                }
              }
-@@ -18248,6 +18250,9 @@ const buildByLevel = (make) => ({
+@@ -19380,6 +19382,9 @@ const buildByLevel = (make) => ({
  });
  const headingItemsByLevel = buildByLevel((level) => {
    const depth = level.slice(1);
@@ -28,8 +28,8 @@ index 69093c7..eb25248 100644
    return {
      description: `Heading ${depth}`,
      icon: Icons[level],
-@@ -18617,10 +18622,10 @@ const MarkToolbarButton = withRef(({ clear, nodeType, ...rest }, ref) => {
-   return /* @__PURE__ */ React__default.createElement(ToolbarButton, { ref, ...props, ...rest });
+@@ -19838,11 +19843,77 @@ const toTextColorMarks = (color) => ({
+   textColor: color
  });
  const highlightColors = [
 -  { label: "Yellow", value: "#FEF08A" },
@@ -40,13 +40,7 @@ index 69093c7..eb25248 100644
 +  { label: "Green", value: "#a7e9d1" },
 +  { label: "Blue", value: "#a9e7e4" },
 +  { label: "Red", value: "#f8b3a9" }
- ];
- const BoldToolbarButton = () => /* @__PURE__ */ React__default.createElement(MarkToolbarButton, { tooltip: "Bold (⌘+B)", nodeType: BoldPlugin.key }, /* @__PURE__ */ React__default.createElement(Icons.bold, null));
- const StrikethroughToolbarButton = () => /* @__PURE__ */ React__default.createElement(MarkToolbarButton, { tooltip: "Strikethrough", nodeType: StrikethroughPlugin.key }, /* @__PURE__ */ React__default.createElement(Icons.strikethrough, null));
-@@ -18686,6 +18691,72 @@ const useHighlightToolbar = () => {
-     rememberSelection
-   };
- };
++];
 +const safeHighlightColors = [
 +  { label: "Sunshine", value: "#f8d98b", suffix: "" },
 +  { label: "Red rock", value: "#f8b3a9", suffix: "r" },
@@ -54,7 +48,7 @@ index 69093c7..eb25248 100644
 +  { label: "Sky", value: "#a9e7e4", suffix: "k" },
 +  { label: "Canyon", value: "#f1d1b7", suffix: "n" },
 +  { label: "Ovni", value: "#d0d3f5", suffix: "o" }
-+];
+ ];
 +const useSafeHighlightToolbar = () => {
 +  const editor = useEditorRef();
 +  const openState = useOpenState();
@@ -113,10 +107,10 @@ index 69093c7..eb25248 100644
 +    color.label
 +  ))));
 +};
- const HighlightColorToolbarButton = () => {
-   const { applyHighlight, inlineCodeActive, openState, rememberSelection } = useHighlightToolbar();
-   return /* @__PURE__ */ React__default.createElement(DropdownMenu$1, { modal: false, ...openState }, /* @__PURE__ */ React__default.createElement(DropdownMenuTrigger$1, { asChild: true }, /* @__PURE__ */ React__default.createElement(
-@@ -18948,10 +19019,10 @@ const toolbarItems = {
+ const HighlightToolbarButton = () => /* @__PURE__ */ React__default.createElement(
+   ColorDropdownToolbarButton,
+   {
+@@ -20115,10 +20186,10 @@ const toolbarItems = {
      width: () => STANDARD_ICON_WIDTH,
      Component: /* @__PURE__ */ React__default.createElement(StrikethroughToolbarButton, null)
    },
@@ -128,9 +122,9 @@ index 69093c7..eb25248 100644
 -    Component: /* @__PURE__ */ React__default.createElement(HighlightToolbarButton, null)
 +    Component: /* @__PURE__ */ React__default.createElement(SafeHighlightColorToolbarButton, null)
    },
-   italic: {
-     label: "Italic",
-@@ -73264,6 +73335,9 @@ const CollectionListPage = () => {
+   textColor: {
+     label: "Text Color",
+@@ -74643,6 +74714,9 @@ const CollectionListPage = () => {
    const [searchInput, setSearchInput] = useState("");
    const { order = "asc", name: sortName } = JSON.parse(sortKey || "{}");
    const [sortOrder, setSortOrder] = useState(order);
@@ -140,7 +134,7 @@ index 69093c7..eb25248 100644
    const loc = useLocation();
    const folder = useCollectionFolder();
    useEffect(() => {
-@@ -73277,6 +73351,8 @@ const CollectionListPage = () => {
+@@ -74656,6 +74730,8 @@ const CollectionListPage = () => {
      setPrevCursors([]);
      setSearch("");
      setSearchInput("");
@@ -149,7 +143,7 @@ index 69093c7..eb25248 100644
    }, [loc]);
    useEffect(() => {
      setVars((old) => ({
-@@ -73333,6 +73409,71 @@ const CollectionListPage = () => {
+@@ -74712,6 +74788,82 @@ const CollectionListPage = () => {
          const documents = collection.documents.edges;
          const admin = cms.api.admin;
          const pageInfo = collection.documents.pageInfo;
@@ -175,7 +169,6 @@ index 69093c7..eb25248 100644
 +            return allSelected ? new Set() : new Set(selectablePaths);
 +          });
 +        };
-+        const ARTICLE_FIELD_KEYS = ["titre", "date", "couverture", "extrait", "auteur", "avatar", "tempsLecture", "vedette", "tags", "body", "statut"];
 +        const formatPubDate = (d) => {
 +          if (!d) return "—";
 +          try {
@@ -184,6 +177,18 @@ index 69093c7..eb25248 100644
 +            return "—";
 +          }
 +        };
++        const sortState = JSON.parse(sortKey || "{}");
++        const DESC_FIRST = ["date", "dateCreation"];
++        const onSortColumn = (name) => {
++          const order = sortState.name === name ? (sortState.order === "asc" ? "desc" : "asc") : (DESC_FIRST.includes(name) ? "desc" : "asc");
++          const value = JSON.stringify({ name, order });
++          setEndCursor("");
++          setPrevCursors([]);
++          window == null ? void 0 : window.localStorage.setItem(`${LOCAL_STORAGE_KEY}.${collectionName}`, value);
++          setSortKey(value);
++          setSortOrder(order);
++        };
++        const sortableHeader = (label, name) => /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle, "aria-sort": sortState.name === name ? (sortState.order === "desc" ? "descending" : "ascending") : "none" }, /* @__PURE__ */ React__default.createElement("button", { type: "button", onClick: () => onSortColumn(name), title: "Trier par " + label.toLowerCase(), className: "inline-flex items-center gap-1 font-bold hover:text-blue-600" }, label, /* @__PURE__ */ React__default.createElement("span", { className: sortState.name === name ? "text-blue-600" : "text-gray-300" }, sortState.name === name ? (sortState.order === "desc" ? "▼" : "▲") : "↕")));
 +        const applyBulkStatut = async (statutValue) => {
 +          const paths = Array.from(selectedPaths);
 +          let okCount = 0;
@@ -195,8 +200,8 @@ index 69093c7..eb25248 100644
 +                throw new Error("Impossible de lire le document existant");
 +              }
 +              const params = {};
-+              ARTICLE_FIELD_KEYS.forEach((key) => {
-+                if (values[key] !== void 0) params[key] = values[key];
++              Object.keys(values).forEach((key) => {
++                if (!key.startsWith("_") && values[key] !== void 0) params[key] = values[key];
 +              });
 +              params.statut = statutValue;
 +              await cms.api.tina.request(
@@ -221,7 +226,7 @@ index 69093c7..eb25248 100644
          if (((_a = collectionExtra == null ? void 0 : collectionExtra.ui) == null ? void 0 : _a.global) && !folder.fullyQualifiedName.startsWith("~/")) {
            if (loading || collection.name !== collectionName) {
              return /* @__PURE__ */ React__default.createElement(LoadingPage, null);
-@@ -73370,7 +73511,7 @@ const CollectionListPage = () => {
+@@ -74749,7 +74901,7 @@ const CollectionListPage = () => {
          const allowCreateFolder = !isGlobalCollection && (((_p = (_o = collectionDefinition == null ? void 0 : collectionDefinition.ui) == null ? void 0 : _o.allowedActions) == null ? void 0 : _p.createFolder) ?? true);
          const allowCreateNestedFolder = !isGlobalCollection && (((_r = (_q = collectionDefinition == null ? void 0 : collectionDefinition.ui) == null ? void 0 : _q.allowedActions) == null ? void 0 : _r.createNestedFolder) ?? true);
          const folderView = folder.fullyQualifiedName !== "";
@@ -230,7 +235,7 @@ index 69093c7..eb25248 100644
            DeleteModal,
            {
              filename: vars.relativePath,
-@@ -73520,7 +73661,15 @@ const CollectionListPage = () => {
+@@ -74904,7 +75056,15 @@ const CollectionListPage = () => {
              },
              close: () => setFolderModalOpen(false)
            }
@@ -247,7 +252,7 @@ index 69093c7..eb25248 100644
            "label",
            {
              htmlFor: "sort",
-@@ -73582,7 +73731,33 @@ const CollectionListPage = () => {
+@@ -74966,7 +75126,33 @@ const CollectionListPage = () => {
                }
              }
            }
@@ -282,7 +287,7 @@ index 69093c7..eb25248 100644
            SearchInput,
            {
              cms,
-@@ -73595,15 +73770,7 @@ const CollectionListPage = () => {
+@@ -74979,15 +75165,7 @@ const CollectionListPage = () => {
                setSearchInput(searchInput2);
              }
            }
@@ -299,7 +304,7 @@ index 69093c7..eb25248 100644
            Link$1,
            {
              onMouseDown: (evt) => {
-@@ -73683,20 +73850,13 @@ const CollectionListPage = () => {
+@@ -75067,20 +75245,13 @@ const CollectionListPage = () => {
                return doc.node.__typename !== "Folder" && Boolean((_a2 = doc.node._sys) == null ? void 0 : _a2.title);
              }
            );
@@ -311,7 +316,7 @@ index 69093c7..eb25248 100644
 -            },
 -            hasAnyTitles ? "Title" : "Filename"
 -          ), hasAnyTitles && /* @__PURE__ */ React__default.createElement(
-+          return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, hasAnyDocuments && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle, style: { width: "2.5rem" } }, /* @__PURE__ */ React__default.createElement("input", { type: "checkbox", checked: selectablePaths.length > 0 && selectablePaths.every((p) => selectedPaths.has(p)), onChange: toggleSelectAll })), /* @__PURE__ */ React__default.createElement(
++          return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, hasAnyDocuments && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle, style: { width: "2.5rem" } }, /* @__PURE__ */ React__default.createElement("input", { type: "checkbox", checked: selectablePaths.length > 0 && selectablePaths.every((p) => selectedPaths.has(p)), onChange: toggleSelectAll })), showBulkStatus ? sortableHeader("Titre", "titre") : /* @__PURE__ */ React__default.createElement(
              "th",
              {
                className: tableHeadingCellStyle
@@ -319,11 +324,11 @@ index 69093c7..eb25248 100644
 -            "Filename"
 -          ), /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Extension"), /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Template"), /* @__PURE__ */ React__default.createElement("th", null))), !hasAnyDocuments && hasAnyFolders && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Name"), /* @__PURE__ */ React__default.createElement(
 +            hasAnyTitles ? "Title" : "Filename"
-+          ), showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Date de publication"), showBulkStatus && /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Statut"), /* @__PURE__ */ React__default.createElement("th", null))), !hasAnyDocuments && hasAnyFolders && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Name"), /* @__PURE__ */ React__default.createElement(
++          ), showBulkStatus && sortableHeader("Date de publication", "date"), showBulkStatus && sortableHeader("Date de création", "dateCreation"), showBulkStatus && sortableHeader("Statut", "statut"), /* @__PURE__ */ React__default.createElement("th", null))), !hasAnyDocuments && hasAnyFolders && /* @__PURE__ */ React__default.createElement("thead", { className: tableHeadingStyle2 }, /* @__PURE__ */ React__default.createElement("tr", null, /* @__PURE__ */ React__default.createElement("th", { className: tableHeadingCellStyle }, "Name"), /* @__PURE__ */ React__default.createElement(
              "th",
              {
                className: tableHeadingCellStyle,
-@@ -73710,7 +73870,7 @@ const CollectionListPage = () => {
+@@ -75094,7 +75265,7 @@ const CollectionListPage = () => {
                navigate,
                collectionName
              }
@@ -332,16 +337,16 @@ index 69093c7..eb25248 100644
              var _a2;
              if (document2.node.__typename === "Folder") {
                return /* @__PURE__ */ React__default.createElement(
-@@ -73749,7 +73909,7 @@ const CollectionListPage = () => {
+@@ -75133,7 +75304,7 @@ const CollectionListPage = () => {
                    "td",
                    {
                      className: "px-3 py-3",
 -                    colSpan: 4
-+                    colSpan: showBulkStatus ? 3 : 1
++                    colSpan: showBulkStatus ? 4 : 1
                    },
                    /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-400 truncate" }, document2.node.path.substring(2).split("/").map((node) => {
                      return /* @__PURE__ */ React__default.createElement("span", { key: node }, /* @__PURE__ */ React__default.createElement("span", { className: "text-gray-300 pr-0.5" }, "/"), /* @__PURE__ */ React__default.createElement("span", { className: "pr-0.5" }, node));
-@@ -73761,17 +73921,22 @@ const CollectionListPage = () => {
+@@ -75145,17 +75316,22 @@ const CollectionListPage = () => {
                document2.node._sys.title
              );
              const subfolders = document2.node._sys.breadcrumbs.slice(0, -1).join("/");
@@ -366,7 +371,7 @@ index 69093c7..eb25248 100644
                  },
                  /* @__PURE__ */ React__default.createElement(
                    "a",
-@@ -73799,9 +73964,8 @@ const CollectionListPage = () => {
+@@ -75183,9 +75359,9 @@ const CollectionListPage = () => {
                    /* @__PURE__ */ React__default.createElement("span", { className: "truncate block" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block truncate mb-1" }, !folderView && !hasTitle && subfolders && /* @__PURE__ */ React__default.createElement("span", { className: "text-xs text-gray-400" }, `${subfolders}/`), /* @__PURE__ */ React__default.createElement("span", null, hasTitle ? (_a2 = document2.node._sys) == null ? void 0 : _a2.title : document2.node._sys.filename)), /* @__PURE__ */ React__default.createElement("span", { className: "block text-xs text-gray-400" }, document2.node._sys.path))
                  )
                ),
@@ -374,11 +379,12 @@ index 69093c7..eb25248 100644
 -              /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, document2.node._sys.extension)),
 -              /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, document2.node._sys.template)),
 +              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900 whitespace-nowrap" }, formatPubDate(document2.node._values == null ? void 0 : document2.node._values.date))),
++              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900 whitespace-nowrap" }, formatPubDate(document2.node._values == null ? void 0 : document2.node._values.dateCreation))),
 +              showBulkStatus && /* @__PURE__ */ React__default.createElement("td", { className: "px-3 py-3" }, /* @__PURE__ */ React__default.createElement("span", { className: "leading-5 block text-sm font-medium text-gray-900" }, rowStatut === "Brouillon" ? /* @__PURE__ */ React__default.createElement("i", null, `(${rowStatut})`) : rowStatut || "—")),
                /* @__PURE__ */ React__default.createElement("td", { className: "w-0" }, /* @__PURE__ */ React__default.createElement(
                  OverflowMenu$1,
                  {
-@@ -74059,6 +74223,23 @@ const Breadcrumb = ({ folder, navigate, collectionName }) => {
+@@ -75443,6 +75619,23 @@ const Breadcrumb = ({ folder, navigate, collectionName }) => {
  const NoDocumentsPlaceholder = () => {
    return /* @__PURE__ */ React__default.createElement("div", { className: "text-center px-5 py-3 flex flex-col items-center justify-center shadow border border-gray-100 bg-gray-50 border-b border-gray-200 w-full max-w-full rounded-lg" }, /* @__PURE__ */ React__default.createElement("p", { className: "text-base italic font-medium text-gray-300" }, "No documents found."));
  };

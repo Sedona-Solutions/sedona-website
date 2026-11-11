@@ -1,6 +1,7 @@
 ---
 titre: 'WWDC : Résumé du Platform State of the Union 2023'
 date: 2023-06-14T09:39:57.523Z
+dateCreation: 2023-06-14T09:39:57.523Z
 couverture: /uploads/articles/wp/wwdc-2023-cover.png
 extrait: |
   Comme chaque année au mois de juin, Apple organise la WWDC et annonce les nouveautés des prochains OS ainsi que les nouvelles possibilités offertes aux développeurs. Cette année fut riche en annonces que nous allons passer en revue dans cet article.

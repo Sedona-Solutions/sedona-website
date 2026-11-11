@@ -1,6 +1,7 @@
 ---
 titre: 'Swift Connection 2026 : du 2 au 3 Novembre à Paris. Nous y serons ! '
 date: 2026-10-29T10:16:36.947Z
+dateCreation: 2026-10-29T10:16:36.947Z
 couverture: /uploads/events/swift-connection-2026.jpg
 extrait: '10 ème édition d''un évènement dédié aux afficionados de la marque à la pomme. '
 auteur: content/auteurs/remy-p.json

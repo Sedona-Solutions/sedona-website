@@ -1296,9 +1296,18 @@ export default defineConfig({
                 .replace(/^-+|-+$/g, ""),
           },
         },
+        // Date de création renseignée automatiquement à la création d'un article
+        // (colonne « Date de création » de la liste, cf. patches/tinacms+3.11.0.patch).
+        defaultItem: () => ({ dateCreation: new Date().toISOString() }),
         fields: [
           { type: "string", name: "titre", label: "Titre", isTitle: true, required: true },
           { type: "datetime", name: "date", label: "Date", required: true },
+          {
+            type: "datetime",
+            name: "dateCreation",
+            label: "Date de création",
+            description: "Renseignée automatiquement à la création de l'article. Non affichée sur le site.",
+          },
           {
             type: "datetime",
             name: "misAJour",

@@ -2,6 +2,7 @@
 categorie: Évènement
 titre: 'Sedona sera présent à l''Elastic{ON} le 27 Janvier à Paris'
 date: 2026-01-15T11:01:00.000Z
+dateCreation: 2026-01-15T11:01:00.000Z
 couverture: /uploads/articles/elasticOn2026.jpg
 extrait: 'Elastic{ON} est l''évènement incontournable des partenaires Elastic. C''est l''occasion de découvrir les nouvelles fonctionnalités des produits, l''intégration de…'
 auteur: content/auteurs/remy-p.json
