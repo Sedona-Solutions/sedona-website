@@ -1,7 +1,16 @@
 diff --git a/node_modules/tinacms/dist/index.js b/node_modules/tinacms/dist/index.js
-index 5732f6c..7e26ad2 100644
+index 5732f6c..c146031 100644
 --- a/node_modules/tinacms/dist/index.js
 +++ b/node_modules/tinacms/dist/index.js
+@@ -4109,7 +4109,7 @@ function FieldsBuilder({
+   padding = false
+ }) {
+   const cms = useCMS$1();
+-  const [fieldPlugins, setFieldPlugins] = React.useState([]);
++  const [fieldPlugins, setFieldPlugins] = React.useState(() => cms.plugins.getType("field").all());
+   const updateFieldPlugins = React.useCallback(() => {
+     const fieldPlugins2 = cms.plugins.getType("field").all();
+     setFieldPlugins(fieldPlugins2);
 @@ -17238,6 +17238,7 @@ class TinaAdminApi {
                      extension
                      hasReferences
