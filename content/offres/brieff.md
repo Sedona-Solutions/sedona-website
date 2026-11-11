@@ -2,7 +2,7 @@
 pillVariant: ovni
 titre: Brieff
 eyebrow: Offres clé en main
-accroche: 'Lancez vos projets 10x plus vite, avec Brieff, concevez vos documents projets avec des agents IA dédiés basés sur la méthode B-MAD. Moins d''incohérence dans la documentation, c''est du temps gagné pour le développement.'
+accroche: 'Lancez vos projets 10x plus vite, avec Brieff, concevez vos documents projets avec des agents IA dédiés'
 enBref: 'BRIEFF rassemble des agents IA dans une salle virtuelle, qui utilisent vos sources existantes, créent vos livrables, détectent les incohérences et suivent chaque décision. Vous êtes l''acteur et le coordinateur des échanges avec les agents pour avoir toujours votre mot à dire.'
 illustration: /uploads/offre/illustration-brieff-meetingroom.png
 heroProof:
@@ -148,6 +148,11 @@ impacts:
     - valeur: 12+
       label: Livrables type
       note: De la synthèse exécutive au cahier de recette signable
+temoignage:
+  citation: 'Nous utilisons Brieff pour le lancement d''une nouvelle application ou pour une nouvelle fonctionnalité. Brieff nous apporte tout d''abord un cadre projet très intéressant alimenté par des agents IA spécialisés personnalisables, ce qui nous permet d''obtenir une documentation toujours à jour et retraçant toutes les décisions prises lors des réunions. Les possibilités de rétro-documentation nous ont permis également de reprendre des vieilles applications un peu "oubliées" et de reconstituer ainsi le fonds documentaire.'
+  auteur: Sébastien R.
+  role: Responsable du pôle administratif, mutuelle française
+  avatar: /uploads/articles/avatar-9.png
 raisons:
   eyebrow: Gestion & Respect des règles
   titre: 'Une IA auditable, signée et conforme.'

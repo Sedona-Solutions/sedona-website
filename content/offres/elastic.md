@@ -97,7 +97,7 @@ incoherence:
   texte: |
     Une formation adaptée, animée par un expert reconnu et rompu aux projets Elastic. Des sessions régulières et des séminaires dédiés avec notre partenaire Elastic. Donnez nous votre besoin, nous créons pour vous la formation adaptée !
 
-    **PLANNING DES SESSIONS BIENTOT DISPONIBLES**
+    **PLANNING DES SESSIONS BIENTÔT DISPONIBLE**
   illustration: /uploads/offre/elastic-formation.svg
 plans:
   eyebrow: Comment nous travaillons ensemble ?
