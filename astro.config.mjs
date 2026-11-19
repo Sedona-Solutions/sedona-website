@@ -5,6 +5,7 @@ import remarkManualHighlight from './src/utils/remarkManualHighlight.mjs';
 import remarkImageCaptionLink from './src/utils/remarkImageCaptionLink.mjs';
 import remarkVideoEmbed from './src/utils/remarkVideoEmbed.mjs';
 import remarkPublicImages from './src/utils/remarkPublicImages.mjs';
+import rehypeTableScroll from './src/utils/rehypeTableScroll.mjs';
 import pruneUnusedImages from './src/utils/astroPruneImages.mjs';
 import sitemap from './src/utils/astroSitemap.mjs';
 // Redirections des anciennes URL WordPress (généré par `npm run seo:redirections`
@@ -45,6 +46,7 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [remarkManualHighlight, remarkImageCaptionLink, remarkVideoEmbed, remarkPublicImages],
+      rehypePlugins: [rehypeTableScroll],
     }),
   },
 });

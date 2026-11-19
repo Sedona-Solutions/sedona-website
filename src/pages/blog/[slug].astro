@@ -224,7 +224,13 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
   .abody .prose :global(pre) { font-family: var(--font-mono); font-size: 0.9375rem; line-height: 1.6; border-radius: 12px; padding: 1.5rem; overflow-x: auto; }
   .abody .prose :global(pre code) { background: none; padding: 0; }
 
+  /* Tableau plus large que l'écran (mobile) : il défile dans son cadre (cf. rehypeTableScroll). */
+  .abody .prose :global(.table-scroll) { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .abody .prose :global(table) { width: 100%; border-collapse: collapse; font-size: 1rem; }
+  @media (max-width: 720px) {
+    .abody .prose :global(table) { font-size: 0.875rem; }
+    .abody .prose :global(th), .abody .prose :global(td) { padding: 0.5rem 0.625rem; min-width: 7.5rem; }
+  }
   .abody .prose :global(th), .abody .prose :global(td) { padding: 0.75rem 1rem; border: 1px solid color-mix(in srgb, #3b0800 20%, transparent); text-align: left; }
   .abody .prose :global(th) { font-family: var(--font-sans); font-weight: 600; background: color-mix(in srgb, #3b0800 6%, transparent); }
 
@@ -254,13 +260,15 @@ const autres = [...tagsCommuns, ...reste.filter((e) => !tagsCommuns.includes(e))
   .abody .prose :global(blockquote) {
     background: #3b0800;
     color: var(--color-red-rock-50);
-    margin: 2.5rem 10rem;
-    padding: clamp(1.75rem, 5vw, 3.5rem);
+    /* Retrait de 10rem sur grand écran, réduit jusqu'à 0 sur mobile
+       (un retrait fixe ne laissait que deux caractères de large). */
+    margin: 2.5rem clamp(0rem, (100% - 40rem) / 2, 10rem);
+    padding: clamp(1.5rem, 5vw, 3.5rem);
     border-radius: 12px;
     text-align: center;
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: clamp(1.125rem, 3.5vw, 1.5rem);
     line-height: 1.25;
     letter-spacing: -0.15px;
   }
