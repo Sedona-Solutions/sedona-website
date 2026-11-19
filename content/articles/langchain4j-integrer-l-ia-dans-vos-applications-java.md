@@ -1,6 +1,7 @@
 ---
 titre: 'LangChain4j : intégrer l''IA dans vos applications Java'
 date: 2026-11-10T01:00:00.000Z
+couverture: /uploads/articles/langchain4j-ia-applications-java.jpg
 extrait: >-
   Appeler un LLM, c'est une requête HTTP. Mais c'est à peine 10 % du travail :
   mémoire, outils, RAG, garde-fous, agents. Retour sur notre présentation
