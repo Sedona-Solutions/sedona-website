@@ -1,14 +1,11 @@
 ---
 titre: 'LangChain4j : intégrer l''IA dans vos applications Java'
-date: 2026-11-10T01:00:00.000Z
+date: 2026-11-19T01:00:00.000Z
 couverture: /uploads/articles/langchain4j-ia-applications-java.jpg
-extrait: >-
-  Appeler un LLM, c'est une requête HTTP. Mais c'est à peine 10 % du travail :
-  mémoire, outils, RAG, garde-fous, agents. Retour sur notre présentation
-  interne consacrée à LangChain4j, la boîte à outils qui rend tout cela simple
-  dans l'écosystème Java.
+extrait: 'Appeler un LLM, c''est une requête HTTP. Mais c''est à peine 10 % du travail : mémoire, outils, RAG, garde-fous, agents. Retour sur notre présentation interne consacrée à LangChain4j, la boîte à outils qui rend tout cela simple dans l''écosystème Java.'
 auteur: content/auteurs/mathieu-b.json
 tempsLecture: 11 min de lecture
+vedette: true
 tags:
   - IA
   - Java
@@ -17,41 +14,16 @@ tags:
 statut: Publié
 faq:
   - question: Qu'est-ce que LangChain4j ?
-    reponse: >-
-      LangChain4j est une bibliothèque Java open source qui simplifie
-      l'intégration des LLM dans les applications. Elle reprend le nom du projet
-      Python LangChain, mais a été conçue pour Java, avec sa propre API et des
-      intégrations pour Spring Boot, Quarkus et Jakarta CDI. Elle prend en
-      charge les appels aux modèles, la mémoire, les outils, le RAG, les
-      garde-fous, MCP et les agents.
+    reponse: 'LangChain4j est une bibliothèque Java open source qui simplifie l''intégration des LLM dans les applications. Elle reprend le nom du projet Python LangChain, mais a été conçue pour Java, avec sa propre API et des intégrations pour Spring Boot, Quarkus et Jakarta CDI. Elle prend en charge les appels aux modèles, la mémoire, les outils, le RAG, les garde-fous, MCP et les agents.'
   - question: LangChain4j est-il prêt pour la production ?
-    reponse: >-
-      Oui pour son cœur. Le projet est apparu en 2023 et reste très actif, avec
-      des versions publiées régulièrement. Il est bien intégré aux frameworks
-      Java du marché et, selon notre retour d'expérience, il est stable. Les
-      modules les plus récents, comme les agents et les garde-fous, sont encore
-      marqués expérimentaux : leur API peut évoluer. Côté fonctionnalités, il
-      couvre l'essentiel de LangChain en Python, qui évolue un peu plus vite.
+    reponse: 'Oui pour son cœur. Le projet est apparu en 2023 et reste très actif, avec des versions publiées régulièrement. Il est bien intégré aux frameworks Java du marché et, selon notre retour d''expérience, il est stable. Les modules les plus récents, comme les agents et les garde-fous, sont encore marqués expérimentaux : leur API peut évoluer. Côté fonctionnalités, il couvre l''essentiel de LangChain en Python, qui évolue un peu plus vite.'
   - question: Comment empêcher l'envoi de données sensibles à un LLM ?
-    reponse: >-
-      LangChain4j propose des garde-fous (guardrails) en entrée et en sortie.
-      En entrée, ils bloquent un message, ou le réécrivent pour masquer une
-      information comme un IBAN ou un mot de passe, avant qu'il ne parte vers
-      le LLM. En sortie, ils contrôlent la réponse. LangChain4j en fournit
-      quelques-uns de génériques, mais les règles propres à chaque métier
-      restent à définir, en implémentant une simple interface.
+    reponse: 'LangChain4j propose des garde-fous (guardrails) en entrée et en sortie. En entrée, ils bloquent un message, ou le réécrivent pour masquer une information comme un IBAN ou un mot de passe, avant qu''il ne parte vers le LLM. En sortie, ils contrôlent la réponse. LangChain4j en fournit quelques-uns de génériques, mais les règles propres à chaque métier restent à définir, en implémentant une simple interface.'
   - question: Peut-on faire du RAG sur des documents en français avec Easy RAG ?
-    reponse: >-
-      Oui, mais mieux vaut changer le modèle d'embedding. Easy RAG est livré
-      avec un modèle anglais prédéfini, moins performant sur du français. Mieux
-      vaut le remplacer par un modèle multilingue, comme multilingual-e5-small,
-      idéalement téléchargé à l'avance : il pèse environ 130 Mo dans sa
-      version quantifiée.
+    reponse: 'Oui, mais mieux vaut changer le modèle d''embedding. Easy RAG est livré avec un modèle anglais prédéfini, moins performant sur du français. Mieux vaut le remplacer par un modèle multilingue, comme multilingual-e5-small, idéalement téléchargé à l''avance : il pèse environ 130 Mo dans sa version quantifiée.'
 seo:
   titre: 'LangChain4j : intégrer un LLM dans une application Java'
-  description: >-
-    Modèles, mémoire, tools, RAG, garde-fous, MCP et agents : découvrez comment
-    LangChain4j simplifie l'intégration de l'IA dans vos applications Java.
+  description: 'Modèles, mémoire, tools, RAG, garde-fous, MCP et agents : découvrez comment LangChain4j simplifie l''intégration de l''IA dans vos applications Java.'
 ---
 
 ## Appeler un LLM, c'est facile en apparence
