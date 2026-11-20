@@ -5,7 +5,6 @@ couverture: /uploads/articles/langchain4j-ia-applications-java.jpg
 extrait: 'Appeler un LLM, c''est une requête HTTP. Mais c''est à peine 10 % du travail : mémoire, outils, RAG, garde-fous, agents. Retour sur notre présentation interne consacrée à LangChain4j, la boîte à outils qui rend tout cela simple dans l''écosystème Java.'
 auteur: content/auteurs/mathieu-b.json
 tempsLecture: 11 min de lecture
-vedette: true
 tags:
   - IA
   - Java

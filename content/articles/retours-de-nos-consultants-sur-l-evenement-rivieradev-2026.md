@@ -9,7 +9,6 @@ extrait: |-
   De l’autre, une IA générative qui s’invite partout, jusqu’à nous forcer à repenser ce que veut dire « faire du logiciel ».
   Voici notre retour sur les sessions qui nous ont marqués.
 auteur: content/auteurs/edouard-l.json
-vedette: true
 tags:
   - Évènement
   - RivieraDev

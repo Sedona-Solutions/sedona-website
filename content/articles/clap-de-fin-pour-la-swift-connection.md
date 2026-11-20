@@ -6,7 +6,6 @@ couverture: /uploads/articles/swift-connection-2026.jpg
 extrait: 'Développement agentique, harness, Swift Concurrency et réflexions sur le métier : retour sur les deux jours de la 10e Swift Connection à Paris… et sur une question qui reste ouverte pour la suite.'
 auteur: content/auteurs/antoine-m.json
 tempsLecture: 5 min de lecture
-vedette: true
 tags:
   - Évènement
   - App Mobile
@@ -37,9 +36,10 @@ Enfin, Matt Massicotte et Lucy Galik ont partagé leurs retours d'expérience et
 ## Catalyseur de créativité
 
 Plusieurs talks ont aussi montré que le développement agentique permet de se lancer dans des projets qu'on n'aurait pas entrepris seul.
-- [Hervé Bérenger](https://fr.linkedin.com/in/herve-berenger) a exploré avec l'aide d'un LLM les [500 000 lignes de code du dépôt officiel](https://github.com/apple/security-pcc) du *Private Cloud Compute* d'Apple pour en présenter les mécanismes de sécurité.
-- Antoine Van der Lee a développé [RocketTrace](https://rockettrace.app/), un outil qui améliore la productivité de ses agents et audite les problèmes de performance relevés avec *Instruments*.
-- Soroush Khanlou a fait développer une app macOS par un agent pour remplacer ses slides par de nombreuses démos interactives.
+
+* [Hervé Bérenger](https://fr.linkedin.com/in/herve-berenger) a exploré avec l'aide d'un LLM les [500 000 lignes de code du dépôt officiel](https://github.com/apple/security-pcc) du *Private Cloud Compute* d'Apple pour en présenter les mécanismes de sécurité.
+* Antoine Van der Lee a développé [RocketTrace](https://rockettrace.app/), un outil qui améliore la productivité de ses agents et audite les problèmes de performance relevés avec *Instruments*.
+* Soroush Khanlou a fait développer une app macOS par un agent pour remplacer ses slides par de nombreuses démos interactives.
 
 ## *Learn, Breathe and Reflect*
 

@@ -6,7 +6,6 @@ couverture: /uploads/articles/jev-ia-qui-decide.jpg
 extrait: 'Faut-il vraiment un LLM pour répondre « oui » ou « non » ? Retour sur notre présentation interne consacrée à Jev, le premier modèle « System One » de TypeSafe AI : son fonctionnement, ses garanties, son prix, et deux cas d''usage concrets avec un serveur MCP Spring AI et jev-router.'
 auteur: content/auteurs/omar-b.json
 tempsLecture: 12 min de lecture
-vedette: true
 tags:
   - IA
   - MCP

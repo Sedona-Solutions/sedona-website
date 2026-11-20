@@ -436,6 +436,21 @@ export default defineConfig({
           },
           {
             type: "object",
+            name: "blogSection",
+            label: "Bloc News",
+            fields: [
+              {
+                type: "reference",
+                name: "articleVedette",
+                label: "Article à la une",
+                collections: ["article"],
+                description:
+                  "Mis en avant en grand sur la page d'accueil et en tête de la page Blog. Un seul article possible. Si vide (ou si l'article choisi n'est pas Publié), l'article le plus récent est utilisé.",
+              },
+            ],
+          },
+          {
+            type: "object",
             name: "ctaFinal",
             label: "Bandeau d'appel final",
             fields: [
@@ -1325,7 +1340,6 @@ export default defineConfig({
             description: "Choisir dans la liste. Nouvel auteur : le créer d'abord dans « Auteurs » (photo, rôle, LinkedIn).",
           },
           { type: "string", name: "tempsLecture", label: "Temps de lecture (ex. 5 min de lecture)" },
-          { type: "boolean", name: "vedette", label: "Article à la une" },
           {
             type: "string",
             name: "tags",

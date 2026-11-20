@@ -5,15 +5,14 @@ import home from "../../../content/home/index.json";
 import CtaFinal from "../../components/home/CtaFinal.astro";
 import ArticleCard from "../../components/blog/ArticleCard.astro";
 import { estArticlePublie } from "../../utils/articleVisibility";
+import { articleALaUne } from "../../utils/articleVedette";
 
-// Vedettes d'abord, puis du plus récent au plus ancien.
-const articles = (await getCollection("article", ({ data }) => estArticlePublie(data.statut)))
+// L'article à la une d'abord (choisi sur la page d'accueil dans Tina), puis du plus récent au plus ancien.
+const parDate = (await getCollection("article", ({ data }) => estArticlePublie(data.statut)))
   .map((a) => ({ ...a.data, slug: a.id }))
-  .sort(
-    (a, b) =>
-      Number(Boolean(b.vedette)) - Number(Boolean(a.vedette)) ||
-      +new Date(b.date) - +new Date(a.date)
-  );
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const vedette = articleALaUne(parDate);
+const articles = vedette ? [vedette, ...parDate.filter((a) => a !== vedette)] : parDate;
 
 const slug = (s = "") =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

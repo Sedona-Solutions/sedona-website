@@ -283,6 +283,9 @@
       }
     ]
   },
+  "blogSection": {
+    "articleVedette": "content/articles/langchain4j-integrer-l-ia-dans-vos-applications-java.md"
+  },
   "ctaFinal": {
     "titre": "Un projet, une idée ? Travaillons ensemble !",
     "titreAccent": "idée ?",

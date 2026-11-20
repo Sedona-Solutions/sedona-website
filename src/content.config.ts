@@ -203,7 +203,6 @@ const article = defineCollection({
     auteur: z.string().nullish(),
     avatar: z.string().optional(),
     tempsLecture: z.string().optional(),
-    vedette: z.boolean().optional(),
     tags: z.array(z.string()).optional(),
     statut: z.enum(["Brouillon", "Publié", "Archivé"]).optional(),
   }),
